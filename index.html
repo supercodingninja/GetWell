@@ -28,8 +28,8 @@ In Other Words: This is the cover of the book. Everything goes inside here.
     <meta charset="UTF-8">
     <!-- 
     This Area Of Code Is: Character Encoding Meta Tag
-    Explanation: This tells the browser to use UTF-8 encoding, which supports almost all characters from all languages (including emojis like 🇺🇸 and ✝️). Without this, special characters might show up as weird symbols or question marks.
-    In Other Words: This tells the computer "use the big alphabet that has all the letters from every language, plus smiley faces."
+    Explanation: This tells the browser to use UTF-8 encoding, which supports almost all characters from all languages (including emojis like 🇺🇸 and ✝️, and special Unicode characters like 𝐹𝑟𝑒𝑑𝑒𝑟𝑖𝑐𝑘). Without this, special characters might show up as weird symbols or question marks.
+    In Other Words: This tells the computer "use the big alphabet that has all the letters from every language, plus smiley faces and fancy italic letters."
     -->
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -186,6 +186,29 @@ In Other Words: This is the cover of the book. Everything goes inside here.
         In Other Words: This shows "Card 5 of 24" so you know how many jokes are left.
         -->
         <div class="progress" id="progress">Card 1 of 24</div>
+
+        <!-- 
+        ================================================================================
+        This Area Of Code Is: Copyright Footer Section (NEW ADDITION)
+        Explanation: This section contains the copyright notice and attribution. It displays the copyright symbol, year 2026, "Get Well" in blue text (using span with class), and the creator attribution with "𝑇ℎ𝑒 𝑆𝑢𝑝𝑒𝑟 𝐶𝑜𝑑𝑖𝑛𝑔 𝑁𝑖𝑛𝑗𝑎™" in orange letters hyperlinked to the ePortfolio. The special Unicode italic characters are preserved for the author name and brand name. The hyperlink opens in a new tab for security and user experience.
+        In Other Words: This is the copyright notice at the bottom. "Get Well" is blue, and "The Super Coding Ninja" is orange and clickable to go to the website. It uses fancy italic letters for the name.
+        ================================================================================
+        -->
+        <div class="copyright-footer">
+            <!-- 
+            This Area Of Code Is: Copyright Text Container
+            Explanation: This paragraph holds the entire copyright message. The spans inside apply specific colors to specific portions of the text.
+            In Other Words: This paragraph holds the copyright text with different colors for different parts.
+            -->
+            <p class="copyright-text">
+                © 2026 <span class="copyright-blue">Get Well</span>. All rights reserved. 𝐹𝑟𝑒𝑑𝑒𝑟𝑖𝑐𝑘 𝑇ℎ𝑜𝑚𝑎𝑠, “<a href="https://supercodingninja.github.io/ePortfolio/" target="_blank" rel="noopener noreferrer" class="copyright-orange">𝑇ℎ𝑒 𝑆𝑢𝑝𝑒𝑟 𝐶𝑜𝑑𝑖𝑛𝑔 𝑁𝑖𝑛𝑗𝑎™</a>”
+            </p>
+            <!-- 
+            This Area Of Code Is: Target and Rel Attributes Explanation
+            Explanation: target="_blank" makes the link open in a new tab so the user doesn't lose their place in the card app. rel="noopener noreferrer" is a security feature that prevents the new page from accessing this page's window object, protecting against tabnabbing attacks.
+            In Other Words: target="_blank" opens the link in a new tab. The rel part keeps it secure so the new website can't mess with this one.
+            -->
+        </div>
     </div>
 
     <!-- 
