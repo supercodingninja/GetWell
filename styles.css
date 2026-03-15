@@ -491,478 +491,6 @@ In Other Words: This is the top bar of the menu with the title on the left and X
 
 /*
 This Area Of Code Is: Menu Title Text
-: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-}
-
-/*
-This Area Of Code Is: Main Container Wrapper
-Explanation: This is the white box that holds all the content. Width: 90% makes it responsive (90% of screen width). Max-width: 650px prevents it from getting too wide on large monitors. Position: relative allows us to position child elements absolutely if needed. Z-index: 10 ensures it appears above the background stars.
-In Other Words: This is the main box that holds the joke cards and buttons. It's 90% as wide as the screen, but never wider than 650 pixels. It sits on top of the floating stars.
-*/
-.container {
-    width: 90%;
-    max-width: 650px;
-    position: relative;
-    z-index: 10;
-}
-
-/*
-This Area Of Code Is: Header Section Styling
-Explanation: Centers the text (title and subtitle) and adds space below it (margin-bottom: 25px). The animation makes it fade in when the page loads.
-In Other Words: This centers the "STAY STRONG" title at the top and adds space below it. It also makes it fade in smoothly when you open the page.
-*/
-.header {
-    text-align: center;
-    margin-bottom: 25px;
-    animation: fadeIn 1s ease;
-}
-
-/*
-This Area Of Code Is: Main Heading (H1) Styling
-Explanation: Sets the color to a light tan/gold (#e8d5b7), large font size (36px), adds a shadow behind the text for depth, and spaces out the letters (letter-spacing: 2px).
-In Other Words: This makes the "STAY STRONG" text big, gold-colored, with a shadow so it pops out, and the letters are slightly spread apart.
-*/
-h1 {
-    color: #e8d5b7;
-    font-size: 36px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
-    letter-spacing: 2px;
-    margin-bottom: 5px;
-}
-
-/*
-This Area Of Code Is: Subtitle Styling
-Explanation: Styles the "God Bless You" text with a lighter blue-gray color, smaller size (16px), and italic style.
-In Other Words: This styles the smaller text under the main title - makes it light blue, smaller, and slanted (italic).
-*/
-.subtitle {
-    color: #b8c5d1;
-    font-size: 16px;
-    font-style: italic;
-}
-
-/*
-This Area Of Code Is: Card Stack Container
-Explanation: This defines the area where cards appear. Height: 400px gives it a fixed size. Perspective: 1000px enables 3D rotation effects so cards can appear to flip or slide in 3D space.
-In Other Words: This creates the stage where the joke cards perform. The perspective makes the cards look like they're moving in 3D space when they slide in and out.
-*/
-.card-stack {
-    position: relative;
-    height: 400px;
-    perspective: 1000px;
-}
-
-/*
-This Area Of Code Is: Individual Flash Card Styling
-Explanation: Position: absolute allows cards to stack on top of each other. The gradient creates a paper-like cream color. Border-radius: 15px rounds the corners. Box-shadow adds depth (makes it look like it's floating). Transition: all 0.7s creates smooth animations when cards move. Transform: translateX(100px) initially places cards off-screen to the right.
-In Other Words: This styles each joke card to look like a piece of paper with rounded corners and a shadow. They start off-screen to the right and slide in smoothly.
-*/
-.flash-card {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(145deg, #f5f1e8 0%, #e8e0d1 100%);
-    border-radius: 15px;
-    box-shadow: 0 15px 50px rgba(0,0,0,0.3), inset 0 2px 0 rgba(255,255,255,0.8);
-    padding: 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    transition: all 0.7s cubic-bezier(0.4, 0.0, 0.2, 1);
-    opacity: 0;
-    transform: translateX(100px) rotateY(-10deg);
-    border: 4px solid;
-}
-
-/*
-This Area Of Code Is: Active Card State
-Explanation: When a card has the "active" class (the one currently being viewed), it becomes fully visible (opacity: 1), moves to the center (translateX(0)), and stands straight up (rotateY(0)). Z-index: 10 puts it above other cards.
-In Other Words: When the card slides into the middle to be viewed, it becomes fully visible and centered, and stands up straight.
-*/
-.flash-card.active {
-    opacity: 1;
-    transform: translateX(0) rotateY(0);
-    z-index: 10;
-}
-
-/*
-This Area Of Code Is: Previous Card State (Off-screen Left)
-Explanation: Cards that have been viewed slide to the left and shrink slightly (scale: 0.9) and fade out.
-In Other Words: Cards you've already seen slide to the left, get smaller, and fade away.
-*/
-.flash-card.prev {
-    opacity: 0;
-    transform: translateX(-150px) scale(0.9);
-    z-index: 5;
-}
-
-/*
-This Area Of Code Is: Next Card State (Waiting Off-screen)
-Explanation: Cards waiting to be shown are slightly visible (opacity: 0.3), positioned to the right, and smaller.
-In Other Words: The next card waiting to come in is slightly visible off to the right, peeking in.
-*/
-.flash-card.next {
-    opacity: 0.3;
-    transform: translateX(50px) scale(0.95);
-    z-index: 1;
-}
-
-/*
-This Area Of Code Is: Card Type Color Coding (Joke Cards)
-Explanation: Joke cards get a brown border (#8b4513 - saddle brown) and a cream/white gradient background to look like paper.
-In Other Words: Joke cards have a brown border and look like cream-colored paper.
-*/
-.card-joke { 
-    border-color: #8b4513; 
-    background: linear-gradient(to bottom, #faf8f3 0%, #f0ebe0 100%); 
-}
-
-/*
-This Area Of Code Is: Card Type Color Coding (Message Cards)
-Explanation: Message/prayer cards get a navy blue border and light blue-tinted background.
-In Other Words: Prayer and message cards have a dark blue border and light blue background.
-*/
-.card-message { 
-    border-color: #1e3a5f; 
-    background: linear-gradient(to bottom, #f5f8ff 0%, #e8eef5 100%); 
-}
-
-/*
-This Area Of Code Is: Card Type Color Coding (Prayer Cards)
-Explanation: Prayer cards get a forest green border and green-tinted background.
-In Other Words: Prayer cards have a green border and light green background.
-*/
-.card-prayer { 
-    border-color: #2e5c43; 
-    background: linear-gradient(to bottom, #f0f5f2 0%, #e8f0ec 100%); 
-}
-
-/*
-This Area Of Code Is: Icon/Image Styling
-Explanation: The large emoji icons at the top of each card are sized at 48px with some space below (margin-bottom: 20px). The animation makes them gently float up and down.
-In Other Words: This makes the big emojis (like 🐻 or ✝️) at the top of each card nice and big, with space below them, and makes them float gently up and down.
-*/
-.icon {
-    font-size: 48px;
-    margin-bottom: 20px;
-    opacity: 0.9;
-    animation: gentleFloat 6s ease-in-out infinite;
-}
-
-/*
-This Area Of Code Is: Floating Animation Keyframes
-Explanation: Defines the gentleFloat animation. At 0% and 100% (start and end), the icon is at normal position. At 50% (middle), it's moved up 5 pixels. This creates a smooth bobbing motion.
-In Other Words: This creates the floating animation - it says "start at normal position, float up a tiny bit, then float back down" over and over.
-*/
-@keyframes gentleFloat {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-5px); }
-}
-
-/*
-This Area Of Code Is: Content Text Styling (Messages)
-Explanation: For non-joke cards (messages, prayers), this styles the text size (26px), line height (space between lines), and color (dark slate gray).
-In Other Words: This makes the text on prayer cards big and easy to read with good spacing between lines.
-*/
-.content {
-    font-size: 26px;
-    line-height: 1.5;
-    color: #2c3e50;
-    font-weight: 500;
-}
-
-/*
-This Area Of Code Is: Setup Text Styling (Joke Questions)
-Explanation: Similar to .content but specifically for the joke setup/questions. Adds margin-bottom to create space before the punchline.
-In Other Words: This styles the joke questions - makes them big and leaves space below for the answer.
-*/
-.setup {
-    font-size: 26px;
-    line-height: 1.5;
-    color: #2c3e50;
-    margin-bottom: 20px;
-    font-weight: 500;
-}
-
-/*
-This Area Of Code Is: Punchline Text Styling (Joke Answers)
-Explanation: The punchline is slightly larger (28px), colored brown (#8b4513), bold, and initially invisible (opacity: 0) and shifted down (translateY: 10px). When revealed, it fades in and moves up.
-In Other Words: This styles the joke answers - makes them brown, bold, and bigger. They start invisible and slide up when shown.
-*/
-.punchline {
-    font-size: 28px;
-    color: #8b4513;
-    font-weight: bold;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.5s ease;
-    min-height: 40px;
-}
-
-/*
-This Area Of Code Is: Revealed Punchline State
-Explanation: When the card has the "revealed" class, the punchline becomes fully visible and moves to its normal position.
-In Other Words: When you click "Show Punchline," this makes the answer appear and slide up into place.
-*/
-.flash-card.revealed .punchline {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/*
-This Area Of Code Is: Tag/Label Styling (Top Right Corner)
-Explanation: The small labels like "JOKE" or "PRAYER" in the top right corner. Position: absolute places it relative to the card. Text-transform: uppercase makes it all caps. Letter-spacing spreads the letters out.
-In Other Words: This styles the little labels in the top right corner of each card (like "JOKE" or "PRAYER") - makes them small, all capital letters, and spaced out.
-*/
-.tag {
-    position: absolute;
-    top: 20px;
-    right: 25px;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: #666;
-    background: rgba(139, 69, 19, 0.1);
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-weight: bold;
-}
-
-/*
-This Area Of Code Is: Button Controls Container
-Explanation: This holds all the buttons at the bottom. Display: flex arranges them in a row. Justify-content: center centers them. Gap: 12px adds space between buttons. Flex-wrap: wrap allows buttons to stack on small screens.
-In Other Words: This arranges the buttons in a neat row at the bottom with space between them, and lets them wrap to the next line if the screen is too small.
-*/
-.controls {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 25px;
-    flex-wrap: wrap;
-}
-
-/*
-This Area Of Code Is: Base Button Styling
-Explanation: All buttons get white-to-gray gradients, blue borders, rounded corners (8px), shadows for depth, and smooth hover transitions. Min-width ensures buttons aren't too narrow.
-In Other Words: This makes all the buttons look 3D with shadows, rounded corners, and white-to-gray color.
-*/
-button {
-    background: linear-gradient(to bottom, #ffffff 0%, #f0f0f0 100%);
-    border: 3px solid #4a6fa5;
-    color: #2c3e50;
-    padding: 14px 24px;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: inherit;
-    font-weight: bold;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-}
-
-/*
-This Area Of Code Is: Button Hover Effect
-Explanation: When mouse hovers over a button (and it's not disabled), it changes to blue background, white text, and moves up slightly (translateY: -2px).
-In Other Words: When you hover your mouse over a button, it turns blue and lifts up a little.
-*/
-button:hover:not(:disabled) {
-    background: #4a6fa5;
-    color: white;
-    transform: translateY(-2px);
-}
-
-/*
-This Area Of Code Is: Disabled Button State
-Explanation: Buttons that are disabled (greyed out) have reduced opacity (0.4), can't be clicked (cursor: not-allowed), and gray background.
-In Other Words: When a button can't be pressed (like "back" on the first card), it looks grayed out and faded.
-*/
-button:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-    background: #ccc;
-}
-
-/*
-This Area Of Code Is: Menu Button Specific Styling
-Explanation: The Menu button gets a purple-tinted gradient and border to distinguish it from other buttons.
-In Other Words: The Menu button is purple instead of blue so it stands out.
-*/
-.menu-btn {
-    border-color: #6b5b95;
-    background: linear-gradient(to bottom, #f0f0ff 0%, #e5e5f5 100%);
-}
-
-/*
-This Area Of Code Is: Menu Button Hover
-Explanation: When hovering the menu button, it turns purple with white text.
-In Other Words: When you hover over the Menu button, it turns purple.
-*/
-.menu-btn:hover:not(:disabled) {
-    background: #6b5b95;
-    color: white;
-}
-
-/*
-This Area Of Code Is: Reveal Punchline Button Styling
-Explanation: The Show/Hide Punchline button gets a tan/orange color scheme to match the joke cards.
-In Other Words: The "Show Answer" button is orange/tan colored to match the joke cards.
-*/
-.reveal-btn {
-    border-color: #d4a574;
-    background: linear-gradient(to bottom, #fff8f0 0%, #f5ebe0 100%);
-    min-width: 160px;
-}
-
-/*
-This Area Of Code Is: Reveal Button Hover
-Explanation: Hovering turns the button tan with white text.
-In Other Words: When you hover over the Show Answer button, it turns tan.
-*/
-.reveal-btn:hover:not(:disabled) {
-    background: #d4a574;
-    color: white;
-}
-
-/*
-This Area Of Code Is: Auto Mode Button Styling
-Explanation: The Auto Mode button is green to indicate "go" or automatic action.
-In Other Words: The Auto Mode button is green like a traffic light "go" signal.
-*/
-.auto-btn {
-    border-color: #228b22;
-    background: linear-gradient(to bottom, #f0fff0 0%, #e0f5e0 100%);
-}
-
-/*
-This Area Of Code Is: Auto Mode Button Active State
-Explanation: When auto mode is running, the button stays green with white text and pulses with a glowing animation.
-In Other Words: When Auto Mode is turned on, the button stays green and pulses to show it's active.
-*/
-.auto-btn.active {
-    background: #228b22;
-    color: white;
-    animation: pulse 2s infinite;
-}
-
-/*
-This Area Of Code Is: Pause Button Styling
-Explanation: The pause button is yellow/gold. It's hidden by default (display: none) and only shown when auto mode is active.
-In Other Words: The Pause button is yellow and only appears when Auto Mode is running.
-*/
-.pause-btn {
-    border-color: #c9a227;
-    background: linear-gradient(to bottom, #fffef0 0%, #f5f3e0 100%);
-    display: none;
-}
-
-/*
-This Area Of Code Is: Pause Button Visible State
-Explanation: When the class "visible" is added via JavaScript, the pause button appears.
-In Other Words: This makes the Pause button appear when Auto Mode starts.
-*/
-.pause-btn.visible {
-    display: inline-block;
-}
-
-/*
-This Area Of Code Is: Pause Button Paused State
-Explanation: When the app is paused, the button turns solid yellow/gold.
-In Other Words: When you pause the slideshow, the Pause button turns solid yellow.
-*/
-.pause-btn.paused {
-    background: #c9a227;
-    color: white;
-    border-color: #a88b20;
-}
-
-/*
-This Area Of Code Is: Pulse Animation for Active Auto Mode
-Explanation: Creates a glowing ring effect that expands and fades out around the auto mode button to show it's active.
-In Other Words: This creates the pulsing glow around the Auto Mode button when it's running.
-*/
-@keyframes pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(34, 139, 34, 0.7); }
-    50% { box-shadow: 0 0 0 10px rgba(34, 139, 34, 0); }
-}
-
-/*
-This Area Of Code Is: Menu Overlay (Dark Background)
-Explanation: When the menu is open, this semi-transparent black div covers the rest of the page so the user focuses on the menu. It's fixed position (covers entire screen) and initially invisible.
-In Other Words: This is the dark see-through curtain that appears behind the menu when you open it.
-*/
-.menu-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-    z-index: 100;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-}
-
-/*
-This Area Of Code Is: Menu Overlay Visible State
-Explanation: When the menu opens, this becomes visible (opacity: 1).
-In Other Words: When the menu slides out, the dark curtain appears.
-*/
-.menu-overlay.visible {
-    opacity: 1;
-    visibility: visible;
-}
-
-/*
-This Area Of Code Is: Slide-in Menu Panel
-Explanation: The actual menu drawer that slides in from the left. Starts off-screen (left: -350px), has a fixed width of 320px, full height, and scrolls if content is too long (overflow-y: auto).
-In Other Words: This is the sliding drawer that comes out from the left side with the list of all jokes.
-*/
-.menu-panel {
-    position: fixed;
-    top: 0;
-    left: -350px;
-    width: 320px;
-    height: 100%;
-    background: linear-gradient(180deg, #f5f1e8 0%, #e8e0d1 100%);
-    z-index: 101;
-    transition: left 0.3s ease;
-    overflow-y: auto;
-    box-shadow: 5px 0 20px rgba(0,0,0,0.3);
-    padding: 20px;
-}
-
-/*
-This Area Of Code Is: Menu Panel Visible State
-Explanation: When the menu should be visible, left becomes 0 (moves onto screen).
-In Other Words: When you click Menu, this slides the drawer onto the screen from the left.
-*/
-.menu-panel.visible {
-    left: 0;
-}
-
-/*
-This Area Of Code Is: Menu Header (Title Bar)
-Explanation: Contains the title "Cards Menu" and the close button. Display: flex puts them side by side. Space-between pushes them to opposite ends. Border-bottom adds the brown line underneath.
-In Other Words: This is the top bar of the menu with the title on the left and X button on the right, with a line underneath.
-*/
-.menu-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 3px solid #8b4513;
-}
-
-/*
-This Area Of Code Is: Menu Title Text
 Explanation: Styles the "📋 Cards Menu" text - large (24px), dark colored.
 In Other Words: This styles the big "Cards Menu" title at the top of the sliding menu.
 */
@@ -1197,6 +725,67 @@ In Other Words: This styles the text at the bottom that says "Card 5 of 24" - ma
 }
 
 /*
+================================================================================
+This Area Of Code Is: Copyright Footer Styles (NEW ADDITION)
+Explanation: These styles control the appearance of the copyright notice at the bottom of the app. The footer uses the same Georgia font family to maintain consistency, with specific color classes for the blue "Get Well" text and orange "The Super Coding Ninja" hyperlink. The text is centered with appropriate spacing and sizing for readability while being subtle enough not to distract from the main content.
+In Other Words: These styles make the copyright notice at the bottom look nice, with "Get Well" in blue and the website link in orange, using the same font as everything else.
+================================================================================
+*/
+
+/*
+This Area Of Code Is: Copyright Footer Container
+Explanation: This div wraps the copyright text and adds spacing above it (margin-top: 30px) to separate it from the card counter. The text-align: center centers the copyright notice horizontally.
+In Other Words: This is the box around the copyright text that adds space above it and centers it.
+*/
+.copyright-footer {
+    margin-top: 30px;
+    text-align: center;
+}
+
+/*
+This Area Of Code Is: Copyright Text Paragraph
+Explanation: Styles the actual copyright text. Font-size: 14px makes it smaller than the main content but still readable. Color: #b8c5d1 gives it a light blue-gray color that matches the subtitle and is visible against the dark background but subtle. The same Georgia font family is maintained for consistency.
+In Other Words: This styles the copyright text to be small, light blue-gray, and use the same fancy font as the rest of the app.
+*/
+.copyright-text {
+    font-size: 14px;
+    color: #b8c5d1;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    line-height: 1.4;
+}
+
+/*
+This Area Of Code Is: Blue "Get Well" Text Styling
+Explanation: This class applies a royal blue color (#4169E1) to the "Get Well" text within the copyright notice. This specific shade of blue is bright enough to stand out against the dark background while maintaining readability.
+In Other Words: This makes the words "Get Well" appear in bright blue.
+*/
+.copyright-blue {
+    color: #4169E1;
+    font-weight: bold;
+}
+
+/*
+This Area Of Code Is: Orange Hyperlink Styling
+Explanation: This class styles "𝑇ℎ𝑒 𝑆𝑢𝑝𝑒𝑟 𝐶𝑜𝑑𝑖𝑛𝑔 𝑁𝑖𝑛𝑗𝑎™" in orange (#FF8C00 - dark orange) to make it pop as a clickable link. Text-decoration: none removes the default underline that browsers add to links, keeping it clean. The transition provides a smooth color change when hovering.
+In Other Words: This makes "The Super Coding Ninja" appear in orange and removes the underline so it looks clean.
+*/
+.copyright-orange {
+    color: #FF8C00;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+/*
+This Area Of Code Is: Orange Link Hover State
+Explanation: When hovering over the orange hyperlink, it changes to a lighter/brighter orange (#FFA500) to provide visual feedback that it's clickable. This maintains the orange color family while indicating interactivity.
+In Other Words: When you hover over the orange "The Super Coding Ninja" link, it turns a lighter orange to show you can click it.
+*/
+.copyright-orange:hover {
+    color: #FFA500;
+    text-decoration: underline;
+}
+
+/*
 This Area Of Code Is: Status Bar Container
 Explanation: Holds the "Auto Mode Active" or "Paused" messages. Min-height ensures space is reserved even when empty.
 In Other Words: This is the area at the bottom that shows "Auto Mode is running" or "Paused."
@@ -1326,4 +915,13 @@ In Other Words: When viewing on a phone, this makes everything smaller so it fit
     h1 { font-size: 28px; }
     button { padding: 12px 18px; font-size: 15px; }
     .menu-panel { width: 280px; left: -300px; }
+    
+    /*
+    This Area Of Code Is: Mobile Copyright Adjustment
+    Explanation: On small screens, reduces the copyright font size slightly (to 12px) to ensure it fits without wrapping awkwardly or taking up too much space.
+    In Other Words: On phones, make the copyright text a bit smaller so it fits nicely.
+    */
+    .copyright-text {
+        font-size: 12px;
+    }
 }
