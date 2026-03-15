@@ -1,50 +1,58 @@
 /*
 ================================================================================
-This Area Of Code Is: Package Configuration
-Explanation: This JSON file defines the Node.js project metadata, dependencies 
-(libraries needed to run), and scripts (commands to start the app). It tells 
-Render.com and other platforms how to run the application.
-In Other Words: This is the instruction manual for the computer. It says what 
-the app is called, what tools it needs (Express, etc.), and how to start it up.
+This Area Of Code Is: Project Configuration & Dependencies
+Explanation: This JSON file tells Node.js what your project is called, what 
+libraries it needs to run (Express for the web server, CORS for security, 
+body-parser for reading form data), and how to start the application. It also
+configures the project for deployment on Render.com or other cloud platforms.
+In Other Words: This is the "ID card" and "shopping list" for your app. It 
+says "this is a get-well card app" and "I need these tools to work."
 ================================================================================
 */
 {
   /*
   This Area Of Code Is: Project Metadata
-  Explanation: Defines the project name (getwell-living-card), version (1.0.0), 
-  and description. The main field specifies which file to run first (server.js).
-  In Other Words: The name tag and ID card for this app. Says "start with 
-  server.js" when launching.
+  Explanation: Basic information about your application including the name 
+  (getwell-living-card), version number, description, and which file to run 
+  first (server.js).
+  In Other Words: The name tag on your app that says "Start here with server.js."
   */
   "name": "getwell-living-card",
   "version": "1.0.0",
-  "description": "Community get well card with church standards and KJV scriptures",
+  "description": "Community get well card with church standards, NSFW filtering, and clean jokes",
   "main": "server.js",
   
   /*
-  This Area Of Code Is: Scripts Configuration
-  Explanation: Defines npm commands. The "start" script is what Render.com uses 
-  to launch the application (node server.js).
-  In Other Words: The button definitions. When someone presses "start," run 
-  server.js using Node.
+  This Area Of Code Is: NPM Scripts
+  Explanation: Defines commands that can be run. The "start" command is what 
+  Render.com uses to launch your app - it runs "node server.js" to start the server.
+  In Other Words: The button that says "GO" - when pressed, it starts the server.
   */
   "scripts": {
     "start": "node server.js"
   },
   
   /*
-  This Area Of Code Is: Dependencies List
-  Explanation: Lists external libraries required for the app to work. Express 
-  is the web framework, CORS handles cross-origin security, and body-parser 
-  reads incoming request data. Version numbers use caret (^) to allow minor 
-  updates automatically.
-  In Other Words: Shopping list of tools needed: Express (web server builder), 
-  CORS (security guard), body-parser (form reader). The ^ means "get the latest 
-  version that works with this."
+  This Area Of Code Is: Dependency List
+  Explanation: Lists external libraries required. Express builds the web server,
+  CORS allows the frontend to talk to the backend safely, and body-parser reads
+  the data sent from forms (like when someone submits a joke).
+  In Other Words: The shopping list of tools needed: Express (the engine), 
+  CORS (security guard), and body-parser (form reader).
   */
   "dependencies": {
     "express": "^4.18.2",
     "cors": "^2.8.5",
     "body-parser": "^1.20.2"
+  },
+  
+  /*
+  This Area Of Code Is: Engine Requirements
+  Explanation: Specifies which version of Node.js the app needs to run properly.
+  This ensures Render.com uses a compatible version.
+  In Other Words: Tells the computer "you need Node.js version 18 or higher."
+  */
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
