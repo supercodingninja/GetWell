@@ -1,123 +1,165 @@
 <!-- 
 ================================================================================
-This Area Of Code Is: The Main HTML Structure (The Skeleton)
-Explanation: This file contains the HTML markup that creates the structure of the web page. It defines all the visible elements like buttons, cards, the menu panel, and text areas. It links to the CSS file (styles.css) for styling and the JavaScript file (script.js) for functionality. Think of this as the blueprint or frame of a house - it defines where walls and doors go, but doesn't paint them or make the lights work.
-In Other Words: This is the skeleton of the app. It tells the computer "put a button here, put a text box there" but doesn't say what color the button is or what happens when you click it. It's like the frame of a car.
+This Area Of Code Is: Main HTML Structure (The Skeleton)
+Explanation: This HTML file creates the structure of the web page. It defines 
+all visible elements like the church community background, buttons, cards, 
+slide-in menu, and submission forms. It links to CSS for styling and JavaScript 
+for functionality. The theme depicts a diverse church community with people 
+arriving, potlucks, and children playing.
+In Other Words: This is the blueprint of the church scene. It builds the 
+"stage" with the church background, the card display area, buttons, and the 
+navigation menu where you can pick different cards.
 ================================================================================
 -->
 <!DOCTYPE html>
 <!-- 
 This Area Of Code Is: Document Type Declaration
-Explanation: This line tells the web browser that this is an HTML5 document. It must be the very first thing in the file so the browser knows how to read everything that comes after it.
-In Other Words: This is like telling someone "this book is written in English" before they start reading it.
+Explanation: Tells the browser this is an HTML5 document. Must be the first 
+line so the browser knows how to interpret everything that follows.
+In Other Words: Tells the computer "this is written in modern HTML language."
 -->
 <html lang="en">
 <!-- 
 This Area Of Code Is: HTML Root Element
-Explanation: This is the container that holds everything visible on the webpage. The "lang=en" part tells screen readers and search engines that the content is in English.
-In Other Words: This is the cover of the book. Everything goes inside here.
+Explanation: The container that holds the entire webpage. The lang="en" 
+attribute tells screen readers and search engines the content is in English.
+In Other Words: The box that holds everything on the page, labeled as English.
 -->
 
 <head>
     <!-- 
-    This Area Of Code Is: Head Section (Behind the Scenes Info)
-    Explanation: The head section contains information ABOUT the page that isn't visible to the user, but is important for the browser. This includes the title (shown in the browser tab), character encoding (so special characters display correctly), viewport settings (for mobile phones), and links to CSS files (for styling).
-    In Other Words: This is like the information on the back of a book cover - the title, the author, and instructions about the book. You don't see this when reading the story, but it's important information.
+    This Area Of Code Is: Head Section (Behind-the-Scenes Info)
+    Explanation: Contains metadata about the page (title, character encoding, 
+    viewport settings) and links to external resources (CSS file). Not visible 
+    to users but essential for browsers and search engines.
+    In Other Words: The back office info - the page title, alphabet settings, 
+    and instructions to look at the styles.css file for colors and layouts.
     -->
     
     <meta charset="UTF-8">
     <!-- 
     This Area Of Code Is: Character Encoding Meta Tag
-    Explanation: This tells the browser to use UTF-8 encoding, which supports almost all characters from all languages (including emojis like 🇺🇸 and ✝️, and special Unicode characters like 𝐹𝑟𝑒𝑑𝑒𝑟𝑖𝑐𝑘). Without this, special characters might show up as weird symbols or question marks.
-    In Other Words: This tells the computer "use the big alphabet that has all the letters from every language, plus smiley faces and fancy italic letters."
+    Explanation: Specifies UTF-8 encoding which supports all languages, emojis, 
+    and special characters. Prevents weird symbols from appearing.
+    In Other Words: Use the big alphabet that has every letter and emoji so 
+    everything displays correctly.
     -->
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- 
     This Area Of Code Is: Viewport Meta Tag (Mobile Responsiveness)
-    Explanation: This ensures the webpage displays correctly on mobile phones and tablets. "width=device-width" means the page width should match the screen width. "initial-scale=1.0" means start at 100% zoom (not zoomed in or out).
-    In Other Words: This makes sure the app looks good on a phone screen, not just a computer screen. It says "fit the screen perfectly."
+    Explanation: Ensures the page displays correctly on mobile phones. 
+    width=device-width makes the page match the screen width. initial-scale=1.0 
+    sets the zoom level to normal.
+    In Other Words: Make sure this looks good on phones by fitting the screen 
+    perfectly and not zoomed in or out.
     -->
     
-    <meta name="theme-color" content="#1a2a3a">
+    <meta name="theme-color" content="#2c3e50">
     <!-- 
     This Area Of Code Is: Theme Color Meta Tag
-    Explanation: This sets the color of the browser's address bar and surrounding UI elements on mobile devices (especially Android Chrome). It matches the dark blue background of our app.
-    In Other Words: This changes the color of the top bar on your phone browser to match the app's dark blue color.
+    Explanation: Sets the color of the browser's address bar on mobile devices 
+    (Android Chrome) to match the church community background theme (dark slate).
+    In Other Words: Colors the top bar of the phone browser to match the app.
     -->
     
-    <title>Stay Strong - Get Well Soon</title>
+    <title>Get Well - Church Family Card</title>
     <!-- 
     This Area Of Code Is: Page Title
-    Explanation: This text appears in the browser tab and when the page is bookmarked. It helps the user identify what the page is when they have multiple tabs open.
-    In Other Words: This is the name that appears on the browser tab at the top of your screen.
+    Explanation: The text that appears in the browser tab and bookmarks. Helps 
+    users identify the page when multiple tabs are open.
+    In Other Words: The name on the browser tab at the top of the screen.
     -->
     
     <!-- 
     This Area Of Code Is: CSS Stylesheet Link
-    Explanation: This line connects this HTML file to the styles.css file where all the colors, fonts, sizes, and layouts are defined. The "href" attribute points to the filename. "rel=stylesheet" tells the browser this is a style file.
-    In Other Words: This says "go look at the styles.css file to find out what colors to use and how big to make things."
+    Explanation: Connects this HTML to the styles.css file where all the church 
+    community theme colors, animations, and layouts are defined.
+    In Other Words: Go look at styles.css to see how to paint everything and 
+    where to put it.
     -->
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
     <!-- 
-    This Area Of Code Is: Body Section (Visible Content)
-    Explanation: Everything inside the body tag is what the user actually sees and interacts with on the screen. This includes text, buttons, images, cards, and menus.
-    In Other Words: This is the actual book content - the story, the pictures, everything you see when you open the book.
+    This Area Of Code Is: Church Community Background Scene
+    Explanation: This container holds the animated background depicting a lively 
+    church community scene. It includes layers for the church building, arriving 
+    cars, diverse people walking to church, picnic/potluck area, and children 
+    playing. Creates the "Multiverse" CGI effect through CSS animations.
+    In Other Words: This is the animated wallpaper showing the church with 
+    people arriving, cars driving by, kids playing, and the potluck setup.
     -->
-    
-    <!-- 
-    This Area Of Code Is: Background Animation Container
-    Explanation: This empty div (division/container) will be filled by JavaScript with floating stars, flags, and crosses that drift slowly in the background. It's placed first so it appears behind everything else (layer 1).
-    In Other Words: This is the backdrop or wallpaper where the floating stars will appear behind the main card.
-    -->
-    <div class="background-elements" id="background"></div>
+    <div class="church-scene" id="churchScene">
+        <!-- Church Building Layer -->
+        <div class="church-building"></div>
+        <!-- Animated Cars Layer -->
+        <div class="cars-container" id="carsContainer"></div>
+        <!-- People Walking Layer -->
+        <div class="people-container" id="peopleContainer"></div>
+        <!-- Picnic/Potluck Area -->
+        <div class="potluck-area">
+            <div class="picnic-table"></div>
+            <div class="food-steam" id="foodSteam"></div>
+        </div>
+        <!-- Kids Playing Area -->
+        <div class="playground-area" id="playgroundArea"></div>
+        <!-- Falling Leaves/Atmosphere -->
+        <div class="atmosphere" id="atmosphere"></div>
+    </div>
     
     <!-- 
     This Area Of Code Is: Slide-in Menu Overlay (Dark Background)
-    Explanation: This is a semi-transparent black layer that covers the entire screen when the menu is open. When clicked, it closes the menu. It sits between the menu panel and the main content.
-    In Other Words: This is the dark see-through curtain that appears behind the menu when you open it, so you know to focus on the menu.
+    Explanation: A semi-transparent dark layer that covers the screen when the 
+    menu is open. When clicked, it closes the menu. Creates focus on the menu.
+    In Other Words: The dark see-through curtain behind the menu when opened.
     -->
     <div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
     
     <!-- 
     This Area Of Code Is: Slide-in Menu Panel (Navigation)
-    Explanation: This is the actual menu that slides in from the left side. It contains a list of all 24 cards so the user can jump to any card instantly. It's hidden off-screen by default and slides in when the Menu button is clicked.
-    In Other Words: This is the navigation panel that slides out from the left like a drawer, showing a list of all the jokes so you can pick which one to see.
+    Explanation: The actual menu drawer that slides in from the left. Contains 
+    the list of all cards so users can jump to any card instantly. Hidden 
+    off-screen by default.
+    In Other Words: The sliding drawer from the left showing all 24 cards to 
+    pick from.
     -->
     <div class="menu-panel" id="menuPanel">
-        <!-- Menu Header with Title and Close Button -->
         <div class="menu-header">
             <div class="menu-title">📋 Cards Menu</div>
             <button class="close-menu" onclick="toggleMenu()">✕</button>
         </div>
-        <!-- Container where JavaScript will insert the list of cards -->
         <div id="menuList"></div>
     </div>
 
     <!-- 
     This Area Of Code Is: Main Container (App Wrapper)
-    Explanation: This div wraps all the main content (header, card, buttons) and centers it on the screen. It has a maximum width so the content doesn't stretch too wide on big screens.
-    In Other Words: This is the box that holds all the main stuff and keeps it centered on the screen, not too wide, not too narrow.
+    Explanation: Wraps all main content (header, card, buttons) and centers it 
+    on screen. Has a max-width to prevent stretching too wide on big screens 
+    and sits above the animated background.
+    In Other Words: The box that holds all the important stuff in the center, 
+    sitting on top of the animated church background.
     -->
     <div class="container">
         
         <!-- 
         This Area Of Code Is: Header Section (Title Area)
-        Explanation: This section contains the main title "STAY STRONG" with American flags, the subtitle "God Bless You", and the instruction text. It's the top portion of the app.
-        In Other Words: This is the top banner with the big "STAY STRONG" title and the American flags.
+        Explanation: Contains the main title, subtitle, and church welcome message. 
+        Positioned at the top with fade-in animation.
+        In Other Words: The top banner with "Get Well" title and welcome text.
         -->
         <div class="header">
-            <h1>🇺🇸 STAY STRONG 🇺🇸</h1>
-            <div class="subtitle">God Bless You & Get Well Soon</div>
+            <h1>⛪ Get Well Soon ⛪</h1>
+            <div class="subtitle">Your Church Family Loves You</div>
         </div>
 
         <!-- 
         This Area Of Code Is: Instruction Box
-        Explanation: This displays helpful text telling the user how to use the app (Menu button, punchline toggle, auto mode). The text changes dynamically via JavaScript depending on what mode is active.
-        In Other Words: This is the hint box that tells you "press this button to see the answer" or "auto mode is on."
+        Explanation: Displays helpful text telling users how to use the app 
+        (Menu button, punchline toggle, auto mode). Text changes dynamically 
+        via JavaScript depending on mode.
+        In Other Words: The hint box saying "press this button to see the answer."
         -->
         <div class="instruction" id="instruction">
             Press "Menu" to jump to any card. Toggle punchline on/off.
@@ -125,15 +167,19 @@ In Other Words: This is the cover of the book. Everything goes inside here.
         
         <!-- 
         This Area Of Code Is: Card Stack Container
-        Explanation: This is where the flash cards are displayed. It has a fixed height and uses 3D perspective effects. JavaScript will insert the current card here. The cards appear to slide and rotate when changing.
-        In Other Words: This is the special box where the joke cards appear and slide around when you press next or back.
+        Explanation: The area where flash cards display with 3D perspective effects. 
+        Fixed height with perspective enabled for sliding animations.
+        In Other Words: The special stage where the joke cards appear and slide 
+        around with 3D effects.
         -->
         <div class="card-stack" id="cardStack"></div>
 
         <!-- 
         This Area Of Code Is: Main Controls Row 1
-        Explanation: This row contains the three main buttons: Menu (to open navigation), Show/Hide Punchline (for jokes), and Next (to advance to next card). These are the primary controls.
-        In Other Words: These are the three main buttons at the bottom: the menu button, the "show answer" button, and the "next" button.
+        Explanation: Contains the three main buttons: Menu (open navigation), 
+        Show/Hide Punchline (for jokes), and Next (advance card).
+        In Other Words: The three main buttons at the bottom: menu, show answer, 
+        and next card.
         -->
         <div class="controls" id="mainControls">
             <button onclick="toggleMenu()" class="menu-btn">☰ Menu</button>
@@ -143,8 +189,8 @@ In Other Words: This is the cover of the book. Everything goes inside here.
 
         <!-- 
         This Area Of Code Is: Secondary Controls Row 2
-        Explanation: This row contains the Auto Mode button (opens settings) and the Pause button (only visible during auto mode). These control automatic playback.
-        In Other Words: These are the extra buttons for making the app run automatically or pause it.
+        Explanation: Contains Auto Mode and Pause buttons for automatic slideshow.
+        In Other Words: Extra buttons for making the app run automatically.
         -->
         <div class="controls">
             <button onclick="toggleSettings()" class="auto-btn" id="autoBtn">⚙️ Auto Mode</button>
@@ -153,8 +199,9 @@ In Other Words: This is the cover of the book. Everything goes inside here.
 
         <!-- 
         This Area Of Code Is: Settings Panel (Hidden by Default)
-        Explanation: This panel appears when Auto Mode is clicked. It contains speed selection buttons (Slow, Medium, Fast) and timing explanations. It's hidden until needed.
-        In Other Words: This is the popup that appears when you click "Auto Mode" where you pick how fast the jokes should go.
+        Explanation: Appears when Auto Mode is clicked. Contains speed selection 
+        buttons (Slow, Medium, Fast) and timing explanations.
+        In Other Words: The popup for choosing how fast the automatic slideshow goes.
         -->
         <div class="settings-panel" id="settingsPanel">
             <div class="settings-title">Choose Reading Speed</div>
@@ -167,13 +214,33 @@ In Other Words: This is the cover of the book. Everything goes inside here.
                 <strong>Slow Mode:</strong> 8 sec setup, 10 sec punchline<br>
                 Best for hospital rest or medication effects.
             </div>
-            <button onclick="startAuto()" style="width: 100%; margin-top: 10px; background: #228b22; color: white; border-color: #1a6b1a; padding: 12px;">Start Auto Play</button>
+            <button onclick="startAuto()" class="start-auto-btn">Start Auto Play</button>
+        </div>
+
+        <!-- 
+        This Area Of Code Is: Submit Joke Section
+        Explanation: Allows community members to submit their own jokes. Contains 
+        input fields for name, joke setup, and punchline, plus a submit button. 
+        Shows moderation messages after submission.
+        In Other Words: The form where visitors can add their own jokes to the 
+        collection after being checked for appropriateness.
+        -->
+        <div class="submit-section" id="submitSection">
+            <div class="submit-title">💌 Share a Smile</div>
+            <div class="submit-form">
+                <input type="text" id="authorName" placeholder="Your name (optional)" maxlength="50">
+                <input type="text" id="jokeSetup" placeholder="Joke question (e.g., Why did the chicken...)" maxlength="200">
+                <input type="text" id="jokePunchline" placeholder="Punchline (e.g., To get to the other side!)" maxlength="200">
+                <button onclick="submitJoke()" class="submit-btn">Submit Joke</button>
+            </div>
+            <div class="submit-message" id="submitMessage"></div>
         </div>
 
         <!-- 
         This Area Of Code Is: Status Bar
-        Explanation: This displays current status messages like "Auto Mode Active" or "PAUSED". It helps the user understand what the app is currently doing.
-        In Other Words: This shows messages like "Auto mode is running" or "Paused" at the bottom.
+        Explanation: Displays current status messages like "Auto Mode Active" 
+        or "PAUSED" to help users understand app state.
+        In Other Words: Shows messages like "Auto mode running" at the bottom.
         -->
         <div class="status-bar">
             <span class="auto-status" id="autoStatus">✓ Auto Mode - Press Space to Pause</span>
@@ -182,39 +249,34 @@ In Other Words: This is the cover of the book. Everything goes inside here.
 
         <!-- 
         This Area Of Code Is: Progress Indicator
-        Explanation: Displays the current card number (e.g., "Card 5 of 24") so the user knows where they are in the deck.
-        In Other Words: This shows "Card 5 of 24" so you know how many jokes are left.
+        Explanation: Shows current card number (e.g., "Card 5 of 24") so users 
+        know their position in the deck.
+        In Other Words: Shows "Card 5 of 24" so you know how many cards are left.
         -->
         <div class="progress" id="progress">Card 1 of 24</div>
 
         <!-- 
-        ================================================================================
-        This Area Of Code Is: Copyright Footer Section (NEW ADDITION)
-        Explanation: This section contains the copyright notice and attribution. It displays the copyright symbol, year 2026, "Get Well" in blue text (using span with class), and the creator attribution with "𝑇ℎ𝑒 𝑆𝑢𝑝𝑒𝑟 𝐶𝑜𝑑𝑖𝑛𝑔 𝑁𝑖𝑛𝑗𝑎™" in orange letters hyperlinked to the ePortfolio. The special Unicode italic characters are preserved for the author name and brand name. The hyperlink opens in a new tab for security and user experience.
-        In Other Words: This is the copyright notice at the bottom. "Get Well" is blue, and "The Super Coding Ninja" is orange and clickable to go to the website. It uses fancy italic letters for the name.
-        ================================================================================
+        This Area Of Code Is: Copyright Footer Section
+        Explanation: Contains copyright notice and attribution. "Get Well" is 
+        displayed in blue, and "The Super Coding Ninja" is in orange with a 
+        hyperlink to the ePortfolio.
+        In Other Words: The copyright notice at the bottom with "Get Well" in 
+        blue and the creator name in orange/clickable.
         -->
         <div class="copyright-footer">
-            <!-- 
-            This Area Of Code Is: Copyright Text Container
-            Explanation: This paragraph holds the entire copyright message. The spans inside apply specific colors to specific portions of the text.
-            In Other Words: This paragraph holds the copyright text with different colors for different parts.
-            -->
             <p class="copyright-text">
-                © 2026 <span class="copyright-blue">Get Well</span>. All rights reserved. 𝐹𝑟𝑒𝑑𝑒𝑟𝑖𝑐𝑘 𝑇ℎ𝑜𝑚𝑎𝑠, “<a href="https://supercodingninja.github.io/ePortfolio/" target="_blank" rel="noopener noreferrer" class="copyright-orange">𝑇ℎ𝑒 𝑆𝑢𝑝𝑒𝑟 𝐶𝑜𝑑𝑖𝑛𝑔 𝑁𝑖𝑛𝑗𝑎™</a>”
+                © 2026 <span class="copyright-blue">Get Well</span>. All rights reserved. 𝐹𝑟𝑒𝑑𝑒𝑟𝑖𝑐𝑘 𝑇ℎ𝑜𝑚𝑎𝑠, "<a href="https://supercodingninja.github.io/ePortfolio/" target="_blank" rel="noopener noreferrer" class="copyright-orange">𝑇ℎ𝑒 𝑆𝑢𝑝𝑒𝑟 𝐶𝑜𝑑𝑖𝑛𝑔 𝑁𝑖𝑛𝑗𝑎™</a>"
             </p>
-            <!-- 
-            This Area Of Code Is: Target and Rel Attributes Explanation
-            Explanation: target="_blank" makes the link open in a new tab so the user doesn't lose their place in the card app. rel="noopener noreferrer" is a security feature that prevents the new page from accessing this page's window object, protecting against tabnabbing attacks.
-            In Other Words: target="_blank" opens the link in a new tab. The rel part keeps it secure so the new website can't mess with this one.
-            -->
         </div>
     </div>
 
     <!-- 
     This Area Of Code Is: JavaScript File Link
-    Explanation: This connects the HTML to the script.js file which contains all the programming logic - what happens when buttons are clicked, the timer system, the card data, etc. It's placed at the bottom so the HTML loads first.
-    In Other Words: This says "load the brain of the app (script.js) which tells the buttons what to do when clicked."
+    Explanation: Connects the HTML to script.js which contains all the programming 
+    logic - button actions, timer system, card data fetching, form handling, and 
+    background animations. Placed at the bottom so HTML loads first.
+    In Other Words: Load the brain of the app (script.js) which tells buttons 
+    what to do when clicked and makes the background move.
     -->
     <script src="script.js"></script>
 </body>
