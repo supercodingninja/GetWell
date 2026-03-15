@@ -208,6 +208,6 @@ Distributed under the MIT License. See LICENSE for more information.
  • Fonts: Inter & system fonts
  • Firebase Team for the generous free tier
 
-© 2026 <font color="blue">Get Well</font>. All Rights Reserved.<a href="https://supercodingninja.github.io/ePortfolio/"><font color="orange">𝑇ℎ𝑒 𝑆𝑢𝑝𝑒𝑟 𝐶𝑜𝑑𝑖𝑛𝑔 𝑁𝑖𝑛𝑗𝑎™</font></a">
+© 2026 [![Get Well](https://img.shields.io/badge/Get-Well-FFCA28?style=for-the-badge&logo=firebase&logoColor=blue)]. All Rights Reserved. [![𝑇ℎ𝑒 𝑆𝑢𝑝𝑒𝑟 𝐶𝑜𝑑𝑖𝑛𝑔 𝑁𝑖𝑛𝑗𝑎™](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=orange))](https://supercodingninja.github.io/ePortfolio/)
 Made with ❤️ for the Church Community
 ⬆ Back to Top
