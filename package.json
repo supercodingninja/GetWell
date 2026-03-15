@@ -1,11 +1,47 @@
+/*
+================================================================================
+This Area Of Code Is: Package Configuration
+Explanation: This JSON file defines the Node.js project metadata, dependencies 
+(libraries needed to run), and scripts (commands to start the app). It tells 
+Render.com and other platforms how to run the application.
+In Other Words: This is the instruction manual for the computer. It says what 
+the app is called, what tools it needs (Express, etc.), and how to start it up.
+================================================================================
+*/
 {
+  /*
+  This Area Of Code Is: Project Metadata
+  Explanation: Defines the project name (getwell-living-card), version (1.0.0), 
+  and description. The main field specifies which file to run first (server.js).
+  In Other Words: The name tag and ID card for this app. Says "start with 
+  server.js" when launching.
+  */
   "name": "getwell-living-card",
   "version": "1.0.0",
-  "description": "Community get well card with church standards",
+  "description": "Community get well card with church standards and KJV scriptures",
   "main": "server.js",
+  
+  /*
+  This Area Of Code Is: Scripts Configuration
+  Explanation: Defines npm commands. The "start" script is what Render.com uses 
+  to launch the application (node server.js).
+  In Other Words: The button definitions. When someone presses "start," run 
+  server.js using Node.
+  */
   "scripts": {
     "start": "node server.js"
   },
+  
+  /*
+  This Area Of Code Is: Dependencies List
+  Explanation: Lists external libraries required for the app to work. Express 
+  is the web framework, CORS handles cross-origin security, and body-parser 
+  reads incoming request data. Version numbers use caret (^) to allow minor 
+  updates automatically.
+  In Other Words: Shopping list of tools needed: Express (web server builder), 
+  CORS (security guard), body-parser (form reader). The ^ means "get the latest 
+  version that works with this."
+  */
   "dependencies": {
     "express": "^4.18.2",
     "cors": "^2.8.5",
