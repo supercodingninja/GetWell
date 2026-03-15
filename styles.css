@@ -1,703 +1,317 @@
-/*
+/* 
 ================================================================================
-This Area Of Code Is: Global Reset and Base Styles
-Explanation: The asterisk (*) targets every element. Resets margin and padding 
-to remove default browser spacing. Box-sizing: border-box ensures padding and 
-borders don't add to element width. Font-family sets Georgia as primary with 
-fallbacks for a classic, readable look suitable for church context.
-In Other Words: Remove default spacing that different browsers add differently. 
-Make sure when we say "make this box 100px wide," it stays 100px even with 
-borders. Use a nice, readable font.
+CSS Architecture: Modern Glassmorphism Design
+Uses CSS Custom Properties, Flexbox, Grid, and backdrop-filter for 
+professional glass card effects over video background.
 ================================================================================
 */
+
+:root {
+    --primary-gold: #e8d5b7;
+    --primary-blue: #2c3e50;
+    --glass-white: rgba(255, 255, 255, 0.92);
+    --glass-border: rgba(255, 255, 255, 0.3);
+    --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --shadow-hard: 0 15px 50px rgba(0, 0, 0, 0.4);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --border-radius: 20px;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/*
-This Area Of Code Is: Body Styling (Main Page Container)
-Explanation: Sets up the full-screen body with the church community background 
-scene. Uses a dark blue gradient base with overflow hidden to prevent scrolling. 
-The church-scene div handles the detailed background imagery.
-In Other Words: Paint the background dark blue and prepare the stage for the 
-church community animation. Prevent scrolling so everything stays on one screen.
-*/
-body {
-    font-family: 'Georgia', 'Times New Roman', serif;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    position: relative;
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-/*
-================================================================================
-This Area Of Code Is: Church Community Background Scene
-Explanation: Creates the immersive church community background with multiple 
-layers - church building, moving cars, walking people, potluck area, and kids 
-playing. Uses CSS animations and gradients to create a "Multiverse" CGI effect 
-without actual images, keeping the app lightweight.
-In Other Words: The animated wallpaper showing church life - the building, 
-cars arriving, people walking, food cooking, and kids playing - all made with 
-code animations instead of heavy pictures.
-================================================================================
-*/
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    background: #1a1a2e;
+}
 
-/*
-This Area Of Code Is: Main Scene Container
-Explanation: Fixed position covering the entire screen. Contains all background 
-elements. Z-index: 1 places it behind the main content. Uses pointer-events: 
-none so clicks pass through to buttons below.
-In Other Words: The big container for the animated background that stays fixed 
-behind everything and lets you click through it.
-*/
-.church-scene {
+/* Video Background Container */
+.video-background {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1;
-    pointer-events: none;
+    z-index: -2;
     overflow: hidden;
 }
 
-/*
-This Area Of Code Is: Church Building Representation
-Explanation: Creates a stylized church silhouette using CSS gradients and shapes. 
-Positioned at the top center of the background. Uses darker colors to appear 
-in the distance.
-In Other Words: Draw the church building at the top using CSS shapes and shadows 
-to look like it's in the background.
-*/
-.church-building {
+.video-background video {
     position: absolute;
-    top: 5%;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
-    width: 300px;
-    height: 200px;
-    background: linear-gradient(to bottom, #2c3e50 0%, #1a252f 100%);
-    clip-path: polygon(50% 0%, 100% 40%, 100% 100%, 0% 100%, 0% 40%);
-    opacity: 0.3;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
 }
 
-/*
-This Area Of Code Is: Church Building Cross
-Explanation: Adds a cross to the top of the church building using ::before 
-pseudo-element. Creates the vertical and horizontal bars of the cross.
-In Other Words: Put a cross on top of the church building.
-*/
-.church-building::before {
-    content: '';
-    position: absolute;
-    top: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 8px;
-    height: 40px;
-    background: #ffd700;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
-}
-
-.church-building::after {
-    content: '';
-    position: absolute;
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 30px;
-    height: 8px;
-    background: #ffd700;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
-}
-
-/*
-This Area Of Code Is: Moving Cars Container
-Explanation: Container for animated cars that drive across the background 
-periodically. Cars are added via JavaScript and animated with CSS keyframes.
-In Other Words: The road where animated cars will drive by from left to right.
-*/
-.cars-container {
-    position: absolute;
-    bottom: 20%;
-    left: 0;
-    width: 100%;
-    height: 100px;
-}
-
-/*
-This Area Of Code Is: Individual Car Styling
-Explanation: Styles for each animated car. Uses emoji or CSS shapes. Animated 
-to drive across screen with varying speeds and delays.
-In Other Words: The cars themselves - little shapes or emojis that move across 
-the screen at different speeds.
-*/
-.car {
-    position: absolute;
-    font-size: 24px;
-    opacity: 0.6;
-    animation: driveAcross 15s linear infinite;
-    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
-}
-
-/*
-This Area Of Code Is: Drive Animation Keyframes
-Explanation: Defines the car movement from left to right across the screen. 
-Starts off-screen left (-100px), moves to off-screen right (100vw + 100px).
-In Other Words: The driving instructions - start on the left (hidden), drive 
-to the right (hidden), taking 15 seconds.
-*/
-@keyframes driveAcross {
-    0% {
-        transform: translateX(-100px);
-        opacity: 0;
-    }
-    10% {
-        opacity: 0.6;
-    }
-    90% {
-        opacity: 0.6;
-    }
-    100% {
-        transform: translateX(calc(100vw + 100px));
-        opacity: 0;
-    }
-}
-
-/*
-This Area Of Code Is: People Walking Container
-Explanation: Container for diverse church members walking toward the church. 
-People are added via JavaScript with different colors/sizes to represent 
-diversity (Asians, Black, Hispanic, European, African, Indian).
-In Other Words: The sidewalk where people of all backgrounds walk to church 
-in their Sunday best.
-*/
-.people-container {
-    position: absolute;
-    bottom: 15%;
-    left: 0;
-    width: 100%;
-    height: 150px;
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-end;
-    opacity: 0.4;
-}
-
-/*
-This Area Of Code Is: Individual Person Styling
-Explanation: Styles for each animated person. Uses emoji or CSS circles with 
-different colors to represent diverse clothing (suits, dresses). Animated with 
-gentle bobbing to simulate walking.
-In Other Words: The church members themselves - different colored shapes or 
-emojis representing different ethnicities in suits and dresses, bobbing up and 
-down like they're walking.
-*/
-.person {
-    font-size: 32px;
-    animation: walk 3s ease-in-out infinite;
-    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
-}
-
-/*
-This Area Of Code Is: Walk Animation Keyframes
-Explanation: Creates a gentle bobbing motion to simulate walking. Moves up 
-and down slightly with a slight rotation.
-In Other Words: The walking motion - bob up and down slightly like taking steps.
-*/
-@keyframes walk {
-    0%, 100% {
-        transform: translateY(0) rotate(-2deg);
-    }
-    50% {
-        transform: translateY(-5px) rotate(2deg);
-    }
-}
-
-/*
-This Area Of Code Is: Potluck Area Styling
-Explanation: Represents the outdoor picnic area with tables and food. Positioned 
-on one side of the scene with styling to suggest a gathering space with soul 
-food.
-In Other Words: The picnic table area with food where people gather and eat.
-*/
-.potluck-area {
-    position: absolute;
-    bottom: 10%;
-    right: 10%;
-    width: 150px;
-    height: 100px;
-    opacity: 0.5;
-}
-
-/*
-This Area Of Code Is: Picnic Table Representation
-Explanation: Creates a simplified picnic table using CSS borders and shapes.
-In Other Words: Draw a picnic table using CSS.
-*/
-.picnic-table {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 60px;
-    background: #8b4513;
-    clip-path: polygon(10% 100%, 0% 40%, 100% 40%, 90% 100%);
-    opacity: 0.6;
-}
-
-/*
-This Area Of Code Is: Food Steam Animation
-Explanation: Animated steam rising from the food to suggest hot soul food 
-(disappearing in later screenshots, showing the effect is working).
-In Other Words: Little wavy lines going up from the food showing it's hot and 
-fresh.
-*/
-.food-steam {
-    position: absolute;
-    top: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 40px;
-}
-
-.food-steam::before,
-.food-steam::after {
-    content: '♨';
-    position: absolute;
-    font-size: 20px;
-    color: rgba(255,255,255,0.3);
-    animation: steamRise 3s ease-in-out infinite;
-}
-
-.food-steam::after {
-    left: 20px;
-    animation-delay: 1.5s;
-}
-
-@keyframes steamRise {
-    0%, 100% {
-        opacity: 0;
-        transform: translateY(0);
-    }
-    50% {
-        opacity: 0.5;
-        transform: translateY(-20px);
-    }
-}
-
-/*
-This Area Of Code Is: Playground Area
-Explanation: Area where children of different races are shown playing together.
-Positioned opposite the potluck area.
-In Other Words: The area showing kids of all backgrounds playing together.
-*/
-.playground-area {
-    position: absolute;
-    bottom: 10%;
-    left: 10%;
-    width: 200px;
-    height: 100px;
-    opacity: 0.4;
-}
-
-/*
-This Area Of Code Is: Playground Kids
-Explanation: Styles for animated children playing. Uses bouncing ball or 
-child emojis with playful animations.
-In Other Words: Animated kids playing with a ball.
-*/
-.playing-child {
-    position: absolute;
-    font-size: 24px;
-    animation: play 2s ease-in-out infinite;
-}
-
-@keyframes play {
-    0%, 100% {
-        transform: translateY(0) scale(1);
-    }
-    50% {
-        transform: translateY(-20px) scale(1.1);
-    }
-}
-
-/*
-This Area Of Code Is: Atmosphere Effects
-Explanation: Contains floating elements like leaves, light rays, or dust 
-particles to add depth and life to the scene.
-In Other Words: Extra floating bits like leaves or dust to make it feel alive.
-*/
-.atmosphere {
+.video-overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none;
+    background: linear-gradient(
+        135deg,
+        rgba(26, 26, 46, 0.7) 0%,
+        rgba(22, 33, 62, 0.6) 50%,
+        rgba(15, 52, 96, 0.5) 100%
+    );
+    z-index: 1;
 }
 
-.falling-leaf {
-    position: absolute;
-    font-size: 16px;
-    animation: fall 10s linear infinite;
-    opacity: 0.3;
+/* Vecteezy Attribution */
+.video-attribution {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    z-index: 1000;
+    font-size: 11px;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 5px 10px;
+    border-radius: 12px;
+    backdrop-filter: blur(4px);
 }
 
-@keyframes fall {
-    0% {
-        transform: translateY(-100px) rotate(0deg);
-        opacity: 0;
-    }
-    10% {
-        opacity: 0.3;
-    }
-    90% {
-        opacity: 0.3;
-    }
-    100% {
-        transform: translateY(100vh) rotate(360deg);
-        opacity: 0;
-    }
+.video-attribution a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-family: system-ui, sans-serif;
 }
 
-/*
-================================================================================
-This Area Of Code Is: Main Container Wrapper
-Explanation: The white/cream box that holds all the content (header, cards, 
-buttons). Positioned above the background with z-index: 10. Width is 90% of 
-screen with max-width of 650px for readability.
-In Other Words: The main box that holds the joke cards and buttons, sitting on 
-top of the church background, centered on the screen.
-================================================================================
-*/
+.video-attribution a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+/* Main Container */
 .container {
     width: 90%;
-    max-width: 650px;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 20px 0;
     position: relative;
     z-index: 10;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    justify-content: center;
 }
 
-/*
-This Area Of Code Is: Header Section Styling
-Explanation: Centers the title and subtitle text, adds space below, and applies 
-a fade-in animation when the page loads.
-In Other Words: Center the "Get Well Soon" title at the top with space below 
-it, and make it fade in smoothly.
-*/
+/* Header */
 .header {
     text-align: center;
-    margin-bottom: 25px;
-    animation: fadeIn 1s ease;
+    margin-bottom: 20px;
 }
 
-/*
-This Area Of Code Is: Main Heading (H1) Styling
-Explanation: Large gold-colored text (suitable for church theme) with text 
-shadow for depth. Letter-spacing adds elegance.
-In Other Words: Make the main title big, gold-colored with a shadow so it pops, 
-and space out the letters for elegance.
-*/
 h1 {
-    color: #e8d5b7;
-    font-size: 36px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+    color: var(--primary-gold);
+    font-size: clamp(28px, 5vw, 42px);
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
     letter-spacing: 2px;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    font-weight: 700;
 }
 
-/*
-This Area Of Code Is: Subtitle Styling
-Explanation: Lighter colored text for the subtitle with italic styling for 
-a warm, personal feel.
-In Other Words: The smaller text under the title - make it light blue-gray, 
-smaller, and slanted for a friendly feel.
-*/
 .subtitle {
     color: #b8c5d1;
-    font-size: 16px;
+    font-size: clamp(14px, 2.5vw, 18px);
     font-style: italic;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
 }
 
-/*
-This Area Of Code Is: Card Stack Container
-Explanation: Fixed height area with 3D perspective enabled for card animations.
-In Other Words: The stage for the cards with 3D depth enabled so cards can 
-slide in and out realistically.
-*/
+/* Instruction Box */
+.instruction {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    color: var(--primary-gold);
+    padding: 12px 20px;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: var(--shadow-soft);
+}
+
+/* Card Stack - Glassmorphism */
 .card-stack {
     position: relative;
-    height: 400px;
+    height: clamp(320px, 50vh, 450px);
     perspective: 1000px;
+    margin-bottom: 20px;
 }
 
-/*
-This Area Of Code Is: Individual Flash Card Styling
-Explanation: Absolute positioning allows cards to stack. Cream/white gradient 
-background like paper. Border-radius rounds corners. Box-shadow adds depth. 
-Initially positioned off-screen to the right (translateX(100px)) and rotated 
-slightly for 3D effect.
-In Other Words: Style each joke card to look like cream paper with rounded 
-corners and shadows. Start them off-screen to the right, tilted slightly.
-*/
 .flash-card {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: linear-gradient(145deg, #f5f1e8 0%, #e8e0d1 100%);
-    border-radius: 15px;
-    box-shadow: 0 15px 50px rgba(0,0,0,0.3), inset 0 2px 0 rgba(255,255,255,0.8);
-    padding: 40px;
+    background: var(--glass-white);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: var(--border-radius);
+    border: 2px solid var(--glass-border);
+    box-shadow: var(--shadow-hard);
+    padding: 40px 30px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    transition: all 0.7s cubic-bezier(0.4, 0.0, 0.2, 1);
+    transition: var(--transition-smooth);
     opacity: 0;
     transform: translateX(100px) rotateY(-10deg);
-    border: 4px solid;
+    overflow: hidden;
 }
 
-/*
-This Area Of Code Is: Active Card State
-Explanation: When a card has the "active" class, it becomes fully visible, 
-centers on screen (translateX(0)), and stands straight (rotateY(0)). Z-index 
-brings it to front.
-In Other Words: When the card slides into view, make it fully visible, centered, 
-and standing straight up.
-*/
+/* Subtle gradient overlay on cards for depth */
+.flash-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.4) 0%, transparent 100%);
+    pointer-events: none;
+}
+
 .flash-card.active {
     opacity: 1;
     transform: translateX(0) rotateY(0);
     z-index: 10;
 }
 
-/*
-This Area Of Code Is: Previous Card State
-Explanation: Cards already viewed slide to the left and shrink slightly while 
-fading out.
-In Other Words: Cards you've seen move to the left, get smaller, and fade away.
-*/
 .flash-card.prev {
     opacity: 0;
     transform: translateX(-150px) scale(0.9);
     z-index: 5;
 }
 
-/*
-This Area Of Code Is: Next Card State
-Explanation: Cards waiting to be shown are slightly visible to the right and 
-smaller.
-In Other Words: The next card peeks in from the right, slightly visible.
-*/
-.flash-card.next {
-    opacity: 0.3;
-    transform: translateX(50px) scale(0.95);
-    z-index: 1;
+/* Card Type Indicators */
+.card-joke { border-top: 5px solid #d4a574; }
+.card-message { border-top: 5px solid #4a6fa5; }
+.card-prayer { border-top: 5px solid #228b22; }
+
+.tag {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #666;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-family: system-ui, sans-serif;
 }
 
-/*
-This Area Of Code Is: Card Type Color Coding (Joke Cards)
-Explanation: Joke cards get a brown border and cream/white gradient background.
-In Other Words: Joke cards have brown borders.
-*/
-.card-joke { 
-    border-color: #8b4513; 
-    background: linear-gradient(to bottom, #faf8f3 0%, #f0ebe0 100%); 
-}
-
-/*
-This Area Of Code Is: Card Type Color Coding (Message Cards)
-Explanation: Message cards get a navy blue border and light blue-tinted background.
-In Other Words: Message cards have dark blue borders.
-*/
-.card-message { 
-    border-color: #1e3a5f; 
-    background: linear-gradient(to bottom, #f5f8ff 0%, #e8eef5 100%); 
-}
-
-/*
-This Area Of Code Is: Card Type Color Coding (Prayer Cards)
-Explanation: Prayer cards get a forest green border and green-tinted background 
-(suitable for KJV scriptures).
-In Other Words: Prayer/scripture cards have green borders.
-*/
-.card-prayer { 
-    border-color: #2e5c43; 
-    background: linear-gradient(to bottom, #f0f5f2 0%, #e8f0ec 100%); 
-}
-
-/*
-This Area Of Code Is: Icon/Image Styling
-Explanation: Large emoji icons at the top of each card (48px) with gentle 
-floating animation.
-In Other Words: The big emojis at the top of each card that float gently up 
-and down.
-*/
 .icon {
     font-size: 48px;
     margin-bottom: 20px;
-    opacity: 0.9;
-    animation: gentleFloat 6s ease-in-out infinite;
+    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1));
 }
 
-@keyframes gentleFloat {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-5px); }
-}
-
-/*
-This Area Of Code Is: Content Text Styling (Messages/Prayers)
-Explanation: For non-joke cards (messages, KJV prayers), styles the text size 
-(26px), line height for readability, and dark slate color.
-In Other Words: Make scripture and message text big and easy to read with good 
-spacing.
-*/
-.content {
-    font-size: 26px;
-    line-height: 1.5;
-    color: #2c3e50;
+.content, .setup {
+    font-size: clamp(20px, 4vw, 26px);
+    line-height: 1.6;
+    color: var(--primary-blue);
     font-weight: 500;
+    z-index: 1;
 }
 
-/*
-This Area Of Code Is: Setup Text Styling (Joke Questions)
-Explanation: Styles the joke question text with margin-bottom to create space 
-before the punchline.
-In Other Words: Style the joke question and leave space below for the answer.
-*/
 .setup {
-    font-size: 26px;
-    line-height: 1.5;
-    color: #2c3e50;
-    margin-bottom: 20px;
-    font-weight: 500;
+    margin-bottom: 25px;
 }
 
-/*
-This Area Of Code Is: Punchline Text Styling (Joke Answers)
-Explanation: The punchline is larger (28px), brown, bold, and starts invisible 
-(opacity: 0) and shifted down. When revealed, fades in and moves up.
-In Other Words: The joke answer - bigger, brown, and bold. Starts hidden and 
-slides up when shown.
-*/
 .punchline {
-    font-size: 28px;
+    font-size: clamp(22px, 4.5vw, 28px);
     color: #8b4513;
     font-weight: bold;
     opacity: 0;
     transform: translateY(10px);
     transition: all 0.5s ease;
     min-height: 40px;
+    z-index: 1;
 }
 
-/*
-This Area Of Code Is: Revealed Punchline State
-Explanation: When the card has the "revealed" class, the punchline becomes 
-fully visible and moves to normal position.
-In Other Words: When you click "Show Punchline," this makes the answer appear.
-*/
 .flash-card.revealed .punchline {
     opacity: 1;
     transform: translateY(0);
 }
 
-/*
-This Area Of Code Is: Tag/Label Styling (Top Right Corner)
-Explanation: Small labels like "JOKE" or "KJV" in the top right. Uppercase, 
-letter-spaced, with pill-shaped background.
-In Other Words: The small labels in the top right corner of cards (like "JOKE" 
-or scripture references) - small, all caps, in a rounded box.
-*/
-.tag {
-    position: absolute;
-    top: 20px;
-    right: 25px;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: #666;
-    background: rgba(139, 69, 19, 0.1);
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-weight: bold;
-}
-
-/*
-This Area Of Code Is: Button Controls Container
-Explanation: Holds all buttons in a flex row with wrapping for mobile screens.
-In Other Words: Arrange the buttons in a neat row that wraps to the next line 
-if the screen is too small.
-*/
+/* Controls */
 .controls {
     display: flex;
     justify-content: center;
     gap: 12px;
-    margin-top: 25px;
+    margin-top: 20px;
     flex-wrap: wrap;
 }
 
-/*
-This Area Of Code Is: Base Button Styling
-Explanation: All buttons get white-to-gray gradients, colored borders, rounded 
-corners, shadows, and smooth hover transitions.
-In Other Words: Make all buttons look 3D with shadows, rounded corners, and 
-white-to-gray color.
-*/
 button {
-    background: linear-gradient(to bottom, #ffffff 0%, #f0f0f0 100%);
-    border: 3px solid #4a6fa5;
-    color: #2c3e50;
-    padding: 14px 24px;
-    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid transparent;
+    color: var(--primary-blue);
+    padding: 14px 28px;
+    border-radius: 12px;
     font-size: 16px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: var(--transition-smooth);
     font-family: inherit;
-    font-weight: bold;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    font-weight: 600;
+    box-shadow: var(--shadow-soft);
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
 }
 
-/*
-This Area Of Code Is: Button Hover Effect
-Explanation: When hovering (and not disabled), button turns blue with white 
-text and lifts up slightly.
-In Other Words: When you hover over a button, it turns blue and lifts up.
-*/
+button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.3) 0%, transparent 100%);
+    pointer-events: none;
+}
+
 button:hover:not(:disabled) {
-    background: #4a6fa5;
-    color: white;
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
 }
 
-/*
-This Area Of Code Is: Disabled Button State
-Explanation: Disabled buttons are grayed out with reduced opacity and show 
-"not-allowed" cursor.
-In Other Words: When a button can't be pressed, make it look gray and faded.
-*/
+button:active:not(:disabled) {
+    transform: translateY(-1px);
+}
+
 button:disabled {
     opacity: 0.4;
     cursor: not-allowed;
-    background: #ccc;
+    background: rgba(255, 255, 255, 0.5);
 }
 
-/*
-This Area Of Code Is: Menu Button Specific Styling
-Explanation: Menu button gets purple-tinted styling to distinguish it.
-In Other Words: The Menu button is purple so it stands out.
-*/
 .menu-btn {
     border-color: #6b5b95;
-    background: linear-gradient(to bottom, #f0f0ff 0%, #e5e5f5 100%);
+    color: #6b5b95;
 }
 
 .menu-btn:hover:not(:disabled) {
@@ -705,14 +319,9 @@ In Other Words: The Menu button is purple so it stands out.
     color: white;
 }
 
-/*
-This Area Of Code Is: Reveal Punchline Button Styling
-Explanation: Show/Hide Punchline button gets tan/orange styling to match joke cards.
-In Other Words: The "Show Answer" button is orange/tan colored.
-*/
 .reveal-btn {
     border-color: #d4a574;
-    background: linear-gradient(to bottom, #fff8f0 0%, #f5ebe0 100%);
+    color: #8b4513;
     min-width: 160px;
 }
 
@@ -721,37 +330,20 @@ In Other Words: The "Show Answer" button is orange/tan colored.
     color: white;
 }
 
-/*
-This Area Of Code Is: Auto Mode Button Styling
-Explanation: Auto Mode button is green to indicate "go" or automatic action.
-In Other Words: The Auto Mode button is green like a "go" light.
-*/
 .auto-btn {
     border-color: #228b22;
-    background: linear-gradient(to bottom, #f0fff0 0%, #e0f5e0 100%);
+    color: #228b22;
 }
 
-/*
-This Area Of Code Is: Auto Mode Active State
-Explanation: When auto mode is running, button stays green with white text 
-and pulses.
-In Other Words: When Auto Mode is on, keep the button green and pulsing.
-*/
 .auto-btn.active {
     background: #228b22;
     color: white;
     animation: pulse 2s infinite;
 }
 
-/*
-This Area Of Code Is: Pause Button Styling
-Explanation: Pause button is yellow/gold. Hidden by default, shown when auto 
-mode is active.
-In Other Words: The Pause button is yellow and only appears when Auto Mode runs.
-*/
 .pause-btn {
     border-color: #c9a227;
-    background: linear-gradient(to bottom, #fffef0 0%, #f5f3e0 100%);
+    color: #c9a227;
     display: none;
 }
 
@@ -762,29 +354,23 @@ In Other Words: The Pause button is yellow and only appears when Auto Mode runs.
 .pause-btn.paused {
     background: #c9a227;
     color: white;
-    border-color: #a88b20;
 }
 
 @keyframes pulse {
     0%, 100% { box-shadow: 0 0 0 0 rgba(34, 139, 34, 0.7); }
-    50% { box-shadow: 0 0 0 10px rgba(34, 139, 34, 0); }
+    50% { box-shadow: 0 0 0 12px rgba(34, 139, 34, 0); }
 }
 
-/*
-This Area Of Code Is: Submit Section Styling
-Explanation: Styles the community joke submission form section with background, 
-padding, and border to distinguish it from cards.
-In Other Words: The form area where people can submit their own jokes - give 
-it a nice background and border.
-*/
+/* Submit Section */
 .submit-section {
-    background: rgba(255,255,255,0.95);
-    border-radius: 15px;
-    padding: 20px;
-    margin-top: 25px;
-    border: 3px solid #4a6fa5;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    display: none; /* Hidden by default, shown via JS when at end or button clicked */
+    background: var(--glass-white);
+    backdrop-filter: blur(20px);
+    border-radius: var(--border-radius);
+    padding: 25px;
+    margin-top: 20px;
+    border: 2px solid var(--glass-border);
+    box-shadow: var(--shadow-hard);
+    display: none;
 }
 
 .submit-section.visible {
@@ -793,8 +379,8 @@ it a nice background and border.
 }
 
 .submit-title {
-    font-size: 20px;
-    color: #2c3e50;
+    font-size: 22px;
+    color: var(--primary-blue);
     text-align: center;
     margin-bottom: 15px;
     font-weight: bold;
@@ -803,21 +389,30 @@ it a nice background and border.
 .submit-form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
 }
 
 .submit-form input {
-    padding: 12px;
-    border: 2px solid #d4a574;
-    border-radius: 8px;
+    padding: 14px;
+    border: 2px solid rgba(139, 69, 19, 0.3);
+    border-radius: 10px;
     font-family: inherit;
-    font-size: 14px;
+    font-size: 15px;
+    background: rgba(255, 255, 255, 0.8);
+    transition: var(--transition-smooth);
+}
+
+.submit-form input:focus {
+    outline: none;
+    border-color: #d4a574;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.2);
 }
 
 .submit-btn {
     border-color: #228b22;
-    background: linear-gradient(to bottom, #f0fff0 0%, #e0f5e0 100%);
-    margin-top: 10px;
+    color: #228b22;
+    margin-top: 5px;
 }
 
 .submit-btn:hover {
@@ -827,37 +422,35 @@ it a nice background and border.
 
 .submit-message {
     text-align: center;
-    margin-top: 10px;
+    margin-top: 12px;
     font-size: 14px;
-    min-height: 20px;
+    min-height: 24px;
+    font-weight: 600;
 }
 
-.submit-message.success {
-    color: #228b22;
-    font-weight: bold;
+.submit-message.success { color: #228b22; }
+.submit-message.error { color: #dc3545; }
+
+.submission-guidelines {
+    text-align: center;
+    margin-top: 10px;
+    color: #666;
+    font-size: 12px;
 }
 
-.submit-message.error {
-    color: #dc3545;
-}
-
-/*
-This Area Of Code Is: Menu Overlay (Dark Background)
-Explanation: Semi-transparent black layer covering the screen when menu is open. 
-Clicking it closes the menu.
-In Other Words: The dark curtain behind the menu when opened.
-*/
+/* Menu Styles */
 .menu-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
     z-index: 100;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;
+    transition: var(--transition-smooth);
 }
 
 .menu-overlay.visible {
@@ -865,48 +458,37 @@ In Other Words: The dark curtain behind the menu when opened.
     visibility: visible;
 }
 
-/*
-This Area Of Code Is: Slide-in Menu Panel
-Explanation: The actual menu drawer sliding in from the left. Fixed width of 
-320px, full height, scrollable if content is long. Starts off-screen (left: -350px).
-In Other Words: The sliding drawer from the left with the list of all cards.
-*/
 .menu-panel {
     position: fixed;
     top: 0;
     left: -350px;
-    width: 320px;
+    width: min(320px, 85vw);
     height: 100%;
-    background: linear-gradient(180deg, #f5f1e8 0%, #e8e0d1 100%);
+    background: var(--glass-white);
+    backdrop-filter: blur(20px);
     z-index: 101;
     transition: left 0.3s ease;
     overflow-y: auto;
-    box-shadow: 5px 0 20px rgba(0,0,0,0.3);
-    padding: 20px;
+    box-shadow: 5px 0 30px rgba(0, 0, 0, 0.3);
+    padding: 25px;
 }
 
 .menu-panel.visible {
     left: 0;
 }
 
-/*
-This Area Of Code Is: Menu Header (Title Bar)
-Explanation: Contains the title "Cards Menu" and close button (X) with border 
-below.
-In Other Words: The top bar of the menu with title on left and X button on right.
-*/
 .menu-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     padding-bottom: 15px;
     border-bottom: 3px solid #8b4513;
 }
 
 .menu-title {
     font-size: 24px;
-    color: #2c3e50;
+    color: var(--primary-blue);
     font-weight: bold;
 }
 
@@ -920,31 +502,27 @@ In Other Words: The top bar of the menu with title on left and X button on right
     padding: 0;
     font-size: 18px;
     cursor: pointer;
+    box-shadow: none;
 }
 
-/*
-This Area Of Code Is: Individual Menu Item
-Explanation: Each row in the menu list. White background, rounded corners, 
-clickable with hover effect.
-In Other Words: Each row in the menu - white box that highlights when you hover.
-*/
 .menu-item {
-    background: white;
-    border: 2px solid #d4a574;
-    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 2px solid rgba(139, 69, 19, 0.2);
+    border-radius: 12px;
     padding: 15px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: var(--transition-smooth);
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
 }
 
 .menu-item:hover {
-    background: #fff8f0;
+    background: white;
     transform: translateX(5px);
     border-color: #8b4513;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .menu-item.current {
@@ -956,14 +534,15 @@ In Other Words: Each row in the menu - white box that highlights when you hover.
 .menu-item-number {
     background: #8b4513;
     color: white;
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 14px;
     flex-shrink: 0;
+    font-weight: bold;
 }
 
 .menu-item-content {
@@ -977,31 +556,28 @@ In Other Words: Each row in the menu - white box that highlights when you hover.
     text-transform: uppercase;
     color: #666;
     letter-spacing: 1px;
-    margin-bottom: 3px;
+    margin-bottom: 4px;
+    font-family: system-ui, sans-serif;
 }
 
 .menu-item-preview {
     font-size: 14px;
-    color: #2c3e50;
+    color: var(--primary-blue);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-/*
-This Area Of Code Is: Settings Panel (Auto Mode Options)
-Explanation: Hidden by default, shown when Auto Mode clicked. White background 
-with border.
-In Other Words: The popup for choosing auto-play speed.
-*/
+/* Settings Panel */
 .settings-panel {
-    background: rgba(255,255,255,0.95);
-    border-radius: 15px;
-    padding: 20px;
+    background: var(--glass-white);
+    backdrop-filter: blur(20px);
+    border-radius: var(--border-radius);
+    padding: 25px;
     margin-top: 15px;
     display: none;
-    border: 3px solid #4a6fa5;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    border: 2px solid var(--glass-border);
+    box-shadow: var(--shadow-hard);
 }
 
 .settings-panel.visible {
@@ -1015,7 +591,7 @@ In Other Words: The popup for choosing auto-play speed.
 }
 
 .settings-title {
-    color: #2c3e50;
+    color: var(--primary-blue);
     font-size: 18px;
     margin-bottom: 15px;
     text-align: center;
@@ -1031,10 +607,12 @@ In Other Words: The popup for choosing auto-play speed.
 }
 
 .speed-btn {
-    padding: 10px 16px;
+    padding: 10px 20px;
     font-size: 14px;
     min-width: 90px;
     border-width: 2px;
+    border-color: #4a6fa5;
+    color: #4a6fa5;
 }
 
 .speed-btn.selected {
@@ -1044,13 +622,14 @@ In Other Words: The popup for choosing auto-play speed.
 }
 
 .timing-explanation {
-    background: #f0f5ff;
-    padding: 12px;
-    border-radius: 8px;
-    margin: 10px 0;
+    background: rgba(240, 245, 255, 0.8);
+    padding: 15px;
+    border-radius: 10px;
+    margin: 15px 0;
     font-size: 13px;
     color: #444;
-    line-height: 1.4;
+    line-height: 1.5;
+    text-align: center;
 }
 
 .start-auto-btn {
@@ -1059,138 +638,120 @@ In Other Words: The popup for choosing auto-play speed.
     background: #228b22;
     color: white;
     border-color: #1a6b1a;
-    padding: 12px;
+    padding: 14px;
+    font-size: 16px;
 }
 
 .start-auto-btn:hover {
     background: #1a6b1a;
 }
 
-/*
-This Area Of Code Is: Progress Text (Card Counter)
-Explanation: Styles the "Card 5 of 24" text at the bottom. Light blue, centered, bold.
-In Other Words: Style the card counter at the bottom - light blue and bold.
-*/
+/* Progress & Status */
 .progress {
     text-align: center;
-    margin-top: 15px;
-    color: #b8c5d1;
+    margin-top: 20px;
+    color: var(--primary-gold);
     font-size: 16px;
     letter-spacing: 1px;
     font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
-/*
-================================================================================
-This Area Of Code Is: Copyright Footer Styles
-Explanation: Styles for the copyright notice at the bottom with blue "Get Well" 
-and orange linked "The Super Coding Ninja" text.
-In Other Words: Make the copyright notice at the bottom look nice with special 
-colors for "Get Well" (blue) and the website link (orange).
-================================================================================
-*/
-.copyright-footer {
-    margin-top: 30px;
-    text-align: center;
-}
-
-.copyright-text {
-    font-size: 14px;
-    color: #b8c5d1;
-    font-family: 'Georgia', 'Times New Roman', serif;
-    line-height: 1.4;
-}
-
-.copyright-blue {
-    color: #4169E1;
-    font-weight: bold;
-}
-
-.copyright-orange {
-    color: #FF8C00;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.copyright-orange:hover {
-    color: #FFA500;
-    text-decoration: underline;
-}
-
-/*
-This Area Of Code Is: Status Bar Container
-Explanation: Holds the "Auto Mode Active" or "Paused" messages. Min-height 
-reserves space even when empty.
-In Other Words: The area showing if auto mode is running or paused.
-*/
 .status-bar {
     text-align: center;
-    margin-top: 10px;
+    margin-top: 15px;
     min-height: 24px;
 }
 
 .auto-status {
-    color: #228b22;
+    color: #90EE90;
     font-size: 14px;
     font-weight: bold;
     display: none;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
-.auto-status.visible {
-    display: inline;
-}
+.auto-status.visible { display: inline; }
 
 .paused-notice {
-    color: #c9a227;
+    color: #FFD700;
     font-size: 14px;
     font-weight: bold;
     display: none;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
-.paused-notice.visible {
-    display: inline;
-}
+.paused-notice.visible { display: inline; }
 
-/*
-This Area Of Code Is: Instruction Box Styling
-Explanation: Semi-transparent instruction text box at the top with border.
-In Other Words: The see-through hint box at the top with instructions.
-*/
-.instruction {
-    background: rgba(255,255,255,0.1);
-    color: #e8d5b7;
-    padding: 10px;
-    border-radius: 8px;
+/* Footer */
+.copyright-footer {
+    margin-top: 30px;
     text-align: center;
-    margin-bottom: 20px;
-    font-size: 14px;
-    border: 1px solid rgba(255,255,255,0.3);
+    padding-bottom: 20px;
 }
 
-/*
-This Area Of Code Is: Fade In Animation
-Explanation: Simple animation that fades element from invisible to visible 
-and moves it down slightly.
-In Other Words: Make the title fade in when the page loads.
-*/
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
+.copyright-text {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.7);
+    font-family: 'Georgia', serif;
+    line-height: 1.5;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
-/*
-This Area Of Code Is: Mobile Responsiveness (Media Query)
-Explanation: Styles that only apply when screen width is 600px or less (phones). 
-Reduces font sizes and padding to fit smaller screens. Adjusts menu width.
-In Other Words: When viewing on a phone, make everything smaller so it fits.
-*/
-@media (max-width: 600px) {
-    .content, .setup { font-size: 22px; }
-    .punchline { font-size: 24px; }
-    .flash-card { padding: 30px 20px; height: 380px; }
-    h1 { font-size: 28px; }
-    button { padding: 12px 18px; font-size: 15px; }
-    .menu-panel { width: 280px; left: -300px; }
-    .copyright-text { font-size: 12px; }
-    .submit-section { margin-top: 15px; padding: 15px; }
+.copyright-blue {
+    color: #6495ED;
+    font-weight: bold;
+}
+
+.copyright-orange {
+    color: #FFB347;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-weight: 600;
+}
+
+.copyright-orange:hover {
+    color: #FFCC00;
+    text-decoration: underline;
+}
+
+/* Mobile Responsive */
+@media (max-width: 640px) {
+    .container {
+        width: 95%;
+        padding: 15px 0;
+    }
+    
+    .flash-card {
+        padding: 30px 20px;
+    }
+    
+    button {
+        padding: 12px 20px;
+        font-size: 15px;
+    }
+    
+    .menu-panel {
+        left: -100%;
+        width: 85%;
+    }
+    
+    .submit-section {
+        padding: 20px;
+    }
+    
+    .video-attribution {
+        font-size: 9px;
+        bottom: 5px;
+        right: 5px;
+    }
+}
+
+/* Reduced Motion Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }
