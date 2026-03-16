@@ -208,6 +208,6 @@ Distributed under the MIT License. See LICENSE for more information.
  • Fonts: Inter & system fonts
  • Firebase Team for the generous free tier
 
-© 2026 Make Him Your Savior. All Rights Reserved. 𝑇ℎ𝑒 𝑆𝑢𝑝𝑒𝑟 𝐶𝑜𝑑𝑖𝑛𝑔 𝑁𝑖𝑛𝑗𝑎™
+© 2026 Get Well. All Rights Reserved. 𝑇ℎ𝑒 𝑆𝑢𝑝𝑒𝑟 𝐶𝑜𝑑𝑖𝑛𝑔 𝑁𝑖𝑛𝑗𝑎™
 Made with ❤️ for the Church Community
 ⬆ Back to Top
