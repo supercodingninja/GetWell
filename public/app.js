@@ -11,18 +11,29 @@ sending them to the database.
 */
 
 /*
+================================================================================
+This Area Of Code Is: Firebase SDK Imports (ADD THIS)
+Explanation: Imports Firebase Storage module in addition to Firestore. Required 
+to load videos from Firebase Cloud Storage (where your large video files live).
+In Other Words: The tool to fetch big video files from Google's storage bucket.
+================================================================================
+*/
+// Add this script tag to your index.html BEFORE app.js:
+// <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+
+/*
 This Area Of Code Is: Firebase Configuration
 Explanation: Initializes the connection to Firebase services (Firestore 
-database). This config is safe to expose publicly - security is handled by 
-Firestore Rules.
-In Other Words: The address and password to connect to the Firebase database 
-in the cloud.
+database AND Storage). This config is safe to expose publicly - security is 
+handled by Firebase Rules.
+In Other Words: The address and password to connect to Firebase database AND 
+video storage in the cloud.
 */
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY", // Replace with your Firebase API Key
-    authDomain: "your-project.firebaseapp.com",
-    projectId: "your-project-id",
-    storageBucket: "your-project.appspot.com",
+    apiKey: "YOUR_API_KEY", // Replace with your Firebase API Key from console
+    authDomain: "your-project.firebaseapp.com", // Replace with your project
+    projectId: "your-project-id", // Replace with your project ID
+    storageBucket: "your-project.appspot.com", // Replace with your bucket
     messagingSenderId: "123456789",
     appId: "1:123456789:web:abcdef123456"
 };
@@ -42,6 +53,7 @@ let currentSpeed = 'slow';
 let timers = [];
 let cards = [];
 let db = null;
+let storage = null; // ADD THIS - Firebase Storage reference
 
 /*
 This Area Of Code Is: Speed Settings Configuration
@@ -93,29 +105,33 @@ const DEFAULT_JOKES = [
 ================================================================================
 This Area Of Code Is: Initialization Functions
 Explanation: Functions that run when the page loads to set up Firebase, 
-register the PWA service worker, and load initial data.
+register the PWA service worker, and load initial data AND VIDEO.
 ================================================================================
 */
 
 /*
 This Area Of Code Is: Window Load Event Listener
 Explanation: Waits for all HTML to load, then initializes Firebase, loads 
-jokes from database (or uses defaults), and registers the Service Worker for 
-offline capability.
+jokes from database (or uses defaults), registers the Service Worker for 
+offline capability, AND loads the background video from Firebase Storage.
 In Other Words: When the page finishes loading, start the app: connect to 
-database, get jokes, and set up offline mode.
+database, get jokes, set up offline mode, and START PLAYING THE CHURCH VIDEO.
 */
 window.addEventListener('load', async () => {
     try {
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         db = firebase.firestore();
+        storage = firebase.storage(); // ADD THIS - Initialize Storage
         
         // Enable offline persistence for PWA
         await db.enablePersistence({ synchronizeTabs: true });
         
         // Load jokes from Firebase or use defaults
         await loadJokes();
+        
+        // ADD THIS: Load the background video from Firebase Storage
+        loadVideoBackground();
         
         // Register Service Worker for PWA
         if ('serviceWorker' in navigator) {
@@ -129,6 +145,66 @@ window.addEventListener('load', async () => {
         renderMenu();
     }
 });
+
+/*
+================================================================================
+This Area Of Code Is: Video Background Functions (ADD THIS ENTIRE SECTION)
+Explanation: Functions to load and play the church interior video from Firebase 
+Cloud Storage. Handles errors gracefully with fallback gradient.
+================================================================================
+*/
+
+/*
+This Area Of Code Is: Video Background Loader
+Explanation: Fetches the church interior video URL from Firebase Storage and 
+injects it into the video element. Uses getDownloadURL() which generates a 
+temporary direct link valid for a few hours. If Firebase fails or video is 
+too large, shows a fallback gradient background instead.
+In Other Words: Ask Firebase "give me the web address for the church video" 
+then plug it into the video player. If that fails, paint the background blue 
+so it's not broken.
+*/
+function loadVideoBackground() {
+    const videoElement = document.getElementById('bg-video');
+    
+    // Exit if no video element exists (HTML not ready)
+    if (!videoElement) {
+        console.log('Video element not found, skipping video load');
+        return;
+    }
+    
+    // Reference to your uploaded video in Firebase Storage
+    // Make sure you upload your video as 'church-interior.mp4' in Firebase
+    const videoRef = storage.ref('videos/church-interior.mp4');
+    
+    videoRef.getDownloadURL()
+        .then((url) => {
+            // Success - set the video source to the Firebase URL
+            videoElement.src = url;
+            videoElement.load(); // Start loading the video
+            console.log('Church video loaded successfully from Firebase Storage');
+        })
+        .catch((error) => {
+            // Error handling - video failed to load
+            console.error('Error loading video from Firebase:', error);
+            
+            // Hide the broken video element
+            videoElement.style.display = 'none';
+            
+            // Show fallback gradient background on body
+            document.body.style.background = 'linear-gradient(to bottom, #1a1a2e, #16213e)';
+            
+            // Optional: Show message to user
+            console.log('Using fallback gradient background');
+        });
+}
+
+/*
+================================================================================
+This Area Of Code Is: Firestore Database Functions
+Explanation: Functions for loading and syncing joke data from Firebase.
+================================================================================
+*/
 
 /*
 This Area Of Code Is: Load Jokes Function
@@ -165,7 +241,8 @@ and keyboard controls.
 /*
 This Area Of Code Is: Enter App Function
 Explanation: Hides the landing page with church interior video and shows the 
-main jokes interface with picnic video background. Smooth fade transition.
+main jokes interface. Smooth fade transition. NOTE: Video continues playing 
+in background or switches to picnic video if you implement that later.
 In Other Words: Switch from the "We miss you" screen to the jokes screen 
 when clicking the Enter button.
 */
