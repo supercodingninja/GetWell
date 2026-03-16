@@ -1,0 +1,16 @@
+{
+    "name": "getwell-church-pwa",
+    "version": "1.0.0",
+    "description": "Secure PWA church get-well card with Firebase backend",
+    "scripts": {
+        "deploy": "firebase deploy",
+        "serve": "firebase serve",
+        "emulators": "firebase emulators:start"
+    },
+    "devDependencies": {
+        "firebase-tools": "^13.0.0"
+    },
+    "engines": {
+        "node": "18"
+    }
+}
