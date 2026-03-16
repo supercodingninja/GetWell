@@ -1,0 +1,4 @@
+# ================================================================================
+# This Area Of Code Is: Git Ignore Configuration
+# Explanation: Tells Git which files/folders to completely ignore and never track. 
+# Critical for excluding dependencies, API
