@@ -1,0 +1,23 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /jokes/{jokeId} {
+      allow read: if true;
+      
+      allow create: if 
+        request.resource.data.setup is string &&
+        request.resource.data.setup.size() > 0 &&
+        request.resource.data.setup.size() < 150 &&
+        request.resource.data.punchline is string &&
+        request.resource.data.punchline.size() > 0 &&
+        request.resource.data.punchline.size() < 150 &&
+        request.resource.data.author is string &&
+        request.resource.data.author.size() > 0 &&
+        request.resource.data.author.size() < 20 &&
+        request.resource.data.type == 'joke' &&
+        request.resource.data.tag == 'Community';
+        
+      allow update, delete: if false;
+    }
+  }
+}
