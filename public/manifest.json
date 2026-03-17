@@ -1,24 +1,108 @@
+/*
+================================================================================
+This Area Of Code Is: PWA Manifest Configuration
+Explanation: Tells browsers this is a Progressive Web App (PWA) and defines
+how it should behave when installed. Includes app name, icons, theme colors,
+and display mode. Required for "Add to Home Screen" functionality.
+In Other Words: The app's ID card that tells phones how to install it and
+what icon to use.
+================================================================================
+*/
 {
-    "name": "Get Well Church Family",
-    "short_name": "GetWell",
-    "description": "A warm church community get-well card with clean jokes and prayers",
-    "start_url": "/",
-    "display": "standalone",
-    "background_color": "#0f172a",
-    "theme_color": "#0f172a",
-    "orientation": "portrait",
-    "scope": "/",
+    /*
+    This Area Of Code Is: App Identity
+    Explanation: Short name shows under icon on home screen. Name is the full
+    name used in app stores and prompts. Description explains what the app does.
+    In Other Words: The app's name tag and description.
+    */
+    "short_name": "Get Well",
+    "name": "Get Well - Growing Card",
+    "description": "Community jokes, prayers & encouragement by Frederick Thomas, The Super Coding Ninja™",
+    
+    /*
+    This Area Of Code Is: App Icons
+    Explanation: Various sizes of the app icon for different devices and uses.
+    You should create these icons and place them in public/icons/ folder.
+    In Other Words: The app logo in different sizes for phones and tablets.
+    */
     "icons": [
         {
-            "src": "icons/icon-192x192.png",
-            "sizes": "192x192",
-            "type": "image/png"
+            "src": "public/icons/icon-72x72.png",
+            "sizes": "72x72",
+            "type": "image/png",
+            "purpose": "maskable any"
         },
         {
-            "src": "icons/icon-512x512.png",
+            "src": "public/icons/icon-96x96.png",
+            "sizes": "96x96",
+            "type": "image/png",
+            "purpose": "maskable any"
+        },
+        {
+            "src": "public/icons/icon-128x128.png",
+            "sizes": "128x128",
+            "type": "image/png",
+            "purpose": "maskable any"
+        },
+        {
+            "src": "public/icons/icon-144x144.png",
+            "sizes": "144x144",
+            "type": "image/png",
+            "purpose": "maskable any"
+        },
+        {
+            "src": "public/icons/icon-152x152.png",
+            "sizes": "152x152",
+            "type": "image/png",
+            "purpose": "maskable any"
+        },
+        {
+            "src": "public/icons/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable any"
+        },
+        {
+            "src": "public/icons/icon-384x384.png",
+            "sizes": "384x384",
+            "type": "image/png",
+            "purpose": "maskable any"
+        },
+        {
+            "src": "public/icons/icon-512x512.png",
             "sizes": "512x512",
             "type": "image/png",
-            "purpose": "any maskable"
+            "purpose": "maskable any"
         }
-    ]
+    ],
+    
+    /*
+    This Area Of Code Is: Display & Theming
+    Explanation: start_url is the page that opens when app launches. display
+    standalone makes it look like a native app (no browser bar). theme_color
+    colors the status bar, background_color is the splash screen background.
+    In Other Words: How the app looks when opened from the home screen.
+    */
+    "start_url": "/GetWell/",
+    "display": "standalone",
+    "theme_color": "#1e40af",
+    "background_color": "#0f0f1e",
+    
+    /*
+    This Area Of Code Is: App Orientation & Categories
+    Explanation: Orientation portrait means app stays vertical. Categories
+    help app stores classify the app.
+    In Other Words: App stays upright and is categorized as lifestyle.
+    */
+    "orientation": "portrait",
+    "categories": ["lifestyle", "social"],
+    
+    /*
+    This Area Of Code Is: Scope & ID
+    Explanation: Scope defines what URLs are part of the app. ID uniquely
+    identifies this app.
+    In Other Words: Defines the app boundaries and unique identifier.
+    */
+    "scope": "/GetWell/",
+    "id": "/GetWell/"
 }
