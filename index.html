@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Get Well - A universal digital card for sharing encouragement, healing, and joy worldwide">
+    <meta name="theme-color" content="#2563eb">
+    <title>Get Well - Growing Digital Card</title>
+    
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+</head>
+<body>
+    <!-- Landing Page with Video Background -->
+    <div id="landing-page" class="page active">
+        <div class="video-background">
+            <video id="landing-video" autoplay muted loop playsinline>
+                <source src="https://github.com/supercodingninja/GetWell/releases/download/v1.0-videos/church-interior.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="video-overlay"></div>
+        </div>
+        
+        <div class="content-overlay glass-panel">
+            <h1>Get Well</h1>
+            <p class="tagline">Healing hearts worldwide, one card at a time</p>
+            <button id="enter-btn" class="btn-primary">Open Card</button>
+        </div>
+    </div>
+
+    <!-- Main Application Page -->
+    <div id="main-page" class="page">
+        <div class="video-background">
+            <video id="main-video" autoplay muted loop playsinline>
+                <source src="https://github.com/supercodingninja/GetWell/releases/download/v1.0-videos/video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="video-overlay"></div>
+        </div>
+
+        <div class="app-container glass-panel">
+            <header class="app-header">
+                <h2>Get Well Card</h2>
+                <nav class="tab-nav">
+                    <button class="tab-btn active" data-category="jokes">Joy & Laughter</button>
+                    <button class="tab-btn" data-category="prayers">Reflections</button>
+                    <button class="tab-btn" data-category="messages">Encouragement</button>
+                </nav>
+            </header>
+
+            <main class="card-stage">
+                <div id="card-container" class="card-container">
+                    <div id="current-card" class="content-card">
+                        <div class="card-content">
+                            <p id="card-text">Loading something wonderful...</p>
+                            <span id="card-category" class="category-badge">Welcome</span>
+                        </div>
+                    </div>
+                    
+                    <div class="card-controls">
+                        <button id="prev-btn" class="nav-btn" aria-label="Previous card">←</button>
+                        <button id="play-pause-btn" class="nav-btn" aria-label="Play or pause">⏸</button>
+                        <button id="next-btn" class="nav-btn" aria-label="Next card">→</button>
+                    </div>
+                </div>
+            </main>
+
+            <section class="submission-section">
+                <h3>Share Your Message</h3>
+                <form id="submission-form" class="submission-form">
+                    <textarea 
+                        id="content-input" 
+                        placeholder="Write something to lift someone's spirits..." 
+                        required
+                        maxlength="500"
+                    ></textarea>
+                    
+                    <select id="category-select" required>
+                        <option value="">Select Type...</option>
+                        <option value="jokes">Joy & Laughter</option>
+                        <option value="prayers">Reflection</option>
+                        <option value="messages">Encouragement</option>
+                    </select>
+                    
+                    <button type="submit" class="btn-primary">Send Love</button>
+                    <p id="submission-status" class="status-message"></p>
+                </form>
+            </section>
+
+            <footer class="app-footer">
+                <p>"A merry heart doeth good like a medicine" - Proverbs 17:22</p>
+                <div class="contact-info">
+                    <p>Questions? <a href="mailto:contact@supercodingninja.com">contact@supercodingninja.com</a></p>
+                </div>
+                <button id="back-to-landing" class="btn-link">Back to Welcome</button>
+            </footer>
+        </div>
+    </div>
+
+    <script src="filters.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
