@@ -1,1062 +1,1159 @@
 /*
 ================================================================================
-This Area Of Code Is: Custom CSS Stylesheet
-Explanation: Provides custom styles that extend Tailwind CSS. Includes the 
-iOS 26 glass morphism effects, video background handling, card animations, 
-and responsive adjustments.
-In Other Words: Extra paint and special effects that Tailwind doesn't have 
-built-in, like the frosted glass look and card sliding animations.
+This Area Of Code Is: Global Styles & CSS Variables
+Explanation: Defines color variables, resets default browser styles, and sets
+up the base styling for the entire application. Uses CSS custom properties
+for consistent theming across all components.
+In Other Words: The foundation - defines colors and resets browser defaults
+so everything looks consistent.
 ================================================================================
 */
 
 /*
-This Area Of Code Is: CSS Custom Properties (Variables)
-Explanation: Defines reusable color values and measurements for consistency 
-across the app.
-In Other Words: Defines the color palette so we don't have to remember 
-color codes.
+This Area Of Code Is: CSS Reset & Base Styles
+Explanation: Removes default browser margins/padding and sets box-sizing to
+border-box for predictable element sizing. Sets base font family and background.
+In Other Words: Clears browser defaults and sets the stage for custom styling.
 */
-:root {
-    --glass-bg: rgba(255, 255, 255, 0.15);
-    --glass-border: rgba(255, 255, 255, 0.25);
-    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    --ios-blur: blur(20px);
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 /*
-This Area Of Code Is: Base Body Styles
-Explanation: Ensures full viewport coverage and smooth scrolling behavior.
-In Other Words: Makes sure the page fills the screen and scrolls smoothly.
+This Area Of Code Is: CSS Custom Properties (Variables)
+Explanation: Defines reusable color values and measurements. Royal blue for
+"Get Well", orange for "The Super Coding Ninja™", and other theme colors.
+In Other Words: A color palette I can reference by name throughout the CSS.
+*/
+:root {
+    --royal-blue: #1e40af;
+    --royal-blue-light: #3b82f6;
+    --ninja-orange: #f97316;
+    --ninja-orange-light: #fb923c;
+    --bronze-gold: #cd7f32;
+    --royal-purple: #6b21a8;
+    --angelic-white: #ffffff;
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.8);
+    --accent-gold: #fbbf24;
+}
+
+/*
+This Area Of Code Is: Body Base Styles
+Explanation: Sets the base font, background color, and text color for the
+entire document. Uses system font stack for optimal performance.
+In Other Words: The basic look of the page - dark background, white text.
 */
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    height: 100vh;
-    width: 100vw;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: #0f0f1e;
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/*
+================================================================================
+This Area Of Code Is: Text Color Classes & Effects
+Explanation: Specific styling for "Get Well" (royal blue), "The Super Coding 
+Ninja™" (orange), and Frederick Thomas (shimmering bronze/gold to royal purple
+with angelic white glow). Includes keyframe animations for the shimmer effect.
+In Other Words: The special effects you requested - blue brand, orange ninja,
+and shimmering name with heavenly glow.
+================================================================================
+*/
+
+/*
+This Area Of Code Is: Get Well Text Styling
+Explanation: Applies royal blue color to "Get Well" text as specified.
+Uses text shadow for depth and visibility against dark backgrounds.
+In Other Words: Makes "Get Well" appear in royal blue with a subtle glow.
+*/
+.getwell-text {
+    color: var(--royal-blue);
+    text-shadow: 0 0 10px rgba(30, 64, 175, 0.5);
+    font-weight: 700;
+}
+
+/*
+This Area Of Code Is: The Super Coding Ninja Text Styling
+Explanation: Applies orange color to "The Super Coding Ninja™" text as specified.
+Uses text shadow for depth.
+In Other Words: Makes your brand name appear in orange with a subtle glow.
+*/
+.ninja-text {
+    color: var(--ninja-orange);
+    text-shadow: 0 0 10px rgba(249, 115, 22, 0.5);
+    font-weight: 700;
+    font-style: italic;
+}
+
+/*
+This Area Of Code Is: Frederick Thomas Shimmer Container
+Explanation: Container for the shimmering name effect. Applies relative
+positioning for the pseudo-element glow effect.
+In Other Words: Sets up the container for your name's special effects.
+*/
+.frederick-shimmer {
+    position: relative;
+    display: inline-block;
+    font-weight: 700;
+    color: var(--bronze-gold);
+    animation: shimmerGradient 3s ease-in-out infinite, angelicGlow 3s ease-in-out infinite;
+    background: linear-gradient(90deg, var(--bronze-gold) 0%, var(--royal-purple) 50%, var(--bronze-gold) 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+}
+
+/*
+This Area Of Code Is: Frederick Thomas Angelic Background Glow
+Explanation: Creates the angelic heavenly spiritual white glow/shine effect
+behind the Frederick Thomas text using a pseudo-element. Pulsates gently.
+In Other Words: The white halo/glow behind your name that makes it look heavenly.
+*/
+.frederick-shimmer::before {
+    content: 'Frederick Thomas';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: transparent;
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 70%);
+    opacity: 0;
+    animation: angelicPulse 3s ease-in-out infinite;
+    z-index: -1;
+    transform: scale(1.5);
+    filter: blur(8px);
+}
+
+/*
+This Area Of Code Is: Shimmer Gradient Keyframes
+Explanation: Animates the background gradient position to create a shimmering
+effect that moves from bronze/gold to royal purple and back every 3 seconds.
+In Other Words: The color-changing shimmer on your name (gold → purple → gold).
+*/
+@keyframes shimmerGradient {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/*
+This Area Of Code Is: Angelic Glow Keyframes
+Explanation: Creates a subtle pulsing glow effect synchronized with the
+shimmer animation. Enhances the spiritual/heavenly appearance.
+In Other Words: The gentle pulsing light effect on your name.
+*/
+@keyframes angelicGlow {
+    0%, 100% {
+        filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3)) drop-shadow(0 0 10px rgba(205, 127, 50, 0.3));
+    }
+    50% {
+        filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.6)) drop-shadow(0 0 20px rgba(107, 33, 168, 0.4));
+    }
+}
+
+/*
+This Area Of Code Is: Angelic Background Pulse Keyframes
+Explanation: Controls the opacity of the white glow pseudo-element, making
+it fade in and out to create a breathing/shining effect behind the text.
+In Other Words: Makes the white halo behind your name breathe in and out.
+*/
+@keyframes angelicPulse {
+    0%, 100% {
+        opacity: 0;
+        transform: scale(1.2);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scale(1.5);
+    }
+}
+
+/*
+================================================================================
+This Area Of Code Is: Landing Page Styles
+Explanation: Styles specific to the landing page (index.html) including
+video background, overlay, content positioning, and responsive adjustments.
+In Other Words: How the welcome page looks - video background, centered content.
+================================================================================
+*/
+
+/*
+This Area Of Code Is: Video Background Container
+Explanation: Fixed position container that holds the background video.
+Covers the entire viewport with z-index behind content.
+In Other Words: The fullscreen video behind everything.
+*/
+.video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
     overflow: hidden;
 }
 
 /*
-================================================================================
-This Area Of Code Is: iOS Glass Morphism Components
-Explanation: Creates the signature iOS 26 "frosted glass" look using 
-backdrop-filter for blur effects, semi-transparent backgrounds, and subtle 
-borders. This makes cards appear to float above video content.
-In Other Words: The special frosted glass effect that looks like an iPhone 
-notification, blurring whatever is behind it (the video).
-================================================================================
+This Area Of Code Is: Video Element Styling
+Explanation: Ensures the video covers the entire container while maintaining
+aspect ratio. Uses object-fit: cover to fill screen without distortion.
+In Other Words: Makes the video fill the screen without stretching weirdly.
 */
-
-/*
-This Area Of Code Is: Main Glass Card Style
-Explanation: Primary glass container with heavy blur, white tint, and shadow. 
-Used for main cards and landing page.
-In Other Words: The main frosted glass box style.
-*/
-.ios-glass {
-    background: var(--glass-bg);
-    backdrop-filter: var(--ios-blur);
-    -webkit-backdrop-filter: var(--ios-blur);
-    border: 1px solid var(--glass-border);
-    box-shadow: var(--glass-shadow);
-}
-
-/*
-This Area Of Code Is: Dark Glass Variant
-Explanation: Darker glass for side panels and menus over bright videos.
-In Other Words: Darker frosted glass for the side menu.
-*/
-.ios-glass-dark {
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: var(--ios-blur);
-    -webkit-backdrop-filter: var(--ios-blur);
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/*
-This Area Of Code Is: Pill-Shaped Glass
-Explanation: Small glass capsule for hints and badges.
-In Other Words: Small pill-shaped frosted glass for hints.
-*/
-.ios-glass-pill {
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-/*
-This Area Of Code Is: Glass Button Styles
-Explanation: Buttons with glass effect that light up on hover. Three variants: 
-primary (blue tint), secondary (neutral), success (green), warning (yellow).
-In Other Words: The see-through buttons that glow when you hover over them.
-*/
-.ios-btn-primary {
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 1rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.ios-btn-primary:hover {
-    background: rgba(255, 255, 255, 0.4);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-}
-
-.ios-btn-secondary {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 1rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.ios-btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.25);
-    transform: translateY(-2px);
-}
-
-.ios-btn-success {
-    background: rgba(34, 197, 94, 0.3);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(34, 197, 94, 0.5);
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 1rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.ios-btn-success:hover {
-    background: rgba(34, 197, 94, 0.4);
-}
-
-.ios-btn-warning {
-    background: rgba(234, 179, 8, 0.3);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(234, 179, 8, 0.5);
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 1rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-/*
-This Area Of Code Is: Speed Selection Buttons
-Explanation: Toggle buttons for auto-mode speed selection.
-In Other Words: The Slow/Medium/Fast buttons in the settings panel.
-*/
-.speed-btn {
-    width: 100%;
-    padding: 0.75rem;
-    border-radius: 0.75rem;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    background: rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.8);
-    transition: all 0.3s ease;
-    text-align: center;
-    font-size: 0.875rem;
-}
-
-.speed-btn.selected {
-    background: rgba(255, 255, 255, 0.3);
-    color: white;
-    border-color: rgba(255, 255, 255, 0.6);
-    font-weight: 600;
-}
-
-/*
-================================================================================
-This Area Of Code Is: Card Stack Animations
-Explanation: 3D transformations for card sliding effects. Cards enter from 
-right, exit to left, with rotation and scaling for depth.
-In Other Words: The sliding and tilting animations when jokes change.
-================================================================================
-*/
-
-/*
-This Area Of Code Is: Perspective Container
-Explanation: Enables 3D perspective for child elements.
-In Other Words: Turns on the 3D view so cards can tilt.
-*/
-.perspective-1000 {
-    perspective: 1000px;
-}
-
-/*
-This Area Of Code Is: Individual Flash Card
-Explanation: Glass morphism card containing joke content. Positioned absolutely 
-for stacking. Starts off-screen right with rotation.
-In Other Words: Each joke card is a frosted glass rectangle that starts off 
-to the right and slides into view.
-*/
-.flash-card {
-    position: absolute;
+.video-background video {
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    border-radius: 1.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    padding: 2rem;
+    object-fit: cover;
+}
+
+/*
+This Area Of Code Is: Video Overlay
+Explanation: Semi-transparent dark overlay on top of video for text readability.
+Uses gradient for depth and to ensure white text stands out.
+In Other Words: The dark tint over the video so words are easy to read.
+*/
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(15, 15, 30, 0.85) 0%, rgba(30, 64, 175, 0.4) 100%);
+}
+
+/*
+This Area Of Code Is: Landing Content Container
+Explanation: Centers all landing page content vertically and horizontally.
+Uses flexbox for alignment and z-index to appear above video.
+In Other Words: The box that holds the title, button, and copyright.
+*/
+.landing-content {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    opacity: 0;
-    transform: translateX(100px) rotateY(-10deg) scale(0.9);
-    z-index: 1;
+    padding: 2rem;
 }
 
 /*
-This Area Of Code Is: Active Card State
-Explanation: Visible card centered on screen with no rotation.
-In Other Words: When the card is showing, center it and stand it straight.
+This Area Of Code Is: Landing Page Heading
+Explanation: Main title styling with large font size and text shadow for depth.
+In Other Words: The big "Get Well" title styling.
 */
-.flash-card.active {
-    opacity: 1;
-    transform: translateX(0) rotateY(0) scale(1);
-    z-index: 10;
+.landing-content h1 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    letter-spacing: -0.02em;
 }
 
 /*
-This Area Of Code Is: Previous Card State
-Explanation: Card slides out to left when moving to next.
-In Other Words: Send the old card to the left and make it fade away.
+This Area Of Code Is: Subtitle Styling
+Explanation: Secondary text below the main title with slightly transparent
+white color for visual hierarchy.
+In Other Words: The description text under the title.
 */
-.flash-card.prev {
-    opacity: 0;
-    transform: translateX(-150px) rotateY(10deg) scale(0.85);
-    z-index: 5;
+.landing-content .subtitle {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    max-width: 600px;
 }
 
 /*
-This Area Of Code Is: Joke Type Color Coding
-Explanation: Subtle left border colors indicating card type.
-In Other Words: Colored stripes on the left edge of cards: brown for jokes, 
-blue for messages, green for prayers.
+This Area Of Code Is: Enter Button Styling
+Explanation: Prominent call-to-action button with gradient background,
+hover effects, and smooth transitions. Glass morphism effect.
+In Other Words: The big "Enter" button with hover animations.
 */
-.card-joke { border-left: 4px solid #8B4513; }
-.card-message { border-left: 4px solid #1e40af; }
-.card-prayer { border-left: 4px solid #15803d; }
-
-/*
-This Area Of Code Is: Punchline Reveal Animation
-Explanation: Punchline starts invisible and slides up when revealed.
-In Other Words: The answer to the joke starts hidden and slides up smoothly.
-*/
-.punchline {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.5s ease;
-    margin-top: 1rem;
-    font-weight: 700;
-    color: #8B4513;
+.enter-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2.5rem;
+    background: linear-gradient(135deg, var(--royal-blue) 0%, var(--royal-purple) 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
     font-size: 1.25rem;
-}
-
-.flash-card.revealed .punchline {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/*
-This Area Of Code Is: Floating Animation
-Explanation: Gentle up-down bobbing for landing page elements.
-In Other Words: Makes the landing page box float gently up and down like 
-it's breathing.
-*/
-@keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-}
-
-.float-animation {
-    animation: float 6s ease-in-out infinite;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(30, 64, 175, 0.4);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
 }
 
 /*
-This Area Of Code Is: Menu Item Styling
-Explanation: Individual rows in the slide-in menu.
-In Other Words: Each row in the side menu.
+This Area Of Code Is: Enter Button Hover State
+Explanation: Enhances button on hover with larger shadow, slight scale,
+and brighter gradient.
+In Other Words: The button grows and glows when you hover over it.
 */
-.menu-item {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 0.75rem;
+.enter-btn:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(30, 64, 175, 0.6);
+    background: linear-gradient(135deg, var(--royal-blue-light) 0%, var(--royal-purple) 100%);
+}
+
+/*
+This Area Of Code Is: Enter Button Arrow Animation
+Explanation: Moves the arrow icon right on button hover.
+In Other Words: The arrow moves when you hover the button.
+*/
+.enter-btn:hover .arrow {
+    transform: translateX(4px);
+}
+
+/*
+This Area Of Code Is: Arrow Icon Transition
+Explanation: Smooth transition for the arrow movement.
+In Other Words: Makes the arrow slide smoothly.
+*/
+.enter-btn .arrow {
+    transition: transform 0.3s ease;
+}
+
+/*
+This Area Of Code Is: Copyright Attribution Container
+Explanation: Positions the copyright text at the bottom of the landing page
+with proper spacing and glass morphism effect.
+In Other Words: The copyright section at the bottom with your name effects.
+*/
+.copyright-attribution {
+    position: absolute;
+    bottom: 2rem;
+    left: 0;
+    right: 0;
+    text-align: center;
     padding: 1rem;
-    cursor: pointer;
-    transition: all 0.2s;
+}
+
+/*
+This Area Of Code Is: Copyright Line Styling
+Explanation: Styles the copyright text with smaller font size, semi-transparent
+background for readability, and proper spacing.
+In Other Words: The actual copyright text styling.
+*/
+.copyright-line {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    background: rgba(0, 0, 0, 0.4);
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    display: inline-block;
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    line-height: 1.8;
+}
+
+/*
+This Area Of Code Is: Copyright Line Spans
+Explanation: Adds proper spacing around the colored text spans in the copyright.
+In Other Words: Spaces out the colored words in the copyright line.
+*/
+.copyright-line span {
+    margin: 0 0.2rem;
+}
+
+/*
+================================================================================
+This Area Of Code Is: Glass Morphism Utilities
+Explanation: Reusable glass effect classes for cards, navigation, and modals.
+Creates the frosted glass look with backdrop blur, transparency, and borders.
+In Other Words: The see-through frosted glass effect used throughout the app.
+================================================================================
+*/
+
+/*
+This Area Of Code Is: Base Glass Effect
+Explanation: Standard glass morphism with blur, transparency, and subtle border.
+Used for cards, navigation, and modal backgrounds.
+In Other Words: The standard frosted glass look.
+*/
+.glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+}
+
+/*
+This Area Of Code Is: Glass Navigation Bar
+Explanation: Fixed navigation with glass effect, stays at top when scrolling.
+Includes flex layout for brand, filters, and actions.
+In Other Words: The top menu bar that stays visible with glass effect.
+*/
+.glass-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(15, 15, 30, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+/*
+This Area Of Code Is: Navigation Brand Section
+Explanation: Contains the back button and app name in the nav bar.
+In Other Words: The left side of the top bar with back arrow and title.
+*/
+.nav-brand {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-}
-
-.menu-item:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateX(5px);
-}
-
-.menu-item.current {
-    background: rgba(34, 197, 94, 0.3);
-    border-color: rgba(34, 197, 94, 0.5);
+    gap: 1rem;
 }
 
 /*
-This Area Of Code Is: Responsive Adjustments
-Explanation: Mobile-specific tweaks for smaller screens.
-In Other Words: Special rules for phones to make sure everything fits.
+This Area Of Code Is: Back Button Link
+Explanation: Styles the back arrow link with hover effect.
+In Other Words: The "<- Back" button styling.
 */
-@media (max-width: 640px) {
-    .ios-glass {
-        margin: 1rem;
-        padding: 1.5rem;
-    }
-    
-    .flash-card {
-        padding: 1.5rem;
-    }
-    
-    h1 {
-        font-size: 1.75rem !important;
-    }
+.nav-brand a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.nav-brand a:hover {
+    color: var(--text-primary);
 }
 
 /*
-This Area Of Code Is: Loading State
-Explanation: Spinner animation for when jokes are loading from Firebase.
-In Other Words: The spinning circle shown while waiting for jokes to load.
+This Area Of Code Is: Brand Text
+Explanation: The app name in the navigation bar with accent color.
+In Other Words: "Growing Get Well Card" in the top bar.
 */
-.loading {
-    display: inline-block;
-    width: 2rem;
-    height: 2rem;
-    border: 3px solid rgba(255, 255, 255, 0.3);
+.nav-brand .brand {
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--accent-gold);
+}
+
+/*
+This Area Of Code Is: Filter Buttons Container
+Explanation: Holds the category filter buttons with flex layout and gap.
+In Other Words: The row of buttons for All/Jokes/Prayers/Messages.
+*/
+.nav-filters {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/*
+This Area Of Code Is: Filter Button Base
+Explanation: Individual filter buttons with glass effect and active state.
+In Other Words: Each category button styling.
+*/
+.filter-btn {
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    color: var(--text-secondary);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+}
+
+/*
+This Area Of Code Is: Filter Button Hover
+Explanation: Enhances filter button on hover with background and color change.
+In Other Words: Buttons light up when you hover them.
+*/
+.filter-btn:hover {
+    background: var(--glass-bg);
+    color: var(--text-primary);
+}
+
+/*
+This Area Of Code Is: Filter Button Active State
+Explanation: Styles for the currently selected filter button with solid
+background and accent color.
+In Other Words: The selected category button looks filled in.
+*/
+.filter-btn.active {
+    background: var(--royal-blue);
+    color: white;
+    border-color: var(--royal-blue);
+}
+
+/*
+This Area Of Code Is: Navigation Actions Container
+Explanation: Holds the slideshow and add buttons on the right side of nav.
+In Other Words: The play and plus buttons in the top right.
+*/
+.nav-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/*
+This Area Of Code Is: Icon Button Base
+Explanation: Circular buttons with icons (play, add) with hover effects.
+In Other Words: The round buttons with symbols.
+*/
+.icon-btn {
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    border-top-color: white;
-    animation: spin 1s ease-in-out infinite;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    font-size: 1.2rem;
 }
 
-@keyframes spin {
-    to { transform: rotate(360deg); }
+/*
+This Area Of Code Is: Icon Button Hover
+Explanation: Scale and background change on hover for icon buttons.
+In Other Words: Buttons grow slightly when hovered.
+*/
+.icon-btn:hover {
+    background: var(--royal-blue);
+    transform: scale(1.1);
 }
+
 /*
 ================================================================================
-This Area Of Code Is: Custom CSS Stylesheet
-Explanation: Provides custom styles that extend Tailwind CSS. Includes the 
-iOS 26 glass morphism effects, video background handling, card animations, 
-and responsive adjustments.
-In Other Words: Extra paint and special effects that Tailwind doesn't have 
-built-in, like the frosted glass look and card sliding animations.
+This Area Of Code Is: Main Content Area & Cards Grid
+Explanation: Styles for the main app content including the cards grid layout,
+individual card styling, and responsive breakpoints.
+In Other Words: How the jokes appear in cards on the main page.
 ================================================================================
 */
 
 /*
-This Area Of Code Is: CSS Custom Properties (Variables)
-Explanation: Defines reusable color values and measurements for consistency 
-across the app.
-In Other Words: Defines the color palette so we don't have to remember 
-color codes.
+This Area Of Code Is: Main Content Container
+Explanation: Padding to account for fixed nav bar and centers content.
+In Other Words: The main area below the top bar.
 */
-:root {
-    --glass-bg: rgba(255, 255, 255, 0.15);
-    --glass-border: rgba(255, 255, 255, 0.25);
-    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    --ios-blur: blur(20px);
+.content-area {
+    padding-top: 100px;
+    padding-bottom: 2rem;
+    min-height: 100vh;
 }
 
 /*
-This Area Of Code Is: Base Body Styles
-Explanation: Ensures full viewport coverage and smooth scrolling behavior.
-In Other Words: Makes sure the page fills the screen and scrolls smoothly.
+This Area Of Code Is: Cards Grid Layout
+Explanation: Responsive grid that shows 1 column on mobile, 2 on tablet,
+3 on desktop, and 4 on large screens. Gap between cards.
+In Other Words: The layout that arranges joke cards in rows.
 */
-body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    height: 100vh;
-    width: 100vw;
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/*
+This Area Of Code Is: Individual Card Styling
+Explanation: Glass morphism cards with hover lift effect, padding, and
+shadow. Contains header, body, and category badge.
+In Other Words: Each individual joke card styling.
+*/
+.card {
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
     overflow: hidden;
 }
 
 /*
-================================================================================
-This Area Of Code Is: iOS Glass Morphism Components
-Explanation: Creates the signature iOS 26 "frosted glass" look using 
-backdrop-filter for blur effects, semi-transparent backgrounds, and subtle 
-borders. This makes cards appear to float above video content.
-In Other Words: The special frosted glass effect that looks like an iPhone 
-notification, blurring whatever is behind it (the video).
-================================================================================
+This Area Of Code Is: Card Hover Effect
+Explanation: Lifts card up and enhances shadow on hover for depth.
+In Other Words: Cards float up when you hover them.
 */
-
-/*
-This Area Of Code Is: Main Glass Card Style
-Explanation: Primary glass container with heavy blur, white tint, and shadow. 
-Used for main cards and landing page.
-In Other Words: The main frosted glass box style.
-*/
-.ios-glass {
-    background: var(--glass-bg);
-    backdrop-filter: var(--ios-blur);
-    -webkit-backdrop-filter: var(--ios-blur);
-    border: 1px solid var(--glass-border);
-    box-shadow: var(--glass-shadow);
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.3);
 }
 
 /*
-This Area Of Code Is: Dark Glass Variant
-Explanation: Darker glass for side panels and menus over bright videos.
-In Other Words: Darker frosted glass for the side menu.
+This Area Of Code Is: Card Header
+Explanation: Top section of card with category badge and author name.
+Uses flex to space elements apart.
+In Other Words: The top of the card with "Joke" badge and author name.
 */
-.ios-glass-dark {
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: var(--ios-blur);
-    -webkit-backdrop-filter: var(--ios-blur);
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--glass-border);
 }
 
 /*
-This Area Of Code Is: Pill-Shaped Glass
-Explanation: Small glass capsule for hints and badges.
-In Other Words: Small pill-shaped frosted glass for hints.
+This Area Of Code Is: Category Badge
+Explanation: Colored label showing content type (joke, prayer, message).
+Different colors for each category.
+In Other Words: The colored tag showing what type of content it is.
 */
-.ios-glass-pill {
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-/*
-This Area Of Code Is: Glass Button Styles
-Explanation: Buttons with glass effect that light up on hover. Three variants: 
-primary (blue tint), secondary (neutral), success (green), warning (yellow).
-In Other Words: The see-through buttons that glow when you hover over them.
-*/
-.ios-btn-primary {
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 1rem;
+.category-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
     font-weight: 600;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
-.ios-btn-primary:hover {
-    background: rgba(255, 255, 255, 0.4);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+/*
+This Area Of Code Is: Joke Category Color
+Explanation: Blue badge for jokes.
+In Other Words: Joke tags are blue.
+*/
+.category-badge.joke {
+    background: rgba(59, 130, 246, 0.3);
+    color: #60a5fa;
 }
 
-.ios-btn-secondary {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 1rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
+/*
+This Area Of Code Is: Prayer Category Color
+Explanation: Purple badge for prayers.
+In Other Words: Prayer tags are purple.
+*/
+.category-badge.prayer {
+    background: rgba(147, 51, 234, 0.3);
+    color: #c084fc;
 }
 
-.ios-btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.25);
-    transform: translateY(-2px);
-}
-
-.ios-btn-success {
+/*
+This Area Of Code Is: Message Category Color
+Explanation: Green badge for messages.
+In Other Words: Message tags are green.
+*/
+.category-badge.message {
     background: rgba(34, 197, 94, 0.3);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(34, 197, 94, 0.5);
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 1rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.ios-btn-success:hover {
-    background: rgba(34, 197, 94, 0.4);
-}
-
-.ios-btn-warning {
-    background: rgba(234, 179, 8, 0.3);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(234, 179, 8, 0.5);
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 1rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
+    color: #4ade80;
 }
 
 /*
-This Area Of Code Is: Speed Selection Buttons
-Explanation: Toggle buttons for auto-mode speed selection.
-In Other Words: The Slow/Medium/Fast buttons in the settings panel.
+This Area Of Code Is: Author Name Styling
+Explanation: Smaller, muted text for the author name in card header.
+In Other Words: The "by Anonymous" text styling.
 */
-.speed-btn {
-    width: 100%;
-    padding: 0.75rem;
-    border-radius: 0.75rem;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    background: rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.8);
-    transition: all 0.3s ease;
-    text-align: center;
-    font-size: 0.875rem;
-}
-
-.speed-btn.selected {
-    background: rgba(255, 255, 255, 0.3);
-    color: white;
-    border-color: rgba(255, 255, 255, 0.6);
-    font-weight: 600;
+.author {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-style: italic;
 }
 
 /*
-================================================================================
-This Area Of Code Is: Card Stack Animations
-Explanation: 3D transformations for card sliding effects. Cards enter from 
-right, exit to left, with rotation and scaling for depth.
-In Other Words: The sliding and tilting animations when jokes change.
-================================================================================
+This Area Of Code Is: Card Body Content
+Explanation: Contains the setup and punchline of jokes with proper spacing.
+In Other Words: The main joke text area.
 */
-
-/*
-This Area Of Code Is: Perspective Container
-Explanation: Enables 3D perspective for child elements.
-In Other Words: Turns on the 3D view so cards can tilt.
-*/
-.perspective-1000 {
-    perspective: 1000px;
-}
-
-/*
-This Area Of Code Is: Individual Flash Card
-Explanation: Glass morphism card containing joke content. Positioned absolutely 
-for stacking. Starts off-screen right with rotation.
-In Other Words: Each joke card is a frosted glass rectangle that starts off 
-to the right and slides into view.
-*/
-.flash-card {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    border-radius: 1.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    padding: 2rem;
+.card-body {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    opacity: 0;
-    transform: translateX(100px) rotateY(-10deg) scale(0.9);
-    z-index: 1;
-}
-
-/*
-This Area Of Code Is: Active Card State
-Explanation: Visible card centered on screen with no rotation.
-In Other Words: When the card is showing, center it and stand it straight.
-*/
-.flash-card.active {
-    opacity: 1;
-    transform: translateX(0) rotateY(0) scale(1);
-    z-index: 10;
-}
-
-/*
-This Area Of Code Is: Previous Card State
-Explanation: Card slides out to left when moving to next.
-In Other Words: Send the old card to the left and make it fade away.
-*/
-.flash-card.prev {
-    opacity: 0;
-    transform: translateX(-150px) rotateY(10deg) scale(0.85);
-    z-index: 5;
-}
-
-/*
-This Area Of Code Is: Joke Type Color Coding
-Explanation: Subtle left border colors indicating card type.
-In Other Words: Colored stripes on the left edge of cards: brown for jokes, 
-blue for messages, green for prayers.
-*/
-.card-joke { border-left: 4px solid #8B4513; }
-.card-message { border-left: 4px solid #1e40af; }
-.card-prayer { border-left: 4px solid #15803d; }
-
-/*
-This Area Of Code Is: Punchline Reveal Animation
-Explanation: Punchline starts invisible and slides up when revealed.
-In Other Words: The answer to the joke starts hidden and slides up smoothly.
-*/
-.punchline {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.5s ease;
-    margin-top: 1rem;
-    font-weight: 700;
-    color: #8B4513;
-    font-size: 1.25rem;
-}
-
-.flash-card.revealed .punchline {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/*
-This Area Of Code Is: Floating Animation
-Explanation: Gentle up-down bobbing for landing page elements.
-In Other Words: Makes the landing page box float gently up and down like 
-it's breathing.
-*/
-@keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-}
-
-.float-animation {
-    animation: float 6s ease-in-out infinite;
-}
-
-/*
-This Area Of Code Is: Menu Item Styling
-Explanation: Individual rows in the slide-in menu.
-In Other Words: Each row in the side menu.
-*/
-.menu-item {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 0.75rem;
-    padding: 1rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
     gap: 0.75rem;
 }
 
-.menu-item:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateX(5px);
-}
-
-.menu-item.current {
-    background: rgba(34, 197, 94, 0.3);
-    border-color: rgba(34, 197, 94, 0.5);
-}
-
 /*
-This Area Of Code Is: Responsive Adjustments
-Explanation: Mobile-specific tweaks for smaller screens.
-In Other Words: Special rules for phones to make sure everything fits.
+This Area Of Code Is: Joke Setup Text
+Explanation: The question or setup part of the joke, slightly larger.
+In Other Words: The first part of the joke ("Why did...").
 */
-@media (max-width: 640px) {
-    .ios-glass {
-        margin: 1rem;
-        padding: 1.5rem;
-    }
-    
-    .flash-card {
-        padding: 1.5rem;
-    }
-    
-    h1 {
-        font-size: 1.75rem !important;
-    }
+.setup {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-primary);
 }
 
 /*
-This Area Of Code Is: Loading State
-Explanation: Spinner animation for when jokes are loading from Firebase.
-In Other Words: The spinning circle shown while waiting for jokes to load.
-*/
-.loading {
-    display: inline-block;
-    width: 2rem;
-    height: 2rem;
-    border: 3px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    border-top-color: white;
-    animation: spin 1s ease-in-out infinite;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-/*
-================================================================================
-This Area Of Code Is: Custom CSS Stylesheet
-Explanation: Provides custom styles that extend Tailwind CSS. Includes the 
-iOS 26 glass morphism effects, video background handling, card animations, 
-and responsive adjustments.
-In Other Words: Extra paint and special effects that Tailwind doesn't have 
-built-in, like the frosted glass look and card sliding animations.
-================================================================================
-*/
-
-/*
-This Area Of Code Is: CSS Custom Properties (Variables)
-Explanation: Defines reusable color values and measurements for consistency 
-across the app.
-In Other Words: Defines the color palette so we don't have to remember 
-color codes.
-*/
-:root {
-    --glass-bg: rgba(255, 255, 255, 0.15);
-    --glass-border: rgba(255, 255, 255, 0.25);
-    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    --ios-blur: blur(20px);
-}
-
-/*
-This Area Of Code Is: Base Body Styles
-Explanation: Ensures full viewport coverage and smooth scrolling behavior.
-In Other Words: Makes sure the page fills the screen and scrolls smoothly.
-*/
-body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
-}
-
-/*
-================================================================================
-This Area Of Code Is: iOS Glass Morphism Components
-Explanation: Creates the signature iOS 26 "frosted glass" look using 
-backdrop-filter for blur effects, semi-transparent backgrounds, and subtle 
-borders. This makes cards appear to float above video content.
-In Other Words: The special frosted glass effect that looks like an iPhone 
-notification, blurring whatever is behind it (the video).
-================================================================================
-*/
-
-/*
-This Area Of Code Is: Main Glass Card Style
-Explanation: Primary glass container with heavy blur, white tint, and shadow. 
-Used for main cards and landing page.
-In Other Words: The main frosted glass box style.
-*/
-.ios-glass {
-    background: var(--glass-bg);
-    backdrop-filter: var(--ios-blur);
-    -webkit-backdrop-filter: var(--ios-blur);
-    border: 1px solid var(--glass-border);
-    box-shadow: var(--glass-shadow);
-}
-
-/*
-This Area Of Code Is: Dark Glass Variant
-Explanation: Darker glass for side panels and menus over bright videos.
-In Other Words: Darker frosted glass for the side menu.
-*/
-.ios-glass-dark {
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: var(--ios-blur);
-    -webkit-backdrop-filter: var(--ios-blur);
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/*
-This Area Of Code Is: Pill-Shaped Glass
-Explanation: Small glass capsule for hints and badges.
-In Other Words: Small pill-shaped frosted glass for hints.
-*/
-.ios-glass-pill {
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-/*
-This Area Of Code Is: Glass Button Styles
-Explanation: Buttons with glass effect that light up on hover. Three variants: 
-primary (blue tint), secondary (neutral), success (green), warning (yellow).
-In Other Words: The see-through buttons that glow when you hover over them.
-*/
-.ios-btn-primary {
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 1rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.ios-btn-primary:hover {
-    background: rgba(255, 255, 255, 0.4);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-}
-
-.ios-btn-secondary {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 1rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.ios-btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.25);
-    transform: translateY(-2px);
-}
-
-.ios-btn-success {
-    background: rgba(34, 197, 94, 0.3);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(34, 197, 94, 0.5);
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 1rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.ios-btn-success:hover {
-    background: rgba(34, 197, 94, 0.4);
-}
-
-.ios-btn-warning {
-    background: rgba(234, 179, 8, 0.3);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(234, 179, 8, 0.5);
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 1rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-/*
-This Area Of Code Is: Speed Selection Buttons
-Explanation: Toggle buttons for auto-mode speed selection.
-In Other Words: The Slow/Medium/Fast buttons in the settings panel.
-*/
-.speed-btn {
-    width: 100%;
-    padding: 0.75rem;
-    border-radius: 0.75rem;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    background: rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.8);
-    transition: all 0.3s ease;
-    text-align: center;
-    font-size: 0.875rem;
-}
-
-.speed-btn.selected {
-    background: rgba(255, 255, 255, 0.3);
-    color: white;
-    border-color: rgba(255, 255, 255, 0.6);
-    font-weight: 600;
-}
-
-/*
-================================================================================
-This Area Of Code Is: Card Stack Animations
-Explanation: 3D transformations for card sliding effects. Cards enter from 
-right, exit to left, with rotation and scaling for depth.
-In Other Words: The sliding and tilting animations when jokes change.
-================================================================================
-*/
-
-/*
-This Area Of Code Is: Perspective Container
-Explanation: Enables 3D perspective for child elements.
-In Other Words: Turns on the 3D view so cards can tilt.
-*/
-.perspective-1000 {
-    perspective: 1000px;
-}
-
-/*
-This Area Of Code Is: Individual Flash Card
-Explanation: Glass morphism card containing joke content. Positioned absolutely 
-for stacking. Starts off-screen right with rotation.
-In Other Words: Each joke card is a frosted glass rectangle that starts off 
-to the right and slides into view.
-*/
-.flash-card {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    border-radius: 1.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    opacity: 0;
-    transform: translateX(100px) rotateY(-10deg) scale(0.9);
-    z-index: 1;
-}
-
-/*
-This Area Of Code Is: Active Card State
-Explanation: Visible card centered on screen with no rotation.
-In Other Words: When the card is showing, center it and stand it straight.
-*/
-.flash-card.active {
-    opacity: 1;
-    transform: translateX(0) rotateY(0) scale(1);
-    z-index: 10;
-}
-
-/*
-This Area Of Code Is: Previous Card State
-Explanation: Card slides out to left when moving to next.
-In Other Words: Send the old card to the left and make it fade away.
-*/
-.flash-card.prev {
-    opacity: 0;
-    transform: translateX(-150px) rotateY(10deg) scale(0.85);
-    z-index: 5;
-}
-
-/*
-This Area Of Code Is: Joke Type Color Coding
-Explanation: Subtle left border colors indicating card type.
-In Other Words: Colored stripes on the left edge of cards: brown for jokes, 
-blue for messages, green for prayers.
-*/
-.card-joke { border-left: 4px solid #8B4513; }
-.card-message { border-left: 4px solid #1e40af; }
-.card-prayer { border-left: 4px solid #15803d; }
-
-/*
-This Area Of Code Is: Punchline Reveal Animation
-Explanation: Punchline starts invisible and slides up when revealed.
-In Other Words: The answer to the joke starts hidden and slides up smoothly.
+This Area Of Code Is: Joke Punchline Text
+Explanation: The answer or punchline with accent color and slight indent.
+In Other Words: The funny answer part with gold color.
 */
 .punchline {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.5s ease;
-    margin-top: 1rem;
-    font-weight: 700;
-    color: #8B4513;
-    font-size: 1.25rem;
-}
-
-.flash-card.revealed .punchline {
-    opacity: 1;
-    transform: translateY(0);
+    font-size: 1rem;
+    color: var(--accent-gold);
+    padding-left: 1rem;
+    border-left: 3px solid var(--accent-gold);
+    font-style: italic;
 }
 
 /*
-This Area Of Code Is: Floating Animation
-Explanation: Gentle up-down bobbing for landing page elements.
-In Other Words: Makes the landing page box float gently up and down like 
-it's breathing.
+This Area Of Code Is: Active Slide Highlight
+Explanation: Enhanced styling for the currently active card during slideshow
+mode with glow border and scale effect.
+In Other Words: The glowing border on the current slideshow card.
 */
-@keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-}
-
-.float-animation {
-    animation: float 6s ease-in-out infinite;
+.card.active-slide {
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.4);
+    transform: scale(1.02);
 }
 
 /*
-This Area Of Code Is: Menu Item Styling
-Explanation: Individual rows in the slide-in menu.
-In Other Words: Each row in the side menu.
+This Area Of Code Is: Empty State Message
+Explanation: Centered message when no cards match the current filter.
+In Other Words: "No jokes yet" message styling.
 */
-.menu-item {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 0.75rem;
-    padding: 1rem;
-    cursor: pointer;
-    transition: all 0.2s;
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--text-secondary);
+}
+
+/*
+================================================================================
+This Area Of Code Is: Slideshow Controls Overlay
+Explanation: Fixed position controls that appear during slideshow mode.
+Shows current position and play/pause/exit buttons.
+In Other Words: The control bar that appears during the slideshow.
+================================================================================
+*/
+
+/*
+This Area Of Code Is: Slideshow Controls Container
+Explanation: Fixed position at bottom with glass effect, hidden by default.
+Contains counter and control buttons.
+In Other Words: The bottom control panel during slideshow.
+*/
+.slideshow-controls {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-}
-
-.menu-item:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateX(5px);
-}
-
-.menu-item.current {
-    background: rgba(34, 197, 94, 0.3);
-    border-color: rgba(34, 197, 94, 0.5);
+    gap: 1rem;
+    padding: 1rem 2rem;
+    background: rgba(15, 15, 30, 0.95);
+    backdrop-filter: blur(12px);
+    border-radius: 50px;
+    border: 1px solid var(--glass-border);
+    z-index: 200;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
 /*
-This Area Of Code Is: Responsive Adjustments
-Explanation: Mobile-specific tweaks for smaller screens.
-In Other Words: Special rules for phones to make sure everything fits.
+This Area Of Code Is: Slide Counter Display
+Explanation: Shows "3 / 24" current position in slideshow.
+In Other Words: The "1 of 10" counter text.
 */
-@media (max-width: 640px) {
-    .ios-glass {
-        margin: 1rem;
-        padding: 1.5rem;
-    }
-    
-    .flash-card {
-        padding: 1.5rem;
-    }
-    
-    h1 {
-        font-size: 1.75rem !important;
-    }
+#slideCounter {
+    font-weight: 600;
+    color: var(--accent-gold);
+    min-width: 60px;
+    text-align: center;
 }
 
 /*
-This Area Of Code Is: Loading State
-Explanation: Spinner animation for when jokes are loading from Firebase.
-In Other Words: The spinning circle shown while waiting for jokes to load.
+================================================================================
+This Area Of Code Is: Modal & Form Styles
+Explanation: Styles for the "Add New" popup modal including the form layout,
+input fields, and action buttons. Uses glass morphism for the modal content.
+In Other Words: The popup window for adding new jokes.
+================================================================================
 */
-.loading {
-    display: inline-block;
-    width: 2rem;
-    height: 2rem;
-    border: 3px solid rgba(255, 255, 255, 0.3);
+
+/*
+This Area Of Code Is: Modal Overlay
+Explanation: Full-screen dark overlay behind the modal content, hidden by default.
+Clicking outside the modal closes it.
+In Other Words: The dark background behind the popup that you can click to close.
+*/
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 300;
+    padding: 1rem;
+}
+
+/*
+This Area Of Code Is: Modal Content Container
+Explanation: The actual popup box with glass effect, max-width for readability,
+and padding. Centers vertically and horizontally.
+In Other Words: The white/frosted box in the center of the popup.
+*/
+.modal-content {
+    width: 100%;
+    max-width: 500px;
+    padding: 2rem;
+    position: relative;
+}
+
+/*
+This Area Of Code Is: Modal Heading
+Explanation: Title of the modal ("Share Encouragement").
+In Other Words: The "Add New Joke" title at the top of the popup.
+*/
+.modal-content h2 {
+    margin-bottom: 1.5rem;
+    color: var(--accent-gold);
+    text-align: center;
+}
+
+/*
+This Area Of Code Is: Form Group Container
+Explanation: Wraps each label+input pair with proper spacing.
+In Other Words: Each row in the form (label + box).
+*/
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+/*
+This Area Of Code Is: Form Label Styling
+Explanation: Labels for form inputs with proper spacing and color.
+In Other Words: The "Category:" and "Your Content:" text.
+*/
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/*
+This Area Of Code Is: Form Input Base
+Explanation: Base styles for text inputs, textareas, and selects with
+glass effect and focus states.
+In Other Words: The text boxes and dropdowns styling.
+*/
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+/*
+This Area Of Code Is: Form Input Focus State
+Explanation: Highlight border and glow when input is active/selected.
+In Other Words: Boxes glow blue when you click in them.
+*/
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--royal-blue);
+    box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.2);
+}
+
+/*
+This Area Of Code Is: Form Hint Text
+Explanation: Small helper text below inputs (e.g., "Keep it Christ-honoring").
+In Other Words: The small hint text under the text box.
+*/
+.form-group .hint {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+/*
+This Area Of Code Is: Form Actions Container
+Explanation: Holds the Cancel and Submit buttons with flex layout.
+In Other Words: The row with Cancel and Submit buttons.
+*/
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: 1.5rem;
+}
+
+/*
+This Area Of Code Is: Secondary Button (Cancel)
+Explanation: The cancel button with transparent background and border.
+In Other Words: The "Cancel" button styling.
+*/
+.btn-secondary {
+    padding: 0.75rem 1.5rem;
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    color: var(--text-secondary);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 1rem;
+}
+
+.btn-secondary:hover {
+    background: var(--glass-bg);
+    color: var(--text-primary);
+}
+
+/*
+This Area Of Code Is: Primary Button (Submit)
+Explanation: The submit button with gradient background and glow.
+In Other Words: The "Submit" button with blue gradient.
+*/
+.btn-primary {
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, var(--royal-blue) 0%, var(--royal-purple) 100%);
+    border: none;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(30, 64, 175, 0.4);
+}
+
+/*
+================================================================================
+This Area Of Code Is: Loading Spinner & Toast Notifications
+Explanation: Styles for the loading indicator and popup toast messages that
+appear temporarily to show success/error/info feedback.
+In Other Words: The spinning loader and popup messages.
+================================================================================
+*/
+
+/*
+This Area Of Code Is: Loading Spinner Container
+Explanation: Centered overlay with spinner animation and text.
+In Other Words: The "Loading..." spinning circle center of screen.
+*/
+.spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 400;
+}
+
+/*
+This Area Of Code Is: Spinner Circle Animation
+Explanation: Rotating border animation for the loading indicator.
+In Other Words: The actual spinning circle part.
+*/
+.spinner-circle {
+    width: 50px;
+    height: 50px;
+    border: 3px solid var(--glass-border);
+    border-top-color: var(--royal-blue);
     border-radius: 50%;
-    border-top-color: white;
-    animation: spin 1s ease-in-out infinite;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
 }
 
+/*
+This Area Of Code Is: Spinner Rotation Keyframes
+Explanation: Continuous 360 degree rotation animation.
+In Other Words: Makes the circle spin forever.
+*/
 @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/*
+This Area Of Code Is: Toast Container
+Explanation: Fixed position at bottom-right for toast messages.
+In Other Words: Where the popup messages appear.
+*/
+.toast-container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 500;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/*
+This Area Of Code Is: Toast Message Base
+Explanation: Individual toast notification with glass effect and colored
+left border based on type (success, error, warning, info).
+In Other Words: Each popup message styling.
+*/
+.toast {
+    padding: 1rem 1.5rem;
+    background: rgba(15, 15, 30, 0.95);
+    backdrop-filter: blur(12px);
+    border-radius: 8px;
+    border-left: 4px solid var(--royal-blue);
+    color: var(--text-primary);
+    transform: translateX(100%);
+    opacity: 0;
+    transition: all 0.3s ease;
+    max-width: 300px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/*
+This Area Of Code Is: Toast Visible State
+Explanation: Slides toast into view when shown.
+In Other Words: Makes the toast slide in from the right.
+*/
+.toast.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+/*
+This Area Of Code Is: Success Toast Color
+Explanation: Green left border for success messages.
+In Other Words: Success toasts have green on the left.
+*/
+.toast-success {
+    border-left-color: #22c55e;
+}
+
+/*
+This Area Of Code Is: Error Toast Color
+Explanation: Red left border for error messages.
+In Other Words: Error toasts have red on the left.
+*/
+.toast-error {
+    border-left-color: #ef4444;
+}
+
+/*
+This Area Of Code Is: Warning Toast Color
+Explanation: Yellow left border for warning messages.
+In Other Words: Warning toasts have yellow on the left.
+*/
+.toast-warning {
+    border-left-color: #f59e0b;
+}
+
+/*
+This Area Of Code Is: Info Toast Color
+Explanation: Blue left border for info messages (default).
+In Other Words: Info toasts have blue on the left.
+*/
+.toast-info {
+    border-left-color: var(--royal-blue);
+}
+
+/*
+================================================================================
+This Area Of Code Is: Utility Classes
+Explanation: Helper classes for common patterns like hiding elements,
+applying app-page padding, and responsive adjustments.
+In Other Words: Shortcut classes for common needs.
+================================================================================
+*/
+
+/*
+This Area Of Code Is: Hidden Utility
+Explanation: Hides elements completely (display: none).
+In Other Words: Makes things disappear completely.
+*/
+.hidden {
+    display: none !important;
+}
+
+/*
+This Area Of Code Is: App Page Body Padding
+Explanation: Adds top padding to body on app page to account for fixed nav.
+In Other Words: Pushes content down so it doesn't hide under the top bar.
+*/
+.app-page {
+    padding-top: 80px;
+}
+
+/*
+This Area Of Code Is: Responsive Adjustments (Mobile)
+Explanation: Adjusts layout and font sizes for screens smaller than 768px.
+In Other Words: Makes everything fit better on phones.
+*/
+@media (max-width: 768px) {
+    .landing-content h1 {
+        font-size: 2.5rem;
+    }
+    
+    .landing-content .subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .glass-nav {
+        padding: 1rem;
+    }
+    
+    .nav-filters {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .cards-grid {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
+    
+    .copyright-line {
+        font-size: 0.75rem;
+        padding: 0.5rem 1rem;
+    }
+}
+
+/*
+This Area Of Code Is: Responsive Adjustments (Tablet)
+Explanation: Adjusts grid columns for medium screens.
+In Other Words: Makes 2 columns on tablets.
+*/
+@media (min-width: 769px) and (max-width: 1024px) {
+    .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
