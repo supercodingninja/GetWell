@@ -1,108 +1,155 @@
+<!--
+================================================================================
+This Area Of Code Is: Main HTML Structure (Landing Page)
+Explanation: This is the entry point for the GetWell Church PWA. It displays
+the landing page with a church interior video background and a button to enter
+the main application. The file is placed at ROOT level (not /public/) because
+GitHub Pages requires index.html at the repository root to serve as the homepage.
+In Other Words: This is the front door of your church app. It shows a beautiful
+church video and invites people to come inside for jokes and prayers.
+================================================================================
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!--
+    This Area Of Code Is: Document Metadata
+    Explanation: Sets the character encoding to UTF-8 (supports all languages),
+    tells the browser to use the latest rendering engine, and sets the viewport
+    to be responsive on mobile devices. The title appears in the browser tab.
+    In Other Words: Basic settings so the page looks right on phones and computers,
+    and the tab says "Growing Get Well Card".
+    -->
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Get Well - A universal digital card for sharing encouragement, healing, and joy worldwide">
-    <meta name="theme-color" content="#2563eb">
-    <title>Get Well - Growing Digital Card</title>
+    <title>Growing Get Well Card</title>
     
-    <link rel="stylesheet" href="styles.css">
+    <!--
+    This Area Of Code Is: PWA Manifest Link
+    Explanation: Links to the manifest.json file that tells the browser this
+    is a Progressive Web App (PWA). This enables "Add to Home Screen" functionality
+    and defines the app icon, name, and theme colors.
+    In Other Words: Tells phones "this is an app you can install on your home screen."
+    -->
     <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
     
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <!--
+    This Area Of Code Is: Theme Color for Mobile Browsers
+    Explanation: Sets the color of the browser's address bar on mobile devices
+    to match the app's theme (dark blue/purple). This creates a seamless app-like
+    experience.
+    In Other Words: Colors the phone's top bar to match your app so it looks professional.
+    -->
+    <meta name="theme-color" content="#1a1a2e">
+    
+    <!--
+    This Area Of Code Is: Stylesheet Link
+    Explanation: Links to the external CSS file that contains all the styling
+    for the app. The 'public/' path is used because the CSS file is in the public folder.
+    In Other Words: Connects the paint and decorations from the styles.css file.
+    -->
+    <link rel="stylesheet" href="public/styles.css">
+    
+    <!--
+    This Area Of Code Is: Apple Touch Icon
+    Explanation: Specifies the icon that appears when users add the app to their
+    iPhone/iPad home screen. iOS devices use this instead of the manifest icon.
+    In Other Words: The app icon for iPhones and iPads.
+    -->
+    <link rel="apple-touch-icon" href="public/icons/icon-192x192.png">
 </head>
-<body>
-    <!-- Landing Page with Video Background -->
-    <div id="landing-page" class="page active">
-        <div class="video-background">
-            <video id="landing-video" autoplay muted loop playsinline>
-                <source src="https://github.com/supercodingninja/GetWell/releases/download/v1.0-videos/church-interior.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <div class="video-overlay"></div>
-        </div>
+<body class="landing-page">
+    <!--
+    This Area Of Code Is: Video Background Container
+    Explanation: Creates a full-screen video background using the church interior
+    video from GitHub Releases. The video autoplays, loops, and is muted (required
+    for autoplay in most browsers). A fallback poster image shows while loading.
+    In Other Words: The beautiful church video playing behind everything. It's
+    muted so it doesn't surprise people, and it loops forever.
+    -->
+    <div class="video-background">
+        <video autoplay muted loop playsinline poster="public/images/church-poster.jpg">
+            <source src="https://github.com/supercodingninja/GetWell/releases/download/v1.0-videos/church-interior.mp4" type="video/mp4">
+            <!--
+            This Area Of Code Is: Fallback Message
+            Explanation: Text displayed if the browser doesn't support HTML5 video.
+            In Other Words: If the video won't play, show this message instead.
+            -->
+            Your browser does not support the video tag.
+        </video>
+        <!--
+        This Area Of Code Is: Video Overlay
+        Explanation: A semi-transparent dark overlay on top of the video to make
+        the text more readable. Without this, white text would be hard to see
+        against the bright church interior.
+        In Other Words: A tinted window over the video so the words are easy to read.
+        -->
+        <div class="video-overlay"></div>
+    </div>
+
+    <!--
+    This Area Of Code Is: Landing Content Container
+    Explanation: Holds the main content (title, description, enter button) that
+    appears on top of the video. Uses flexbox to center everything vertically
+    and horizontally.
+    In Other Words: The box with the welcome message and "Enter" button floating
+    over the church video.
+    -->
+    <div class="landing-content">
+        <!--
+        This Area Of Code Is: Main Title
+        Explanation: The large heading displaying the app name. Uses an accent
+        span to highlight "Get Well" in the church's brand color.
+        In Other Words: The big title "Growing Get Well Card" with "Get Well"
+        in gold/yellow color.
+        -->
+        <h1>Growing <span class="accent">Get Well</span> Card</h1>
         
-        <div class="content-overlay glass-panel">
-            <h1>Get Well</h1>
-            <p class="tagline">Healing hearts worldwide, one card at a time</p>
-            <button id="enter-btn" class="btn-primary">Open Card</button>
-        </div>
+        <!--
+        This Area Of Code Is: Subtitle/Description
+        Explanation: A brief description of what the app offers - jokes, prayers,
+        and messages to help people feel better.
+        In Other Words: Tells visitors "we have jokes, prayers, and encouragement here."
+        -->
+        <p class="subtitle">Community jokes, prayers & encouragement</p>
+        
+        <!--
+        This Area Of Code Is: Enter Application Button
+        Explanation: A prominent button that links to the main app page (app.html).
+        The button has hover effects defined in CSS and uses an arrow icon.
+        In Other Words: The big button that says "Come on in!" and takes you to
+        the jokes and prayers.
+        -->
+        <a href="public/app.html" class="enter-btn">
+            Enter
+            <span class="arrow">→</span>
+        </a>
+        
+        <!--
+        This Area Of Code Is: Church Attribution
+        Explanation: Small text at the bottom giving credit to the church and
+        indicating this is a community project. Shows this is an official church app.
+        In Other Words: "Brought to you by GetWell Church" in small letters at the bottom.
+        -->
+        <p class="church-credit">Brought to you by GetWell Church</p>
     </div>
 
-    <!-- Main Application Page -->
-    <div id="main-page" class="page">
-        <div class="video-background">
-            <video id="main-video" autoplay muted loop playsinline>
-                <source src="https://github.com/supercodingninja/GetWell/releases/download/v1.0-videos/video.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <div class="video-overlay"></div>
-        </div>
-
-        <div class="app-container glass-panel">
-            <header class="app-header">
-                <h2>Get Well Card</h2>
-                <nav class="tab-nav">
-                    <button class="tab-btn active" data-category="jokes">Joy & Laughter</button>
-                    <button class="tab-btn" data-category="prayers">Reflections</button>
-                    <button class="tab-btn" data-category="messages">Encouragement</button>
-                </nav>
-            </header>
-
-            <main class="card-stage">
-                <div id="card-container" class="card-container">
-                    <div id="current-card" class="content-card">
-                        <div class="card-content">
-                            <p id="card-text">Loading something wonderful...</p>
-                            <span id="card-category" class="category-badge">Welcome</span>
-                        </div>
-                    </div>
-                    
-                    <div class="card-controls">
-                        <button id="prev-btn" class="nav-btn" aria-label="Previous card">←</button>
-                        <button id="play-pause-btn" class="nav-btn" aria-label="Play or pause">⏸</button>
-                        <button id="next-btn" class="nav-btn" aria-label="Next card">→</button>
-                    </div>
-                </div>
-            </main>
-
-            <section class="submission-section">
-                <h3>Share Your Message</h3>
-                <form id="submission-form" class="submission-form">
-                    <textarea 
-                        id="content-input" 
-                        placeholder="Write something to lift someone's spirits..." 
-                        required
-                        maxlength="500"
-                    ></textarea>
-                    
-                    <select id="category-select" required>
-                        <option value="">Select Type...</option>
-                        <option value="jokes">Joy & Laughter</option>
-                        <option value="prayers">Reflection</option>
-                        <option value="messages">Encouragement</option>
-                    </select>
-                    
-                    <button type="submit" class="btn-primary">Send Love</button>
-                    <p id="submission-status" class="status-message"></p>
-                </form>
-            </section>
-
-            <footer class="app-footer">
-                <p>"A merry heart doeth good like a medicine" - Proverbs 17:22</p>
-                <div class="contact-info">
-                    <p>Questions? <a href="mailto:contact@supercodingninja.com">contact@supercodingninja.com</a></p>
-                </div>
-                <button id="back-to-landing" class="btn-link">Back to Welcome</button>
-            </footer>
-        </div>
-    </div>
-
-    <script src="filters.js"></script>
-    <script src="app.js"></script>
+    <!--
+    This Area Of Code Is: Service Worker Registration
+    Explanation: JavaScript that registers the service worker (sw.js) to enable
+    PWA features like offline access and "Add to Home Screen". This must run on
+    every page load to activate the service worker.
+    In Other Words: The code that makes this a real app you can use without internet
+    and install on your phone.
+    -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('public/sw.js')
+                .then(reg => console.log('Service Worker registered:', reg))
+                .catch(err => console.log('Service Worker registration failed:', err));
+        }
+    </script>
 </body>
 </html>
