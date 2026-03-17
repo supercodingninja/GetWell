@@ -94,10 +94,7 @@ I implemented Firestore so the app truly lives up to its name—"Growing Get Wel
 Content Moderation Strategy
 I check both the message content and the author information (name + location) against the PurgoMalum API to ensure everything stays appropriate.
 
-
-
-Copyright
-Copyright © 2026 Frederick Thomas (The Super Coding Ninja™). All rights reserved.
+© 2026 Frederick Thomas. All rights reserved. The Super Coding Ninja™
 
 License
 MIT License
