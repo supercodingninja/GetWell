@@ -3,47 +3,54 @@
 This Area Of Code Is: Main Application JavaScript
 Explanation: Controls all interactivity for the Get Well PWA. Manages card 
 navigation, Firebase real-time data, auto-play modes, content submission with 
-client-side validation, and PWA service worker registration.
+client-side validation, PWA service worker registration, AND video backgrounds.
 In Other Words: The brain that makes buttons work, loads jokes from the 
-internet, switches cards automatically, and checks if jokes are clean before 
-sending them to the database.
+internet, switches cards automatically, plays church videos in the background,
+and checks if jokes are clean before sending them to the database.
 ================================================================================
 */
 
 /*
 ================================================================================
-This Area Of Code Is: Firebase SDK Imports (ADD THIS)
-Explanation: Imports Firebase Storage module in addition to Firestore. Required 
-to load videos from Firebase Cloud Storage (where your large video files live).
-In Other Words: The tool to fetch big video files from Google's storage bucket.
+This Area Of Code Is: Video Background Configuration
+Explanation: Stores the direct URLs to your church background videos hosted 
+on GitHub Releases. These URLs never change once the release is published.
+In Other Words: The web addresses for your church videos that play behind 
+the app content.
 ================================================================================
 */
-// Add this script tag to your index.html BEFORE app.js:
-// <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+const videoConfig = {
+    // Landing page video (church interior)
+    landingPageVideo: 'https://github.com/supercodingninja/GetWell/releases/download/v1.0-videos/church-interior.mp4',
+    // Main app video (church community/picnic)
+    mainAppVideo: 'https://github.com/supercodingninja/GetWell/releases/download/v1.0-videos/video.mp4',
+    // Fallback background if videos fail
+    fallbackBackground: 'linear-gradient(to bottom, #1a1a2e, #16213e)'
+};
 
 /*
 This Area Of Code Is: Firebase Configuration
 Explanation: Initializes the connection to Firebase services (Firestore 
-database AND Storage). This config is safe to expose publicly - security is 
+database). This config is safe to expose publicly - security is 
 handled by Firebase Rules.
-In Other Words: The address and password to connect to Firebase database AND 
-video storage in the cloud.
+In Other Words: The address and password to connect to Firebase database 
+in the cloud.
 */
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY", // Replace with your Firebase API Key from console
-    authDomain: "your-project.firebaseapp.com", // Replace with your project
-    projectId: "your-project-id", // Replace with your project ID
-    storageBucket: "your-project.appspot.com", // Replace with your bucket
-    messagingSenderId: "123456789",
-    appId: "1:123456789:web:abcdef123456"
+    apiKey: "AIzaSyDieVA5y_pag35ZVh8P8PuL68sZ_2qtEGU",
+    authDomain: "growing-get-well-card.firebaseapp.com",
+    projectId: "growing-get-well-card",
+    storageBucket: "growing-get-well-card.firebasestorage.app",
+    messagingSenderId: "615025378529",
+    appId: "1:615025378529:web:38e3801c79f54d852623a0"
 };
 
 /*
 This Area Of Code Is: Global State Variables
 Explanation: Variables tracking app state: current card index, reveal status, 
-auto mode, pause status, speed settings, timers, and card data array.
+auto mode, pause status, speed settings, timers, card data array, and video state.
 In Other Words: The app's memory - remembers which joke is showing, if the 
-answer is visible, if auto-play is on, etc.
+answer is visible, if auto-play is on, which video is playing, etc.
 */
 let currentIndex = 0;
 let isRevealed = false;
@@ -53,7 +60,8 @@ let currentSpeed = 'slow';
 let timers = [];
 let cards = [];
 let db = null;
-let storage = null; // ADD THIS - Firebase Storage reference
+let currentVideoElement = null;
+let isLandingPage = true;
 
 /*
 This Area Of Code Is: Speed Settings Configuration
@@ -105,7 +113,7 @@ const DEFAULT_JOKES = [
 ================================================================================
 This Area Of Code Is: Initialization Functions
 Explanation: Functions that run when the page loads to set up Firebase, 
-register the PWA service worker, and load initial data AND VIDEO.
+register the PWA service worker, load initial data, AND initialize video backgrounds.
 ================================================================================
 */
 
@@ -113,7 +121,7 @@ register the PWA service worker, and load initial data AND VIDEO.
 This Area Of Code Is: Window Load Event Listener
 Explanation: Waits for all HTML to load, then initializes Firebase, loads 
 jokes from database (or uses defaults), registers the Service Worker for 
-offline capability, AND loads the background video from Firebase Storage.
+offline capability, AND initializes the background video system.
 In Other Words: When the page finishes loading, start the app: connect to 
 database, get jokes, set up offline mode, and START PLAYING THE CHURCH VIDEO.
 */
@@ -122,7 +130,6 @@ window.addEventListener('load', async () => {
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         db = firebase.firestore();
-        storage = firebase.storage(); // ADD THIS - Initialize Storage
         
         // Enable offline persistence for PWA
         await db.enablePersistence({ synchronizeTabs: true });
@@ -130,8 +137,8 @@ window.addEventListener('load', async () => {
         // Load jokes from Firebase or use defaults
         await loadJokes();
         
-        // ADD THIS: Load the background video from Firebase Storage
-        loadVideoBackground();
+        // Initialize video background system
+        initVideoBackground();
         
         // Register Service Worker for PWA
         if ('serviceWorker' in navigator) {
@@ -143,60 +150,126 @@ window.addEventListener('load', async () => {
         cards = DEFAULT_JOKES;
         renderCard();
         renderMenu();
+        // Still try to load video even if Firebase fails
+        initVideoBackground();
     }
 });
 
 /*
 ================================================================================
-This Area Of Code Is: Video Background Functions (ADD THIS ENTIRE SECTION)
-Explanation: Functions to load and play the church interior video from Firebase 
-Cloud Storage. Handles errors gracefully with fallback gradient.
+This Area Of Code Is: Video Background Functions
+Explanation: Functions to load and play church background videos from GitHub 
+Releases. Handles landing page video and main app video with smooth transitions.
 ================================================================================
 */
 
 /*
-This Area Of Code Is: Video Background Loader
-Explanation: Fetches the church interior video URL from Firebase Storage and 
-injects it into the video element. Uses getDownloadURL() which generates a 
-temporary direct link valid for a few hours. If Firebase fails or video is 
-too large, shows a fallback gradient background instead.
-In Other Words: Ask Firebase "give me the web address for the church video" 
-then plug it into the video player. If that fails, paint the background blue 
-so it's not broken.
+This Area Of Code Is: Video Background Initializer
+Explanation: Determines which video to show based on current page (landing vs 
+main app), creates the video element, and starts playback. Uses GitHub Release 
+URLs for hosting large video files.
+In Other Words: Figure out which church video to play, create the video player,
+and start showing it behind everything.
 */
-function loadVideoBackground() {
-    const videoElement = document.getElementById('bg-video');
+function initVideoBackground() {
+    // Check if we're on landing page or main app
+    const landingPage = document.getElementById('landingPage');
+    isLandingPage = landingPage && !landingPage.classList.contains('hidden');
     
-    // Exit if no video element exists (HTML not ready)
-    if (!videoElement) {
-        console.log('Video element not found, skipping video load');
-        return;
+    // Select appropriate video URL
+    const videoUrl = isLandingPage ? videoConfig.landingPageVideo : videoConfig.mainAppVideo;
+    
+    // Create or update video element
+    createVideoElement(videoUrl);
+}
+
+/*
+This Area Of Code Is: Video Element Creator
+Explanation: Creates a full-screen video element with the specified URL, sets 
+all required attributes for autoplay and mobile compatibility, and inserts it 
+into the DOM behind all other content.
+In Other Words: Build the actual video player that fills the whole screen,
+set it to autoplay and loop, and put it behind the jokes so you can read them.
+*/
+function createVideoElement(videoUrl) {
+    // Remove any existing video
+    if (currentVideoElement) {
+        currentVideoElement.remove();
     }
     
-    // Reference to your uploaded video in Firebase Storage
-    // Make sure you upload your video as 'church-interior.mp4' in Firebase
-    const videoRef = storage.ref('videos/church-interior.mp4');
+    // Create new video element
+    currentVideoElement = document.createElement('video');
+    currentVideoElement.id = 'bg-video';
+    currentVideoElement.src = videoUrl;
+    currentVideoElement.autoplay = true;
+    currentVideoElement.loop = true;
+    currentVideoElement.muted = true; // Required for autoplay
+    currentVideoElement.playsInline = true; // Required for iOS
+    currentVideoElement.preload = 'auto';
     
-    videoRef.getDownloadURL()
-        .then((url) => {
-            // Success - set the video source to the Firebase URL
-            videoElement.src = url;
-            videoElement.load(); // Start loading the video
-            console.log('Church video loaded successfully from Firebase Storage');
-        })
-        .catch((error) => {
-            // Error handling - video failed to load
-            console.error('Error loading video from Firebase:', error);
-            
-            // Hide the broken video element
-            videoElement.style.display = 'none';
-            
-            // Show fallback gradient background on body
-            document.body.style.background = 'linear-gradient(to bottom, #1a1a2e, #16213e)';
-            
-            // Optional: Show message to user
-            console.log('Using fallback gradient background');
-        });
+    // Style the video to fill screen and sit behind content
+    currentVideoElement.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+        opacity: 0.7;
+        pointer-events: none;
+    `;
+    
+    // Add error handling
+    currentVideoElement.addEventListener('error', handleVideoError);
+    currentVideoElement.addEventListener('loadeddata', () => {
+        console.log('Video loaded successfully:', videoUrl);
+    });
+    
+    // Insert video into body
+    document.body.insertBefore(currentVideoElement, document.body.firstChild);
+}
+
+/*
+This Area Of Code Is: Video Error Handler
+Explanation: If the video fails to load (network issues, URL problems, etc.), 
+hides the broken video and shows a fallback gradient background instead.
+In Other Words: If the church video breaks, paint the background a nice blue 
+gradient so the app still looks good.
+*/
+function handleVideoError() {
+    console.error('Video failed to load, using fallback background');
+    if (currentVideoElement) {
+        currentVideoElement.style.display = 'none';
+    }
+    document.body.style.background = videoConfig.fallbackBackground;
+    document.body.style.backgroundAttachment = 'fixed';
+}
+
+/*
+This Area Of Code Is: Video Switcher
+Explanation: Called when transitioning from landing page to main app. Switches 
+the background video from church interior to community/picnic video smoothly.
+In Other Words: When clicking Enter to go from the welcome screen to the jokes,
+swap the background video to the other church video.
+*/
+function switchVideo() {
+    isLandingPage = false;
+    const newUrl = videoConfig.mainAppVideo;
+    
+    // Fade out current video
+    if (currentVideoElement) {
+        currentVideoElement.style.transition = 'opacity 1s';
+        currentVideoElement.style.opacity = '0';
+        
+        // After fade, swap video and fade back in
+        setTimeout(() => {
+            currentVideoElement.src = newUrl;
+            currentVideoElement.load();
+            currentVideoElement.play().catch(e => console.log('Autoplay prevented:', e));
+            currentVideoElement.style.opacity = '0.7';
+        }, 1000);
+    }
 }
 
 /*
@@ -241,14 +314,17 @@ and keyboard controls.
 /*
 This Area Of Code Is: Enter App Function
 Explanation: Hides the landing page with church interior video and shows the 
-main jokes interface. Smooth fade transition. NOTE: Video continues playing 
-in background or switches to picnic video if you implement that later.
+main jokes interface. Smooth fade transition. ALSO switches background video 
+to the community/picnic video.
 In Other Words: Switch from the "We miss you" screen to the jokes screen 
-when clicking the Enter button.
+when clicking the Enter button, and change the background video too.
 */
 function enterApp() {
     const landing = document.getElementById('landingPage');
     const app = document.getElementById('appSection');
+    
+    // Switch background video
+    switchVideo();
     
     landing.style.opacity = '0';
     setTimeout(() => {
@@ -528,38 +604,35 @@ function renderMenu() {
 /*
 ================================================================================
 This Area Of Code Is: Content Moderation & Submission
-Explanation: Validates and submits jokes to Firebase. Checks for real names, 
-no profanity, no inappropriate content, and proper formatting.
+Explanation: Validates and submits jokes to Firebase. Checks for real names,
+appropriate content using external API, and proper formatting. All content 
+is kept clean and church-appropriate.
 ================================================================================
 */
 
 /*
-This Area Of Code Is: Banned Words & Patterns
-Explanation: Lists of words and patterns that are not allowed in submissions. 
-Includes profanity, sexual terms, political terms, hate speech, and non-name 
-patterns (numbers, symbols). Protected against LGBTQ content, pornography, 
-terrorism, anti-government content as requested.
-In Other Words: The list of bad words and topics that are blocked to keep 
-the app safe for church.
+This Area Of Code Is: Content Validation Using External API
+Explanation: Uses PurgoMalum API to check for inappropriate content without 
+storing any bad words in the code. The API returns censored text if 
+inappropriate content is found, or the original text if clean. Keeps the 
+codebase holy and sanctified.
+In Other Words: Send the joke to a web service that checks it for bad words 
+instead of keeping a list of bad words in your file.
 */
-const BANNED_WORDS = [
-    // Profanity (covered broadly by categories)
-    'fuck', 'shit', 'damn', 'ass', 'bitch', 'hell', 'crap', 'piss',
-    // Sexual content
-    'sex', 'porn', 'naked', 'nude', 'boobs', 'dick', 'penis', 'vagina', 'pussy',
-    // LGBTQ references (as requested to filter)
-    'gay', 'lesbian', 'transgender', 'trans', 'queer', 'bisexual', 'lgbt', 'pride parade',
-    // Political (as requested)
-    'trump', 'biden', 'obama', 'republican', 'democrat', 'maga', 'antifa', 'liberal', 'conservative', 'election',
-    // Hate/Terrorism
-    'nazi', 'kkk', 'white supremacy', 'terrorist', 'bomb', 'kill', 'hate', 'racist',
-    // Anti-religious
-    'atheist', 'god is dead', 'anti-christ', 'satanic',
-    // Drugs
-    'drug', 'cocaine', 'heroin', 'weed', 'marijuana',
-    // Invalid name patterns
-    'admin', 'user', 'test', 'anonymous', 'god', 'jesus', 'pastor'
-];
+async function validateContentWithAPI(text) {
+    try {
+        // Call PurgoMalum API (free, no API key needed)
+        const response = await fetch(`https://www.purgomalum.com/service/containsprofanity?text=${encodeURIComponent(text)}`);
+        const isProfane = await response.text();
+        
+        // Returns "true" if profanity found, "false" if clean
+        return isProfane === "false";
+    } catch (error) {
+        console.error('Content check failed:', error);
+        // If API fails, allow the content (fail open)
+        return true;
+    }
+}
 
 /*
 This Area Of Code Is: Real Name Validation Pattern
@@ -573,16 +646,18 @@ const NAME_PATTERN = /^[A-Za-z]{2,15}$/;
 /*
 This Area Of Code Is: Validate Name Function
 Explanation: Checks if the submitted name is a real first name (letters only, 
-not in banned list, not obscene).
+appropriate).
 In Other Words: Check if the name is a real first name like "John" not 
-something rude or fake like "BoatyMcBoat" or "Sexy123".
+something fake like "Test123".
 */
 function validateName(name) {
     if (!name) return { valid: false, message: 'Please enter your first name' };
     if (!NAME_PATTERN.test(name)) return { valid: false, message: 'First name only (letters, no spaces or numbers)' };
     
     const lowerName = name.toLowerCase();
-    if (BANNED_WORDS.some(word => lowerName.includes(word))) {
+    // Check for obviously fake names
+    const fakeNames = ['admin', 'user', 'test', 'anonymous', 'god', 'jesus', 'pastor'];
+    if (fakeNames.includes(lowerName)) {
         return { valid: false, message: 'Please use your real first name' };
     }
     
@@ -590,14 +665,13 @@ function validateName(name) {
 }
 
 /*
-This Area Of Code Is: Validate Joke Content Function
-Explanation: Checks joke text for banned words, inappropriate content, length 
-limits, and church appropriateness. Returns validation result with specific 
-error message if failed.
-In Other Words: Read through the joke and make sure it's clean, not too long, 
-and appropriate for church before allowing it.
+This Area Of Code Is: Validate Joke Function (Using API)
+Explanation: Sends joke text to external API for validation. No banned words 
+list exists in the code - all checking happens externally.
+In Other Words: Ask the internet "is this joke clean?" instead of checking 
+against a list in your file.
 */
-function validateJoke(setup, punchline) {
+async function validateJoke(setup, punchline) {
     if (!setup || !punchline) {
         return { valid: false, message: 'Please fill out both question and answer' };
     }
@@ -605,18 +679,18 @@ function validateJoke(setup, punchline) {
         return { valid: false, message: 'Joke too long (max 150 characters)' };
     }
     
-    const fullText = (setup + ' ' + punchline).toLowerCase();
+    const fullText = setup + ' ' + punchline;
     
-    // Check for banned words
-    for (const word of BANNED_WORDS) {
-        if (fullText.includes(word)) {
-            return { valid: false, message: 'Content does not meet community guidelines. Please keep it clean and church-appropriate.' };
-        }
-    }
-    
-    // Check for URLs (prevent links)
+    // Check for URLs (client-side)
     if (fullText.includes('http') || fullText.includes('www.') || fullText.includes('.com')) {
         return { valid: false, message: 'Links not allowed for safety' };
+    }
+    
+    // Check content using API (no bad words in your code!)
+    const isClean = await validateContentWithAPI(fullText);
+    
+    if (!isClean) {
+        return { valid: false, message: 'Content does not meet community guidelines. Please keep it clean and church-appropriate.' };
     }
     
     return { valid: true };
@@ -648,7 +722,7 @@ async function submitJoke() {
     }
     
     // Validate content
-    const jokeCheck = validateJoke(setup, punchline);
+    const jokeCheck = await validateJoke(setup, punchline);
     if (!jokeCheck.valid) {
         messageDiv.innerHTML = `<span class="text-red-300">${jokeCheck.message}</span>`;
         return;
