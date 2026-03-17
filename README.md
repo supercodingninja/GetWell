@@ -1,213 +1,108 @@
-<div align="center">
+# Get Well - Growing Digital Card
 
-# ⛪ Get Well Church Family
-### A Progressive Web App for Sending Love, Laughter & Prayers
+![Get Well App Structure](./IMG_1714.jpeg)
 
-[![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)](https://firebase.google.com)
-[![PWA](https://img.shields.io/badge/PWA-5A0FC8?style=for-the-badge&logo=pwa&logoColor=white)](https://web.dev/progressive-web-apps/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
-[![Security](https://img.shields.io/badge/Security-A+-brightgreen?style=for-the-badge&logo=shield&logoColor=white)](SECURITY.md)
+## Project Overview
 
-**A secure, offline-capable PWA featuring iOS-style glass morphism design, real-time Firebase backend, and church-appropriate content moderation.**
+I built Get Well as a universal digital card that anyone, anywhere in the world can use to send or receive encouragement. It's designed to be a living, growing collection of joy, reflections, and uplifting messages that gets richer over time as more people contribute.
 
-[View Demo](https://your-project.web.app) · [Report Bug](../../issues) · [Request Feature](../../issues)
+The concept is simple: a digital card that never runs out of space, never gets old, and can be shared instantly with anyone who needs their spirits lifted. Whether someone is recovering from illness, going through a hard time, or just needs a smile, this card is here for them.
 
-</div>
+**Live Site:** https://supercodingninja.github.io
 
 ---
 
-## 📱 Application Preview
+## How It Works
 
-<div align="center">
+People submit messages with their first name and location—like "Ginny from Ohio" or "Hakim from Turkey"—and those messages become part of the rotating collection. The card keeps growing as more people add their voices from around the world.
 
-### Landing Page with Church Interior Video Background
-*Cinematic video background with glass-morphism welcome card*
-
-<img src="videos/church-interior-poster.jpg" alt="Landing Page" width="600" style="border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
-
-### Main Jokes Interface with Community Video
-*Translucent glass cards floating over church picnic video*
-
-<img src="public/screenshots/app-preview.jpg" alt="App Interface" width="600" style="border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
-
-</div>
+**Submission includes:**
+* **Your first name** (required)
+* **Your location**—city, state, country, or any combination (required)
+* **Your message**—joke, reflection, or encouragement (required)
+* **Category selection**
 
 ---
 
-## ✨ Key Features
+## Repository Structure
 
-| Feature | Description | Technology |
-|---------|-------------|------------|
-| 🎥 **Dual Video Backgrounds** | Cinematic church interior (landing) & community picnic (main) with full viewport coverage | HTML5 Video API |
-| 🪟 **iOS Glass Morphism** | Translucent frosted-glass cards with backdrop blur matching iOS 26 design specs | Tailwind CSS + Custom CSS |
-| 🔒 **Multi-Layer Security** | Client-side + Firebase Rules + Cloud Functions triple moderation | Firebase Security |
-| 📴 **Offline PWA** | Full offline capability with service worker caching | Progressive Web App |
-| ⚡ **Real-Time Sync** | Live joke updates across all devices instantly | Cloud Firestore |
-| 🛡️ **Content Filtering** | Auto-blocks inappropriate content, enforces real names only | Cloud Functions |
-| 🎮 **Auto-Play Mode** | Configurable slideshow with pause/resume functionality | Vanilla JS |
-| ♿ **Accessibility** | Full keyboard navigation (Space, Arrows, Escape) | ARIA Standards |
+```text
+/GetWell/
+├── index.html          # Main entry point
+├── app.js             # Application logic
+├── styles.css         # Styling
+├── filters.js         # Content moderation
+├── manifest.json      # PWA config
+├── sw.js              # Service worker
+├── firebase.json      # Firebase hosting
+├── firestore.rules    # Database security
+├── .gitignore         # Git exclusions
+├── .gitattributes     # Git settings
+├── IMG_1714.jpeg      # App structure diagram
+└── README.md          # This file
 
----
+Branch: LivingCard (deploys to GitHub Pages)
 
-## 🗂️ File Structure
+Firebase Setup
+I configured this to use Firebase Firestore so the card can grow continuously. To make it work with your Firebase project:
+1. Go to Firebase Console
+2. Open project "Growing Get Well Card"
+3. Project Settings → General → Your apps
+4. Copy the config values into app.js:
 
-getwell-church-pwa/
-│
-├── 📁 public/                          # Frontend PWA (Deployed to Firebase Hosting)
-│   ├── 📄 index.html                   # Main SPA shell with video backgrounds
-│   ├── 📄 app.js                       # Application logic & Firebase integration
-│   ├── 📄 styles.css                   # Glass morphism & animation styles
-│   ├── 📄 manifest.json                # PWA install configuration
-│   ├── 📄 sw.js                        # Service Worker for offline support
-│   │
-│   ├── 📁 videos/                      # Video Assets
-│   │   ├── 🎬 church-interior.mp4      # Landing page background (Vecteezy)
-│   │   └── 🎬 church-community.mp4     # Jokes page background (Picnic scene)
-│   │
-│   ├── 📁 icons/                       # PWA Icons
-│   │   ├── 🖼️ icon-192x192.png
-│   │   └── 🖼️ icon-512x512.png
-│   │
-│   └── 📁 screenshots/                 # App store screenshots
-│       └── 🖼️ app-preview.jpg
-│
-├── 📁 firebase/                        # Backend Configuration
-│   ├── 📄 firestore.rules              # Database security rules
-│   │
-│   └── 📁 functions/                   # Cloud Functions (Node.js)
-│       ├── 📄 index.js                 # Main functions & moderation triggers
-│       ├── 📄 moderation.js            # Content validation utilities
-│       └── 📄 package.json             # Functions dependencies
-│
-├── 📄 firebase.json                    # Firebase hosting configuration
-├── 📄 tailwind.config.js               # Tailwind customization (glass effects)
-├── 📄 package.json                     # Root dependencies & scripts
-├── 📄 .firebaserc                      # Firebase project aliases
-└── 📄 README.md                        # This file
+const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "growing-get-well-card.firebaseapp.com",
+    projectId: "growing-get-well-card",
+    storageBucket: "growing-get-well-card.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+};
 
----
+The app will seed itself with starter content on first launch, then accumulate new submissions over time.
 
-## 🛡️ Security Architecture
+Video Hosting
+I host background videos via GitHub Releases to avoid the 100MB repository limit:
+* Landing: github.com
+* Main: github.com
+If you need to update videos, create a new release and update the URLs in app.js.
 
-┌─────────────────────────────────────────────────────────────┐
-│                    CLIENT SIDE (Browser)                     │
-│  • Real-time name validation (letters only)                  │
-│  • Banned word filtering (RegEx)                            │
-│  • XSS Protection (HTML escaping)                           │
-└──────────────────────┬──────────────────────────────────────┘
-│
-┌──────────────────────▼──────────────────────────────────────┐
-│                 FIRESTORE SECURITY RULES                     │
-│  • Validate data types & lengths                            │
-│  • Enforce required fields                                  │
-│  • Block unauthorized delete/update                         │
-└──────────────────────┬──────────────────────────────────────┘
-│
-┌──────────────────────▼──────────────────────────────────────┐
-│              CLOUD FUNCTIONS (Server-Side)                   │
-│  • Secondary content moderation                             │
-│  • AI-powered toxicity detection (Perspective API)          │
-│  • Auto-delete violations within 2 seconds                  │
-│  • Moderation logging for admin review                      │
-└─────────────────────────────────────────────────────────────┘
-￼
-### Content Filters Applied
-- ✅ **Real Name Verification** - First names only (no handles like "CoolDude123")
-- ✅ **Profanity Blocking** - 50+ word filter list
-- ✅ **Political Content** - Blocks election/references (as requested)
-- ✅ **LGBTQ Content** - Filters pride parade/references (as requested)
-- ✅ **Anti-Religious** - Blocks anti-Christian content
-- ✅ **Hate Speech** - Nazi, KKK, white supremacy blocked
-- ✅ **Sexual Content** - Pornographic terms blocked
-- ✅ **Terrorism/Drugs** - Related keywords blocked
+Content Moderation
+I use the PurgoMalum API to keep submissions clean without storing profanity lists in the codebase:
+Endpoint: www.purgomalum.com
+All submissions are checked before being added to the global collection.
 
----
+Features
+* Personal attribution: Every message shows the author's first name and location
+* Universal access: Works on any device with a browser
+* Continuously growing: Database expands with each new submission
+* Content moderation: Automatic screening via PurgoMalum API
+* Glass morphism UI: Modern frosted glass design
+* Video backgrounds: Ambient footage with fallback gradients
+* PWA capable: Install to home screen
+* Offline functionality: Service worker caching
+* Keyboard navigation: Arrow keys, spacebar, escape
+* Mobile responsive: Works on phones and tablets
 
-## 🚀 Quick Start
+Technical Notes
+Why GitHub Releases for Video Hosting
+Hosting large MP4 files directly in the repository hits GitHub's 100MB limit. By attaching videos to release v1.0-videos, I gain direct download URLs and GitHub's CDN for fast delivery.
 
-### Prerequisites
-- [Node.js](https://nodejs.org/) 18+
-- [Firebase CLI](https://firebase.google.com/docs/cli): `npm install -g firebase-tools`
+Firebase Firestore for Continuous Content
+I implemented Firestore so the app truly lives up to its name—"Growing Get Well Card." The database seeds itself on first launch with starter content, then accumulates user submissions over time. Security rules allow public reading of approved content while restricting edits to authenticated users only.
 
-### Installation
+Content Moderation Strategy
+I check both the message content and the author information (name + location) against the PurgoMalum API to ensure everything stays appropriate.
 
-1. **Clone the repository**
-```bash
-git clone https://github.com/yourusername/getwell-church-pwa.git
-cd getwell-church-pwa
-2. Install dependencies
-npm install
-cd firebase/functions && npm install && cd ../..
-3. Configure Firebase
-￼
-4. Add your video files
-Place your videos in public/videos/:
- • church-interior.mp4 - Landing page background
- • church-community.mp4 - Main app background
-5. Update Firebase Config
-Edit public/app.js with your Firebase config:
-￼
-6. Deploy
-￼
-Your app is now live at https://your-project.web.app 🎉
 
-￼
-📋 PWA Installation
-Users can install this app on their home screen:
-iOS Safari:
-1. Tap Share button
-2. Select "Add to Home Screen"
-3. Open like a native app
-Android Chrome:
-1. Tap menu (⋮)
-2. Select "Add to Home screen"
-3. App installs with splash screen & offline support
 
-￼
-🎨 Design System
-Glass Morphism Specifications
-￼Background: rgba(255, 255, 255, 0.15)
-Backdrop Filter: blur(20px)
-Border: 1px solid rgba(255, 255, 255, 0.25)
-Shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37)
+Copyright
+Copyright © 2026 Frederick Thomas (The Super Coding Ninja™). All rights reserved.
 
-Color Palette
- • Primary Glass: #ffffff (15% opacity)
- • Accent Blue: #3b82f6 (buttons)
- • Success Green: #22c55e (auto-mode)
- • Warning Amber: #eab308 (pause)
- • Church Gold: #ffd700 (accents)
+License
+MIT License
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-￼
-📊 Firebase Free Tier Limits
-￼Resource	Limit	Usage Estimate
-Firestore Reads	50,000/day	~1,000 users/day
-Firestore Writes	20,000/day	~500 submissions/day
-Hosting Storage	1 GB	Videos optimized
-Functions Calls	125,000/month	Auto-moderation
-Bandwidth	10 GB/month	CDN optimized
-
-💡 Tip: Videos are cached locally after first load, minimizing bandwidth usage.
-
-￼
-🤝 Contributing
-We love contributions! Please ensure:
- • Jokes are family-friendly (4-year-old appropriate)
- • No political or controversial content
- • Follow the existing glass-morphism design
- • Maintain Firebase Security Rules coverage
-
-￼
-📄 License
-Distributed under the MIT License. See LICENSE for more information.
-
-￼
-🙏 Acknowledgments
- • Video Background: Vecteezy Church Stock Videos
- • Icons: Heroicons
- • Fonts: Inter & system fonts
- • Firebase Team for the generous free tier
-
-© 2026 Get Well. All Rights Reserved. 𝑇ℎ𝑒 𝑆𝑢𝑝𝑒𝑟 𝐶𝑜𝑑𝑖𝑛𝑔 𝑁𝑖𝑛𝑗𝑎™
-Made with ❤️ for the Church Community
-⬆ Back to Top
+"A merry heart doeth good like a medicine" - Proverbs 17:22
