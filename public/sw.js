@@ -1,88 +1,83 @@
 /*
 ================================================================================
 This Area Of Code Is: Service Worker (PWA Offline Support)
-Explanation: A background script that enables offline functionality. Caches 
-the app shell (HTML, CSS, JS) and videos so the app works without internet 
-after first load. Intercepts network requests and serves from cache when offline.
-In Other Words: The behind-the-scenes helper that saves the app to the phone 
-so it works even without WiFi (like a downloaded app).
+Explanation: This script runs in the background and enables offline functionality.
+It caches the app files so users can still view jokes without internet. Also
+handles push notifications and background sync if added later.
+In Other Words: The behind-the-scenes worker that saves the app to your phone
+so it works without internet.
 ================================================================================
 */
 
 /*
 This Area Of Code Is: Cache Configuration
-Explanation: Name of the cache storage and list of essential files to cache 
-for offline use.
-In Other Words: The list of files to save for offline mode.
+Explanation: Defines the cache name (versioned) and which files to cache for
+offline use. These are the core files needed to run the app.
+In Other Words: The list of files to save for offline use.
 */
-const CACHE_NAME = 'getwell-church-v1';
+const CACHE_NAME = 'getwell-cache-v1';
 const urlsToCache = [
-    '/',
-    '/index.html',
-    '/styles.css',
-    '/app.js',
-    '/manifest.json',
-    'https://cdn.tailwindcss.com'
+    '/GetWell/',
+    '/GetWell/index.html',
+    '/GetWell/public/app.html',
+    '/GetWell/public/styles.css',
+    '/GetWell/public/app.js',
+    '/GetWell/manifest.json'
 ];
 
 /*
-This Area Of Code Is: Install Event Listener
-Explanation: Runs when the service worker installs. Opens the cache and adds 
-all essential files. Also caches the video files if possible.
-In Other Words: When the app is first installed, save all the important files 
-to the phone's storage.
+This Area Of Code Is: Install Event Handler
+Explanation: Runs when the service worker is first installed. Opens the cache
+and adds all core files to it. This happens when the user first visits the page.
+In Other Words: When the app is first added, save all the files to the phone.
 */
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then((cache) => {
+                console.log('Cache opened');
                 return cache.addAll(urlsToCache);
             })
-            .catch((err) => console.log('Cache install failed:', err))
+            .catch((err) => {
+                console.error('Cache failed:', err);
+            })
     );
+    
+    // Activate immediately
     self.skipWaiting();
 });
 
 /*
-This Area Of Code Is: Fetch Event Listener
-Explanation: Intercepts all network requests. If the request is in cache, 
-returns the cached version (faster, works offline). If not, fetches from 
-network and caches the result.
-In Other Words: When the app asks for a file, first check if we have it saved 
-locally. If yes, use the saved copy. If no, get it from the internet and save 
-it for later.
+This Area Of Code Is: Fetch Event Handler
+Explanation: Intercepts all network requests. First tries to serve from cache
+(offline), then falls back to network if not in cache. This enables offline use.
+In Other Words: When the app asks for a file, give the saved version first.
+If not saved, try to download it.
 */
 self.addEventListener('fetch', (event) => {
     event.respondWith(
         caches.match(event.request)
             .then((response) => {
-                // Return cached or fetch new
+                // Return cached version or fetch from network
                 if (response) {
                     return response;
                 }
-                return fetch(event.request)
-                    .then((response) => {
-                        // Don't cache if not valid response
-                        if (!response || response.status !== 200 || response.type !== 'basic') {
-                            return response;
-                        }
-                        // Clone and cache the response
-                        const responseToCache = response.clone();
-                        caches.open(CACHE_NAME)
-                            .then((cache) => {
-                                cache.put(event.request, responseToCache);
-                            });
-                        return response;
-                    });
+                return fetch(event.request);
+            })
+            .catch(() => {
+                // If both fail, return offline fallback
+                if (event.request.mode === 'navigate') {
+                    return caches.match('/GetWell/index.html');
+                }
             })
     );
 });
 
 /*
-This Area Of Code Is: Activate Event Listener
-Explanation: Cleans up old caches when the service worker updates to a new 
-version.
-In Other Words: Delete old saved files when updating the app to a new version.
+This Area Of Code Is: Activate Event Handler
+Explanation: Runs when the service worker activates. Cleans up old caches
+from previous versions to save space.
+In Other Words: Delete old saved files when updating to a new version.
 */
 self.addEventListener('activate', (event) => {
     event.waitUntil(
@@ -96,5 +91,7 @@ self.addEventListener('activate', (event) => {
             );
         })
     );
+    
+    // Take control of all clients immediately
     self.clients.claim();
 });
