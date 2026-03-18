@@ -1,8 +1,7 @@
 /*
 ================================================================================
 This Area Of Code Is: Encrypted Firebase Configuration
-Explanation: I Base64-encoded the Firebase API credentials to prevent plain-text exposure in GitHub source code. The configuration is decoded at runtime using the atob() function before Firebase initialization, keeping keys hidden from casual code inspection while maintaining full functionality.
-In Other Words: This hides the API keys from people reading the code but decodes them when the app runs.
+Explanation: Base64 encoded credentials to prevent GitHub exposure
 ================================================================================
 */
 
@@ -16,7 +15,6 @@ const encryptedConfig = {
     measurementId: "Ry1SRUs5OVAzRUtX"
 };
 
-// Decode configuration
 const firebaseConfig = {
     apiKey: atob(encryptedConfig.apiKey),
     authDomain: atob(encryptedConfig.authDomain),
@@ -34,16 +32,64 @@ try {
     firebase.initializeApp(firebaseConfig);
     db = firebase.firestore();
     firebaseInitialized = true;
-    console.log('[App] Firebase initialized successfully');
+    console.log('[App] Firebase initialized');
 } catch (e) {
     console.error('[App] Firebase init failed:', e);
 }
 
 /*
 ================================================================================
+This Area Of Code Is: Default Jokes Dataset
+Explanation: Pre-loaded jokes with NO author names (as requested). Only "App Original, USA" or blank.
+================================================================================
+*/
+
+const defaultJokes = [
+    { type: 'joke', icon: '🧪', setup: "What do you call a fake noodle?", punchline: "An impasta!", author: "App Original, USA" },
+    { type: 'joke', icon: '🐄', setup: "What do you call a sleeping bull?", punchline: "A bulldozer!", author: "App Original, USA" },
+    { type: 'prayer', icon: '🙏', setup: "May you feel God's healing presence", punchline: "The Lord is my shepherd; I shall not want. - Psalm 23:1", author: "App Original, USA" },
+    { type: 'joke', icon: '🍊', setup: "Why did the orange stop?", punchline: "It ran out of juice!", author: "App Original, USA" },
+    { type: 'message', icon: '💝', setup: "You are in our prayers daily", punchline: "For I know the plans I have for you, declares the Lord. - Jeremiah 29:11", author: "App Original, USA" },
+    { type: 'joke', icon: '⛪', setup: "Why do church musicians have to be so careful?", punchline: "Because one wrong note and it's an organ-ized crime!", author: "App Original, USA" },
+    { type: 'prayer', icon: '🌟', setup: "Healing comes from above", punchline: "But He was pierced for our transgressions; by His wounds we are healed. - Isaiah 53:5", author: "App Original, USA" },
+    { type: 'joke', icon: '🐝', setup: "What do you call a bee that can't make up its mind?", punchline: "A maybe!", author: "App Original, USA" },
+    { type: 'message', icon: '💐', setup: "Sending you love and strength", punchline: "I can do all things through Christ who strengthens me. - Philippians 4:13", author: "App Original, USA" },
+    { type: 'joke', icon: '🐟', setup: "What do you call a fish with no eyes?", punchline: "Fsh!", author: "App Original, USA" },
+    { type: 'prayer', icon: '✝️', setup: "May God's peace comfort you", punchline: "Peace I leave with you; my peace I give you. - John 14:27", author: "App Original, USA" },
+    { type: 'joke', icon: '🍕', setup: "Why did the pizza maker go to church?", punchline: "He needed help with his daily bread!", author: "App Original, USA" }
+];
+
+let state = {
+    jokes: [...defaultJokes],
+    currentIndex: 0,
+    autoMode: false,
+    autoSpeed: 6000,
+    punchlineVisible: false,
+    autoInterval: null
+};
+
+/*
+================================================================================
+This Area Of Code Is: Content Moderation System
+Explanation: Uses PurgoMalum API to check for inappropriate content before saving
+================================================================================
+*/
+
+async function validateContent(text) {
+    try {
+        const response = await fetch(`https://www.purgomalum.com/service/containsprofanity?text=${encodeURIComponent(text)}`);
+        const hasProfanity = await response.text();
+        return hasProfanity === 'false';
+    } catch (e) {
+        console.log('[Validation] API failed, allowing content');
+        return true;
+    }
+}
+
+/*
+================================================================================
 This Area Of Code Is: Video Background Manager
-Explanation: I implemented a VideoBackgroundManager class that handles lazy loading of background video elements, error fallbacks for network failures, and device detection to disable heavy video on low-power devices or when reduced motion is preferred.
-In Other Words: This loads the background video and handles errors if it doesn't work.
+Explanation: Handles lazy loading and fallback for background video
 ================================================================================
 */
 
@@ -57,19 +103,16 @@ class VideoBackgroundManager {
     init() {
         if (!this.video) return;
         
-        // Handle video load errors
         this.video.addEventListener('error', () => {
             console.log('[Video] Load failed, using fallback');
             this.showFallback();
         });
 
-        // Handle successful load
         this.video.addEventListener('loadeddata', () => {
             console.log('[Video] Loaded successfully');
             this.video.style.opacity = '0.7';
         });
 
-        // Check for reduced motion preference
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             this.video.pause();
             this.video.style.display = 'none';
@@ -88,60 +131,8 @@ class VideoBackgroundManager {
 
 /*
 ================================================================================
-This Area Of Code Is: Joke Card Application State
-Explanation: I defined the application state object containing default joke dataset, current card index, auto-play settings, and visibility flags for managing the UI state throughout the user session.
-In Other Words: This stores all the jokes and keeps track of which one is showing.
-================================================================================
-*/
-
-const defaultJokes = [
-    { type: 'joke', icon: '🧪', setup: "What do you call a fake noodle?", punchline: "An impasta!", author: "Pastor Mike" },
-    { type: 'joke', icon: '🐄', setup: "What do you call a sleeping bull?", punchline: "A bulldozer!", author: "Youth Group" },
-    { type: 'prayer', icon: '🙏', setup: "May you feel God's healing presence", punchline: "The Lord is my shepherd; I shall not want. - Psalm 23:1", author: "Church Family" },
-    { type: 'joke', icon: '🍊', setup: "Why did the orange stop?", punchline: "It ran out of juice!", author: "Sister Sarah" },
-    { type: 'message', icon: '💝', setup: "You are in our prayers daily", punchline: "For I know the plans I have for you, declares the Lord. - Jeremiah 29:11", author: "Elder Board" },
-    { type: 'joke', icon: '⛪', setup: "Why do church musicians have to be so careful?", punchline: "Because one wrong note and it's an organ-ized crime!", author: "Worship Team" },
-    { type: 'prayer', icon: '🌟', setup: "Healing comes from above", punchline: "But He was pierced for our transgressions, He was crushed for our iniquities; the punishment that brought us peace was on Him, and by His wounds we are healed. - Isaiah 53:5", author: "Prayer Team" },
-    { type: 'joke', icon: '🐝', setup: "What do you call a bee that can't make up its mind?", punchline: "A maybe!", author: "Kids Ministry" },
-    { type: 'message', icon: '💐', setup: "Sending you love and strength", punchline: "I can do all things through Christ who strengthens me. - Philippians 4:13", author: "Pastoral Care" },
-    { type: 'joke', icon: '🐟', setup: "What do you call a fish with no eyes?", punchline: "Fsh!", author: "Brother Bob" },
-    { type: 'prayer', icon: '✝️', setup: "May God's peace comfort you", punchline: "Peace I leave with you; my peace I give you. - John 14:27", author: "Deacons" },
-    { type: 'joke', icon: '🍕', setup: "Why did the pizza maker go to church?", punchline: "He needed help with his daily bread!", author: "Youth Pastor" }
-];
-
-let state = {
-    jokes: [...defaultJokes],
-    currentIndex: 0,
-    autoMode: false,
-    autoSpeed: 6000,
-    punchlineVisible: false,
-    autoInterval: null
-};
-
-/*
-================================================================================
-This Area Of Code Is: Content Moderation System
-Explanation: I implemented content validation using the PurgoMalum API to check user-submitted jokes for inappropriate language before saving, ensuring the database remains clean without storing banned word lists locally.
-In Other Words: This checks if jokes are clean before saving them using an online filter.
-================================================================================
-*/
-
-async function validateContent(text) {
-    try {
-        const response = await fetch(`https://www.purgomalum.com/service/containsprofanity?text=${encodeURIComponent(text)}`);
-        const hasProfanity = await response.text();
-        return hasProfanity === 'false';
-    } catch (e) {
-        console.log('[Validation] API check failed, allowing content');
-        return true; // Fail open if API is down
-    }
-}
-
-/*
-================================================================================
-This Area Of Code Is: DOM Manipulation Functions
-Explanation: I created functions to update the DOM elements including renderCard() to display current joke data, updateCounter() to show position, and togglePunchline() to reveal hidden answers with animation classes.
-In Other Words: These functions change what's shown on the screen.
+This Area Of Code Is: Card Rendering System
+Explanation: Displays current joke with NO author for defaults, shows author only for user submissions
 ================================================================================
 */
 
@@ -155,7 +146,6 @@ function renderCard() {
     
     if (!cardIcon || !setupText || !punchlineText) return;
 
-    // Animate out
     cardIcon.style.transform = 'scale(0)';
     
     setTimeout(() => {
@@ -167,15 +157,14 @@ function renderCard() {
         state.punchlineVisible = false;
         document.getElementById('punchlineBtn').textContent = 'Show Punchline';
         
-        if (joke.author) {
+        // Only show author if it's a user submission (not App Original)
+        if (joke.author && joke.author !== 'App Original, USA' && !joke.author.includes('App Original')) {
             authorInfo.innerHTML = `<span>by</span> <span class="author-name">${joke.author}</span>`;
         } else {
-            authorInfo.innerHTML = '';
+            authorInfo.innerHTML = '<span style="opacity:0.5;">GetWell Card</span>';
         }
         
         updateCounter();
-        
-        // Animate in
         cardIcon.style.transform = 'scale(1)';
     }, 150);
 }
@@ -225,9 +214,7 @@ function jumpToCard(index) {
 
 /*
 ================================================================================
-This Area Of Code Is: Auto-Play Mode Controller
-Explanation: I implemented setInterval-based auto-rotation with configurable speeds (3.5s, 6s, 8s), including cleanup on mode disable and visual indicators for active state.
-In Other Words: This makes the cards flip through automatically when turned on.
+This Area Of Code Is: Auto-Play Controller
 ================================================================================
 */
 
@@ -251,7 +238,7 @@ function toggleAutoMode() {
 }
 
 function startAutoMode() {
-    stopAutoMode(); // Clear any existing
+    stopAutoMode();
     state.autoInterval = setInterval(() => {
         if (state.punchlineVisible) {
             nextCard();
@@ -281,9 +268,7 @@ function setSpeed(speed) {
 
 /*
 ================================================================================
-This Area Of Code Is: UI Interaction Handlers
-Explanation: I created toggle functions for the side menu modal using classList to toggle CSS states, and implemented form handlers for joke submission with validation and Firebase integration for persistence.
-In Other Words: These handle opening menus and submitting new jokes.
+This Area Of Code Is: Menu and Modal Controllers
 ================================================================================
 */
 
@@ -351,8 +336,7 @@ function goHome() {
 /*
 ================================================================================
 This Area Of Code Is: Joke Submission Handler
-Explanation: I implemented async form submission with content moderation validation, Firebase Firestore integration for persistence, and localStorage fallback for offline support. Submissions are sanitized and include author metadata.
-In Other Words: This saves new jokes to the database after checking they're clean.
+Explanation: Saves user jokes with their name/location ONLY for user submissions
 ================================================================================
 */
 
@@ -376,7 +360,6 @@ async function submitJoke(event) {
         return;
     }
     
-    // Validate content
     const isClean = await validateContent(setup + ' ' + punchline);
     if (!isClean) {
         alert('Please keep content family-friendly. Thank you!');
@@ -388,37 +371,27 @@ async function submitJoke(event) {
         icon: '✨',
         setup: setup,
         punchline: punchline,
-        author: location ? `${name} (${location})` : name,
+        author: location ? `${name} (${location})` : name, // User submission - show their name
         timestamp: new Date().toISOString()
     };
     
-    // Save to Firebase if available
     if (firebaseInitialized && db) {
         try {
             await db.collection('jokes').add(newJoke);
             console.log('[Submit] Saved to Firebase');
         } catch (e) {
-            console.log('[Submit] Firebase save failed, using localStorage');
+            console.log('[Submit] Firebase failed, using localStorage');
             saveLocal(newJoke);
         }
     } else {
         saveLocal(newJoke);
     }
     
-    // Add to current session
     state.jokes.push(newJoke);
     state.currentIndex = state.jokes.length - 1;
     renderCard();
     closeJokeModal();
     updateCardJumps();
-    
-    // Show success
-    const btn = document.querySelector('.submit-btn');
-    if (btn) {
-        const original = btn.innerHTML;
-        btn.innerHTML = '<span>✓</span> Saved!';
-        setTimeout(() => btn.innerHTML = original, 2000);
-    }
 }
 
 function saveLocal(joke) {
@@ -434,8 +407,6 @@ function saveLocal(joke) {
 /*
 ================================================================================
 This Area Of Code Is: Firebase Data Loader
-Explanation: I implemented async loading of community jokes from Firestore, merging them with default jokes and sorting by timestamp to display user submissions alongside curated content on application startup.
-In Other Words: This loads saved jokes from the cloud when the app starts.
 ================================================================================
 */
 
@@ -457,7 +428,6 @@ async function loadCommunityJokes() {
             ...doc.data()
         }));
         
-        // Merge with defaults, avoiding duplicates
         const existingSetups = new Set(state.jokes.map(j => j.setup));
         communityJokes.forEach(joke => {
             if (!existingSetups.has(joke.setup)) {
@@ -469,7 +439,7 @@ async function loadCommunityJokes() {
         renderCard();
         updateCardJumps();
     } catch (e) {
-        console.log('[Load] Firestore query failed:', e);
+        console.log('[Load] Firestore failed:', e);
         loadLocalJokes();
     }
 }
@@ -493,25 +463,17 @@ function loadLocalJokes() {
 /*
 ================================================================================
 This Area Of Code Is: Application Initialization
-Explanation: I set up the DOMContentLoaded event listener to initialize the video background manager, load community jokes from Firebase, render the initial card, and set up keyboard navigation handlers.
-In Other Words: This starts everything when the page loads.
 ================================================================================
 */
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log('[App] Initializing...');
     
-    // Initialize video background
     new VideoBackgroundManager();
-    
-    // Load jokes
     loadCommunityJokes();
-    
-    // Initial render
     renderCard();
     updateCardJumps();
     
-    // Keyboard controls
     document.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowRight') nextCard();
         if (e.key === 'ArrowLeft') previousCard();
@@ -527,7 +489,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // Live viewer counter simulation
     const viewerEl = document.getElementById('liveViewers');
     if (viewerEl) {
         setInterval(() => {
@@ -536,5 +497,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 10000);
     }
     
-    console.log('[App] Initialized successfully');
+    console.log('[App] Initialized');
 });
