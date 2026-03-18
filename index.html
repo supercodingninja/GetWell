@@ -3,44 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Get Well - Growing Get Well Card</title>
+    <title>Get Well Card</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="manifest" href="manifest.json">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <style>
-        .video-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; }
-        .video-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,20,0.6); z-index: -1; }
-        .shimmer { background: linear-gradient(90deg, #cd7f32, #6b21a8, #cd7f32); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 3s linear infinite; text-shadow: 0 0 20px rgba(255,255,255,0.3); }
-        @keyframes shimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
-        .glass-card { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; }
+        * { font-family: 'Inter', sans-serif; }
+        .serif { font-family: 'Playfair Display', serif; }
+        
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        
+        .video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.7);
+            z-index: -1;
+        }
+        
+        .glass-button {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .glass-button:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
     </style>
 </head>
-<body class="min-h-screen text-white relative overflow-x-hidden flex flex-col">
-    <video class="video-bg" autoplay muted loop playsinline>
-        <source src="https://github.com/supercodingninja/GetWell/releases/download/v1.0-videos/church-interior.mp4" type="video/mp4">
-    </video>
-    <div class="video-overlay"></div>
+<body class="text-white min-h-screen">
 
-    <nav class="p-6 relative z-10">
-        <h1 class="text-3xl font-bold text-[#1e40af] drop-shadow-lg">Get Well</h1>
-    </nav>
+<!-- Video Background -->
+<video class="video-bg" autoplay muted loop playsinline>
+    <source src="https://github.com/supercodingninja/GetWell/releases/download/v1.0-videos/video.mp4" type="video/mp4">
+</video>
+<div class="video-overlay"></div>
 
-    <main class="flex-grow flex items-center justify-center px-4 relative z-10">
-        <div class="glass-card p-8 md:p-12 max-w-2xl w-full text-center">
-            <h1 class="text-5xl md:text-7xl font-bold mb-4 text-[#1e40af]">Get Well</h1>
-            <p class="text-xl text-gray-200 mb-8">Growing Get Well Card</p>
-            
-            <a href="public/app.html" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-full text-lg transition transform hover:scale-105 shadow-lg">
-                Enter App
-            </a>
-            
-            <p class="mt-6 text-lg">Made With 🫶🏿 By <span class="shimmer font-semibold">Frederick Thomas</span>, <span class="text-[#f97316] font-semibold">"The Super Coding Ninja™"</span></p>
-        </div>
-    </main>
-
-    <footer class="p-4 text-center text-sm text-gray-400 relative z-10 bg-black/30">
-        <p>© 2026 <span class="text-[#1e40af] font-semibold">Get Well</span>. All rights reserved. <span class="shimmer">Frederick Thomas</span>, <span class="text-[#f97316]">"The Super Coding Ninja™"</span></p>
+<div class="min-h-screen flex flex-col items-center justify-center px-4">
+    <div class="glass rounded-3xl p-8 sm:p-12 max-w-xl w-full text-center">
+        <div class="mb-6 text-6xl">⛪</div>
+        
+        <h1 class="text-4xl sm:text-5xl font-bold serif mb-4 text-white">Get Well Soon</h1>
+        <p class="text-xl text-white/80 mb-2">Your Church Family Loves You</p>
+        <p class="text-white/60 mb-8">God Bless You</p>
+        
+        <a href="public/app.html" class="glass-button inline-flex items-center gap-2 px-8 py-4 rounded-full text-lg font-semibold">
+            <i class="ph ph-cards text-xl"></i>
+            <span>Open Card</span>
+        </a>
+    </div>
+    
+    <footer class="mt-12 text-center text-white/40 text-sm">
+        <p>© 2026 Get Well Card</p>
+        <p class="mt-1">Frederick Thomas, "The Super Coding Ninja™"</p>
     </footer>
+</div>
 
-    <script>if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');</script>
 </body>
 </html>
