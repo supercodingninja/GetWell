@@ -1,0 +1,118 @@
+<!-- public/app.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Well App - Growing Get Well Card</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="get-well-text">Get Well</span>
+        </div>
+        <div class="nav-links">
+            <a href="../index.html" class="btn btn-secondary">Home</a>
+            <button id="slideshowToggle" class="btn btn-primary">▶ Slideshow</button>
+        </div>
+    </nav>
+
+    <div class="video-background" id="videoBackground">
+        <video autoplay muted loop playsinline>
+            <source src="https://github.com/supercodingninja/GetWell/releases/download/v1.0-videos/video.mp4" type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
+    <main class="app-container">
+        <div class="mode-toggle">
+            <button class="mode-btn active" data-mode="jokes">😄 Jokes</button>
+            <button class="mode-btn" data-mode="prayers">🙏 Prayers</button>
+            <button class="mode-btn" data-mode="messages">💌 Messages</button>
+        </div>
+
+        <div class="content-display" id="contentDisplay">
+            <div class="glass-card" id="contentCard">
+                <div class="card-header">
+                    <span class="card-type" id="cardType">Joke</span>
+                    <span class="card-number" id="cardNumber">#1</span>
+                </div>
+                <div class="card-body">
+                    <p class="card-text" id="cardText">Loading...</p>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-outline" id="prevBtn">← Previous</button>
+                    <button class="btn btn-outline" id="nextBtn">Next →</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="submission-section">
+            <button class="btn btn-glow btn-lg" id="addContentBtn">+ Add Your Own</button>
+            <div class="form-container glass-card" id="submissionForm" style="display: none;">
+                <h3>Share Something Positive</h3>
+                <form id="contentForm">
+                    <div class="form-group">
+                        <label>Type:</label>
+                        <select id="submitType" required>
+                            <option value="jokes">Joke</option>
+                            <option value="prayers">Prayer</option>
+                            <option value="messages">Message</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Your Content:</label>
+                        <textarea id="submitText" rows="4" placeholder="Share something uplifting..." required></textarea>
+                        <div class="char-count" id="charCount">0 / 500</div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="copyright">
+                © 2026 <span class="get-well-text">Get Well</span>. All rights reserved. 
+                <span class="frederick-text">Frederick Thomas</span>, 
+                <span class="ninja-text">"The Super Coding Ninja™"</span>
+            </p>
+            <p class="made-with">
+                Made With 🫶🏿 By <span class="frederick-text">Frederick Thomas</span>, 
+                <span class="ninja-text">"The Super Coding Ninja™"</span>
+            </p>
+        </div>
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-analytics.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDieVA5y_pag35ZVh8P8Pul68sZ_2qtEGU",
+            authDomain: "growing-get-well-card.firebaseapp.com",
+            projectId: "growing-get-well-card",
+            storageBucket: "growing-get-well-card.firebasestorage.app",
+            messagingSenderId: "615025378529",
+            appId: "1:615025378529:web:38e3801c79f54d852623a0",
+            measurementId: "G-REK99P3EKW"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const analytics = getAnalytics(app);
+        window.firebaseApp = app;
+        window.firebaseDb = db;
+    </script>
+    <script type="module" src="app.js"></script>
+</body>
+</html>
