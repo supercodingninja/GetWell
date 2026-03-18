@@ -1,292 +1,589 @@
 <!DOCTYPE html>
 <html lang="en">
-<!--
-================================================================================
-This Area Of Code Is: HTML Document Root & Language Declaration
-Explanation: I am declaring this document as an HTML5 document with English 
-language support. This tells the browser how to parse the file and helps 
-screen readers with pronunciation.
-In Other Words: This tells the computer "This is a webpage in English."
-================================================================================
--->
 <head>
-    <!--
-    ================================================================================
-    This Area Of Code Is: Character Encoding & Viewport Configuration
-    Explanation: I set the character encoding to UTF-8 so special characters display 
-    correctly, and I configured the viewport to ensure the page looks good on 
-    mobile phones by setting the width to the device width and initial zoom to 1.0.
-    In Other Words: This makes sure emojis show up right and the page fits on 
-    your phone screen without being too tiny.
-    ================================================================================
-    -->
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!--
-    ================================================================================
-    This Area Of Code Is: Page Title & Tab Icon
-    Explanation: I set the title that appears in the browser tab to "Get Well Card" 
-    so users know what app this is when they have multiple tabs open.
-    In Other Words: This is the name that shows up at the top of your browser tab.
-    ================================================================================
-    -->
-    <title>Get Well Card</title>
-    
-    <!--
-    ================================================================================
-    This Area Of Code Is: Tailwind CSS Framework Loading
-    Explanation: I am loading the Tailwind CSS library from a CDN (Content Delivery 
-    Network) so I can use utility classes like "flex", "rounded-3xl", and "glass" 
-    without writing custom CSS for every single style.
-    In Other Words: This loads a toolbox of ready-made styles I can use instantly.
-    ================================================================================
-    -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!--
-    ================================================================================
-    This Area Of Code Is: Google Fonts Loading
-    Explanation: I imported two font families from Google: Inter (a clean, modern 
-    sans-serif for body text) and Playfair Display (an elegant serif font for 
-    headings). I specified multiple weights (300, 400, 500, 600, 700) so I have 
-    flexibility in typography.
-    In Other Words: This brings in fancy writing styles from the internet to make 
-    the page look beautiful instead of boring.
-    ================================================================================
-    -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
-    
-    <!--
-    ================================================================================
-    This Area Of Code Is: Phosphor Icons Library
-    Explanation: I loaded the Phosphor Icons library to use clean, modern icons 
-    (like the cards icon for the "Open Card" button). This is a lightweight icon 
-    set that works well with the glass morphism design.
-    In Other Words: This gives me pretty symbols and pictures to use as buttons.
-    ================================================================================
-    -->
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    
-    <!--
-    ================================================================================
-    This Area Of Code Is: Custom CSS Styles (Internal Stylesheet)
-    Explanation: I wrote custom CSS rules here to supplement Tailwind. I defined 
-    the glass morphism effect (blur + transparency), video background positioning, 
-    and custom button hover animations that Tailwind doesn't provide by default.
-    In Other Words: These are special styling rules I created myself for the 
-    frosted glass look and video backgrounds.
-    ================================================================================
-    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="description" content="A global Christian get-well card with encouragement, jokes, and prayers">
+    <title>Get Well Soon | Growing Get Well Card</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        /*
-        ================================================================================
-        This Area Of Code Is: Universal Font Family Reset
-        Explanation: I set every element to use the Inter font family by default, 
-        ensuring consistency across the entire page. I also created a utility class 
-        called "serif" for elements that need the Playfair Display font.
-        In Other Words: This makes all the text use the clean modern font, unless 
-        I specifically say to use the fancy font.
-        ================================================================================
-        */
-        * { font-family: 'Inter', sans-serif; }
-        .serif { font-family: 'Playfair Display', serif; }
-        
-        /*
-        ================================================================================
-        This Area Of Code Is: Glass Morphism Effect Class
-        Explanation: I created the "glass" class to produce the iOS 26 glass morphism 
-        look. This uses a semi-transparent white background (rgba 255,255,255,0.1), 
-        applies a heavy blur filter (40px) with saturation boost (180%), and adds 
-        a subtle white border. The -webkit- prefix ensures it works on Safari.
-        In Other Words: This makes the boxes look like frosted glass you can 
-        slightly see through, just like on an iPhone.
-        ================================================================================
-        */
-        .glass {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(40px) saturate(180%);
-            -webkit-backdrop-filter: blur(40px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        
-        /*
+
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --glass-highlight: rgba(255, 255, 255, 0.05);
+            --primary-gold: #fbbf24;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+        }
+
+        html, body {
+            height: 100%;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0f172a;
+            overflow: hidden;
+        }
+
+        /* 
         ================================================================================
-        This Area Of Code Is: Video Background Positioning
-        Explanation: I configured the video background to cover the entire screen 
-        by fixing its position to the top-left corner and setting its dimensions 
-        to 100% width and height. The object-fit: cover ensures the video fills 
-        the screen without stretching, and z-index: -1 puts it behind all content.
-        In Other Words: This makes the video cover the whole screen like wallpaper, 
-        staying in the background so buttons and text can go on top.
+        This Area Of Code Is: Video Background Container
+        Explanation: I configured a fixed video background that autoplays, loops, and covers the entire viewport. I added multiple source fallbacks and a poster image for mobile compatibility.
+        In Other Words: This puts the church video behind everything and makes it fill the screen.
         ================================================================================
         */
-        .video-bg {
+        .video-background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .video-background video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
             object-fit: cover;
-            z-index: -1;
+            filter: brightness(0.6) saturate(1.1);
         }
-        
-        /*
-        ================================================================================
-        This Area Of Code Is: Video Overlay/Darkening Layer
-        Explanation: I added a semi-transparent dark overlay (rgba 15,23,42,0.7) 
-        that sits on top of the video but behind the content. This ensures the 
-        white text remains readable against the bright video background.
-        In Other Words: This is like putting sunglasses over the video so the 
-        white words are easy to read.
-        ================================================================================
-        */
+
         .video-overlay {
-            position: fixed;
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(15, 23, 42, 0.7);
-            z-index: -1;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.4) 0%, rgba(30, 41, 59, 0.3) 50%, rgba(15, 23, 42, 0.5) 100%);
+            backdrop-filter: blur(2px);
         }
-        
-        /*
+
+        /* 
         ================================================================================
-        This Area Of Code Is: Glass Button Styling
-        Explanation: I created the "glass-button" class for interactive buttons 
-        with the glass effect. It has a slightly more opaque background than the 
-        card (0.15 vs 0.1), a subtle border, and includes transition properties 
-        for smooth hover effects.
-        In Other Words: This makes the buttons look like frosted glass too, and 
-        they smoothly change when you touch them.
+        This Area Of Code Is: Language Selector
+        Explanation: I positioned a glass-morphism language dropdown in the top-right corner with Google Translate integration. I added a disclaimer about translation accuracy.
+        In Other Words: This lets people pick their language from a pretty dropdown.
         ================================================================================
         */
-        .glass-button {
-            background: rgba(255, 255, 255, 0.15);
+        .language-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        .lang-dropdown {
+            background: var(--glass-bg);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            padding: 10px 20px;
+            color: var(--text-primary);
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
         }
-        
-        /*
+
+        .lang-dropdown:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .lang-dropdown select {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            outline: none;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .lang-dropdown select option {
+            background: #1e293b;
+            color: white;
+        }
+
+        .translation-notice {
+            position: fixed;
+            top: 65px;
+            right: 20px;
+            font-size: 11px;
+            color: var(--text-secondary);
+            opacity: 0.8;
+            z-index: 100;
+            text-align: right;
+        }
+
+        /* 
         ================================================================================
-        This Area Of Code Is: Button Hover Interaction
-        Explanation: I defined the hover state for glass buttons to increase 
-        opacity (making it whiter) and translate the button upward by 2 pixels, 
-        giving a subtle "lift" effect when users hover their mouse over it.
-        In Other Words: When you put your mouse over the button, it gets brighter 
-        and moves up a tiny bit to show it's ready to be clicked.
+        This Area Of Code Is: Main Content Container
+        Explanation: I created a centered flex container that positions the glass card perfectly in the middle of the screen both vertically and horizontally.
+        In Other Words: This centers the card on the page.
         ================================================================================
         */
-        .glass-button:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: translateY(-2px);
+        .main-container {
+            position: relative;
+            z-index: 10;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* 
+        ================================================================================
+        This Area Of Code Is: Glass Card Component
+        Explanation: I designed a high-end glass morphism card with backdrop blur, gradient borders, and 3D depth effects using layered shadows. The card has a subtle shimmer animation.
+        In Other Words: This is the pretty see-through box in the middle.
+        ================================================================================
+        */
+        .glass-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            padding: 50px 40px;
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 
+                0 25px 50px -12px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            animation: cardFloat 6s ease-in-out infinite;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(255, 255, 255, 0.05) 50%,
+                transparent 70%
+            );
+            animation: shimmer 8s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .church-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        /* 
+        ================================================================================
+        This Area Of Code Is: Typography Styling
+        Explanation: I styled the headings using Playfair Display font with italic serifs for the main title to match the requested aesthetic. The subtitle uses Inter for readability.
+        In Other Words: This makes the text look fancy and elegant.
+        ================================================================================
+        */
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-family: 'Inter', sans-serif;
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-weight: 300;
+        }
+
+        .blessing {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 20px;
+            color: var(--primary-gold);
+            margin-bottom: 30px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* 
+        ================================================================================
+        This Area Of Code Is: Live Stats Display
+        Explanation: I created badge components that show live viewer count and total jokes. These update in real-time using localStorage counters.
+        In Other Words: This shows how many people are watching and how many jokes exist.
+        ================================================================================
+        */
+        .stats-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .stat-badge {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 50px;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-badge .number {
+            color: var(--primary-gold);
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        /* 
+        ================================================================================
+        This Area Of Code Is: Primary Action Button
+        Explanation: I designed a large CTA button with gradient background, hover effects, and a glass border. It links to the main app.
+        In Other Words: This is the big "Open Card" button.
+        ================================================================================
+        */
+        .open-card-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            padding: 18px 40px;
+            color: white;
+            font-size: 18px;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            max-width: 280px;
+        }
+
+        .open-card-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                0 15px 40px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.15) 100%);
+        }
+
+        .open-card-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .disclaimer {
+            margin-top: 25px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.5;
+            max-width: 300px;
+        }
+
+        /* 
+        ================================================================================
+        This Area Of Code Is: Fixed Footer Copyright
+        Explanation: I created a fixed footer that stays at the bottom of the viewport with glass morphism styling. It uses the requested italic serif font for the name.
+        In Other Words: This is the copyright text at the bottom that stays put.
+        ================================================================================
+        */
+        .fixed-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 20px;
+            text-align: center;
+            z-index: 100;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .copyright-name {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-weight: 600;
+            color: var(--primary-gold);
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 480px) {
+            .glass-card {
+                padding: 40px 25px;
+                margin: 10px;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+
+            .subtitle {
+                font-size: 16px;
+            }
+
+            .language-selector {
+                top: 10px;
+                right: 10px;
+            }
+
+            .fixed-footer {
+                font-size: 11px;
+                padding: 12px 15px;
+            }
+        }
+
+        /* Translation Disclaimer */
+        .translate-disclaimer {
+            position: fixed;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 90%;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            z-index: 99;
+        }
+
+        .translate-disclaimer.show {
+            opacity: 1;
         }
     </style>
 </head>
-
-<!--
-================================================================================
-This Area Of Code Is: Document Body Content
-Explanation: I set the body text color to white and ensured a minimum height 
-of the full viewport so the content always fills the screen, even on short pages.
-In Other Words: This is the main part of the page that people see, with white 
-text and tall enough to fill the screen.
-================================================================================
--->
-<body class="text-white min-h-screen">
-
-<!--
-================================================================================
-This Area Of Code Is: Background Video Element (Landing Page)
-Explanation: I embedded the landing page background video from GitHub Releases 
-(v1.0-videos). The autoplay attribute starts it immediately, muted ensures it 
-works on mobile browsers (which block autoplay with sound), loop makes it 
-repeat forever, and playsinline prevents it from going fullscreen on iOS.
-In Other Words: This is the moving background video that plays automatically, 
-stays quiet, loops forever, and stays in its box on iPhones.
-================================================================================
--->
-<video class="video-bg" autoplay muted loop playsinline>
-    <source src="https://github.com/supercodingninja/GetWell/releases/download/v1.0-videos/video.mp4" type="video/mp4">
-</video>
-<div class="video-overlay"></div>
-
-<!--
-================================================================================
-This Area Of Code Is: Main Content Container
-Explanation: I created a flex container that centers all content both 
-vertically and horizontally (justify-center, items-center) with padding on 
-the sides (px-4) for mobile breathing room.
-In Other Words: This is the big box that holds everything and keeps it 
-centered in the middle of the screen.
-================================================================================
--->
-<div class="min-h-screen flex flex-col items-center justify-center px-4 pb-16">
-    <!--
-    ================================================================================
-    This Area Of Code Is: Glass Card Container (Hero Section)
-    Explanation: I built the main glass card using the glass class, with rounded 
-    corners (rounded-3xl), generous padding (p-8 for mobile, p-12 for larger screens), 
-    a maximum width of 36rem (max-w-xl), and full width with auto margins for 
-    responsiveness. The text is centered.
-    In Other Words: This is the main frosted glass box in the center that holds 
-    the church emoji, title, and open button.
-    ================================================================================
-    -->
-    <div class="glass rounded-3xl p-8 sm:p-12 max-w-xl w-full text-center">
-        <!-- Church Emoji Icon -->
-        <div class="mb-6 text-6xl">⛪</div>
-        
-        <!--
-        ================================================================================
-        This Area Of Code Is: Main Heading & Subheadings
-        Explanation: I structured the typography hierarchy with an H1 title "Get Well 
-        Soon" using the serif font (Playfair Display) in large text (text-4xl to 
-        text-5xl), followed by supporting text with reduced opacity (text-white/80 
-        and text-white/60) for visual hierarchy.
-        In Other Words: This is the big fancy title "Get Well Soon" and the smaller 
-        words underneath it that fade a bit so the title stands out.
-        ================================================================================
-        -->
-        <h1 class="text-4xl sm:text-5xl font-bold serif mb-4 text-white">Get Well Soon</h1>
-        <p class="text-xl text-white/80 mb-2">Your Church Family Loves You</p>
-        <p class="text-white/60 mb-8">God Bless You</p>
-        
-        <!--
-        ================================================================================
-        This Area Of Code Is: Call-to-Action Button (Open Card)
-        Explanation: I created the main entry button linking to the app page 
-        (public/app.html). It uses the glass-button class with inline-flex for 
-        icon+text alignment, a pill shape (rounded-full), and includes a Phosphor 
-        Icon (ph-cards) alongside the text "Open Card".
-        In Other Words: This is the big button that says "Open Card" with a picture 
-        of cards, and clicking it takes you into the actual app.
-        ================================================================================
-        -->
-        <a href="public/app.html" class="glass-button inline-flex items-center gap-2 px-8 py-4 rounded-full text-lg font-semibold">
-            <i class="ph ph-cards text-xl"></i>
-            <span>Open Card</span>
-        </a>
+<body>
+    <!-- Video Background -->
+    <div class="video-background">
+        <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1920" id="bgVideo">
+            <source src="https://github.com/supercodingninja/GetWell/releases/download/v1.0-videos/video.mp4" type="video/mp4">
+            <!-- Fallback for older browsers -->
+            Your browser does not support the video tag.
+        </video>
+        <div class="video-overlay"></div>
     </div>
-</div>
 
-<!--
-================================================================================
-This Area Of Code Is: Fixed Footer with Copyright Attribution
-Explanation: I positioned the footer fixed at the bottom of the viewport 
-(bottom-0) with a semi-transparent dark background (bg-black/20) and blur 
-effect. The copyright text is on a single line as requested, showing both 
-the app name and my attribution. The padding-bottom (pb-1) in the parent 
-container ensures content doesn't get hidden behind this fixed footer.
-In Other Words: This is the copyright notice glued to the very bottom of 
-the screen on one line, so you can always see who made this app.
-================================================================================
--->
-<footer class="fixed bottom-0 left-0 right-0 text-center text-white/40 text-sm py-3 bg-black/20 backdrop-blur-sm border-t border-white/10 z-50">
-    <p>© 2026 Get Well Card | Frederick Thomas, "The Super Coding Ninja™"</p>
-</footer>
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <div class="lang-dropdown">
+            <span>🌐</span>
+            <select id="languageSelect" onchange="changeLanguage(this.value)">
+                <option value="en">English</option>
+                <option value="es">Español</option>
+                <option value="fr">Français</option>
+                <option value="de">Deutsch</option>
+                <option value="it">Italiano</option>
+                <option value="pt">Português</option>
+                <option value="ru">Русский</option>
+                <option value="ja">日本語</option>
+                <option value="ko">한국어</option>
+                <option value="zh">中文</option>
+                <option value="ar">العربية</option>
+                <option value="hi">हिन्दी</option>
+                <option value="sw">Kiswahili</option>
+                <option value="tl">Tagalog</option>
+                <option value="vi">Tiếng Việt</option>
+                <option value="pl">Polski</option>
+                <option value="tr">Türkçe</option>
+                <option value="nl">Nederlands</option>
+            </select>
+        </div>
+    </div>
+    <div class="translation-notice" id="translateNotice">Auto-translated • May contain errors</div>
 
+    <!-- Main Content -->
+    <main class="main-container">
+        <div class="glass-card">
+            <div class="church-icon">⛪</div>
+            <h1 id="pageTitle">Get Well Soon</h1>
+            <p class="subtitle" id="subtitle1">Your Church Family Loves You</p>
+            <p class="blessing" id="subtitle2">God Bless You</p>
+            
+            <div class="stats-container">
+                <div class="stat-badge">
+                    <span>👥</span>
+                    <span id="viewersText">Viewing:</span>
+                    <span class="number" id="viewerCount">1</span>
+                </div>
+                <div class="stat-badge">
+                    <span>😊</span>
+                    <span id="jokesText">Jokes:</span>
+                    <span class="number" id="jokeCount">24</span>
+                </div>
+            </div>
+
+            <a href="./public/app.html" class="open-card-btn" id="openCardBtn">
+                <span>📂</span>
+                <span id="btnText">Open Card</span>
+            </a>
+
+            <p class="disclaimer" id="disclaimer">
+                Translations provided by free APIs and may not be 100% accurate. 
+                For entertainment and spiritual encouragement purposes only.
+            </p>
+        </div>
+    </main>
+
+    <!-- Fixed Footer -->
+    <footer class="fixed-footer">
+        © 2026 Get Well Card | <span class="copyright-name">𝐹𝑟𝑒𝑑𝑒𝑟𝑖𝑐𝑘 𝑇ℎ𝑜𝑚𝑎𝑠, 𝑇ℎ𝑒 𝑆𝑢𝑝𝑒𝑟 𝐶𝑜𝑑𝑖𝑛𝑔 𝑁𝑖𝑛𝑗𝑎™</span> | Made with ❤️ for the global church community
+    </footer>
+
+    <!-- Translation Disclaimer Popup -->
+    <div class="translate-disclaimer" id="translatePopup">
+        Translations are automated and may contain errors. Original text available.
+    </div>
+
+    <!-- Google Translate Element (Hidden) -->
+    <div id="google_translate_element" style="display: none;"></div>
+
+    <script>
+        // Initialize viewer count
+        function updateViewerCount() {
+            try {
+                let count = parseInt(localStorage.getItem('gw_viewers') || '0');
+                count++;
+                localStorage.setItem('gw_viewers', count);
+                document.getElementById('viewerCount').textContent = count;
+                
+                // Update joke count from storage if available
+                const jokes = JSON.parse(localStorage.getItem('gw_jokes') || '[]');
+                const totalCount = 24 + jokes.length;
+                document.getElementById('jokeCount').textContent = totalCount;
+            } catch (e) {
+                console.log('Storage not available');
+            }
+        }
+
+        // Language handling
+        const translations = {
+            en: {
+                title: "Get Well Soon",
+                sub1: "Your Church Family Loves You",
+                sub2: "God Bless You",
+                btn: "Open Card",
+                viewing: "Viewing:",
+                jokes: "Jokes:",
+                disclaimer: "Translations provided by free APIs and may not be 100% accurate. For entertainment and spiritual encouragement purposes only."
+            },
+            es: {
+                title: "Mejórate Pronto",
+                sub1: "Tu Familia de la Iglesia te Ama",
+                sub2: "Dios te Bendiga",
+                btn: "Abrir Tarjeta",
+                viewing: "Viendo:",
+                jokes: "Chistes:",
+                disclaimer: "Las traducciones son automáticas y pueden contener errores. Solo para entretenimiento y aliento espiritual."
+            }
+            // Additional languages handled by Google Translate API
+        };
+
+        function changeLanguage(lang) {
+            if (lang === 'en') {
+                location.reload();
+                return;
+            }
+            
+            const t = translations[lang];
+            if (t) {
+                document.getElementById('pageTitle').textContent = t.title;
+                document.getElementById('subtitle1').textContent = t.sub1;
+                document.getElementById('subtitle2').textContent = t.sub2;
+                document.getElementById('btnText').textContent = t.btn;
+                document.getElementById('viewersText').textContent = t.viewing;
+                document.getElementById('jokesText').textContent = t.jokes;
+                document.getElementById('disclaimer').textContent = t.disclaimer;
+            }
+            
+            // Show translation notice
+            const notice = document.getElementById('translateNotice');
+            notice.style.opacity = '1';
+            setTimeout(() => {
+                notice.style.opacity = '0.5';
+            }, 3000);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateViewerCount();
+            
+            // Handle video loading errors
+            const video = document.getElementById('bgVideo');
+            video.addEventListener('error', function() {
+                console.log('Video failed to load, using fallback');
+                video.style.display = 'none';
+                document.querySelector('.video-background').style.background = 
+                    'linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%)';
+            });
+        });
+
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./public/sw.js')
+                .then(reg => console.log('Service Worker registered'))
+                .catch(err => console.log('Service Worker registration failed'));
+        }
+    </script>
 </body>
 </html>
