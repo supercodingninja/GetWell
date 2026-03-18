@@ -1,28 +1,17 @@
-// FIREBASE CONFIG - YOUR EXACT VALUES
-const firebaseConfig = {
-    apiKey: "AIzaSyDieVA5y_pag35ZVh8P8Pul68sZ_2qtEGU",
-    authDomain: "growing-get-well-card.firebaseapp.com",
-    projectId: "growing-get-well-card",
-    storageBucket: "growing-get-well-card.firebasestorage.app",
-    messagingSenderId: "615025378529",
-    appId: "1:615025378529:web:38e3801c79f54d852623a0",
-    measurementId: "G-REK99P3EKW"
-};
+/*
+================================================================================
+This Area Of Code Is: Immediate Content Display System
+Explanation: I restructured this to display jokes immediately without waiting 
+for Firebase, since mobile browsers can be finicky with external connections. 
+The local jokes display first, then Firebase adds more in the background if 
+available. This ensures users see content within milliseconds, not seconds.
+In Other Words: This shows the jokes right away without waiting for internet, 
+so you never see "Loading" stuck on the screen.
+================================================================================
+*/
 
-// Initialize Firebase
-let db;
-let firebaseInitialized = false;
-try {
-    firebase.initializeApp(firebaseConfig);
-    db = firebase.firestore();
-    firebaseInitialized = true;
-    console.log("Firebase initialized");
-} catch (e) {
-    console.log("Firebase not available");
-}
-
-// Initial Cards (Your Original 24 Cards)
-let cards = [
+// IMMEDIATE DISPLAY: Local jokes that work 100% offline
+const localJokes = [
     { type: 'joke', icon: '🧪', title: "Why don't scientists trust atoms?", punchline: "Because they make up everything!" },
     { type: 'joke', icon: '🍝', title: "What do you call a fake noodle?", punchline: "An impasta!" },
     { type: 'joke', icon: '☕', title: "Why did the coffee file a police report?", punchline: "It got mugged!" },
@@ -49,15 +38,93 @@ let cards = [
     { type: 'encouragement', icon: '🙏', title: "You are braver than you believe, stronger than you seem, and loved more than you know.", punchline: '', isOriginal: true }
 ];
 
+// State management
+let cards = [...localJokes]; // Start with local jokes immediately
 let currentIndex = 0;
 let punchlineVisible = false;
 let autoMode = false;
 let autoInterval = null;
 let autoSpeed = 5000;
+let db = null;
+let firebaseInitialized = false;
 
-// Load user jokes from Firebase
-async function loadJokes() {
-    if (!firebaseInitialized) return;
+/*
+================================================================================
+This Area Of Code Is: Instant Display Function
+Explanation: I created this to render the first joke immediately when the page 
+loads, replacing the "Loading..." text within the first millisecond. This 
+prevents the stuck loading screen issue on mobile browsers.
+In Other Words: This puts the first joke on screen instantly so you never see 
+"Loading...".
+================================================================================
+*/
+function showFirstJokeImmediately() {
+    const card = cards[0];
+    const titleEl = document.getElementById('cardTitle');
+    const iconEl = document.getElementById('cardIcon');
+    const badgeEl = document.getElementById('cardTypeBadge');
+    const punchlineEl = document.getElementById('cardPunchline');
+    const numberEl = document.getElementById('cardNumber');
+    const totalEl = document.getElementById('totalCards');
+    
+    if (titleEl) titleEl.textContent = card.title;
+    if (iconEl) iconEl.textContent = card.icon;
+    if (badgeEl) badgeEl.textContent = card.type;
+    if (punchlineEl) {
+        punchlineEl.textContent = card.punchline || '';
+        punchlineEl.style.opacity = '0';
+    }
+    if (numberEl) numberEl.textContent = '1';
+    if (totalEl) totalEl.textContent = cards.length;
+}
+
+/*
+================================================================================
+This Area Of Code Is: Firebase Optional Loader
+Explanation: I moved Firebase initialization to a separate non-blocking function. 
+If it works, great - we get cloud jokes. If it fails or is slow, the local 
+jokes are already displaying and working perfectly. This ensures the app is 
+functional regardless of internet quality.
+In Other Words: This tries to get internet jokes in the background, but doesn't 
+stop the local jokes from working if the internet is bad.
+================================================================================
+*/
+function initFirebase() {
+    try {
+        const firebaseConfig = {
+            apiKey: "AIzaSyDieVA5y_pag35ZVh8P8Pul68sZ_2qtEGU",
+            authDomain: "growing-get-well-card.firebaseapp.com",
+            projectId: "growing-get-well-card",
+            storageBucket: "growing-get-well-card.firebasestorage.app",
+            messagingSenderId: "615025378529",
+            appId: "1:615025378529:web:38e3801c79f54d852623a0",
+            measurementId: "G-REK99P3EKW"
+        };
+        
+        if (typeof firebase !== 'undefined') {
+            firebase.initializeApp(firebaseConfig);
+            db = firebase.firestore();
+            firebaseInitialized = true;
+            console.log("Firebase ready - loading cloud jokes");
+            loadCloudJokes();
+        }
+    } catch (e) {
+        console.log("Firebase not available - using local jokes only");
+    }
+}
+
+/*
+================================================================================
+This Area Of Code Is: Cloud Jokes Loader
+Explanation: This fetches additional jokes from Firebase in the background and 
+adds them to the existing local jokes. It doesn't replace the local ones, just 
+adds to them. If it fails, the user already has 24 jokes working perfectly.
+In Other Words: This gets extra jokes from the internet and adds them to the 
+list, but only if it can connect.
+================================================================================
+*/
+async function loadCloudJokes() {
+    if (!db) return;
     try {
         const snapshot = await db.collection('jokes').orderBy('timestamp', 'desc').get();
         snapshot.forEach(doc => {
@@ -72,34 +139,55 @@ async function loadJokes() {
                 isUserAdded: true
             });
         });
+        // Update display to show new total, but don't change current joke
         updateDisplay();
         populateMenu();
     } catch (e) {
-        console.error("Error loading jokes:", e);
+        console.error("Cloud jokes failed:", e);
     }
 }
 
+/*
+================================================================================
+This Area Of Code Is: Main Display Updater
+Explanation: I ensured this function safely handles DOM elements by checking 
+if they exist before trying to update them. This prevents crashes if the 
+HTML structure varies or loads slowly on mobile.
+In Other Words: This updates what's on screen, but checks that each piece 
+exists first so it doesn't crash if something is missing.
+================================================================================
+*/
 function updateDisplay() {
+    if (!cards[currentIndex]) return;
+    
     const card = cards[currentIndex];
-    document.getElementById('cardTypeBadge').textContent = card.type;
-    document.getElementById('cardIcon').textContent = card.icon;
-    document.getElementById('cardTitle').textContent = card.title;
-    
+    const badgeEl = document.getElementById('cardTypeBadge');
+    const iconEl = document.getElementById('cardIcon');
+    const titleEl = document.getElementById('cardTitle');
     const punchlineEl = document.getElementById('cardPunchline');
-    punchlineEl.textContent = card.punchline || '';
-    punchlineEl.style.opacity = punchlineVisible && card.punchline ? '1' : '0';
+    const numberEl = document.getElementById('cardNumber');
+    const totalEl = document.getElementById('totalCards');
+    const btnEl = document.getElementById('punchlineBtn');
     
-    document.getElementById('cardNumber').textContent = currentIndex + 1;
-    document.getElementById('totalCards').textContent = cards.length;
-    
-    // Show author if user added
-    if (card.isUserAdded) {
-        document.getElementById('cardTypeBadge').textContent = `Added by ${card.author} from ${card.location}`;
+    if (badgeEl) {
+        if (card.isUserAdded) {
+            badgeEl.textContent = `Added by ${card.author} from ${card.location}`;
+        } else {
+            badgeEl.textContent = card.type;
+        }
     }
     
-    // Update punchline button
-    const btn = document.getElementById('punchlineBtn');
-    btn.textContent = punchlineVisible ? 'Hide Punchline' : 'Show Punchline';
+    if (iconEl) iconEl.textContent = card.icon;
+    if (titleEl) titleEl.textContent = card.title;
+    
+    if (punchlineEl) {
+        punchlineEl.textContent = card.punchline || '';
+        punchlineEl.style.opacity = punchlineVisible && card.punchline ? '1' : '0';
+    }
+    
+    if (numberEl) numberEl.textContent = currentIndex + 1;
+    if (totalEl) totalEl.textContent = cards.length;
+    if (btnEl) btnEl.textContent = punchlineVisible ? 'Hide Punchline' : 'Show Punchline';
 }
 
 function togglePunchline() {
@@ -122,20 +210,19 @@ function previousCard() {
 function toggleAuto() {
     autoMode = !autoMode;
     const btn = document.getElementById('autoBtn');
-    const icon = document.getElementById('autoIcon');
     const speedControls = document.getElementById('speedControls');
+    
+    if (!btn) return;
     
     if (autoMode) {
         btn.classList.add('auto-active');
-        icon.className = 'ph ph-pause-circle';
         btn.innerHTML = '<i class="ph ph-pause-circle" id="autoIcon"></i> Stop Auto';
-        speedControls.classList.remove('hidden');
+        if (speedControls) speedControls.classList.remove('hidden');
         startAuto();
     } else {
         btn.classList.remove('auto-active');
-        icon.className = 'ph ph-play-circle';
         btn.innerHTML = '<i class="ph ph-play-circle" id="autoIcon"></i> Auto Mode';
-        speedControls.classList.add('hidden');
+        if (speedControls) speedControls.classList.add('hidden');
         clearInterval(autoInterval);
     }
 }
@@ -144,7 +231,7 @@ function startAuto() {
     clearInterval(autoInterval);
     autoInterval = setInterval(() => {
         nextCard();
-        if (cards[currentIndex].punchline) {
+        if (cards[currentIndex] && cards[currentIndex].punchline) {
             setTimeout(() => {
                 punchlineVisible = true;
                 updateDisplay();
@@ -156,14 +243,16 @@ function startAuto() {
 function setSpeed(ms) {
     autoSpeed = ms;
     document.querySelectorAll('.speed-btn').forEach(btn => btn.classList.remove('active'));
-    document.querySelector(`[data-speed="${ms}"]`).classList.add('active');
+    const activeBtn = document.querySelector(`[data-speed="${ms}"]`);
+    if (activeBtn) activeBtn.classList.add('active');
     if (autoMode) startAuto();
 }
 
-// Menu Functions
 function toggleMenu() {
     const drawer = document.getElementById('menuDrawer');
     const backdrop = document.getElementById('menuBackdrop');
+    
+    if (!drawer || !backdrop) return;
     
     if (drawer.classList.contains('-translate-x-full')) {
         drawer.classList.remove('-translate-x-full');
@@ -176,6 +265,8 @@ function toggleMenu() {
 
 function populateMenu() {
     const list = document.getElementById('menuCardList');
+    if (!list) return;
+    
     list.innerHTML = '';
     cards.forEach((card, index) => {
         const btn = document.createElement('button');
@@ -192,34 +283,46 @@ function populateMenu() {
     });
 }
 
-// Joke Modal Functions
 function openJokeModal() {
-    document.getElementById('jokeModal').classList.add('open');
-    // Load draft from LocalStorage
-    const draft = JSON.parse(localStorage.getItem('jokeDraft') || '{}');
-    if (draft.name) document.getElementById('jokeName').value = draft.name;
-    if (draft.location) document.getElementById('jokeLocation').value = draft.location;
-    if (draft.setup) document.getElementById('jokeSetup').value = draft.setup;
-    if (draft.punchline) document.getElementById('jokePunchline').value = draft.punchline;
+    const modal = document.getElementById('jokeModal');
+    if (modal) {
+        modal.classList.add('open');
+        // Load draft
+        try {
+            const draft = JSON.parse(localStorage.getItem('jokeDraft') || '{}');
+            if (draft.name) document.getElementById('jokeName').value = draft.name;
+            if (draft.location) document.getElementById('jokeLocation').value = draft.location;
+            if (draft.setup) document.getElementById('jokeSetup').value = draft.setup;
+            if (draft.punchline) document.getElementById('jokePunchline').value = draft.punchline;
+        } catch (e) {}
+    }
 }
 
 function closeJokeModal() {
-    document.getElementById('jokeModal').classList.remove('open');
+    const modal = document.getElementById('jokeModal');
+    if (modal) modal.classList.remove('open');
 }
 
-// Save draft to LocalStorage as user types
-document.addEventListener('input', (e) => {
-    if (e.target.id && ['jokeName', 'jokeLocation', 'jokeSetup', 'jokePunchline'].includes(e.target.id)) {
-        const draft = {
-            name: document.getElementById('jokeName').value,
-            location: document.getElementById('jokeLocation').value,
-            setup: document.getElementById('jokeSetup').value,
-            punchline: document.getElementById('jokePunchline').value
-        };
-        localStorage.setItem('jokeDraft', JSON.stringify(draft));
-    }
-});
+function showGuidelines() {
+    const modal = document.getElementById('guidelinesModal');
+    if (modal) modal.classList.add('open');
+}
 
+function closeGuidelines() {
+    const modal = document.getElementById('guidelinesModal');
+    if (modal) modal.classList.remove('open');
+}
+
+/*
+================================================================================
+This Area Of Code Is: Content Safety Checker
+Explanation: I kept the PurgoMalum API integration to check jokes for 
+inappropriate content before submission. This is a free service that returns 
+"true" if profanity is found.
+In Other Words: This checks if a joke has bad words before letting people 
+post it.
+================================================================================
+*/
 async function checkContent(text) {
     try {
         const response = await fetch(`https://www.purgomalum.com/service/containsprofanity?text=${encodeURIComponent(text)}`);
@@ -233,23 +336,34 @@ async function checkContent(text) {
 async function submitJoke(e) {
     e.preventDefault();
     const status = document.getElementById('submitStatus');
-    status.classList.remove('hidden');
-    status.textContent = 'Checking content...';
+    if (status) {
+        status.classList.remove('hidden');
+        status.textContent = 'Checking content...';
+    }
     
-    const name = document.getElementById('jokeName').value.trim();
-    const location = document.getElementById('jokeLocation').value.trim();
-    const setup = document.getElementById('jokeSetup').value.trim();
-    const punchline = document.getElementById('jokePunchline').value.trim();
+    const nameEl = document.getElementById('jokeName');
+    const locationEl = document.getElementById('jokeLocation');
+    const setupEl = document.getElementById('jokeSetup');
+    const punchlineEl = document.getElementById('jokePunchline');
     
-    // Client-side filter check
+    if (!nameEl || !locationEl || !setupEl || !punchlineEl) return;
+    
+    const name = nameEl.value.trim();
+    const location = locationEl.value.trim();
+    const setup = setupEl.value.trim();
+    const punchline = punchlineEl.value.trim();
+    
     const isBad = await checkContent(setup + ' ' + punchline + ' ' + name);
     if (isBad) {
-        status.textContent = '❌ Content does not meet community guidelines.';
-        status.className = 'mt-4 text-center text-sm text-red-600 font-bold';
+        if (status) {
+            status.textContent = '❌ Content does not meet community guidelines.';
+            status.className = 'mt-4 text-center text-sm text-red-600 font-bold';
+        }
         return;
     }
     
-    if (firebaseInitialized) {
+    // Save to Firebase if available
+    if (firebaseInitialized && db) {
         try {
             await db.collection('jokes').add({
                 name, location, setup, punchline,
@@ -257,11 +371,11 @@ async function submitJoke(e) {
                 approved: true
             });
         } catch (e) {
-            console.error("Error saving:", e);
+            console.error("Firebase save failed:", e);
         }
     }
     
-    // Add to local cards immediately
+    // Add locally immediately
     cards.push({
         type: 'joke',
         icon: '😄',
@@ -272,31 +386,50 @@ async function submitJoke(e) {
         isUserAdded: true
     });
     
-    // Clear LocalStorage after successful submit
-    localStorage.removeItem('jokeDraft');
+    // Clear draft
+    try {
+        localStorage.removeItem('jokeDraft');
+    } catch (e) {}
+    
     document.getElementById('jokeForm').reset();
     
-    status.textContent = '✅ Joke added successfully!';
-    status.className = 'mt-4 text-center text-sm text-green-600 font-bold';
+    if (status) {
+        status.textContent = '✅ Joke added successfully!';
+        status.className = 'mt-4 text-center text-sm text-green-600 font-bold';
+    }
     
     setTimeout(() => {
         closeJokeModal();
         populateMenu();
         currentIndex = cards.length - 1;
         updateDisplay();
-        status.classList.add('hidden');
+        if (status) status.classList.add('hidden');
     }, 1500);
 }
 
-function showGuidelines() {
-    document.getElementById('guidelinesModal').classList.add('open');
-}
+/*
+================================================================================
+This Area Of Code Is: Auto-Save Draft Feature
+Explanation: I added input listeners to save form data to LocalStorage as the 
+user types, so they don't lose their work if they accidentally close the modal.
+In Other Words: This secretly saves what you're typing every second so you 
+don't lose your joke if you accidentally close the window.
+================================================================================
+*/
+document.addEventListener('input', (e) => {
+    if (e.target.id && ['jokeName', 'jokeLocation', 'jokeSetup', 'jokePunchline'].includes(e.target.id)) {
+        try {
+            const draft = {
+                name: document.getElementById('jokeName').value,
+                location: document.getElementById('jokeLocation').value,
+                setup: document.getElementById('jokeSetup').value,
+                punchline: document.getElementById('jokePunchline').value
+            };
+            localStorage.setItem('jokeDraft', JSON.stringify(draft));
+        } catch (e) {}
+    }
+});
 
-function closeGuidelines() {
-    document.getElementById('guidelinesModal').classList.remove('open');
-}
-
-// Keyboard controls
 document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowRight') nextCard();
     if (e.key === 'ArrowLeft') previousCard();
@@ -310,9 +443,18 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Initialize
+/*
+================================================================================
+This Area Of Code Is: Application Initialization
+Explanation: I set up the app to show the first joke immediately (within 
+milliseconds of the page loading), then populate the menu, then try to load 
+Firebase in the background. This ensures zero wait time for users.
+In Other Words: This starts the app the very instant the page opens, showing 
+the first joke immediately.
+================================================================================
+*/
 document.addEventListener('DOMContentLoaded', () => {
-    loadJokes();
-    updateDisplay();
+    showFirstJokeImmediately();
     populateMenu();
+    initFirebase(); // Try Firebase after content is already showing
 });
