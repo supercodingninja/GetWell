@@ -1,118 +1,280 @@
-<!-- public/app.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Get Well App - Growing Get Well Card</title>
-    <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Get Well Card</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .serif { font-family: 'Playfair Display', serif; }
+        
+        .glass {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(60px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .glass-button {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .glass-button:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+        
+        .video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.6;
+        }
+        
+        .video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.8) 100%);
+            z-index: -1;
+        }
+        
+        .auto-active {
+            animation: golden-pulse 2s infinite;
+            border-color: #fbbf24 !important;
+            box-shadow: 0 0 20px #fbbf24 !important;
+        }
+        
+        @keyframes golden-pulse {
+            0%, 100% { box-shadow: 0 0 5px #fbbf24; }
+            50% { box-shadow: 0 0 30px #fbbf24, 0 0 50px #f59e0b; }
+        }
+        
+        .modal { display: none; }
+        .modal.open { display: flex; }
+        
+        .speed-btn.active {
+            background: #fbbf24;
+            color: black;
+            font-weight: bold;
+        }
+    </style>
 </head>
-<body>
-    <nav class="navbar">
-        <div class="nav-brand">
-            <span class="get-well-text">Get Well</span>
-        </div>
-        <div class="nav-links">
-            <a href="../index.html" class="btn btn-secondary">Home</a>
-            <button id="slideshowToggle" class="btn btn-primary">▶ Slideshow</button>
-        </div>
-    </nav>
+<body class="bg-slate-900 text-white min-h-screen">
 
-    <div class="video-background" id="videoBackground">
-        <video autoplay muted loop playsinline>
-            <source src="https://github.com/supercodingninja/GetWell/releases/download/v1.0-videos/video.mp4" type="video/mp4">
-        </video>
-        <div class="video-overlay"></div>
+<!-- VIDEO BACKGROUND - GITHUB RELEASES URL -->
+<video id="bgVideo" class="video-bg" autoplay muted loop playsinline>
+    <source src="https://github.com/supercodingninja/GetWell/releases/download/v1.0-videos/church-interior.mp4" type="video/mp4">
+</video>
+<div class="video-overlay"></div>
+
+<!-- Header -->
+<header class="fixed top-0 left-0 right-0 z-30 glass px-4 py-4">
+    <div class="max-w-4xl mx-auto flex justify-between items-center">
+        <button onclick="toggleMenu()" class="glass-button p-3 rounded-full text-white">
+            <i class="ph ph-list text-xl"></i>
+        </button>
+        
+        <h1 class="text-lg sm:text-2xl font-bold serif">Get Well Soon</h1>
+        
+        <a href="../index.html" class="glass-button p-3 rounded-full text-white">
+            <i class="ph ph-house text-xl"></i>
+        </a>
+    </div>
+</header>
+
+<!-- Main Content -->
+<main class="pt-24 pb-8 px-4 min-h-screen flex flex-col items-center justify-center">
+    
+    <!-- Card Display -->
+    <div id="cardContainer" class="w-full max-w-2xl mx-auto mb-8">
+        <div id="currentCard" class="glass-card rounded-3xl p-8 sm:p-12 min-h-[350px] flex flex-col items-center justify-center text-center relative">
+            
+            <div id="cardTypeBadge" class="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold uppercase bg-slate-200 text-slate-700">
+                Joke
+            </div>
+            
+            <div id="cardIcon" class="text-5xl mb-4">😄</div>
+            
+            <h2 id="cardTitle" class="text-2xl sm:text-3xl font-semibold text-slate-800 serif mb-4">
+                Loading...
+            </h2>
+            
+            <p id="cardPunchline" class="text-xl text-amber-600 font-medium opacity-0 transition-opacity duration-500">
+                
+            </p>
+            
+            <div class="absolute bottom-4 text-slate-500 text-sm">
+                Card <span id="cardNumber">1</span> of <span id="totalCards">24</span>
+            </div>
+        </div>
     </div>
 
-    <main class="app-container">
-        <div class="mode-toggle">
-            <button class="mode-btn active" data-mode="jokes">😄 Jokes</button>
-            <button class="mode-btn" data-mode="prayers">🙏 Prayers</button>
-            <button class="mode-btn" data-mode="messages">💌 Messages</button>
-        </div>
+    <!-- Navigation Buttons -->
+    <div class="flex justify-center gap-3 mb-6">
+        <button onclick="previousCard()" class="glass-button px-6 py-3 rounded-full text-white">
+            <i class="ph ph-arrow-left"></i> Back
+        </button>
+        
+        <button id="punchlineBtn" onclick="togglePunchline()" class="glass-button px-6 py-3 rounded-full bg-white/20 text-white">
+            Show Punchline
+        </button>
+        
+        <button onclick="nextCard()" class="glass-button px-6 py-3 rounded-full text-white">
+            Next <i class="ph ph-arrow-right"></i>
+        </button>
+    </div>
 
-        <div class="content-display" id="contentDisplay">
-            <div class="glass-card" id="contentCard">
-                <div class="card-header">
-                    <span class="card-type" id="cardType">Joke</span>
-                    <span class="card-number" id="cardNumber">#1</span>
-                </div>
-                <div class="card-body">
-                    <p class="card-text" id="cardText">Loading...</p>
-                </div>
-                <div class="card-footer">
-                    <button class="btn btn-outline" id="prevBtn">← Previous</button>
-                    <button class="btn btn-outline" id="nextBtn">Next →</button>
-                </div>
+    <!-- Action Buttons -->
+    <div class="flex justify-center gap-4 mb-6">
+        <button onclick="openJokeModal()" class="glass-button px-6 py-3 rounded-full bg-green-500/20 border-green-400/40 text-green-400 hover:bg-green-500/30">
+            <i class="ph ph-plus-circle"></i> Add Your Joke
+        </button>
+        
+        <button id="autoBtn" onclick="toggleAuto()" class="glass-button px-6 py-3 rounded-full bg-blue-500/20 border-blue-400/40 text-blue-400 hover:bg-blue-500/30">
+            <i class="ph ph-play-circle" id="autoIcon"></i> Auto Mode
+        </button>
+    </div>
+
+    <!-- Speed Controls (Hidden by default) -->
+    <div id="speedControls" class="hidden flex gap-2 mb-6">
+        <button onclick="setSpeed(8000)" class="speed-btn px-4 py-2 rounded-full text-xs bg-white/10 text-white border border-white/20" data-speed="8000">Slow</button>
+        <button onclick="setSpeed(5000)" class="speed-btn px-4 py-2 rounded-full text-xs bg-white/10 text-white border border-white/20 active" data-speed="5000">Medium</button>
+        <button onclick="setSpeed(2000)" class="speed-btn px-4 py-2 rounded-full text-xs bg-white/10 text-white border border-white/20" data-speed="2000">Fast</button>
+    </div>
+
+    <!-- Community Guidelines Link -->
+    <button onclick="showGuidelines()" class="text-xs text-white/40 hover:text-white/60 underline">
+        Community Guidelines
+    </button>
+</main>
+
+<!-- Menu Drawer -->
+<div id="menuBackdrop" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden" onclick="toggleMenu()"></div>
+<nav id="menuDrawer" class="fixed top-0 left-0 h-full w-72 glass z-50 transform -translate-x-full transition-transform duration-300 overflow-y-auto">
+    <div class="p-6">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-xl font-bold text-white">Menu</h2>
+            <button onclick="toggleMenu()" class="glass-button p-2 rounded-full text-white">
+                <i class="ph ph-x"></i>
+            </button>
+        </div>
+        
+        <div class="space-y-3">
+            <a href="../index.html" class="glass-button block w-full text-left px-4 py-3 rounded-xl text-white">
+                <i class="ph ph-house mr-2"></i> Home
+            </a>
+        </div>
+        
+        <div class="mt-8">
+            <p class="text-xs text-white/50 mb-2">Jump to Card</p>
+            <div id="menuCardList" class="space-y-2 max-h-80 overflow-y-auto"></div>
+        </div>
+    </div>
+</nav>
+
+<!-- Add Joke Modal -->
+<div id="jokeModal" class="modal fixed inset-0 z-50 items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" onclick="closeJokeModal()"></div>
+    <div class="glass-card rounded-3xl p-6 w-full max-w-md relative z-10 max-h-[90vh] overflow-y-auto bg-white">
+        <button onclick="closeJokeModal()" class="absolute top-4 right-4 p-2 rounded-full bg-slate-200 hover:bg-slate-300">
+            <i class="ph ph-x text-slate-700"></i>
+        </button>
+        
+        <h2 class="text-2xl font-bold text-slate-800 serif mb-6 text-center">Add Your Joke</h2>
+        
+        <form id="jokeForm" onsubmit="submitJoke(event)" class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium mb-1 text-slate-700">Your First Name *</label>
+                <input type="text" id="jokeName" required class="w-full px-4 py-2 rounded-lg bg-slate-100 border border-slate-300 text-slate-800" placeholder="John">
             </div>
-        </div>
-
-        <div class="submission-section">
-            <button class="btn btn-glow btn-lg" id="addContentBtn">+ Add Your Own</button>
-            <div class="form-container glass-card" id="submissionForm" style="display: none;">
-                <h3>Share Something Positive</h3>
-                <form id="contentForm">
-                    <div class="form-group">
-                        <label>Type:</label>
-                        <select id="submitType" required>
-                            <option value="jokes">Joke</option>
-                            <option value="prayers">Prayer</option>
-                            <option value="messages">Message</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Your Content:</label>
-                        <textarea id="submitText" rows="4" placeholder="Share something uplifting..." required></textarea>
-                        <div class="char-count" id="charCount">0 / 500</div>
-                    </div>
-                    <div class="form-actions">
-                        <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </form>
+            
+            <div>
+                <label class="block text-sm font-medium mb-1 text-slate-700">Location (City, State, Country) *</label>
+                <input type="text" id="jokeLocation" required class="w-full px-4 py-2 rounded-lg bg-slate-100 border border-slate-300 text-slate-800" placeholder="Dallas, TX, USA">
             </div>
+            
+            <div>
+                <label class="block text-sm font-medium mb-1 text-slate-700">Joke Question *</label>
+                <input type="text" id="jokeSetup" required class="w-full px-4 py-2 rounded-lg bg-slate-100 border border-slate-300 text-slate-800" placeholder="Why did the chicken...">
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium mb-1 text-slate-700">Punchline *</label>
+                <input type="text" id="jokePunchline" required class="w-full px-4 py-2 rounded-lg bg-slate-100 border border-slate-300 text-slate-800" placeholder="To get to the other side!">
+            </div>
+            
+            <button type="submit" class="w-full py-3 rounded-lg font-semibold bg-green-500 text-white hover:bg-green-600">
+                Submit Joke
+            </button>
+            
+            <button type="button" onclick="closeJokeModal()" class="w-full py-3 rounded-lg font-semibold bg-slate-300 text-slate-700 hover:bg-slate-400">
+                Cancel
+            </button>
+        </form>
+        
+        <div id="submitStatus" class="mt-4 text-center text-sm hidden"></div>
+    </div>
+</div>
+
+<!-- Community Guidelines Modal -->
+<div id="guidelinesModal" class="modal fixed inset-0 z-50 items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" onclick="closeGuidelines()"></div>
+    <div class="glass-card rounded-3xl p-6 w-full max-w-lg relative z-10 max-h-[90vh] overflow-y-auto bg-white">
+        <button onclick="closeGuidelines()" class="absolute top-4 right-4 p-2 rounded-full bg-slate-200 hover:bg-slate-300">
+            <i class="ph ph-x text-slate-700"></i>
+        </button>
+        
+        <h2 class="text-2xl font-bold text-slate-800 serif mb-4 text-center">Community Guidelines</h2>
+        
+        <div class="space-y-4 text-slate-700 text-sm">
+            <p>Welcome to Get Well Card - a Christian-based digital card for church families.</p>
+            
+            <h3 class="font-bold text-slate-800">Content Standards (King James Version Standards):</h3>
+            <ul class="list-disc pl-5 space-y-1">
+                <li>No profanity, vulgar language, or inappropriate content</li>
+                <li>Nothing against Christian faith or biblical teachings</li>
+                <li>Clean, family-friendly jokes only</li>
+                <li>Encouraging and uplifting content</li>
+                <li>Respectful of all people</li>
+            </ul>
+            
+            <h3 class="font-bold text-slate-800">Filtering:</h3>
+            <p>All submissions are checked using automated content filtering and manual review. Inappropriate content will be rejected.</p>
+            
+            <p class="text-xs text-slate-500 mt-4">By submitting content, you agree to these guidelines.</p>
         </div>
-    </main>
+        
+        <button onclick="closeGuidelines()" class="w-full mt-6 py-3 rounded-lg font-semibold bg-blue-500 text-white hover:bg-blue-600">
+            I Understand
+        </button>
+    </div>
+</div>
 
-    <footer class="footer">
-        <div class="footer-content">
-            <p class="copyright">
-                © 2026 <span class="get-well-text">Get Well</span>. All rights reserved. 
-                <span class="frederick-text">Frederick Thomas</span>, 
-                <span class="ninja-text">"The Super Coding Ninja™"</span>
-            </p>
-            <p class="made-with">
-                Made With 🫶🏿 By <span class="frederick-text">Frederick Thomas</span>, 
-                <span class="ninja-text">"The Super Coding Ninja™"</span>
-            </p>
-        </div>
-    </footer>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-analytics.js";
+<!-- App Script - CORRECT PATH -->
+<script src="./app.js"></script>
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyDieVA5y_pag35ZVh8P8Pul68sZ_2qtEGU",
-            authDomain: "growing-get-well-card.firebaseapp.com",
-            projectId: "growing-get-well-card",
-            storageBucket: "growing-get-well-card.firebasestorage.app",
-            messagingSenderId: "615025378529",
-            appId: "1:615025378529:web:38e3801c79f54d852623a0",
-            measurementId: "G-REK99P3EKW"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const analytics = getAnalytics(app);
-        window.firebaseApp = app;
-        window.firebaseDb = db;
-    </script>
-    <script type="module" src="app.js"></script>
 </body>
 </html>
