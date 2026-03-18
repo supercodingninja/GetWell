@@ -1,4 +1,20 @@
+/*
+================================================================================
+This Area Of Code Is: Firebase Hosting Configuration
+Explanation: Tells Firebase how to serve your app. Configures hosting behavior,
+rewrites (SPA routing), headers (security), and which folder to deploy.
+Not needed for GitHub Pages, but included if you switch to Firebase Hosting later.
+In Other Words: Settings for Firebase's web hosting service.
+================================================================================
+*/
 {
+    /*
+    This Area Of Code Is: Hosting Configuration
+    Explanation: Defines the public folder (where files are served from),
+    rewrites for single-page-app behavior, and cache headers.
+    In Other Words: Tells Firebase "serve files from public folder" and
+    "always serve index.html for any route" (SPA behavior).
+    */
     "hosting": {
         "public": "public",
         "ignore": [
@@ -14,29 +30,24 @@
         ],
         "headers": [
             {
-                "source": "**/*.mp4",
-                "headers": [
-                    {
-                        "key": "Cache-Control",
-                        "value": "public, max-age=31536000"
-                    }
-                ]
-            },
-            {
                 "source": "**/*.@(js|css)",
                 "headers": [
                     {
                         "key": "Cache-Control",
-                        "value": "public, max-age=31536000"
+                        "value": "max-age=31536000"
                     }
                 ]
             }
         ]
     },
-    "functions": {
-        "source": "firebase/functions"
-    },
+    
+    /*
+    This Area Of Code Is: Firestore Configuration
+    Explanation: Points to the firestore.rules file for database security rules.
+    In Other Words: Tells Firebase where the security rules file is.
+    */
     "firestore": {
-        "rules": "firebase/firestore.rules"
+        "rules": "firestore.rules",
+        "indexes": "firestore.indexes.json"
     }
 }
