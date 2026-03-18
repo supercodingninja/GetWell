@@ -1,12 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+<!--
+================================================================================
+This Area Of Code Is: HTML5 Document Declaration for Main App
+Explanation: I declared this as the main application HTML5 document with English 
+language support. This is the page users see after clicking "Open Card" from 
+the landing page.
+In Other Words: This is the second page you go to when you enter the app.
+================================================================================
+-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Get Well Card</title>
+    
+    <!--
+    ================================================================================
+    This Area Of Code Is: External Resource Loading
+    Explanation: I loaded Tailwind CSS for styling, Google Fonts (Inter and 
+    Playfair Display) for typography, and Phosphor Icons for the iconography 
+    used in navigation buttons and controls.
+    In Other Words: These lines bring in the design tools and pretty fonts 
+    for this page.
+    ================================================================================
+    -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <!--
+    ================================================================================
+    This Area Of Code Is: Component Styling & Animations
+    Explanation: I wrote custom CSS for the main app including glass morphism 
+    variations (glass-card for white cards, glass-button for controls), the 
+    golden pulse animation for Auto Mode, modal display toggling, and speed 
+    button active states. The video background has reduced opacity (0.6) so 
+    it doesn't overpower the card content.
+    In Other Words: These are special style rules for the joke cards, the 
+    glowing auto-play button, and the popup windows.
+    ================================================================================
+    -->
     <style>
         * { font-family: 'Inter', sans-serif; }
         .serif { font-family: 'Playfair Display', serif; }
@@ -57,6 +90,17 @@
             z-index: -1;
         }
         
+        /*
+        ================================================================================
+        This Area Of Code Is: Auto Mode Active State Animation
+        Explanation: I created the "auto-active" class that applies a golden 
+        pulsing animation to the Auto Mode button when it's turned on. This 
+        uses a keyframes animation called golden-pulse that oscillates the 
+        box-shadow between small (5px) and large (50px) golden glows every 2 seconds.
+        In Other Words: This makes the Auto Play button glow and pulse with 
+        a golden light when you turn it on.
+        ================================================================================
+        */
         .auto-active {
             animation: golden-pulse 2s infinite;
             border-color: #fbbf24 !important;
@@ -78,42 +122,106 @@
         }
     </style>
 </head>
+
 <body class="bg-slate-900 text-white min-h-screen">
 
-<!-- VIDEO BACKGROUND - GITHUB RELEASES URL -->
+<!--
+================================================================================
+This Area Of Code Is: Application Background Video
+Explanation: I embedded the main app background video from GitHub Releases 
+(v1.1-video). This video plays behind the joke cards with reduced opacity 
+(defined in CSS) to create an ambient church atmosphere without distracting 
+from the readable content.
+In Other Words: This is the background video for the jokes page, showing 
+church scenes but faded so you can read the jokes easily.
+================================================================================
+-->
 <video id="bgVideo" class="video-bg" autoplay muted loop playsinline>
-    <source src="https://github.com/supercodingninja/GetWell/releases/download/v1.0-videos/church-interior.mp4" type="video/mp4">
+    <source src="https://github.com/supercodingninja/GetWell/releases/download/v1.1-video/video.mp4" type="video/mp4">
 </video>
 <div class="video-overlay"></div>
 
-<!-- Header -->
+<!--
+================================================================================
+This Area Of Code Is: Fixed Application Header
+Explanation: I built a fixed header that stays at the top of the screen 
+(z-30) with glass morphism styling. It contains a hamburger menu button 
+(on the left), the app title "Get Well Soon" (centered), and a home button 
+(linking back to index.html) on the right. The max-width and mx-auto keep 
+the content centered.
+In Other Words: This is the top bar that stays visible while you scroll, 
+with a menu button, the app name, and a home button.
+================================================================================
+-->
 <header class="fixed top-0 left-0 right-0 z-30 glass px-4 py-4">
     <div class="max-w-4xl mx-auto flex justify-between items-center">
-        <button onclick="toggleMenu()" class="glass-button p-3 rounded-full text-white">
+        <button onclick="toggleMenu()" class="glass-button p-3 rounded-full text-white" aria-label="Open menu">
             <i class="ph ph-list text-xl"></i>
         </button>
         
         <h1 class="text-lg sm:text-2xl font-bold serif">Get Well Soon</h1>
         
-        <a href="../index.html" class="glass-button p-3 rounded-full text-white">
+        <a href="../index.html" class="glass-button p-3 rounded-full text-white" aria-label="Go home">
             <i class="ph ph-house text-xl"></i>
         </a>
     </div>
 </header>
 
-<!-- Main Content -->
+<!--
+================================================================================
+This Area Of Code Is: Main Content Area
+Explanation: I created the main content wrapper with padding-top (pt-24) to 
+prevent content from sliding under the fixed header, and padding-bottom (pb-8) 
+for breathing room. It uses flexbox to center the joke card vertically and 
+horizontally.
+In Other Words: This is the main area where the jokes show up, pushed down 
+so it doesn't hide under the top bar.
+================================================================================
+-->
 <main class="pt-24 pb-8 px-4 min-h-screen flex flex-col items-center justify-center">
     
-    <!-- Card Display -->
+    <!--
+    ================================================================================
+    This Area Of Code Is: Joke Card Display Container
+    Explanation: I built the primary card container with a max-width of 42rem 
+    (max-w-2xl) to ensure optimal reading line length. Inside is the glass-card 
+    (white background) that holds the current joke content, with minimum height 
+    of 350px to prevent layout shifts when content changes.
+    In Other Words: This is the big white card in the middle that displays 
+    the current joke.
+    ================================================================================
+    -->
     <div id="cardContainer" class="w-full max-w-2xl mx-auto mb-8">
         <div id="currentCard" class="glass-card rounded-3xl p-8 sm:p-12 min-h-[350px] flex flex-col items-center justify-center text-center relative">
             
+            <!--
+            ================================================================================
+            This Area Of Code Is: Card Type/Author Badge
+            Explanation: I positioned an absolute badge in the top-right corner that 
+            displays either the category (Joke, Prayer, etc.) or the author attribution 
+            for user-added jokes. It uses a light gray background for subtle contrast.
+            In Other Words: This little tag in the corner shows if it's a joke or 
+            who added it.
+            ================================================================================
+            -->
             <div id="cardTypeBadge" class="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold uppercase bg-slate-200 text-slate-700">
                 Joke
             </div>
             
+            <!-- Card Icon/Emoji -->
             <div id="cardIcon" class="text-5xl mb-4">😄</div>
             
+            <!--
+            ================================================================================
+            This Area Of Code Is: Joke Content Display
+            Explanation: I set up the title element (H2) for the joke setup/question 
+            and a paragraph element for the punchline. The punchline starts with 
+            opacity-0 (invisible) and transitions to visible when the user clicks 
+            "Show Punchline". The serif font adds elegance to the joke text.
+            In Other Words: This shows the joke question, and the answer is hiding 
+            until you press the button to reveal it.
+            ================================================================================
+            -->
             <h2 id="cardTitle" class="text-2xl sm:text-3xl font-semibold text-slate-800 serif mb-4">
                 Loading...
             </h2>
@@ -122,13 +230,33 @@
                 
             </p>
             
+            <!--
+            ================================================================================
+            This Area Of Code Is: Card Counter Display
+            Explanation: I added a card position indicator at the bottom of the card 
+            showing "Card X of Y" so users know their position in the deck. The 
+            cardNumber and totalCards spans are updated dynamically by JavaScript.
+            In Other Words: This shows which number joke you're looking at, like 
+            "Card 3 of 25".
+            ================================================================================
+            -->
             <div class="absolute bottom-4 text-slate-500 text-sm">
                 Card <span id="cardNumber">1</span> of <span id="totalCards">24</span>
             </div>
         </div>
     </div>
 
-    <!-- Navigation Buttons -->
+    <!--
+    ================================================================================
+    This Area Of Code Is: Primary Navigation Controls (Row 1)
+    Explanation: I created the first row of control buttons: Back (previous card), 
+    Show/Hide Punchline (toggle visibility), and Next (advance card). These use 
+    the glass-button class for consistent styling and are arranged with gap-3 
+    spacing.
+    In Other Words: These are the three main buttons to go back, show the answer, 
+    or go to the next joke.
+    ================================================================================
+    -->
     <div class="flex justify-center gap-3 mb-6">
         <button onclick="previousCard()" class="glass-button px-6 py-3 rounded-full text-white">
             <i class="ph ph-arrow-left"></i> Back
@@ -143,7 +271,17 @@
         </button>
     </div>
 
-    <!-- Action Buttons -->
+    <!--
+    ================================================================================
+    This Area Of Code Is: Secondary Action Buttons (Row 2)
+    Explanation: I built the second row containing the "Add Your Joke" button 
+    (green styling) and "Auto Mode" button (blue styling). The Add Joke button 
+    triggers the modal, while Auto Mode toggles the slideshow functionality with 
+    the golden glow animation.
+    In Other Words: These buttons let you add your own joke or turn on the 
+    automatic slideshow.
+    ================================================================================
+    -->
     <div class="flex justify-center gap-4 mb-6">
         <button onclick="openJokeModal()" class="glass-button px-6 py-3 rounded-full bg-green-500/20 border-green-400/40 text-green-400 hover:bg-green-500/30">
             <i class="ph ph-plus-circle"></i> Add Your Joke
@@ -154,26 +292,55 @@
         </button>
     </div>
 
-    <!-- Speed Controls (Hidden by default) -->
+    <!--
+    ================================================================================
+    This Area Of Code Is: Auto Mode Speed Controls
+    Explanation: I created a hidden-by-default container (hidden class) that 
+    appears when Auto Mode is activated. It contains three speed buttons: 
+    Slow (8 seconds), Medium (5 seconds), and Fast (2 seconds). The active 
+    class highlights the currently selected speed.
+    In Other Words: These buttons appear when you turn on Auto Mode to let 
+    you pick how fast the jokes change (slow, medium, or fast).
+    ================================================================================
+    -->
     <div id="speedControls" class="hidden flex gap-2 mb-6">
         <button onclick="setSpeed(8000)" class="speed-btn px-4 py-2 rounded-full text-xs bg-white/10 text-white border border-white/20" data-speed="8000">Slow</button>
         <button onclick="setSpeed(5000)" class="speed-btn px-4 py-2 rounded-full text-xs bg-white/10 text-white border border-white/20 active" data-speed="5000">Medium</button>
         <button onclick="setSpeed(2000)" class="speed-btn px-4 py-2 rounded-full text-xs bg-white/10 text-white border border-white/20" data-speed="2000">Fast</button>
     </div>
 
-    <!-- Community Guidelines Link -->
+    <!--
+    ================================================================================
+    This Area Of Code Is: Community Guidelines Link
+    Explanation: I added a subtle text link at the bottom that opens the 
+    Community Guidelines modal when clicked. It uses small text (text-xs) 
+    and low opacity (text-white/40) to remain unobtrusive while accessible.
+    In Other Words: This is the tiny link at the bottom that explains the 
+    rules for posting jokes.
+    ================================================================================
+    -->
     <button onclick="showGuidelines()" class="text-xs text-white/40 hover:text-white/60 underline">
         Community Guidelines
     </button>
 </main>
 
-<!-- Menu Drawer -->
+<!--
+================================================================================
+This Area Of Code Is: Side Menu Drawer (Navigation)
+Explanation: I built a slide-out menu drawer that appears from the left side 
+when the hamburger menu is clicked. It includes a backdrop overlay that closes 
+the menu when clicked, a close button, navigation links, and the "Jump to Card" 
+list (populated dynamically by JavaScript).
+In Other Words: This is the menu that slides out from the left when you click 
+the three lines, showing a list of all jokes you can jump to.
+================================================================================
+-->
 <div id="menuBackdrop" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden" onclick="toggleMenu()"></div>
 <nav id="menuDrawer" class="fixed top-0 left-0 h-full w-72 glass z-50 transform -translate-x-full transition-transform duration-300 overflow-y-auto">
     <div class="p-6">
         <div class="flex justify-between items-center mb-8">
             <h2 class="text-xl font-bold text-white">Menu</h2>
-            <button onclick="toggleMenu()" class="glass-button p-2 rounded-full text-white">
+            <button onclick="toggleMenu()" class="glass-button p-2 rounded-full text-white" aria-label="Close menu">
                 <i class="ph ph-x"></i>
             </button>
         </div>
@@ -191,11 +358,21 @@
     </div>
 </nav>
 
-<!-- Add Joke Modal -->
+<!--
+================================================================================
+This Area Of Code Is: Add Joke Modal (Popup Form)
+Explanation: I created a modal dialog for submitting new jokes. It includes 
+form fields for First Name, Location, Joke Question, and Punchline. The modal 
+has a dark backdrop that closes it when clicked, a white content area with 
+form validation (required fields), and status messaging for submission feedback.
+In Other Words: This is the popup window where you type your name, where 
+you're from, and your joke to add it to the app.
+================================================================================
+-->
 <div id="jokeModal" class="modal fixed inset-0 z-50 items-center justify-center p-4">
     <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" onclick="closeJokeModal()"></div>
     <div class="glass-card rounded-3xl p-6 w-full max-w-md relative z-10 max-h-[90vh] overflow-y-auto bg-white">
-        <button onclick="closeJokeModal()" class="absolute top-4 right-4 p-2 rounded-full bg-slate-200 hover:bg-slate-300">
+        <button onclick="closeJokeModal()" class="absolute top-4 right-4 p-2 rounded-full bg-slate-200 hover:bg-slate-300" aria-label="Close modal">
             <i class="ph ph-x text-slate-700"></i>
         </button>
         
@@ -235,11 +412,21 @@
     </div>
 </div>
 
-<!-- Community Guidelines Modal -->
+<!--
+================================================================================
+This Area Of Code Is: Community Guidelines Modal
+Explanation: I created a modal displaying the community rules: Christian-based 
+content (King James Version standards), no profanity, clean family-friendly 
+jokes only, and content filtering information. It includes an "I Understand" 
+button to close the modal.
+In Other Words: This popup explains the rules: keep it clean, keep it Christian, 
+and be nice.
+================================================================================
+-->
 <div id="guidelinesModal" class="modal fixed inset-0 z-50 items-center justify-center p-4">
     <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" onclick="closeGuidelines()"></div>
     <div class="glass-card rounded-3xl p-6 w-full max-w-lg relative z-10 max-h-[90vh] overflow-y-auto bg-white">
-        <button onclick="closeGuidelines()" class="absolute top-4 right-4 p-2 rounded-full bg-slate-200 hover:bg-slate-300">
+        <button onclick="closeGuidelines()" class="absolute top-4 right-4 p-2 rounded-full bg-slate-200 hover:bg-slate-300" aria-label="Close guidelines">
             <i class="ph ph-x text-slate-700"></i>
         </button>
         
@@ -269,11 +456,30 @@
     </div>
 </div>
 
-<!-- Firebase SDK -->
+<!--
+================================================================================
+This Area Of Code Is: Firebase SDK Loading
+Explanation: I loaded the Firebase App and Firestore libraries from Google's 
+CDN using the compat (compatibility) version for easier global namespace usage. 
+Firebase provides the cloud database that stores jokes permanently so they 
+persist between sessions and devices.
+In Other Words: This loads Google's database tools so jokes get saved forever 
+in the cloud, not just on your phone.
+================================================================================
+-->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
-<!-- App Script - CORRECT PATH -->
+<!--
+================================================================================
+This Area Of Code Is: Application JavaScript Loading
+Explanation: I linked the external app.js file that contains all the logic 
+for card navigation, Firebase integration, modal handling, and form submission. 
+The ./app.js path indicates it's in the same directory as this HTML file 
+(public folder).
+In Other Words: This connects the brain of the app (JavaScript) to the page.
+================================================================================
+-->
 <script src="./app.js"></script>
 
 </body>
