@@ -1,16 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
+<!--
+================================================================================
+This Area Of Code Is: HTML Document Root & Language Declaration
+Explanation: I am declaring this document as an HTML5 document with English 
+language support. This tells the browser how to parse the file and helps 
+screen readers with pronunciation.
+In Other Words: This tells the computer "This is a webpage in English."
+================================================================================
+-->
 <head>
+    <!--
+    ================================================================================
+    This Area Of Code Is: Character Encoding & Viewport Configuration
+    Explanation: I set the character encoding to UTF-8 so special characters display 
+    correctly, and I configured the viewport to ensure the page looks good on 
+    mobile phones by setting the width to the device width and initial zoom to 1.0.
+    In Other Words: This makes sure emojis show up right and the page fits on 
+    your phone screen without being too tiny.
+    ================================================================================
+    -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!--
+    ================================================================================
+    This Area Of Code Is: Page Title & Tab Icon
+    Explanation: I set the title that appears in the browser tab to "Get Well Card" 
+    so users know what app this is when they have multiple tabs open.
+    In Other Words: This is the name that shows up at the top of your browser tab.
+    ================================================================================
+    -->
     <title>Get Well Card</title>
+    
+    <!--
+    ================================================================================
+    This Area Of Code Is: Tailwind CSS Framework Loading
+    Explanation: I am loading the Tailwind CSS library from a CDN (Content Delivery 
+    Network) so I can use utility classes like "flex", "rounded-3xl", and "glass" 
+    without writing custom CSS for every single style.
+    In Other Words: This loads a toolbox of ready-made styles I can use instantly.
+    ================================================================================
+    -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!--
+    ================================================================================
+    This Area Of Code Is: Google Fonts Loading
+    Explanation: I imported two font families from Google: Inter (a clean, modern 
+    sans-serif for body text) and Playfair Display (an elegant serif font for 
+    headings). I specified multiple weights (300, 400, 500, 600, 700) so I have 
+    flexibility in typography.
+    In Other Words: This brings in fancy writing styles from the internet to make 
+    the page look beautiful instead of boring.
+    ================================================================================
+    -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!--
+    ================================================================================
+    This Area Of Code Is: Phosphor Icons Library
+    Explanation: I loaded the Phosphor Icons library to use clean, modern icons 
+    (like the cards icon for the "Open Card" button). This is a lightweight icon 
+    set that works well with the glass morphism design.
+    In Other Words: This gives me pretty symbols and pictures to use as buttons.
+    ================================================================================
+    -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <!--
+    ================================================================================
+    This Area Of Code Is: Custom CSS Styles (Internal Stylesheet)
+    Explanation: I wrote custom CSS rules here to supplement Tailwind. I defined 
+    the glass morphism effect (blur + transparency), video background positioning, 
+    and custom button hover animations that Tailwind doesn't provide by default.
+    In Other Words: These are special styling rules I created myself for the 
+    frosted glass look and video backgrounds.
+    ================================================================================
+    -->
     <style>
+        /*
+        ================================================================================
+        This Area Of Code Is: Universal Font Family Reset
+        Explanation: I set every element to use the Inter font family by default, 
+        ensuring consistency across the entire page. I also created a utility class 
+        called "serif" for elements that need the Playfair Display font.
+        In Other Words: This makes all the text use the clean modern font, unless 
+        I specifically say to use the fancy font.
+        ================================================================================
+        */
         * { font-family: 'Inter', sans-serif; }
         .serif { font-family: 'Playfair Display', serif; }
         
+        /*
+        ================================================================================
+        This Area Of Code Is: Glass Morphism Effect Class
+        Explanation: I created the "glass" class to produce the iOS 26 glass morphism 
+        look. This uses a semi-transparent white background (rgba 255,255,255,0.1), 
+        applies a heavy blur filter (40px) with saturation boost (180%), and adds 
+        a subtle white border. The -webkit- prefix ensures it works on Safari.
+        In Other Words: This makes the boxes look like frosted glass you can 
+        slightly see through, just like on an iPhone.
+        ================================================================================
+        */
         .glass {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(40px) saturate(180%);
@@ -18,6 +110,17 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
+        /*
+        ================================================================================
+        This Area Of Code Is: Video Background Positioning
+        Explanation: I configured the video background to cover the entire screen 
+        by fixing its position to the top-left corner and setting its dimensions 
+        to 100% width and height. The object-fit: cover ensures the video fills 
+        the screen without stretching, and z-index: -1 puts it behind all content.
+        In Other Words: This makes the video cover the whole screen like wallpaper, 
+        staying in the background so buttons and text can go on top.
+        ================================================================================
+        */
         .video-bg {
             position: fixed;
             top: 0;
@@ -28,6 +131,16 @@
             z-index: -1;
         }
         
+        /*
+        ================================================================================
+        This Area Of Code Is: Video Overlay/Darkening Layer
+        Explanation: I added a semi-transparent dark overlay (rgba 15,23,42,0.7) 
+        that sits on top of the video but behind the content. This ensures the 
+        white text remains readable against the bright video background.
+        In Other Words: This is like putting sunglasses over the video so the 
+        white words are easy to read.
+        ================================================================================
+        */
         .video-overlay {
             position: fixed;
             top: 0;
@@ -38,6 +151,17 @@
             z-index: -1;
         }
         
+        /*
+        ================================================================================
+        This Area Of Code Is: Glass Button Styling
+        Explanation: I created the "glass-button" class for interactive buttons 
+        with the glass effect. It has a slightly more opaque background than the 
+        card (0.15 vs 0.1), a subtle border, and includes transition properties 
+        for smooth hover effects.
+        In Other Words: This makes the buttons look like frosted glass too, and 
+        they smoothly change when you touch them.
+        ================================================================================
+        */
         .glass-button {
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(20px);
@@ -45,39 +169,124 @@
             transition: all 0.3s ease;
         }
         
+        /*
+        ================================================================================
+        This Area Of Code Is: Button Hover Interaction
+        Explanation: I defined the hover state for glass buttons to increase 
+        opacity (making it whiter) and translate the button upward by 2 pixels, 
+        giving a subtle "lift" effect when users hover their mouse over it.
+        In Other Words: When you put your mouse over the button, it gets brighter 
+        and moves up a tiny bit to show it's ready to be clicked.
+        ================================================================================
+        */
         .glass-button:hover {
             background: rgba(255, 255, 255, 0.25);
             transform: translateY(-2px);
         }
     </style>
 </head>
+
+<!--
+================================================================================
+This Area Of Code Is: Document Body Content
+Explanation: I set the body text color to white and ensured a minimum height 
+of the full viewport so the content always fills the screen, even on short pages.
+In Other Words: This is the main part of the page that people see, with white 
+text and tall enough to fill the screen.
+================================================================================
+-->
 <body class="text-white min-h-screen">
 
-<!-- Video Background -->
+<!--
+================================================================================
+This Area Of Code Is: Background Video Element (Landing Page)
+Explanation: I embedded the landing page background video from GitHub Releases 
+(v1.0-videos). The autoplay attribute starts it immediately, muted ensures it 
+works on mobile browsers (which block autoplay with sound), loop makes it 
+repeat forever, and playsinline prevents it from going fullscreen on iOS.
+In Other Words: This is the moving background video that plays automatically, 
+stays quiet, loops forever, and stays in its box on iPhones.
+================================================================================
+-->
 <video class="video-bg" autoplay muted loop playsinline>
     <source src="https://github.com/supercodingninja/GetWell/releases/download/v1.0-videos/video.mp4" type="video/mp4">
 </video>
 <div class="video-overlay"></div>
 
-<div class="min-h-screen flex flex-col items-center justify-center px-4">
+<!--
+================================================================================
+This Area Of Code Is: Main Content Container
+Explanation: I created a flex container that centers all content both 
+vertically and horizontally (justify-center, items-center) with padding on 
+the sides (px-4) for mobile breathing room.
+In Other Words: This is the big box that holds everything and keeps it 
+centered in the middle of the screen.
+================================================================================
+-->
+<div class="min-h-screen flex flex-col items-center justify-center px-4 pb-16">
+    <!--
+    ================================================================================
+    This Area Of Code Is: Glass Card Container (Hero Section)
+    Explanation: I built the main glass card using the glass class, with rounded 
+    corners (rounded-3xl), generous padding (p-8 for mobile, p-12 for larger screens), 
+    a maximum width of 36rem (max-w-xl), and full width with auto margins for 
+    responsiveness. The text is centered.
+    In Other Words: This is the main frosted glass box in the center that holds 
+    the church emoji, title, and open button.
+    ================================================================================
+    -->
     <div class="glass rounded-3xl p-8 sm:p-12 max-w-xl w-full text-center">
+        <!-- Church Emoji Icon -->
         <div class="mb-6 text-6xl">⛪</div>
         
+        <!--
+        ================================================================================
+        This Area Of Code Is: Main Heading & Subheadings
+        Explanation: I structured the typography hierarchy with an H1 title "Get Well 
+        Soon" using the serif font (Playfair Display) in large text (text-4xl to 
+        text-5xl), followed by supporting text with reduced opacity (text-white/80 
+        and text-white/60) for visual hierarchy.
+        In Other Words: This is the big fancy title "Get Well Soon" and the smaller 
+        words underneath it that fade a bit so the title stands out.
+        ================================================================================
+        -->
         <h1 class="text-4xl sm:text-5xl font-bold serif mb-4 text-white">Get Well Soon</h1>
         <p class="text-xl text-white/80 mb-2">Your Church Family Loves You</p>
         <p class="text-white/60 mb-8">God Bless You</p>
         
+        <!--
+        ================================================================================
+        This Area Of Code Is: Call-to-Action Button (Open Card)
+        Explanation: I created the main entry button linking to the app page 
+        (public/app.html). It uses the glass-button class with inline-flex for 
+        icon+text alignment, a pill shape (rounded-full), and includes a Phosphor 
+        Icon (ph-cards) alongside the text "Open Card".
+        In Other Words: This is the big button that says "Open Card" with a picture 
+        of cards, and clicking it takes you into the actual app.
+        ================================================================================
+        -->
         <a href="public/app.html" class="glass-button inline-flex items-center gap-2 px-8 py-4 rounded-full text-lg font-semibold">
             <i class="ph ph-cards text-xl"></i>
             <span>Open Card</span>
         </a>
     </div>
-    
-    <footer class="mt-12 text-center text-white/40 text-sm">
-        <p>© 2026 Get Well Card</p>
-        <p class="mt-1">Frederick Thomas, "The Super Coding Ninja™"</p>
-    </footer>
 </div>
+
+<!--
+================================================================================
+This Area Of Code Is: Fixed Footer with Copyright Attribution
+Explanation: I positioned the footer fixed at the bottom of the viewport 
+(bottom-0) with a semi-transparent dark background (bg-black/20) and blur 
+effect. The copyright text is on a single line as requested, showing both 
+the app name and my attribution. The padding-bottom (pb-1) in the parent 
+container ensures content doesn't get hidden behind this fixed footer.
+In Other Words: This is the copyright notice glued to the very bottom of 
+the screen on one line, so you can always see who made this app.
+================================================================================
+-->
+<footer class="fixed bottom-0 left-0 right-0 text-center text-white/40 text-sm py-3 bg-black/20 backdrop-blur-sm border-t border-white/10 z-50">
+    <p>© 2026 Get Well Card | Frederick Thomas, "The Super Coding Ninja™"</p>
+</footer>
 
 </body>
 </html>
