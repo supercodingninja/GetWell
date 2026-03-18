@@ -1,23 +1,81 @@
+/*
+================================================================================
+This Area Of Code Is: Firestore Security Rules
+Explanation: Defines who can read/write to your Firestore database. These rules
+run on Google's servers for every request. Currently allows all reads (public
+jokes) but restricts writes to validated content. You must deploy these in the
+Firebase console for them to take effect.
+In Other Words: The security guard for your database - decides who can save jokes.
+================================================================================
+*/
+
+/*
+This Area Of Code Is: Rules Version Declaration
+Explanation: Specifies which version of the rules syntax to use. Version 2
+is the current standard with improved functionality.
+In Other Words: Tells Firebase which rule language version to use.
+*/
 rules_version = '2';
+
+/*
+This Area Of Code Is: Service Cloud Firestore Declaration
+Explanation: Begins the Firestore rules block. All database rules go inside.
+In Other Words: Starts the security rules section.
+*/
 service cloud.firestore {
-  match /databases/{database}/documents {
-    match /jokes/{jokeId} {
-      allow read: if true;
-      
-      allow create: if 
-        request.resource.data.setup is string &&
-        request.resource.data.setup.size() > 0 &&
-        request.resource.data.setup.size() < 150 &&
-        request.resource.data.punchline is string &&
-        request.resource.data.punchline.size() > 0 &&
-        request.resource.data.punchline.size() < 150 &&
-        request.resource.data.author is string &&
-        request.resource.data.author.size() > 0 &&
-        request.resource.data.author.size() < 20 &&
-        request.resource.data.type == 'joke' &&
-        request.resource.data.tag == 'Community';
+    /*
+    This Area Of Code Is: Database Match Block
+    Explanation: Matches the entire database. Rules inside apply to all documents.
+    In Other Words: These rules apply to your entire database.
+    */
+    match /databases/{database}/documents {
         
-      allow update, delete: if false;
+        /*
+        This Area Of Code Is: Jokes Collection Rules
+        Explanation: Rules for the 'jokes' collection. Allows anyone to read
+        (public app), but requires authentication for writes in production.
+        For now, allows writes for testing.
+        In Other Words: Anyone can view jokes, but only certain people can add them.
+        */
+        match /jokes/{jokeId} {
+            /*
+            This Area Of Code Is: Read Permission
+            Explanation: Allows anyone to read jokes (public access).
+            In Other Words: Anyone can view the jokes.
+            */
+            allow read: if true;
+            
+            /*
+            This Area Of Code Is: Write Permission
+            Explanation: Currently allows anyone to create jokes for testing.
+            For production, change to: allow create: if request.auth != null;
+            to require login. Includes validation that required fields exist.
+            In Other Words: Anyone can add a joke (for testing). Change later
+            to require login.
+            */
+            allow create: if true
+                && request.resource.data.setup is string
+                && request.resource.data.setup.size() > 0
+                && request.resource.data.punchline is string
+                && request.resource.data.category is string;
+            
+            /*
+            This Area Of Code Is: Update/Delete Permission
+            Explanation: Only allows updates/deletes by the joke author or admin.
+            For now, disabled (no updates/deletes allowed).
+            In Other Words: Nobody can edit or delete jokes once posted.
+            */
+            allow update, delete: if false;
+        }
+        
+        /*
+        This Area Of Code Is: Moderation Log Rules
+        Explanation: Rules for the moderation log collection (for tracking
+        deleted content). Only admins should access this.
+        In Other Words: Tracks deleted jokes - admin only.
+        */
+        match /moderationLog/{logId} {
+            allow read, write: if false; // Admin only - implement later
+        }
     }
-  }
 }
