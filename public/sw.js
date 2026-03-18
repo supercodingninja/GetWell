@@ -1,19 +1,24 @@
 /*
 ================================================================================
 This Area Of Code Is: Service Worker (PWA Offline Support)
-Explanation: This script runs in the background and enables offline functionality.
-It caches the app files so users can still view jokes without internet. Also
-handles push notifications and background sync if added later.
-In Other Words: The behind-the-scenes worker that saves the app to your phone
-so it works without internet.
+Explanation: I created this service worker script to enable Progressive Web 
+App functionality. It runs in the background separate from the web page and 
+handles caching the app's files so users can view content even without an 
+internet connection once they've visited the site at least once.
+In Other Words: This is a behind-the-scenes helper that saves the app to your 
+phone so it works even when you're offline or have bad signal.
 ================================================================================
 */
 
 /*
-This Area Of Code Is: Cache Configuration
-Explanation: Defines the cache name (versioned) and which files to cache for
-offline use. These are the core files needed to run the app.
-In Other Words: The list of files to save for offline use.
+================================================================================
+This Area Of Code Is: Cache Configuration Constants
+Explanation: I defined the cache name (versioned as 'getwell-cache-v1' so I 
+can update it easily later) and an array of URLs that must be cached for the 
+app to function offline. These are the core HTML, CSS, and JS files.
+In Other Words: This is the list of files I need to save for offline use, 
+like the blueprints of the app.
+================================================================================
 */
 const CACHE_NAME = 'getwell-cache-v1';
 const urlsToCache = [
@@ -26,10 +31,15 @@ const urlsToCache = [
 ];
 
 /*
-This Area Of Code Is: Install Event Handler
-Explanation: Runs when the service worker is first installed. Opens the cache
-and adds all core files to it. This happens when the user first visits the page.
-In Other Words: When the app is first added, save all the files to the phone.
+================================================================================
+This Area Of Code Is: Service Worker Installation Handler
+Explanation: I set up an event listener for the 'install' event that fires 
+when the service worker is first registered. It opens the cache storage, 
+adds all the essential files to it, and forces immediate activation with 
+skipWaiting(). If caching fails, it logs the error but doesn't break the app.
+In Other Words: When you first visit the site, this saves all the important 
+files to your phone's storage so the app works without internet later.
+================================================================================
 */
 self.addEventListener('install', (event) => {
     event.waitUntil(
@@ -43,16 +53,22 @@ self.addEventListener('install', (event) => {
             })
     );
     
-    // Activate immediately
+    // Activate immediately without waiting for tabs to close
     self.skipWaiting();
 });
 
 /*
-This Area Of Code Is: Fetch Event Handler
-Explanation: Intercepts all network requests. First tries to serve from cache
-(offline), then falls back to network if not in cache. This enables offline use.
-In Other Words: When the app asks for a file, give the saved version first.
-If not saved, try to download it.
+================================================================================
+This Area Of Code Is: Fetch Interceptor (Cache-First Strategy)
+Explanation: I implemented a fetch event listener that intercepts all network 
+requests. It first checks the cache for a matching request; if found, it 
+returns the cached version instantly. If not in cache, it fetches from the 
+network. If both fail, it returns the index.html as a fallback for navigation 
+requests (SPA behavior).
+In Other Words: When the app asks for a file, I first check if I already 
+saved it; if yes, I use that immediately. If not, I try to download it. If 
+that fails too, I show the main page.
+================================================================================
 */
 self.addEventListener('fetch', (event) => {
     event.respondWith(
@@ -65,7 +81,7 @@ self.addEventListener('fetch', (event) => {
                 return fetch(event.request);
             })
             .catch(() => {
-                // If both fail, return offline fallback
+                // If both fail, return offline fallback for navigation requests
                 if (event.request.mode === 'navigate') {
                     return caches.match('/GetWell/index.html');
                 }
@@ -74,10 +90,15 @@ self.addEventListener('fetch', (event) => {
 });
 
 /*
-This Area Of Code Is: Activate Event Handler
-Explanation: Runs when the service worker activates. Cleans up old caches
-from previous versions to save space.
-In Other Words: Delete old saved files when updating to a new version.
+================================================================================
+This Area Of Code Is: Activation & Cache Cleanup Handler
+Explanation: I added an 'activate' event listener that runs when the service 
+worker becomes active. It deletes old caches from previous versions to save 
+storage space on the user's device. clients.claim() ensures the service worker 
+takes control of all clients (tabs) immediately.
+In Other Words: This cleans up old saved files when updating to a new version 
+and makes sure the new version controls all open windows right away.
+================================================================================
 */
 self.addEventListener('activate', (event) => {
     event.waitUntil(
