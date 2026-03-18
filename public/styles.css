@@ -1,8 +1,8 @@
 /*
 ================================================================================
-This Area Of Code Is: CSS Variables & Reset
-Explanation: I defined CSS custom properties for the glass morphism color palette and reset default browser styles for consistent cross-platform rendering.
-In Other Words: This sets up the colors and removes default spacing.
+This Area Of Code Is: CSS Variables and Design Tokens
+Explanation: I defined CSS custom properties for the glass morphism design system including transparency values, gold accent colors, dynamic viewport units (dvh/dvw), and safe area insets for iPhone notch/home indicator compatibility.
+In Other Words: This sets up the colors, transparency levels, and viewport measurements for the app.
 ================================================================================
 */
 
@@ -14,14 +14,12 @@ In Other Words: This sets up the colors and removes default spacing.
     --primary-gold: #fbbf24;
     --primary-gold-dark: #f59e0b;
     --success-green: #10b981;
-    --danger-red: #ef4444;
     --text-primary: #ffffff;
     --text-secondary: rgba(255, 255, 255, 0.75);
     --text-muted: rgba(255, 255, 255, 0.5);
     --bg-dark: #0f172a;
-    --bg-darker: #020617;
-    --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    --safe-top: env(safe-area-inset-top);
+    --safe-bottom: env(safe-area-inset-bottom);
 }
 
 * {
@@ -32,8 +30,8 @@ In Other Words: This sets up the colors and removes default spacing.
 }
 
 html, body {
-    height: 100%;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    height: 100dvh;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     background: var(--bg-dark);
     color: var(--text-primary);
     overflow-x: hidden;
@@ -41,9 +39,9 @@ html, body {
 
 /*
 ================================================================================
-This Area Of Code Is: Video Background Styling
-Explanation: I styled the video background container with absolute positioning, object-fit cover for aspect ratio maintenance, and a gradient overlay for text legibility.
-In Other Words: This makes the background video cover the screen and puts a dark tint over it.
+This Area Of Code Is: Video Background Container
+Explanation: I styled the video background using fixed positioning with 100dvw/dvh units to account for dynamic viewport changes on mobile. The video uses object-fit cover to maintain aspect ratio and has a gradient overlay for text legibility.
+In Other Words: This makes the background video cover the entire screen on any device.
 ================================================================================
 */
 
@@ -51,8 +49,8 @@ In Other Words: This makes the background video cover the screen and puts a dark
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100dvw;
+    height: 100dvh;
     z-index: 0;
     overflow: hidden;
 }
@@ -67,7 +65,7 @@ In Other Words: This makes the background video cover the screen and puts a dark
     height: auto;
     transform: translate(-50%, -50%);
     object-fit: cover;
-    opacity: 0.6;
+    opacity: 0.7;
 }
 
 .video-overlay {
@@ -78,18 +76,17 @@ In Other Words: This makes the background video cover the screen and puts a dark
     height: 100%;
     background: linear-gradient(
         135deg, 
-        rgba(15, 23, 42, 0.7) 0%, 
-        rgba(15, 23, 42, 0.5) 50%, 
-        rgba(15, 23, 42, 0.8) 100%
+        rgba(15, 23, 42, 0.8) 0%, 
+        rgba(15, 23, 42, 0.6) 50%, 
+        rgba(15, 23, 42, 0.9) 100%
     );
-    backdrop-filter: blur(1px);
 }
 
 /*
 ================================================================================
-This Area Of Code Is: App Header Component
-Explanation: I created a fixed glass-morphism header with a hamburger menu that transforms into the SCN logo when clicked, a centered title, and home button.
-In Other Words: This is the top bar with the menu button and title.
+This Area Of Code Is: App Header with Hamburger-to-SCN Morph Animation
+Explanation: I created a fixed header with a hamburger menu button that transforms into the <SCN/>™ logo when clicked. The animation uses CSS transitions on opacity, transform rotate, and scale to morph the three lines into the logo text with a golden glow effect.
+In Other Words: This is the top bar where the menu button turns into your SCN logo when you click it.
 ================================================================================
 */
 
@@ -99,21 +96,22 @@ In Other Words: This is the top bar with the menu button and title.
     left: 0;
     right: 0;
     height: 60px;
-    background: rgba(15, 23, 42, 0.7);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    padding-top: var(--safe-top);
+    background: rgba(15, 23, 42, 0.8);
     border-bottom: 1px solid var(--glass-border);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 15px;
+    padding-left: 15px;
+    padding-right: 15px;
     z-index: 100;
+    backdrop-filter: none; /* True glass - no blur */
 }
 
 .menu-btn {
-    width: 44px;
+    width: 50px;
     height: 44px;
-    border-radius: 50%;
+    border-radius: 12px;
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
     cursor: pointer;
@@ -122,50 +120,77 @@ In Other Words: This is the top bar with the menu button and title.
     justify-content: center;
     position: relative;
     overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 .hamburger {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    transition: opacity 0.3s;
+    transition: all 0.3s ease;
+    position: absolute;
 }
 
 .hamburger span {
     display: block;
-    width: 20px;
+    width: 22px;
     height: 2px;
     background: white;
     border-radius: 2px;
-    transition: all 0.3s;
-}
-
-.menu-btn.active .hamburger {
-    opacity: 0;
-    transform: scale(0.5);
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    transform-origin: center;
 }
 
 .scn-logo {
     position: absolute;
     font-family: 'Courier New', monospace;
     font-weight: bold;
-    font-size: 12px;
+    font-size: 11px;
     color: var(--primary-gold);
+    text-shadow: 0 0 10px rgba(251, 191, 36, 0.8);
     opacity: 0;
-    transform: scale(0.5) rotate(-180deg);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(0) rotate(-180deg);
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     white-space: nowrap;
+    letter-spacing: -0.5px;
+}
+
+/* Morph Animation States */
+.menu-btn.active .hamburger {
+    opacity: 0;
+    transform: scale(0);
+}
+
+.menu-btn.active .hamburger span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+    opacity: 0;
+}
+
+.menu-btn.active .hamburger span:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+.menu-btn.active .hamburger span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+    opacity: 0;
 }
 
 .menu-btn.active .scn-logo {
     opacity: 1;
     transform: scale(1) rotate(0deg);
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.9));
+}
+
+.menu-btn:hover {
+    background: var(--glass-bg-strong);
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+    border-color: var(--primary-gold);
 }
 
 .header-title {
     font-family: 'Playfair Display', serif;
-    font-size: 20px;
+    font-size: clamp(18px, 5vw, 24px);
     font-weight: 600;
     color: var(--text-primary);
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
@@ -189,19 +214,20 @@ In Other Words: This is the top bar with the menu button and title.
 .home-btn:hover {
     background: var(--glass-bg-strong);
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
 /*
 ================================================================================
 This Area Of Code Is: Live Stats Display
-Explanation: I positioned floating badges in the top-right showing online viewers and total cards with pulsing animation for the live indicator.
-In Other Words: This shows "1 online" and "24 cards" in the corner.
+Explanation: I positioned floating badges in the top-right corner below the safe area inset, using glass morphism styling with live pulse animations to indicate real-time connection status and card counts.
+In Other Words: These are the "1 online" and "24 cards" badges in the corner.
 ================================================================================
 */
 
 .live-stats {
     position: fixed;
-    top: 70px;
+    top: calc(70px + var(--safe-top));
     right: 15px;
     z-index: 50;
     display: flex;
@@ -212,7 +238,6 @@ In Other Words: This shows "1 online" and "24 cards" in the corner.
 
 .live-badge, .cards-badge {
     background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 20px;
     padding: 6px 12px;
@@ -220,6 +245,8 @@ In Other Words: This shows "1 online" and "24 cards" in the corner.
     display: flex;
     align-items: center;
     gap: 6px;
+    color: white;
+    backdrop-filter: none;
 }
 
 .pulse-dot {
@@ -231,15 +258,15 @@ In Other Words: This shows "1 online" and "24 cards" in the corner.
 }
 
 @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.8); }
+    0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+    50% { opacity: 0.5; transform: scale(0.8); box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
 }
 
 /*
 ================================================================================
 This Area Of Code Is: Side Navigation Menu
-Explanation: I created a slide-out drawer menu with card jump shortcuts, using transform for smooth 60fps animation and backdrop blur.
-In Other Words: This is the menu that slides in from the left.
+Explanation: I created a slide-out drawer menu using transform translateX for 60fps animation performance, with backdrop blur on the overlay and glass morphism styling on the menu panel itself.
+In Other Words: This is the menu that slides in from the left when you click the hamburger.
 ================================================================================
 */
 
@@ -247,15 +274,16 @@ In Other Words: This is the menu that slides in from the left.
     position: fixed;
     top: 0;
     left: 0;
-    width: 280px;
-    height: 100%;
+    width: min(80vw, 300px);
+    height: 100dvh;
     background: rgba(15, 23, 42, 0.95);
-    backdrop-filter: blur(30px);
     border-right: 1px solid var(--glass-border);
     z-index: 200;
     transform: translateX(-100%);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     overflow-y: auto;
+    padding-top: var(--safe-top);
+    backdrop-filter: none;
 }
 
 .side-menu.open {
@@ -268,12 +296,12 @@ In Other Words: This is the menu that slides in from the left.
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(5px);
+    background: rgba(0, 0, 0, 0.7);
     z-index: 199;
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s;
+    backdrop-filter: blur(5px);
 }
 
 .menu-overlay.open {
@@ -292,6 +320,7 @@ In Other Words: This is the menu that slides in from the left.
 .menu-header h3 {
     font-family: 'Playfair Display', serif;
     font-size: 24px;
+    color: white;
 }
 
 .close-menu {
@@ -337,6 +366,7 @@ In Other Words: This is the menu that slides in from the left.
 .menu-item:hover {
     background: var(--glass-bg-strong);
     transform: translateX(5px);
+    border-color: var(--primary-gold);
 }
 
 .menu-divider {
@@ -383,16 +413,16 @@ In Other Words: This is the menu that slides in from the left.
 /*
 ================================================================================
 This Area Of Code Is: Main App Layout
-Explanation: I structured the main content area with flexbox column layout, proper spacing for the fixed header, and centered alignment for the card.
-In Other Words: This arranges everything below the header.
+Explanation: I structured the main content area using flexbox column layout with dynamic viewport height units, accounting for the fixed header height and safe area insets to ensure content fits within the visible screen area on all devices.
+In Other Words: This arranges the card and buttons below the header, taking up the full screen height.
 ================================================================================
 */
 
 .app-main {
     position: relative;
     z-index: 10;
-    min-height: 100vh;
-    padding: 80px 15px 100px;
+    min-height: 100dvh;
+    padding: calc(80px + var(--safe-top)) 15px calc(100px + var(--safe-bottom));
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -401,9 +431,9 @@ In Other Words: This arranges everything below the header.
 
 /*
 ================================================================================
-This Area Of Code Is: Content Card Component
-Explanation: I designed the primary content card with heavy glass morphism, gradient backgrounds, and translucent blur effects. It adapts height based on content.
-In Other Words: This is the big see-through card that shows jokes.
+This Area Of Code Is: Content Card Component with True Glass
+Explanation: I designed the joke display card with pure rgba transparency (no backdrop blur), gradient borders, 3D shadow effects, and shimmer animations. The card adapts height based on content while maintaining minimum dimensions for touch targets.
+In Other Words: This is the big see-through card in the middle showing the jokes.
 ================================================================================
 */
 
@@ -414,17 +444,11 @@ In Other Words: This is the big see-through card that shows jokes.
 }
 
 .content-card {
-    background: linear-gradient(
-        135deg, 
-        rgba(255, 255, 255, 0.12) 0%, 
-        rgba(255, 255, 255, 0.05) 100%
-    );
-    backdrop-filter: blur(40px);
-    -webkit-backdrop-filter: blur(40px);
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.15); /* True transparency */
+    border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 24px;
-    padding: 40px 30px;
-    min-height: 350px;
+    padding: clamp(30px, 8vw, 50px) clamp(20px, 5vw, 40px);
+    min-height: 300px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -436,6 +460,24 @@ In Other Words: This is the big see-through card that shows jokes.
         inset 0 1px 0 rgba(255, 255, 255, 0.3),
         0 0 100px rgba(251, 191, 36, 0.1);
     transition: transform 0.3s, box-shadow 0.3s;
+    backdrop-filter: none; /* True glass - no blur */
+    overflow: hidden;
+}
+
+.content-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 200%; }
 }
 
 .content-card:hover {
@@ -462,7 +504,7 @@ In Other Words: This is the big see-through card that shows jokes.
 }
 
 .card-icon {
-    font-size: 48px;
+    font-size: clamp(40px, 10vw, 56px);
     margin-bottom: 20px;
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
     animation: iconFloat 3s ease-in-out infinite;
@@ -475,7 +517,7 @@ In Other Words: This is the big see-through card that shows jokes.
 
 .setup-text {
     font-family: 'Playfair Display', serif;
-    font-size: 28px;
+    font-size: clamp(24px, 6vw, 32px);
     line-height: 1.4;
     color: var(--text-primary);
     margin-bottom: 20px;
@@ -483,7 +525,7 @@ In Other Words: This is the big see-through card that shows jokes.
 }
 
 .punchline-text {
-    font-size: 20px;
+    font-size: clamp(18px, 4vw, 22px);
     color: var(--primary-gold);
     font-weight: 500;
     opacity: 0;
@@ -526,8 +568,8 @@ In Other Words: This is the big see-through card that shows jokes.
 
 /*
 ================================================================================
-This Area Of Code Is: Control Buttons
-Explanation: I styled the navigation and action buttons with glass morphism, hover states, and touch-friendly sizing (min 44px).
+This Area Of Code Is: Control Buttons with Glass Morphism
+Explanation: I styled navigation buttons using intrinsic sizing with min-height 44px for iOS accessibility guidelines, glass transparency backgrounds, and hover states with transform effects. Buttons use flexbox for icon and text alignment.
 In Other Words: These are the Back, Next, Add Joke, and Auto Mode buttons.
 ================================================================================
 */
@@ -547,7 +589,6 @@ In Other Words: These are the Back, Next, Add Joke, and Auto Mode buttons.
     border-radius: 50px;
     border: 1px solid var(--glass-border);
     background: var(--glass-bg);
-    backdrop-filter: blur(10px);
     color: white;
     font-size: 15px;
     font-weight: 500;
@@ -559,27 +600,29 @@ In Other Words: These are the Back, Next, Add Joke, and Auto Mode buttons.
     flex: 1;
     justify-content: center;
     min-width: 100px;
+    backdrop-filter: none;
 }
 
 .nav-btn:hover, .action-btn:hover {
     background: var(--glass-bg-strong);
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    border-color: var(--primary-gold);
 }
 
 .add-joke-btn {
-    background: linear-gradient(135deg, rgba(16, 185, 129, 0.3) 0%, rgba(16, 185, 129, 0.1) 100%);
+    background: rgba(16, 185, 129, 0.2);
     border-color: rgba(16, 185, 129, 0.4);
     color: #6ee7b7;
 }
 
 .add-joke-btn:hover {
-    background: linear-gradient(135deg, rgba(16, 185, 129, 0.4) 0%, rgba(16, 185, 129, 0.2) 100%);
+    background: rgba(16, 185, 129, 0.3);
     box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
 }
 
 .auto-mode-btn {
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.3) 0%, rgba(59, 130, 246, 0.1) 100%);
+    background: rgba(59, 130, 246, 0.2);
     border-color: rgba(59, 130, 246, 0.4);
     color: #93c5fd;
     position: relative;
@@ -590,25 +633,19 @@ In Other Words: These are the Back, Next, Add Joke, and Auto Mode buttons.
     animation: goldenPulse 2s infinite;
     border-color: var(--primary-gold);
     color: var(--primary-gold);
-    background: linear-gradient(135deg, rgba(251, 191, 36, 0.3) 0%, rgba(251, 191, 36, 0.1) 100%);
+    background: rgba(251, 191, 36, 0.2);
 }
 
 @keyframes goldenPulse {
-    0%, 100% { 
-        box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.4);
-        transform: scale(1);
-    }
-    50% { 
-        box-shadow: 0 0 20px 5px rgba(251, 191, 36, 0.2);
-        transform: scale(1.02);
-    }
+    0%, 100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.4); }
+    50% { box-shadow: 0 0 20px 5px rgba(251, 191, 36, 0.2); }
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Speed Controls
-Explanation: I created a segmented control for auto-mode speed selection that appears when auto-mode is active, showing time ranges for accessibility.
-In Other Words: These are the Slow/Medium/Fast buttons that show up in Auto Mode.
+This Area Of Code Is: Speed Control Segmented Buttons
+Explanation: I created a hidden-by-default speed selector that appears when auto-mode is active, using segmented button styling with active states indicating current selection.
+In Other Words: These are the Slow/Medium/Fast buttons that appear in Auto Mode.
 ================================================================================
 */
 
@@ -639,6 +676,7 @@ In Other Words: These are the Slow/Medium/Fast buttons that show up in Auto Mode
     transition: all 0.3s;
     text-align: center;
     line-height: 1.3;
+    backdrop-filter: none;
 }
 
 .speed-btn small {
@@ -675,9 +713,9 @@ In Other Words: These are the Slow/Medium/Fast buttons that show up in Auto Mode
 
 /*
 ================================================================================
-This Area Of Code Is: Modal Components
-Explanation: I designed centered modal dialogs with heavy glass morphism for adding jokes and viewing guidelines, including form styling.
-In Other Words: These are the popup windows for adding jokes.
+This Area Of Code Is: Modal Dialog Components
+Explanation: I designed centered modal dialogs using fixed positioning with flexbox centering, glass morphism backgrounds, and transform animations for open/close states. Modals include form inputs with focus states and high-contrast text.
+In Other Words: These are the popup windows for adding jokes and viewing guidelines.
 ================================================================================
 */
 
@@ -688,7 +726,6 @@ In Other Words: These are the popup windows for adding jokes.
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(10px);
     z-index: 300;
     display: flex;
     align-items: center;
@@ -697,6 +734,7 @@ In Other Words: These are the popup windows for adding jokes.
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s;
+    backdrop-filter: none;
 }
 
 .modal.open {
@@ -707,7 +745,7 @@ In Other Words: These are the popup windows for adding jokes.
 .modal-content {
     width: 100%;
     max-width: 480px;
-    max-height: 90vh;
+    max-height: 90dvh;
     overflow-y: auto;
     transform: scale(0.9) translateY(20px);
     transition: transform 0.3s;
@@ -718,12 +756,7 @@ In Other Words: These are the popup windows for adding jokes.
 }
 
 .glass-modal {
-    background: linear-gradient(
-        135deg, 
-        rgba(30, 41, 59, 0.95) 0%, 
-        rgba(15, 23, 42, 0.98) 100%
-    );
-    backdrop-filter: blur(40px);
+    background: rgba(15, 23, 42, 0.98);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 24px;
     padding: 30px;
@@ -740,6 +773,7 @@ In Other Words: These are the popup windows for adding jokes.
 .modal-header h3 {
     font-family: 'Playfair Display', serif;
     font-size: 24px;
+    color: white;
 }
 
 .close-modal {
@@ -850,6 +884,7 @@ In Other Words: These are the popup windows for adding jokes.
     align-items: center;
     justify-content: center;
     gap: 8px;
+    min-height: 44px;
 }
 
 .submit-btn {
@@ -920,11 +955,10 @@ In Other Words: These are the popup windows for adding jokes.
 
 .translation-bar {
     position: fixed;
-    bottom: 20px;
+    bottom: calc(20px + var(--safe-bottom));
     left: 50%;
     transform: translateX(-50%);
     background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(10px);
     padding: 8px 16px;
     border-radius: 20px;
     font-size: 12px;
@@ -932,57 +966,28 @@ In Other Words: These are the popup windows for adding jokes.
     border: 1px solid var(--glass-border);
     z-index: 50;
     white-space: nowrap;
+    backdrop-filter: none;
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Responsive Design
-Explanation: I added media queries to ensure proper layout on mobile devices with touch-friendly adjustments.
-In Other Words: This makes it look good on phones.
+This Area Of Code Is: Responsive Design Media Queries
+Explanation: I implemented mobile-specific adjustments using max-width media queries to ensure touch-friendly sizing, reduced padding on small screens, and proper safe area handling for iPhone 14 and similar devices.
+In Other Words: This makes everything fit better on small phones.
 ================================================================================
 */
 
 @media (max-width: 480px) {
-    .setup-text {
-        font-size: 22px;
-    }
-    
-    .punchline-text {
-        font-size: 18px;
-    }
-    
-    .content-card {
-        padding: 30px 20px;
-        min-height: 300px;
-    }
-    
-    .nav-btn, .action-btn {
-        padding: 10px 16px;
-        font-size: 14px;
-    }
-    
-    .speed-btn {
-        padding: 8px 14px;
-        font-size: 12px;
-    }
-    
-    .glass-modal {
-        padding: 20px;
-    }
-    
-    .translation-bar {
-        font-size: 11px;
-        padding: 6px 12px;
-        bottom: 10px;
-    }
+    .setup-text { font-size: 22px; }
+    .punchline-text { font-size: 18px; }
+    .content-card { padding: 25px 15px; min-height: 280px; }
+    .nav-btn, .action-btn { padding: 10px 16px; font-size: 14px; }
+    .speed-btn { padding: 8px 14px; font-size: 12px; }
+    .glass-modal { padding: 20px; }
+    .translation-bar { font-size: 11px; padding: 6px 12px; }
 }
 
 @media (max-width: 360px) {
-    .controls-row {
-        flex-direction: column;
-    }
-    
-    .nav-btn, .action-btn {
-        width: 100%;
-    }
+    .controls-row { flex-direction: column; }
+    .nav-btn, .action-btn { width: 100%; }
 }
