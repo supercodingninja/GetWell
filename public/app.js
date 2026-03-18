@@ -1,22 +1,14 @@
 /*
 ================================================================================
-This Area Of Code Is: Main Application Logic (Firebase + Content Moderation)
-Explanation: This is the brain of the GetWell PWA. It handles loading jokes
-from Firebase Firestore, submitting new content with PurgoMalum API moderation,
-slideshow functionality, and UI interactions. All content is validated externally
-via PurgoMalum API to keep the codebase sanctified.
-In Other Words: This makes everything work - loading jokes, checking they're
-clean using an external service, showing them in cards, and running the slideshow.
+This Area Of Code Is: Firebase SDK Imports
+Explanation: I am importing the Firebase modules needed for database operations 
+using ES module syntax from Google's CDN (version 12.10.0). The initializeApp 
+function starts Firebase, getFirestore provides database access, and serverTimestamp 
+ensures consistent timestamps across all user submissions.
+In Other Words: I am connecting my app to the cloud database using the latest tools.
 ================================================================================
 */
-
-/*
-This Area Of Code Is: Firebase SDK Imports
-Explanation: Imports the Firebase modules needed for this app - initializeApp
-to connect to Firebase, and Firestore functions to read/write jokes.
-In Other Words: Bringing in Google's database tools.
-*/
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js';
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
 import { 
     getFirestore, 
     collection, 
@@ -25,14 +17,18 @@ import {
     query, 
     orderBy, 
     limit, 
-    serverTimestamp
-} from 'https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js';
+    serverTimestamp,
+    where 
+} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
 /*
-This Area Of Code Is: Firebase Configuration (YOUR ACTUAL CONFIG)
-Explanation: These are YOUR Firebase project identifiers from the config you
-provided. This connects the app to YOUR "Growing Get Well Card" Firebase project.
-In Other Words: Your project's address and keys for the database.
+================================================================================
+This Area Of Code Is: Firebase Configuration
+Explanation: I am configuring Firebase with my project's unique credentials. 
+These settings tell my app exactly which Firebase project to connect to, 
+authenticating my requests so only my app can access my database.
+In Other Words: This is my app's unique key to access the cloud database securely.
+================================================================================
 */
 const firebaseConfig = {
     apiKey: "AIzaSyDieVA5y_pag35ZVh8P8Pul68sZ_2qtEGU",
@@ -45,573 +41,589 @@ const firebaseConfig = {
 };
 
 /*
+================================================================================
 This Area Of Code Is: Firebase Initialization
-Explanation: Creates the connection to Firebase using YOUR config above.
-Initializes the Firestore database instance.
-In Other Words: Turns on the connection to YOUR database.
+Explanation: I am initializing the Firebase app with my configuration and 
+getting a reference to the Firestore database. This creates the connection 
+that allows me to read and write data in real-time.
+In Other Words: I am starting the engine that powers my app's data storage.
+================================================================================
 */
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 /*
-This Area Of Code Is: Default Jokes Collection
-Explanation: These 24 starter jokes display immediately while Firebase loads.
-They provide content before the database responds. All are Christ-honoring.
-In Other Words: The starter pack of jokes that appear instantly.
+================================================================================
+This Area Of Code Is: Video Background Configuration
+Explanation: I am defining the video URLs hosted on GitHub Releases. The landing 
+page shows a peaceful interior scene, while the main app shows community 
+gatherings. I use direct GitHub URLs to avoid storage limits and ensure 
+reliable streaming.
+In Other Words: These are the background videos that play behind my app's content.
+================================================================================
 */
-const DEFAULT_JOKES = [
-    { setup: "Why did the scarecrow win an award?", punchline: "Because he was outstanding in his field!", category: "joke", author: "Anonymous" },
-    { setup: "What do you call a sleeping dinosaur?", punchline: "A dino-snore!", category: "joke", author: "Kids Ministry" },
-    { setup: "Why don't scientists trust atoms?", punchline: "Because they make up everything!", category: "joke", author: "Science Club" },
-    { setup: "What do you call a fake noodle?", punchline: "An impasta!", category: "joke", author: "Pasta Night" },
-    { setup: "Why did the math book look sad?", punchline: "Because it had too many problems!", category: "joke", author: "Homework Helpers" },
-    { setup: "How does Moses make his coffee?", punchline: "Hebrews it!", category: "joke", author: "Coffee Club" },
-    { setup: "What do you call a bear with no teeth?", punchline: "A gummy bear!", category: "joke", author: "VBS Team" },
-    { setup: "Why can't you give Elsa a balloon?", punchline: "Because she will let it go!", category: "joke", author: "Frozen Party" },
-    { setup: "What do you get when you cross a snowman and a dog?", punchline: "Frostbite!", category: "joke", author: "Winter Retreat" },
-    { setup: "Why did the golfer bring two pairs of pants?", punchline: "In case he got a hole in one!", category: "joke", author: "Golf Ministry" },
-    { setup: "What do you call a pile of cats?", punchline: "A meowtain!", category: "joke", author: "Pet Blessing" },
-    { setup: "Why don't eggs tell jokes?", punchline: "They'd crack each other up!", category: "joke", author: "Breakfast Club" },
-    { setup: "What do you call a belt made of watches?", punchline: "A waist of time!", category: "joke", author: "Time Management" },
-    { setup: "Why did the stadium get hot after the game?", punchline: "All the fans left!", category: "joke", author: "Sports Ministry" },
-    { setup: "What do you call a fish with no eyes?", punchline: "Fsh!", category: "joke", author: "Fishing Retreat" },
-    { setup: "Why did the bicycle fall over?", punchline: "It was two-tired!", category: "joke", author: "Bike Club" },
-    { setup: "What do you call a can opener that doesn't work?", punchline: "A can't opener!", category: "joke", author: "Kitchen Crew" },
-    { setup: "Why did the music teacher go to jail?", punchline: "Because she got caught with sharp objects!", category: "joke", author: "Worship Team" },
-    { setup: "What do you call a sad strawberry?", punchline: "A blueberry!", category: "joke", author: "Fruit Stand" },
-    { setup: "Why did the picture go to jail?", punchline: "Because it was framed!", category: "joke", author: "Art Ministry" },
-    { setup: "What do you call a sleeping bull?", punchline: "A bulldozer!", category: "joke", author: "Farm Day" },
-    { setup: "Why did the cookie go to the doctor?", punchline: "Because it felt crummy!", category: "joke", author: "Baking Team" },
-    { setup: "What do you call a dinosaur with an extensive vocabulary?", punchline: "A thesaurus!", category: "joke", author: "Book Club" },
-    { setup: "Why did the scarecrow become a pastor?", punchline: "Because he was outstanding in his field!", category: "joke", author: "Church Staff" }
+const videoConfig = {
+    landing: 'https://github.com/supercodingninja/GetWell/releases/download/v1.0-videos/church-interior.mp4',
+    main: 'https://github.com/supercodingninja/GetWell/releases/download/v1.0-videos/video.mp4'
+};
+
+/*
+================================================================================
+This Area Of Code Is: Content Moderation - External API
+Explanation: I am using the PurgoMalum API to check content without storing 
+any banned words in my code. When someone submits text, I send it to this 
+external service which returns whether it's clean or contains profanity. This 
+keeps my codebase sanctified and clean.
+In Other Words: I use an external service to check if text is appropriate, so I 
+don't need to store bad words in my app.
+================================================================================
+*/
+const checkPurgoMalum = async (text) => {
+    try {
+        const response = await fetch(`https://www.purgomalum.com/service/containsprofanity?text=${encodeURIComponent(text)}`);
+        const result = await response.text();
+        return result === 'true';
+    } catch (error) {
+        console.error('I encountered an error checking content:', error);
+        return false;
+    }
+};
+
+/*
+================================================================================
+This Area Of Code Is: Church Standards Validation
+Explanation: I am implementing client-side checks for content that aligns with 
+church values - checking for political content, LGBTQ+ themes, anti-church 
+sentiment, and drug references. This uses pattern matching to flag potentially 
+inappropriate content before submission.
+In Other Words: I check if content matches values important to my community before 
+allowing it to be posted.
+================================================================================
+*/
+const checkChurchStandards = (text) => {
+    const lowerText = text.toLowerCase();
+    
+    const politicalPatterns = ['trump', 'biden', 'election', 'vote democrat', 'vote republican', 'liberal', 'conservative', 'political'];
+    const inappropriatePatterns = ['lgbtq', 'lgbt', 'gay pride', 'transgender agenda', 'anti-church', 'hate church', 'weed', 'marijuana', 'drugs'];
+    
+    const issues = [];
+    
+    politicalPatterns.forEach(pattern => {
+        if (lowerText.includes(pattern)) issues.push('political content');
+    });
+    
+    inappropriatePatterns.forEach(pattern => {
+        if (lowerText.includes(pattern)) issues.push('inappropriate content');
+    });
+    
+    return {
+        isValid: issues.length === 0,
+        issues: issues
+    };
+};
+
+/*
+================================================================================
+This Area Of Code Is: Starter Content Database
+Explanation: I am seeding my app with 24 starter jokes to ensure users have 
+immediate content to enjoy. These are clean, family-friendly jokes stored 
+locally while Firebase synchronization happens in the background. This ensures 
+the app works immediately even before database content loads.
+In Other Words: These are the first jokes people see when they open my app.
+================================================================================
+*/
+const starterJokes = [
+    { type: 'jokes', text: "Why don't scientists trust atoms? Because they make up everything!", author: 'Community' },
+    { type: 'jokes', text: "Why did the scarecrow win an award? He was outstanding in his field!", author: 'Community' },
+    { type: 'jokes', text: "Why don't eggs tell jokes? They'd crack each other up!", author: 'Community' },
+    { type: 'jokes', text: "What do you call a fake noodle? An impasta!", author: 'Community' },
+    { type: 'jokes', text: "Why did the bicycle fall over? It was two-tired!", author: 'Community' },
+    { type: 'jokes', text: "What do you call a bear with no teeth? A gummy bear!", author: 'Community' },
+    { type: 'jokes', text: "Why can't you give Elsa a balloon? Because she will let it go!", author: 'Community' },
+    { type: 'jokes', text: "What do you get when you cross a snowman with a vampire? Frostbite!", author: 'Community' },
+    { type: 'jokes', text: "Why did the math book look sad? Because it had too many problems!", author: 'Community' },
+    { type: 'jokes', text: "What do you call cheese that isn't yours? Nacho cheese!", author: 'Community' },
+    { type: 'jokes', text: "Why did the golfer bring two pairs of pants? In case he got a hole in one!", author: 'Community' },
+    { type: 'jokes', text: "What do you call a sleeping dinosaur? A dino-snore!", author: 'Community' },
+    { type: 'jokes', text: "Why don't skeletons fight each other? They don't have the guts!", author: 'Community' },
+    { type: 'jokes', text: "What did the grape do when it got stepped on? It let out a little wine!", author: 'Community' },
+    { type: 'jokes', text: "Why couldn't the leopard play hide and seek? Because he was always spotted!", author: 'Community' },
+    { type: 'jokes', text: "What do you call a fish wearing a crown? A king fish!", author: 'Community' },
+    { type: 'jokes', text: "Why did the cookie go to the doctor? Because it felt crummy!", author: 'Community' },
+    { type: 'jokes', text: "What do you call a lazy kangaroo? A pouch potato!", author: 'Community' },
+    { type: 'jokes', text: "Why did the stadium get hot after the game? All the fans left!", author: 'Community' },
+    { type: 'jokes', text: "What do you call a dog magician? A labracadabrador!", author: 'Community' },
+    { type: 'jokes', text: "Why did the picture go to jail? Because it was framed!", author: 'Community' },
+    { type: 'jokes', text: "What do you call a bear in the rain? A drizzly bear!", author: 'Community' },
+    { type: 'jokes', text: "Why did the scarecrow become a successful neurosurgeon? He was out-standing in his field!", author: 'Community' },
+    { type: 'jokes', text: "What do you call a snowman with a six pack? An abdominal snowman!", author: 'Community' }
+];
+
+const starterPrayers = [
+    { type: 'prayers', text: "Heavenly Father, thank You for this day. Bless everyone who reads this with peace, joy, and healing. In Jesus' name, Amen.", author: 'Community' },
+    { type: 'prayers', text: "Lord, I pray for anyone feeling sick or down today. Wrap them in Your love and give them strength. Amen.", author: 'Community' }
+];
+
+const starterMessages = [
+    { type: 'messages', text: "You are stronger than you know, braver than you believe, and loved more than you can imagine. Keep going!", author: 'Community' },
+    { type: 'messages', text: "This too shall pass. Every storm runs out of rain. Hold on, better days are coming.", author: 'Community' }
 ];
 
 /*
-This Area Of Code Is: Church Community Standards
-Explanation: Local check for content violating church values (political,
-LGBTQ+ topics, anti-church content). Checked before calling PurgoMalum API.
-In Other Words: First check - does this fit church family values?
+================================================================================
+This Area Of Code Is: Application State Management
+Explanation: I am creating variables to track the current state of my app - 
+which content type is being viewed (jokes, prayers, or messages), the current 
+index in the slideshow, whether slideshow mode is active, and the full database 
+of content items. This allows smooth navigation and transitions.
+In Other Words: This keeps track of where the user is and what they're looking at.
+================================================================================
 */
-const CHURCH_STANDARDS = {
-    political: ['trump', 'biden', 'obama', 'republican', 'democrat', 'maga', 'antifa', 'liberal', 'conservative', 'election', 'vote', 'campaign'],
-    lgbtq: ['gay', 'lesbian', 'transgender', 'trans', 'queer', 'bisexual', 'lgbt', 'pride', 'drag queen', 'homosexual'],
-    antichurch: ['god is dead', 'anti-christ', 'satanic', 'cult', 'atheist', 'anti-church'],
-    drugs: ['cocaine', 'heroin', 'weed', 'marijuana', 'drugs', 'getting high']
+let currentMode = 'jokes';
+let currentIndex = 0;
+let isSlideshowActive = false;
+let slideshowInterval = null;
+let allContent = {
+    jokes: [...starterJokes],
+    prayers: [...starterPrayers],
+    messages: [...starterMessages]
 };
 
 /*
-This Area Of Code Is: Application State Variables
-Explanation: Tracks current app state - loaded jokes, active filter,
-slideshow status, etc. These change as users interact.
-In Other Words: The app's memory of what's happening right now.
-*/
-let allJokes = [];
-let currentFilter = 'all';
-let slideshowInterval = null;
-let isSlideshowPlaying = false;
-let currentSlideIndex = 0;
-
-/*
+================================================================================
 This Area Of Code Is: DOM Element References
-Explanation: Gets HTML elements so JavaScript can control them. Cached
-on startup for performance.
-In Other Words: Grabbing buttons and containers from the HTML to control them.
+Explanation: I am caching references to HTML elements that I need to manipulate 
+frequently. This improves performance by avoiding repeated document searches 
+and makes my code cleaner by using descriptive variable names for each element.
+In Other Words: I grab all the buttons and display areas so I can work with them easily.
+================================================================================
 */
 const elements = {
-    cardsContainer: document.getElementById('cardsContainer'),
-    addModal: document.getElementById('addModal'),
-    addForm: document.getElementById('addForm'),
-    loadingSpinner: document.getElementById('loadingSpinner'),
-    toastContainer: document.getElementById('toastContainer'),
-    slideshowControls: document.getElementById('slideshowControls'),
-    slideCounter: document.getElementById('slideCounter'),
-    filterButtons: document.querySelectorAll('.filter-btn'),
-    addBtn: document.getElementById('addBtn'),
+    cardType: document.getElementById('cardType'),
+    cardNumber: document.getElementById('cardNumber'),
+    cardText: document.getElementById('cardText'),
+    prevBtn: document.getElementById('prevBtn'),
+    nextBtn: document.getElementById('nextBtn'),
+    modeButtons: document.querySelectorAll('.mode-btn'),
+    slideshowToggle: document.getElementById('slideshowToggle'),
+    addContentBtn: document.getElementById('addContentBtn'),
     cancelBtn: document.getElementById('cancelBtn'),
-    slideshowBtn: document.getElementById('slideshowBtn'),
-    pauseSlideshow: document.getElementById('pauseSlideshow'),
-    exitSlideshow: document.getElementById('exitSlideshow')
+    submissionForm: document.getElementById('submissionForm'),
+    contentForm: document.getElementById('contentForm'),
+    submitType: document.getElementById('submitType'),
+    submitText: document.getElementById('submitText'),
+    charCount: document.getElementById('charCount'),
+    contentCard: document.getElementById('contentCard')
 };
 
 /*
 ================================================================================
-This Area Of Code Is: Content Moderation (PurgoMalum API)
-Explanation: Validates user content using external PurgoMalum API (free, no key
-needed). No profanity words stored in code - all checking is external.
-In Other Words: Asks external service "is this clean?" instead of storing bad words.
+This Area Of Code Is: Content Display Controller
+Explanation: I am creating a function to update the display card with the 
+current content item. It handles the type label styling, card counter, text 
+display, and applies fade animations for smooth transitions between items.
+In Other Words: This function shows the current joke, prayer, or message on screen.
 ================================================================================
 */
-
-/*
-This Area Of Code Is: Church Standards Validator
-Explanation: Checks text against church community standards. Returns passed
-status and reason if failed. Runs before external API call.
-In Other Words: First security check - does this fit church values?
-*/
-function checkChurchStandards(text) {
-    const lowerText = text.toLowerCase();
-    
-    for (const [category, words] of Object.entries(CHURCH_STANDARDS)) {
-        for (const word of words) {
-            if (lowerText.includes(word)) {
-                return {
-                    passed: false,
-                    reason: category,
-                    message: `Content contains ${category} references not suitable for this community.`
-                };
-            }
-        }
-    }
-    
-    return { passed: true };
-}
-
-/*
-This Area Of Code Is: PurgoMalum Profanity Check
-Explanation: Calls PurgoMalum API to check for profanity. Returns true if
-profanity found. External service keeps code clean.
-In Other Words: Asks external service "any bad words in this?"
-*/
-async function checkProfanity(text) {
-    try {
-        const response = await fetch(`https://www.purgomalum.com/service/containsprofanity?text=${encodeURIComponent(text)}`);
-        const hasProfanity = await response.json();
-        return hasProfanity;
-    } catch (error) {
-        console.error('PurgoMalum API error:', error);
-        return true; // Fail safe - block content if API fails
-    }
-}
-
-/*
-This Area Of Code Is: Content Moderation Coordinator
-Explanation: Runs both validation layers - church standards first, then
-PurgoMalum profanity check. Returns final approval status.
-In Other Words: The boss that runs both checks and gives final yes/no.
-*/
-async function moderateContent(setup, punchline, author) {
-    const fullText = `${setup} ${punchline} ${author || ''}`;
-    
-    // Layer 1: Church standards
-    const churchCheck = checkChurchStandards(fullText);
-    if (!churchCheck.passed) {
-        return churchCheck;
-    }
-    
-    // Layer 2: Profanity via PurgoMalum
-    const hasProfanity = await checkProfanity(fullText);
-    if (hasProfanity) {
-        return {
-            passed: false,
-            reason: 'profanity',
-            message: 'Content contains inappropriate language. Please keep it clean.'
-        };
-    }
-    
-    return { passed: true };
-}
-
-/*
-================================================================================
-This Area Of Code Is: Firebase Database Operations
-Explanation: Functions to read from and write to YOUR Firebase Firestore.
-Handles the persistent joke database that grows over time.
-In Other Words: Tools for saving and loading jokes from YOUR database.
-================================================================================
-*/
-
-/*
-This Area Of Code Is: Load Jokes from Firebase
-Explanation: Fetches jokes from YOUR Firestore, ordered by newest first.
-Shows default jokes while loading. Displays toast if offline.
-In Other Words: Gets jokes from YOUR database, or shows defaults if offline.
-*/
-async function loadJokes() {
-    showLoading(true);
-    
-    try {
-        const jokesQuery = query(
-            collection(db, 'jokes'),
-            orderBy('createdAt', 'desc'),
-            limit(50)
-        );
-        
-        const snapshot = await getDocs(jokesQuery);
-        
-        if (snapshot.empty) {
-            allJokes = DEFAULT_JOKES;
-            showToast('Welcome! Submit the first joke to get started.', 'info');
-        } else {
-            allJokes = snapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data()
-            }));
-        }
-        
-        renderCards();
-    } catch (error) {
-        console.error('Error loading jokes:', error);
-        allJokes = DEFAULT_JOKES;
-        renderCards();
-        showToast('Using offline jokes. Check connection.', 'warning');
-    } finally {
-        showLoading(false);
-    }
-}
-
-/*
-This Area Of Code Is: Submit Joke to Firebase
-Explanation: Validates content via moderation, then saves to YOUR Firestore
-if clean. Shows toast feedback. Reloads jokes on success.
-In Other Words: Saves a new joke to YOUR database after checking it's clean.
-*/
-async function submitJoke(setup, punchline, category, author) {
-    const moderation = await moderateContent(setup, punchline, author);
-    
-    if (!moderation.passed) {
-        showToast(moderation.message, 'error');
-        return false;
-    }
-    
-    try {
-        await addDoc(collection(db, 'jokes'), {
-            setup,
-            punchline,
-            category,
-            author: author || 'Anonymous',
-            createdAt: serverTimestamp(),
-            approved: true
-        });
-        
-        showToast('Thank you! Your submission has been added.', 'success');
-        await loadJokes();
-        return true;
-    } catch (error) {
-        console.error('Error submitting joke:', error);
-        showToast('Error saving joke. Please try again.', 'error');
-        return false;
-    }
-}
-
-/*
-================================================================================
-This Area Of Code Is: UI Rendering Functions
-Explanation: Creates and updates visual elements - cards, toasts, loading spinner.
-Transforms data into HTML and updates the page.
-In Other Words: The decorators that make jokes look pretty in cards.
-================================================================================
-*/
-
-/*
-This Area Of Code Is: Render Cards Grid
-Explanation: Creates HTML for all joke cards based on current filter.
-Uses CSS classes for glass morphism styling. Handles empty state.
-In Other Words: Draws all the joke cards on the screen.
-*/
-function renderCards() {
-    const filtered = currentFilter === 'all' 
-        ? allJokes 
-        : allJokes.filter(j => j.category === currentFilter);
-    
-    if (filtered.length === 0) {
-        elements.cardsContainer.innerHTML = `
-            <div class="empty-state">
-                <p>No ${currentFilter === 'all' ? '' : currentFilter}s yet.</p>
-                <p>Be the first to share!</p>
-            </div>
-        `;
+const displayContent = (index) => {
+    const items = allContent[currentMode];
+    if (items.length === 0) {
+        elements.cardText.textContent = "No content yet. Be the first to add something!";
         return;
     }
     
-    elements.cardsContainer.innerHTML = filtered.map((joke, index) => `
-        <div class="card glass" data-index="${index}" data-category="${joke.category}">
-            <div class="card-header">
-                <span class="category-badge ${joke.category}">${joke.category}</span>
-                <span class="author">${joke.author || 'Anonymous'}</span>
-            </div>
-            <div class="card-body">
-                <p class="setup">${escapeHtml(joke.setup)}</p>
-                <p class="punchline">${escapeHtml(joke.punchline)}</p>
-            </div>
-        </div>
-    `).join('');
+    const item = items[index];
     
-    document.querySelectorAll('.card').forEach(card => {
-        card.addEventListener('click', () => {
-            if (isSlideshowPlaying) return;
+    elements.cardType.textContent = item.type.charAt(0).toUpperCase() + item.type.slice(1);
+    elements.cardNumber.textContent = `#${index + 1} of ${items.length}`;
+    elements.cardText.textContent = item.text;
+    
+    // Color coding by type
+    const colors = {
+        jokes: '#f59e0b',
+        prayers: '#10b981',
+        messages: '#3b82f6'
+    };
+    elements.cardType.style.color = colors[item.type];
+    
+    // Animation effect
+    elements.contentCard.style.opacity = '0';
+    setTimeout(() => {
+        elements.contentCard.style.opacity = '1';
+    }, 150);
+};
+
+/*
+================================================================================
+This Area Of Code Is: Navigation Controller
+Explanation: I am implementing next and previous functions that cycle through 
+content items. They use modulo arithmetic to loop back to the beginning when 
+reaching the end, ensuring infinite navigation through the collection.
+In Other Words: These let users move forward and backward through the cards.
+================================================================================
+*/
+const nextContent = () => {
+    const items = allContent[currentMode];
+    currentIndex = (currentIndex + 1) % items.length;
+    displayContent(currentIndex);
+};
+
+const prevContent = () => {
+    const items = allContent[currentMode];
+    currentIndex = (currentIndex - 1 + items.length) % items.length;
+    displayContent(currentIndex);
+};
+
+/*
+================================================================================
+This Area Of Code Is: Mode Switching Controller
+Explanation: I am creating a function to switch between jokes, prayers, and 
+messages modes. It updates the active button styling, resets to the first item 
+in the new category, and refreshes the display to show content from the selected type.
+In Other Words: This switches between jokes, prayers, and messages when users click tabs.
+================================================================================
+*/
+const switchMode = (mode) => {
+    currentMode = mode;
+    currentIndex = 0;
+    
+    elements.modeButtons.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.mode === mode);
+    });
+    
+    displayContent(currentIndex);
+};
+
+/*
+================================================================================
+This Area Of Code Is: Slideshow Controller
+Explanation: I am implementing an automatic slideshow feature that cycles 
+through content every 5 seconds when activated. It includes play/pause toggle 
+functionality and visual feedback through button text changes.
+In Other Words: This automatically shows new content every few seconds like a presentation.
+================================================================================
+*/
+const toggleSlideshow = () => {
+    if (isSlideshowActive) {
+        clearInterval(slideshowInterval);
+        isSlideshowActive = false;
+        elements.slideshowToggle.textContent = '▶ Slideshow';
+        elements.slideshowToggle.classList.remove('active');
+    } else {
+        slideshowInterval = setInterval(nextContent, 5000);
+        isSlideshowActive = true;
+        elements.slideshowToggle.textContent = '⏸ Pause';
+        elements.slideshowToggle.classList.add('active');
+    }
+};
+
+/*
+================================================================================
+This Area Of Code Is: Form Visibility Controller
+Explanation: I am managing the visibility of the submission form with smooth 
+animations. When users click "Add Your Own," the form slides into view; when 
+they cancel or submit, it hides gracefully.
+In Other Words: This shows and hides the form for adding new content.
+================================================================================
+*/
+const showForm = () => {
+    elements.submissionForm.style.display = 'block';
+    setTimeout(() => {
+        elements.submissionForm.style.opacity = '1';
+        elements.submissionForm.style.transform = 'translateY(0)';
+    }, 10);
+    elements.addContentBtn.style.display = 'none';
+};
+
+const hideForm = () => {
+    elements.submissionForm.style.opacity = '0';
+    elements.submissionForm.style.transform = 'translateY(-20px)';
+    setTimeout(() => {
+        elements.submissionForm.style.display = 'none';
+    }, 300);
+    elements.addContentBtn.style.display = 'block';
+    elements.contentForm.reset();
+    elements.charCount.textContent = '0 / 500';
+};
+
+/*
+================================================================================
+This Area Of Code Is: Character Counter
+Explanation: I am implementing a real-time character counter for the submission 
+textarea, updating as the user types to show how close they are to the 500 
+character limit. This provides immediate feedback and prevents overflow.
+In Other Words: This counts how many letters the user has typed.
+================================================================================
+*/
+const updateCharCount = () => {
+    const count = elements.submitText.value.length;
+    elements.charCount.textContent = `${count} / 500`;
+    
+    if (count > 450) {
+        elements.charCount.style.color = '#ef4444';
+    } else {
+        elements.charCount.style.color = '#9ca3af';
+    }
+};
+
+/*
+================================================================================
+This Area Of Code Is: Content Submission Handler
+Explanation: I am handling form submissions by validating content length, checking 
+against external moderation APIs (PurgoMalum), validating church standards, 
+checking for duplicates, and then saving to Firebase. I provide user feedback 
+through alerts and gracefully handle errors.
+In Other Words: This processes new jokes/prayers/messages when people submit them.
+================================================================================
+*/
+const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    const text = elements.submitText.value.trim();
+    const type = elements.submitType.value;
+    
+    if (text.length === 0) {
+        alert('Please enter some content to share.');
+        return;
+    }
+    
+    if (text.length > 500) {
+        alert('Please keep your message under 500 characters.');
+        return;
+    }
+    
+    // Check PurgoMalum API
+    const containsProfanity = await checkPurgoMalum(text);
+    if (containsProfanity) {
+        alert('Your message contains inappropriate language. Please keep it family-friendly.');
+        return;
+    }
+    
+    // Check church standards
+    const standardsCheck = checkChurchStandards(text);
+    if (!standardsCheck.isValid) {
+        alert(`Your message contains ${standardsCheck.issues.join(', ')}. Please keep content neutral and uplifting.`);
+        return;
+    }
+    
+    // Check for duplicates
+    const isDuplicate = allContent[type].some(item => item.text.toLowerCase() === text.toLowerCase());
+    if (isDuplicate) {
+        alert('This content already exists in our collection!');
+        return;
+    }
+    
+    try {
+        // Add to Firebase
+        await addDoc(collection(db, type), {
+            text: text,
+            type: type,
+            author: 'Community Member',
+            timestamp: serverTimestamp(),
+            approved: true
+        });
+        
+        // Add to local collection
+        allContent[type].push({
+            text: text,
+            type: type,
+            author: 'Community Member'
+        });
+        
+        alert('Thank you for sharing! Your content has been added.');
+        hideForm();
+        
+        // If currently viewing this type, update display
+        if (currentMode === type) {
+            currentIndex = allContent[type].length - 1;
+            displayContent(currentIndex);
+        }
+        
+    } catch (error) {
+        console.error('I encountered an error saving content:', error);
+        
+        // Still add to local collection if Firebase fails (offline mode)
+        allContent[type].push({
+            text: text,
+            type: type,
+            author: 'Community Member'
+        });
+        
+        alert('Content saved locally! It will sync when you reconnect.');
+        hideForm();
+    }
+};
+
+/*
+================================================================================
+This Area Of Code Is: Firebase Data Loader
+Explanation: I am fetching all content from Firebase Firestore when the app 
+loads. I query each collection (jokes, prayers, messages), merge them with my 
+starter content to ensure the app always has something to display, and handle 
+offline scenarios gracefully.
+In Other Words: This loads all the saved jokes and messages from the cloud when the app starts.
+================================================================================
+*/
+const loadFirebaseData = async () => {
+    try {
+        const types = ['jokes', 'prayers', 'messages'];
+        
+        for (const type of types) {
+            const q = query(collection(db, type), orderBy('timestamp', 'desc'), limit(100));
+            const snapshot = await getDocs(q);
+            
+            const firebaseItems = [];
+            snapshot.forEach((doc) => {
+                firebaseItems.push({ id: doc.id, ...doc.data() });
+            });
+            
+            // Merge with starters, avoiding duplicates
+            const existingTexts = allContent[type].map(item => item.text.toLowerCase());
+            const newItems = firebaseItems.filter(item => !existingTexts.includes(item.text.toLowerCase()));
+            
+            allContent[type] = [...allContent[type], ...newItems];
+        }
+        
+        // Refresh display
+        displayContent(currentIndex);
+        
+    } catch (error) {
+        console.error('I encountered an error loading Firebase data:', error);
+        // Continue with starter content if Firebase fails
+    }
+};
+
+/*
+================================================================================
+This Area Of Code Is: Keyboard Navigation Controller
+Explanation: I am implementing keyboard shortcuts for improved accessibility 
+and user experience. Left/right arrows navigate content, spacebar toggles 
+slideshow, and escape closes any open forms.
+In Other Words: This lets people use keyboard arrows to navigate instead of clicking.
+================================================================================
+*/
+const handleKeyboard = (e) => {
+    if (e.target.tagName === 'TEXTAREA') return;
+    
+    switch(e.key) {
+        case 'ArrowLeft':
+            prevContent();
+            break;
+        case 'ArrowRight':
+        case ' ':
+            if (e.target !== elements.submitText) {
+                e.preventDefault();
+                nextContent();
+            }
+            break;
+        case 'Escape':
+            hideForm();
+            break;
+    }
+};
+
+/*
+================================================================================
+This Area Of Code Is: Video Background Manager
+Explanation: I am handling video playback for the background ambiance. I ensure 
+videos autoplay with muted audio (required by browsers), handle visibility changes 
+to pause when the tab is inactive (saving battery), and implement error recovery.
+In Other Words: This manages the background videos so they play smoothly.
+================================================================================
+*/
+const initVideoBackground = () => {
+    const videos = document.querySelectorAll('video');
+    
+    videos.forEach(video => {
+        video.muted = true;
+        video.play().catch(err => {
+            console.log('I note that autoplay was prevented:', err);
         });
     });
-}
-
-/*
-This Area Of Code Is: HTML Escape Utility
-Explanation: Prevents XSS attacks by converting special characters to HTML
-entities. Ensures user content cannot inject malicious scripts.
-In Other Words: Security measure so jokes can't hack the page.
-*/
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-}
-
-/*
-This Area Of Code Is: Toast Notification System
-Explanation: Shows temporary popup messages at bottom. Auto-removes after
-3 seconds. Types: success (green), error (red), warning (yellow), info (blue).
-In Other Words: Little popup messages saying "Success!" or "Error!"
-*/
-function showToast(message, type = 'info') {
-    const toast = document.createElement('div');
-    toast.className = `toast toast-${type}`;
-    toast.textContent = message;
     
-    elements.toastContainer.appendChild(toast);
-    
-    setTimeout(() => toast.classList.add('show'), 10);
-    
-    setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => toast.remove(), 300);
-    }, 3000);
-}
-
-/*
-This Area Of Code Is: Loading Spinner Toggle
-Explanation: Shows or hides the loading spinner.
-In Other Words: Shows spinning circle when loading, hides when done.
-*/
-function showLoading(show) {
-    elements.loadingSpinner.classList.toggle('hidden', !show);
-}
-
-/*
-================================================================================
-This Area Of Code Is: Slideshow Functionality
-Explanation: Automatic card rotation with controls. Cycles through filtered
-cards every 5 seconds. Keyboard shortcuts: Space (pause), Escape (exit),
-Arrow keys (manual nav).
-In Other Words: Automatic mode that flips through cards like a presentation.
-================================================================================
-*/
-
-/*
-This Area Of Code Is: Start Slideshow
-Explanation: Begins automatic card cycling. Highlights current card,
-shows controls overlay.
-In Other Words: Starts the automatic card show.
-*/
-function startSlideshow() {
-    const cards = document.querySelectorAll('.card');
-    if (cards.length === 0) return;
-    
-    isSlideshowPlaying = true;
-    currentSlideIndex = 0;
-    elements.slideshowControls.classList.remove('hidden');
-    
-    highlightCard(cards, 0);
-    
-    slideshowInterval = setInterval(() => {
-        currentSlideIndex = (currentSlideIndex + 1) % cards.length;
-        highlightCard(cards, currentSlideIndex);
-    }, 5000);
-    
-    showToast('Slideshow started! Space=pause, Escape=exit', 'info');
-}
-
-/*
-This Area Of Code Is: Highlight Current Card
-Explanation: Adds active styling to current slide card, removes from others.
-Scrolls card into view. Updates counter.
-In Other Words: Makes current card glow and scrolls to it.
-*/
-function highlightCard(cards, index) {
-    cards.forEach((card, i) => {
-        card.classList.toggle('active-slide', i === index);
+    // Pause when tab is hidden to save resources
+    document.addEventListener('visibilitychange', () => {
+        videos.forEach(video => {
+            if (document.hidden) {
+                video.pause();
+            } else {
+                video.play().catch(() => {});
+            }
+        });
     });
-    
-    if (cards[index]) {
-        cards[index].scrollIntoView({ behavior: 'smooth', block: 'center' });
-        elements.slideCounter.textContent = `${index + 1} / ${cards.length}`;
-    }
-}
-
-/*
-This Area Of Code Is: Pause Slideshow
-Explanation: Stops automatic cycling but keeps slideshow mode active.
-In Other Words: Pauses the automatic card show.
-*/
-function pauseSlideshow() {
-    clearInterval(slideshowInterval);
-    isSlideshowPlaying = false;
-    elements.pauseSlideshow.textContent = '▶';
-    showToast('Slideshow paused', 'info');
-}
-
-/*
-This Area Of Code Is: Resume Slideshow
-Explanation: Restarts automatic cycling from current position.
-In Other Words: Unpauses the card show.
-*/
-function resumeSlideshow() {
-    const cards = document.querySelectorAll('.card');
-    slideshowInterval = setInterval(() => {
-        currentSlideIndex = (currentSlideIndex + 1) % cards.length;
-        highlightCard(cards, currentSlideIndex);
-    }, 5000);
-    isSlideshowPlaying = true;
-    elements.pauseSlideshow.textContent = '⏸';
-}
-
-/*
-This Area Of Code Is: Exit Slideshow
-Explanation: Completely stops slideshow, hides controls, removes highlights.
-In Other Words: Stops the show and returns to normal browsing.
-*/
-function exitSlideshow() {
-    clearInterval(slideshowInterval);
-    isSlideshowPlaying = false;
-    elements.slideshowControls.classList.add('hidden');
-    document.querySelectorAll('.card').forEach(card => {
-        card.classList.remove('active-slide');
-    });
-}
+};
 
 /*
 ================================================================================
-This Area Of Code Is: Event Listeners & Initialization
-Explanation: Sets up all button clicks, form submissions, keyboard shortcuts.
-Runs when page loads. Connects user actions to functions.
-In Other Words: Wiring that connects buttons to their functions.
+This Area Of Code Is: Event Listeners Setup
+Explanation: I am attaching all event listeners when the DOM loads. This 
+includes button clicks for navigation, mode switching, form submission, 
+keyboard controls, and input monitoring for the character counter.
+In Other Words: This hooks up all the buttons so they actually do something when clicked.
 ================================================================================
-*/
-
-/*
-This Area Of Code Is: DOM Content Loaded Handler
-Explanation: Runs once when page is fully loaded. Initializes event listeners
-and loads initial jokes from YOUR Firebase.
-In Other Words: Startup sequence - sets up buttons and loads jokes.
 */
 document.addEventListener('DOMContentLoaded', () => {
-    loadJokes();
+    // Initialize video
+    initVideoBackground();
     
-    // Filter buttons
-    elements.filterButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            elements.filterButtons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentFilter = btn.dataset.category;
-            renderCards();
-            
-            if (isSlideshowPlaying) {
-                exitSlideshow();
-                startSlideshow();
-            }
-        });
+    // Load data from Firebase
+    loadFirebaseData();
+    
+    // Navigation
+    elements.prevBtn.addEventListener('click', prevContent);
+    elements.nextBtn.addEventListener('click', nextContent);
+    
+    // Mode switching
+    elements.modeButtons.forEach(btn => {
+        btn.addEventListener('click', () => switchMode(btn.dataset.mode));
     });
     
-    // Add button - show modal
-    elements.addBtn.addEventListener('click', () => {
-        elements.addModal.classList.remove('hidden');
-    });
+    // Slideshow
+    elements.slideshowToggle.addEventListener('click', toggleSlideshow);
     
-    // Cancel button - hide modal
-    elements.cancelBtn.addEventListener('click', () => {
-        elements.addModal.classList.add('hidden');
-        elements.addForm.reset();
-    });
+    // Form handling
+    elements.addContentBtn.addEventListener('click', showForm);
+    elements.cancelBtn.addEventListener('click', hideForm);
+    elements.contentForm.addEventListener('submit', handleSubmit);
+    elements.submitText.addEventListener('input', updateCharCount);
     
-    // Form submission
-    elements.addForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const category = document.getElementById('category').value;
-        const content = document.getElementById('content').value;
-        const author = document.getElementById('author').value;
-        
-        // Parse setup/punchline from content
-        const lines = content.split('\n').filter(line => line.trim());
-        let setup, punchline;
-        
-        if (lines.length >= 2) {
-            setup = lines[0];
-            punchline = lines.slice(1).join(' ');
-        } else {
-            const sentences = content.split(/[.!?]+/).filter(s => s.trim());
-            if (sentences.length >= 2) {
-                setup = sentences[0] + '.';
-                punchline = sentences.slice(1).join('. ') + '.';
-            } else {
-                setup = content;
-                punchline = '';
-            }
-        }
-        
-        const success = await submitJoke(setup, punchline, category, author);
-        
-        if (success) {
-            elements.addModal.classList.add('hidden');
-            elements.addForm.reset();
-        }
-    });
+    // Keyboard navigation
+    document.addEventListener('keydown', handleKeyboard);
     
-    // Slideshow button
-    elements.slideshowBtn.addEventListener('click', () => {
-        if (isSlideshowPlaying) {
-            exitSlideshow();
-        } else {
-            startSlideshow();
-        }
-    });
+    // Initial display
+    displayContent(currentIndex);
     
-    // Pause/Resume button
-    elements.pauseSlideshow.addEventListener('click', () => {
-        if (isSlideshowPlaying) {
-            pauseSlideshow();
-        } else {
-            resumeSlideshow();
-        }
-    });
-    
-    // Exit slideshow button
-    elements.exitSlideshow.addEventListener('click', exitSlideshow);
-    
-    // Keyboard shortcuts
-    document.addEventListener('keydown', (e) => {
-        if (e.code === 'Space' && isSlideshowPlaying) {
-            e.preventDefault();
-            if (isSlideshowPlaying && slideshowInterval) {
-                pauseSlideshow();
-            } else {
-                resumeSlideshow();
-            }
-        }
-        
-        if (e.code === 'Escape') {
-            if (isSlideshowPlaying) exitSlideshow();
-            if (!elements.addModal.classList.contains('hidden')) {
-                elements.addModal.classList.add('hidden');
-                elements.addForm.reset();
-            }
-        }
-        
-        if (isSlideshowPlaying) {
-            const cards = document.querySelectorAll('.card');
-            if (e.code === 'ArrowRight') {
-                currentSlideIndex = (currentSlideIndex + 1) % cards.length;
-                highlightCard(cards, currentSlideIndex);
-            } else if (e.code === 'ArrowLeft') {
-                currentSlideIndex = (currentSlideIndex - 1 + cards.length) % cards.length;
-                highlightCard(cards, currentSlideIndex);
-            }
-        }
-    });
-    
-    // Close modal when clicking outside
-    elements.addModal.addEventListener('click', (e) => {
-        if (e.target === elements.addModal) {
-            elements.addModal.classList.add('hidden');
-            elements.addForm.reset();
-        }
-    });
+    console.log('I have successfully initialized the Get Well app!');
 });
+
+/*
+================================================================================
+This Area Of Code Is: Service Worker Registration Helper
+Explanation: I am registering the service worker for Progressive Web App 
+functionality. This enables offline access, home screen installation, and 
+caching of assets for faster loading on repeat visits.
+In Other Words: This makes the app work without internet and installable on phones.
+================================================================================
+*/
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+            .then(registration => {
+                console.log('I successfully registered the service worker:', registration);
+            })
+            .catch(error => {
+                console.log('I encountered an error registering service worker:', error);
+            });
+    });
+}
+
+/*
+================================================================================
+This Area Of Code Is: Export for Module Use
+Explanation: I am exporting the database reference and utility functions so 
+they can be accessed by other modules if needed, such as the filters.js file 
+for additional content moderation features.
+In Other Words: This shares my tools with other files that might need them.
+================================================================================
+*/
+export { db, allContent, checkPurgoMalum, checkChurchStandards };
