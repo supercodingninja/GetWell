@@ -1,39 +1,58 @@
 # ================================================================================
-# This Area Of Code Is: Git Large File Storage (LFS) Configuration
-# Explanation: This file tells Git how to handle large files (videos). Instead of 
-# storing the actual video data in Git (which would break the 100MB limit), it 
-# stores a text pointer and uploads the video to GitHub's LFS servers. This file 
-# also documents the storage limits so you understand the constraints.
-# In Other Words: This is the instruction manual telling Git "handle these big 
-# video files specially - don't try to store them like normal text files."
+# This Area Of Code Is: Git Attributes Configuration
+# Explanation: Tells Git how to handle different file types - line endings,
+# merge behavior, and which files to treat as binary (not diffable).
+# In Other Words: Settings for how Git should treat different file types.
 # ================================================================================
 
-# This Area Of Code Is: Video File Tracking Rule
-# Explanation: Tracks all MP4 files using Git LFS. This replaces the actual video 
-# data with a small text pointer in the repository, while the real file lives on 
-# GitHub's LFS servers. Required because GitHub blocks files over 100MB.
-# In Other Words: "Hey Git, these video files are too big for normal storage - 
-# use the special big-file system instead."
-*.mp4 filter=lfs diff=lfs merge=lfs -text
+# This Area Of Code Is: Auto Line Endings
+# Explanation: Automatically handles line endings (LF vs CRLF) based on the
+# operating system. Prevents "whole file changed" issues between Mac/Windows.
+# In Other Words: Makes line endings work on both Mac and Windows automatically.
+* text=auto
 
-# ================================================================================
-# This Area Of Code Is: GitHub LFS Storage Limits Documentation
-# Explanation: GitHub gives 1GB free LFS storage. If your videos exceed this, 
-# you either need to compress them or purchase additional storage ($5/month for 
-# 50GB). This is critical information since your church videos are large assets.
-# In Other Words: You get 1GB free storage for big files. If both videos are 
-# 500MB each, you'll need to pay $5 or make them smaller.
-# ================================================================================
+# This Area Of Code Is: Source Code Files
+# Explanation: Forces consistent LF line endings for code files regardless of OS.
+# In Other Words: Code files always use Unix-style line endings.
+*.js text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+*.json text eol=lf
 
-# Storage tracking for project maintenance
-# Current quota: 1GB free, then $5/month for 50GB
-# Monitor usage at: GitHub Settings -> Billing -> Git LFS
+# This Area Of Code Is: Documentation Files
+# Explanation: Treats markdown and text files as text with auto line endings.
+# In Other Words: Text files get proper line ending handling.
+*.md text
+*.txt text
 
-# ================================================================================
-# This Area Of Code Is: Line Ending Normalization
-# Explanation: Forces consistent line endings (LF) for cross-platform 
-# compatibility between Windows, Mac, and Linux systems.
-# In Other Words: Makes sure the code looks the same whether edited on iPad, 
-# Mac, or PC.
-# ================================================================================
-* text=auto eol=lf
+# This Area Of Code Is: Binary Files (Images)
+# Explanation: Marks image files as binary so Git doesn't try to diff them.
+# In Other Words: Don't try to compare image files line-by-line.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.svg binary
+
+# This Area Of Code Is: Binary Files (Video/Audio)
+# Explanation: Marks video and audio files as binary (large, not diffable).
+# In Other Words: Video files are binary blobs, not text.
+*.mp4 binary
+*.webm binary
+*.mp3 binary
+*.wav binary
+
+# This Area Of Code Is: Font Files
+# Explanation: Font files are binary assets.
+# In Other Words: Font files are binary.
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+
+# This Area Of Code Is: Archive Files
+# Explanation: Compressed archives are binary.
+# In Other Words: Zip files are binary.
+*.zip binary
+*.gz binary
