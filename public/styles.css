@@ -1,564 +1,988 @@
 /*
 ================================================================================
-This Area Of Code Is: Global Styles & CSS Reset
-Explanation: I wrote this CSS reset to remove default browser margins and 
-padding, set box-sizing to border-box for predictable element sizing, and 
-establish base font families. This ensures the app looks consistent across 
-Chrome, Safari, Firefox, and Edge.
-In Other Words: This clears out the browser's default styles so I have a 
-clean slate to work with, and makes sure boxes size the way I expect.
+This Area Of Code Is: CSS Variables & Reset
+Explanation: I defined CSS custom properties for the glass morphism color palette and reset default browser styles for consistent cross-platform rendering.
+In Other Words: This sets up the colors and removes default spacing.
 ================================================================================
 */
+
+:root {
+    --glass-bg: rgba(255, 255, 255, 0.08);
+    --glass-bg-strong: rgba(255, 255, 255, 0.15);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-border-light: rgba(255, 255, 255, 0.1);
+    --primary-gold: #fbbf24;
+    --primary-gold-dark: #f59e0b;
+    --success-green: #10b981;
+    --danger-red: #ef4444;
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.75);
+    --text-muted: rgba(255, 255, 255, 0.5);
+    --bg-dark: #0f172a;
+    --bg-darker: #020617;
+    --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
-/*
-================================================================================
-This Area Of Code Is: CSS Custom Properties (Variables)
-Explanation: I defined CSS variables for the color scheme to maintain 
-consistency. I set Royal Blue (#1e40af) for "Get Well" branding, Orange 
-(#f97316) for "The Super Coding Ninja™" branding, Bronze-Gold to Royal 
-Purple gradient variables for my name shimmer effect, and glass morphism 
-transparency values.
-In Other Words: This is my color palette that I can reference by name 
-throughout the CSS instead of typing color codes repeatedly.
-================================================================================
-*/
-:root {
-    --royal-blue: #1e40af;
-    --royal-blue-light: #3b82f6;
-    --ninja-orange: #f97316;
-    --ninja-orange-light: #fb923c;
-    --bronze-gold: #cd7f32;
-    --royal-purple: #6b21a8;
-    --angelic-white: #ffffff;
-    --glass-bg: rgba(255, 255, 255, 0.1);
-    --glass-border: rgba(255, 255, 255, 0.2);
-    --text-primary: #ffffff;
-    --text-secondary: rgba(255, 255, 255, 0.8);
-    --accent-gold: #fbbf24;
-}
-
-/*
-================================================================================
-This Area Of Code Is: Base Body Styles
-Explanation: I set the base font family to the system font stack for optimal 
-performance, established a dark background color (#0f0f1e), set text color to 
-white, and disabled horizontal overflow to prevent unwanted scrolling.
-In Other Words: This sets the basic look: dark blue background, white text, 
-and the default font.
-================================================================================
-*/
-body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background-color: #0f0f1e;
+html, body {
+    height: 100%;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg-dark);
     color: var(--text-primary);
-    line-height: 1.6;
     overflow-x: hidden;
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Typography Color Classes
-Explanation: I created utility classes for branded text colors. .getwell-text 
-applies royal blue with glow for the app name, .ninja-text applies orange for 
-"The Super Coding Ninja™", and .frederick-shimmer creates a complex gradient 
-animation from bronze-gold to royal-purple with a heavenly white glow behind it.
-In Other Words: These are special effects for the words "Get Well" (blue), 
-"The Super Coding Ninja" (orange), and my name (shimmering gold to purple).
+This Area Of Code Is: Video Background Styling
+Explanation: I styled the video background container with absolute positioning, object-fit cover for aspect ratio maintenance, and a gradient overlay for text legibility.
+In Other Words: This makes the background video cover the screen and puts a dark tint over it.
 ================================================================================
 */
-.getwell-text {
-    color: var(--royal-blue);
-    text-shadow: 0 0 10px rgba(30, 64, 175, 0.5);
-    font-weight: 700;
+
+.video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
 }
 
-.ninja-text {
-    color: var(--ninja-orange);
-    text-shadow: 0 0 10px rgba(249, 115, 22, 0.5);
-    font-weight: 700;
-    font-style: italic;
+.video-background video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    opacity: 0.6;
 }
 
-.frederick-shimmer {
-    position: relative;
-    display: inline-block;
-    font-weight: 700;
-    color: var(--bronze-gold);
-    animation: shimmerGradient 3s ease-in-out infinite, angelicGlow 3s ease-in-out infinite;
-    background: linear-gradient(90deg, var(--bronze-gold) 0%, var(--royal-purple) 50%, var(--bronze-gold) 100%);
-    background-size: 200% 100%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-shadow: none;
-    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
-}
-
-/*
-================================================================================
-This Area Of Code Is: Angelic Glow Pseudo-Element
-Explanation: I created a ::before pseudo-element for the .frederick-shimmer 
-class that creates a white glowing background behind the text. It uses a 
-radial gradient that pulses in opacity using the angelicPulse animation to 
-create a heavenly spiritual effect.
-In Other Words: This creates the white halo that glows behind my name like 
-an angelic light.
-================================================================================
-*/
-.frederick-shimmer::before {
-    content: 'Frederick Thomas';
+.video-overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    color: transparent;
-    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 70%);
-    opacity: 0;
-    animation: angelicPulse 3s ease-in-out infinite;
-    z-index: -1;
-    transform: scale(1.5);
-    filter: blur(8px);
+    background: linear-gradient(
+        135deg, 
+        rgba(15, 23, 42, 0.7) 0%, 
+        rgba(15, 23, 42, 0.5) 50%, 
+        rgba(15, 23, 42, 0.8) 100%
+    );
+    backdrop-filter: blur(1px);
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Shimmer Gradient Animation Keyframes
-Explanation: I defined the shimmerGradient animation that moves the background 
-gradient position from left to right and back over 3 seconds, creating a 
-shimmering metallic effect on the text.
-In Other Words: This makes the colors on my name slide back and forth like 
-shiny metal.
+This Area Of Code Is: App Header Component
+Explanation: I created a fixed glass-morphism header with a hamburger menu that transforms into the SCN logo when clicked, a centered title, and home button.
+In Other Words: This is the top bar with the menu button and title.
 ================================================================================
 */
-@keyframes shimmerGradient {
-    0%, 100% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-}
 
-/*
-================================================================================
-This Area Of Code Is: Angelic Glow Animation Keyframes
-Explanation: I created the angelicGlow animation that pulses the drop-shadow 
-filter on the text, synchronizing with the background shimmer to enhance the 
-spiritual heavenly appearance.
-In Other Words: This makes the glow around my name breathe in and out.
-================================================================================
-*/
-@keyframes angelicGlow {
-    0%, 100% {
-        filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3)) drop-shadow(0 0 10px rgba(205, 127, 50, 0.3));
-    }
-    50% {
-        filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.6)) drop-shadow(0 0 20px rgba(107, 33, 168, 0.4));
-    }
-}
-
-/*
-================================================================================
-This Area Of Code Is: Background Pulse Animation Keyframes
-Explanation: I defined the angelicPulse animation for the pseudo-element that 
-controls the opacity and scale of the white glow behind the text, making it 
-fade in and out gently like a breathing effect.
-In Other Words: This makes the white halo behind my name get brighter and 
-dimmer slowly like it's breathing.
-================================================================================
-*/
-@keyframes angelicPulse {
-    0%, 100% {
-        opacity: 0;
-        transform: scale(1.2);
-    }
-    50% {
-        opacity: 0.6;
-        transform: scale(1.5);
-    }
-}
-
-/*
-================================================================================
-This Area Of Code Is: Glass Morphism Base Class
-Explanation: I created the base .glass class that establishes the frosted 
-glass look using backdrop-filter blur, semi-transparent white background, 
-and subtle border. This is the foundation for all glass components.
-In Other Words: This is the basic frosted glass look used throughout the app.
-================================================================================
-*/
-.glass {
-    background: var(--glass-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--glass-border);
-    border-radius: 16px;
-}
-
-/*
-================================================================================
-This Area Of Code Is: Glass Navigation Bar
-Explanation: I styled the fixed navigation bar with enhanced glass effects, 
-darker background for better text readability, and flexbox layout for the 
-brand, filters, and action buttons.
-In Other Words: This is the top menu bar with the glass effect that stays 
-at the top when you scroll.
-================================================================================
-*/
-.glass-nav {
+.app-header {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 100;
-    background: rgba(15, 15, 30, 0.8);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    height: 60px;
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--glass-border);
-    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+    z-index: 100;
+}
+
+.menu-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    transition: opacity 0.3s;
+}
+
+.hamburger span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: white;
+    border-radius: 2px;
+    transition: all 0.3s;
+}
+
+.menu-btn.active .hamburger {
+    opacity: 0;
+    transform: scale(0.5);
+}
+
+.scn-logo {
+    position: absolute;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 12px;
+    color: var(--primary-gold);
+    opacity: 0;
+    transform: scale(0.5) rotate(-180deg);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+}
+
+.menu-btn.active .scn-logo {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+}
+
+.header-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    letter-spacing: -0.3px;
+}
+
+.home-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.home-btn:hover {
+    background: var(--glass-bg-strong);
+    transform: translateY(-2px);
+}
+
+/*
+================================================================================
+This Area Of Code Is: Live Stats Display
+Explanation: I positioned floating badges in the top-right showing online viewers and total cards with pulsing animation for the live indicator.
+In Other Words: This shows "1 online" and "24 cards" in the corner.
+================================================================================
+*/
+
+.live-stats {
+    position: fixed;
+    top: 70px;
+    right: 15px;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-end;
+}
+
+.live-badge, .cards-badge {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 6px 12px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.pulse-dot {
+    width: 8px;
+    height: 8px;
+    background: #10b981;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+/*
+================================================================================
+This Area Of Code Is: Side Navigation Menu
+Explanation: I created a slide-out drawer menu with card jump shortcuts, using transform for smooth 60fps animation and backdrop blur.
+In Other Words: This is the menu that slides in from the left.
+================================================================================
+*/
+
+.side-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(30px);
+    border-right: 1px solid var(--glass-border);
+    z-index: 200;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+}
+
+.side-menu.open {
+    transform: translateX(0);
+}
+
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    z-index: 199;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+}
+
+.menu-overlay.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.menu-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
+    padding: 20px;
+    border-bottom: 1px solid var(--glass-border);
 }
 
-/*
-================================================================================
-This Area Of Code Is: Card Grid Layout System
-Explanation: I implemented a responsive grid layout for displaying joke cards 
-using CSS Grid. It automatically fills columns with a minimum width of 300px, 
-creating 1 column on mobile, 2 on tablet, 3 on desktop, etc. The gap property 
-adds spacing between cards.
-In Other Words: This arranges the joke cards in neat rows that adjust based 
-on your screen size.
-================================================================================
-*/
-.cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.5rem;
-    padding: 2rem;
-    max-width: 1400px;
-    margin: 0 auto;
+.menu-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
 }
 
-/*
-================================================================================
-This Area Of Code Is: Individual Card Styling
-Explanation: I styled the individual joke cards with glass morphism, hover 
-lift effects (transform: translateY), and enhanced shadows on hover for depth 
-perception. The transition property ensures smooth animations.
-In Other Words: This is how each joke box looks, and it floats up a little 
-when you hover over it.
-================================================================================
-*/
-.card {
-    padding: 1.5rem;
-    transition: all 0.3s ease;
+.close-menu {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--glass-border);
+    background: transparent;
+    color: white;
+    font-size: 24px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.close-menu:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(90deg);
+}
+
+.menu-content {
+    padding: 15px;
+}
+
+.menu-item {
+    width: 100%;
+    padding: 15px;
+    border-radius: 12px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: white;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-bottom: 10px;
+}
+
+.menu-item:hover {
+    background: var(--glass-bg-strong);
+    transform: translateX(5px);
+}
+
+.menu-divider {
+    height: 1px;
+    background: var(--glass-border);
+    margin: 15px 0;
+}
+
+.menu-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    padding-left: 5px;
+}
+
+.card-jumps {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.jump-btn {
+    padding: 12px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border-light);
+    color: var(--text-secondary);
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.jump-btn:hover, .jump-btn.active {
+    background: var(--glass-bg-strong);
+    color: white;
+    border-color: var(--primary-gold);
+}
+
+/*
+================================================================================
+This Area Of Code Is: Main App Layout
+Explanation: I structured the main content area with flexbox column layout, proper spacing for the fixed header, and centered alignment for the card.
+In Other Words: This arranges everything below the header.
+================================================================================
+*/
+
+.app-main {
+    position: relative;
+    z-index: 10;
+    min-height: 100vh;
+    padding: 80px 15px 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+/*
+================================================================================
+This Area Of Code Is: Content Card Component
+Explanation: I designed the primary content card with heavy glass morphism, gradient backgrounds, and translucent blur effects. It adapts height based on content.
+In Other Words: This is the big see-through card that shows jokes.
+================================================================================
+*/
+
+.card-container {
+    width: 100%;
+    max-width: 600px;
+    perspective: 1000px;
+}
+
+.content-card {
+    background: linear-gradient(
+        135deg, 
+        rgba(255, 255, 255, 0.12) 0%, 
+        rgba(255, 255, 255, 0.05) 100%
+    );
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 24px;
+    padding: 40px 30px;
+    min-height: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3),
+        0 0 100px rgba(251, 191, 36, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.content-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 
+        0 30px 60px -12px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4),
+        0 0 120px rgba(251, 191, 36, 0.15);
+}
+
+.card-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+.card-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    animation: iconFloat 3s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.setup-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    line-height: 1.4;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.punchline-text {
+    font-size: 20px;
+    color: var(--primary-gold);
+    font-weight: 500;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    min-height: 30px;
+}
+
+.punchline-text.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.card-footer {
+    margin-top: auto;
+    padding-top: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.author-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.author-flag {
+    font-size: 16px;
+}
+
+.author-name {
+    font-style: italic;
+    color: var(--text-secondary);
+}
+
+/*
+================================================================================
+This Area Of Code Is: Control Buttons
+Explanation: I styled the navigation and action buttons with glass morphism, hover states, and touch-friendly sizing (min 44px).
+In Other Words: These are the Back, Next, Add Joke, and Auto Mode buttons.
+================================================================================
+*/
+
+.controls-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 600px;
+}
+
+.nav-btn, .action-btn {
+    min-height: 44px;
+    padding: 12px 24px;
+    border-radius: 50px;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+    flex: 1;
+    justify-content: center;
+    min-width: 100px;
+}
+
+.nav-btn:hover, .action-btn:hover {
+    background: var(--glass-bg-strong);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.add-joke-btn {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.3) 0%, rgba(16, 185, 129, 0.1) 100%);
+    border-color: rgba(16, 185, 129, 0.4);
+    color: #6ee7b7;
+}
+
+.add-joke-btn:hover {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.4) 0%, rgba(16, 185, 129, 0.2) 100%);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+}
+
+.auto-mode-btn {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.3) 0%, rgba(59, 130, 246, 0.1) 100%);
+    border-color: rgba(59, 130, 246, 0.4);
+    color: #93c5fd;
     position: relative;
     overflow: hidden;
 }
 
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    border-color: rgba(255, 255, 255, 0.3);
+.auto-mode-btn.active {
+    animation: goldenPulse 2s infinite;
+    border-color: var(--primary-gold);
+    color: var(--primary-gold);
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.3) 0%, rgba(251, 191, 36, 0.1) 100%);
+}
+
+@keyframes goldenPulse {
+    0%, 100% { 
+        box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.4);
+        transform: scale(1);
+    }
+    50% { 
+        box-shadow: 0 0 20px 5px rgba(251, 191, 36, 0.2);
+        transform: scale(1.02);
+    }
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Category Badge Styling
-Explanation: I created color-coded badges for different content types: blue 
-for jokes, purple for prayers, and green for messages. Each uses a semi-transparent 
-background matching the theme color.
-In Other Words: These are the colored tags that say "Joke" or "Prayer" with 
-different colors.
+This Area Of Code Is: Speed Controls
+Explanation: I created a segmented control for auto-mode speed selection that appears when auto-mode is active, showing time ranges for accessibility.
+In Other Words: These are the Slow/Medium/Fast buttons that show up in Auto Mode.
 ================================================================================
 */
-.category-badge {
-    padding: 0.25rem 0.75rem;
+
+.speed-controls {
+    display: none;
+    gap: 10px;
+    justify-content: center;
+    animation: slideDown 0.3s ease;
+}
+
+.speed-controls.visible {
+    display: flex;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.speed-btn {
+    padding: 10px 20px;
     border-radius: 12px;
-    font-size: 0.75rem;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    color: var(--text-secondary);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+    line-height: 1.3;
+}
+
+.speed-btn small {
+    display: block;
+    font-size: 11px;
+    opacity: 0.7;
+    margin-top: 2px;
+}
+
+.speed-btn:hover {
+    background: var(--glass-bg-strong);
+    color: white;
+}
+
+.speed-btn.active {
+    background: var(--primary-gold);
+    color: #0f172a;
+    border-color: var(--primary-gold);
     font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
 }
 
-.category-badge.joke {
-    background: rgba(59, 130, 246, 0.3);
-    color: #60a5fa;
+.guidelines-link {
+    color: var(--text-muted);
+    font-size: 13px;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: color 0.3s;
 }
 
-.category-badge.prayer {
-    background: rgba(147, 51, 234, 0.3);
-    color: #c084fc;
-}
-
-.category-badge.message {
-    background: rgba(34, 197, 94, 0.3);
-    color: #4ade80;
+.guidelines-link:hover {
+    color: var(--text-secondary);
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Slideshow Active State Highlight
-Explanation: I created the .active-slide class that applies when a card is 
-the current slide in Auto Mode. It adds a golden border and glowing shadow 
-to indicate which card is currently displayed.
-In Other Words: This puts a golden glowing border around the current joke 
-when the slideshow is playing.
+This Area Of Code Is: Modal Components
+Explanation: I designed centered modal dialogs with heavy glass morphism for adding jokes and viewing guidelines, including form styling.
+In Other Words: These are the popup windows for adding jokes.
 ================================================================================
 */
-.card.active-slide {
-    border-color: var(--accent-gold);
-    box-shadow: 0 0 20px rgba(251, 191, 36, 0.4);
-    transform: scale(1.02);
-}
 
-/*
-================================================================================
-This Area Of Code Is: Modal Overlay Styling
-Explanation: I styled the modal backdrop with a semi-transparent black 
-background and blur filter. It's fixed position covering the entire viewport 
-and uses flexbox to center the modal content vertically and horizontally.
-In Other Words: This is the dark blurry background behind popup windows.
-================================================================================
-*/
 .modal {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    right: 0;
+    bottom: 0;
     background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(10px);
+    z-index: 300;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 300;
-    padding: 1rem;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
 }
 
-/*
-================================================================================
-This Area Of Code Is: Modal Content Container
-Explanation: I defined the modal content box with a maximum width for 
-readability (500px), glass effect background, padding, and relative 
-positioning for the close button.
-In Other Words: This is the actual white popup box that holds the forms.
-================================================================================
-*/
+.modal.open {
+    opacity: 1;
+    visibility: visible;
+}
+
 .modal-content {
     width: 100%;
-    max-width: 500px;
-    padding: 2rem;
-    position: relative;
+    max-width: 480px;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.3s;
 }
 
-/*
-================================================================================
-This Area Of Code Is: Form Input Styling
-Explanation: I styled form inputs (text fields, textareas, selects) with 
-consistent padding, dark semi-transparent backgrounds, light borders, and 
-focus states that add a blue glow and border highlight for accessibility.
-In Other Words: This makes the text boxes look good and glow blue when you 
-click in them to type.
-================================================================================
-*/
-.form-group input,
-.form-group textarea,
-.form-group select {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    background: rgba(0, 0, 0, 0.3);
+.modal.open .modal-content {
+    transform: scale(1) translateY(0);
+}
+
+.glass-modal {
+    background: linear-gradient(
+        135deg, 
+        rgba(30, 41, 59, 0.95) 0%, 
+        rgba(15, 23, 42, 0.98) 100%
+    );
+    backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    padding: 30px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.modal-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+}
+
+.close-modal {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
     border: 1px solid var(--glass-border);
-    border-radius: 8px;
-    color: var(--text-primary);
+    background: transparent;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.close-modal:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(90deg);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--text-secondary);
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    font-size: 16px;
     font-family: inherit;
-    font-size: 1rem;
     transition: all 0.3s;
 }
 
 .form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus {
+.form-group textarea:focus {
     outline: none;
-    border-color: var(--royal-blue);
-    box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.2);
+    border-color: var(--primary-gold);
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.1);
 }
 
-/*
-================================================================================
-This Area Of Code Is: Primary Action Button Styling
-Explanation: I created the primary button style with a gradient background 
-from royal blue to royal purple, white text, and hover effects that lift 
-the button and add shadow depth.
-In Other Words: This is the pretty blue-purple gradient button for important 
-actions like Submit.
-================================================================================
-*/
-.btn-primary {
-    padding: 0.75rem 1.5rem;
-    background: linear-gradient(135deg, var(--royal-blue) 0%, var(--royal-purple) 100%);
-    border: none;
-    color: white;
-    border-radius: 8px;
+.location-group {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid var(--glass-border-light);
+}
+
+.location-options {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: auto;
+    cursor: pointer;
+}
+
+.help-text {
+    display: block;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 5px;
+    font-style: italic;
+}
+
+.form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.submit-btn, .cancel-btn, .ok-btn {
+    flex: 1;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.3s;
-    font-size: 1rem;
-    font-weight: 600;
-}
-
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(30, 64, 175, 0.4);
-}
-
-/*
-================================================================================
-This Area Of Code Is: Loading Spinner Animation
-Explanation: I built a CSS loading spinner using a rotating border technique. 
-A circular div has three borders transparent and one border colored; animating 
-the rotation creates a loading indicator.
-In Other Words: This is the spinning circle that shows when something is loading.
-================================================================================
-*/
-.spinner-circle {
-    width: 50px;
-    height: 50px;
-    border: 3px solid var(--glass-border);
-    border-top-color: var(--royal-blue);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 1rem;
-}
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-/*
-================================================================================
-This Area Of Code Is: Toast Notification System
-Explanation: I styled toast notifications (popup messages) with fixed 
-positioning at the bottom-right, glass morphism background, and colored 
-left borders indicating success (green), error (red), warning (yellow), 
-or info (blue). They slide in from the right using transform animations.
-In Other Words: These are the little popup messages that slide in to tell 
-you if something worked or failed.
-================================================================================
-*/
-.toast-container {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    z-index: 500;
+    border: none;
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
-.toast {
-    padding: 1rem 1.5rem;
-    background: rgba(15, 15, 30, 0.95);
-    backdrop-filter: blur(12px);
-    border-radius: 8px;
-    border-left: 4px solid var(--royal-blue);
-    color: var(--text-primary);
-    transform: translateX(100%);
-    opacity: 0;
-    transition: all 0.3s ease;
-    max-width: 300px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+.submit-btn {
+    background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
 }
 
-.toast.show {
-    transform: translateX(0);
-    opacity: 1;
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
 }
 
-.toast-success { border-left-color: #22c55e; }
-.toast-error { border-left-color: #ef4444; }
-.toast-warning { border-left-color: #f59e0b; }
+.cancel-btn {
+    background: var(--glass-bg);
+    color: var(--text-secondary);
+    border: 1px solid var(--glass-border);
+}
+
+.cancel-btn:hover {
+    background: var(--glass-bg-strong);
+    color: white;
+}
+
+.form-disclaimer {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: 15px;
+    line-height: 1.5;
+}
+
+.guidelines-content {
+    line-height: 1.6;
+}
+
+.guidelines-content p {
+    margin-bottom: 15px;
+    color: var(--text-secondary);
+}
+
+.guidelines-content ul {
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+.guidelines-content li {
+    padding: 8px 0;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--glass-border-light);
+}
+
+.guidelines-content li:last-child {
+    border-bottom: none;
+}
+
+.ok-btn {
+    background: var(--primary-gold);
+    color: #0f172a;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.ok-btn:hover {
+    background: var(--primary-gold-dark);
+    transform: translateY(-2px);
+}
+
+.translation-bar {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    color: var(--text-muted);
+    border: 1px solid var(--glass-border);
+    z-index: 50;
+    white-space: nowrap;
+}
 
 /*
 ================================================================================
-This Area Of Code Is: Utility Classes
-Explanation: I created utility classes for common needs: .hidden for display:none, 
-.app-page for body padding adjustment, and responsive breakpoint adjustments 
-for mobile optimization.
-In Other Words: These are shortcut classes for hiding things or making the 
-page fit phones better.
+This Area Of Code Is: Responsive Design
+Explanation: I added media queries to ensure proper layout on mobile devices with touch-friendly adjustments.
+In Other Words: This makes it look good on phones.
 ================================================================================
 */
-.hidden {
-    display: none !important;
+
+@media (max-width: 480px) {
+    .setup-text {
+        font-size: 22px;
+    }
+    
+    .punchline-text {
+        font-size: 18px;
+    }
+    
+    .content-card {
+        padding: 30px 20px;
+        min-height: 300px;
+    }
+    
+    .nav-btn, .action-btn {
+        padding: 10px 16px;
+        font-size: 14px;
+    }
+    
+    .speed-btn {
+        padding: 8px 14px;
+        font-size: 12px;
+    }
+    
+    .glass-modal {
+        padding: 20px;
+    }
+    
+    .translation-bar {
+        font-size: 11px;
+        padding: 6px 12px;
+        bottom: 10px;
+    }
 }
 
-.app-page {
-    padding-top: 80px;
-}
-
-/*
-================================================================================
-This Area Of Code Is: Mobile Responsive Adjustments
-Explanation: I wrote media queries that activate on screens narrower than 
-768px (phones). They reduce font sizes, adjust grid layouts to single column, 
-and modify spacing for better mobile usability.
-In Other Words: These rules make everything smaller and stack nicely when 
-you're using a phone instead of a computer.
-================================================================================
-*/
-@media (max-width: 768px) {
-    .landing-content h1 {
-        font-size: 2.5rem;
+@media (max-width: 360px) {
+    .controls-row {
+        flex-direction: column;
     }
     
-    .landing-content .subtitle {
-        font-size: 1.1rem;
-    }
-    
-    .glass-nav {
-        padding: 1rem;
-    }
-    
-    .nav-filters {
-        order: 3;
+    .nav-btn, .action-btn {
         width: 100%;
-        justify-content: center;
-    }
-    
-    .cards-grid {
-        grid-template-columns: 1fr;
-        padding: 1rem;
-    }
-    
-    .copyright-line {
-        font-size: 0.75rem;
-        padding: 0.5rem 1rem;
-    }
-}
-
-/*
-================================================================================
-This Area Of Code Is: Tablet Responsive Adjustments
-Explanation: I added a media query for tablet-sized screens (769px to 1024px) 
-that adjusts the card grid to show 2 columns instead of 1 or 3-4.
-In Other Words: This makes the layout show 2 columns on iPads and tablets.
-================================================================================
-*/
-@media (min-width: 769px) and (max-width: 1024px) {
-    .cards-grid {
-        grid-template-columns: repeat(2, 1fr);
     }
 }
