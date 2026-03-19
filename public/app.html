@@ -81,7 +81,7 @@
                 <div class="card-icon" id="cardIcon">🧪</div>
                 <div class="card-content">
                     <h2 class="setup-text" id="setupText">Loading...</h2>
-                    <p class="punchline-text" id="punchlineText"></p>
+                    <p class="punchline-text visible" id="punchlineText"></p>
                 </div>
                 <div class="card-footer">
                     <div class="author-info" id="authorInfo"></div>
@@ -94,9 +94,6 @@
         <div class="controls-row">
             <button class="nav-btn" onclick="previousCard()" aria-label="Previous card">
                 <span>←</span> Back
-            </button>
-            <button class="action-btn punchline-toggle" id="punchlineBtn" onclick="togglePunchline()">
-                Show Punchline
             </button>
             <button class="nav-btn" onclick="nextCard()" aria-label="Next card">
                 Next <span>→</span>
