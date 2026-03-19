@@ -411,9 +411,9 @@ function goHome() {
 
 /*
 ================================================================================
-This Area Of Code Is: Joke Submission Handler (Firebase Only)
+This Area Of Code Is: Joke Submission Handler (Firebase Only - No localStorage)
 Explanation: Saves user jokes to Firebase only. Card count updates after successful save.
-In Other Words: Sends new jokes to the cloud database only - no local backup
+In Other Words: Sends new jokes to the cloud database only - no local backup to save space
 ================================================================================
 */
 
@@ -467,7 +467,7 @@ async function submitJoke(event) {
         state.jokes.push(newJoke);
         state.currentIndex = state.jokes.length - 1;
         
-        // Update the card counter automatically
+        // Update the card counter automatically (shows "Card X of 101", "102", etc.)
         renderCard();
         updateCardJumps();
         closeJokeModal();
@@ -476,14 +476,15 @@ async function submitJoke(event) {
     } catch (e) {
         console.error('[Submit] Firebase failed:', e);
         alert('Failed to save your joke. Please check your connection and try again. No data was stored locally.');
+        // Note: We do NOT save to localStorage here to prevent clogging resources
     }
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Firebase Data Loader (Cloud Only)
+This Area Of Code Is: Firebase Data Loader (Cloud Only - No localStorage Fallback)
 Explanation: Loads community-submitted jokes from Firestore only.
-In Other Words: Fetches new jokes from the cloud only
+In Other Words: Fetches new jokes from the cloud only - doesn't look for local backups
 ================================================================================
 */
 
@@ -516,6 +517,7 @@ async function loadCommunityJokes() {
         updateCardJumps();
     } catch (e) {
         console.log('[Load] Firestore failed:', e);
+        // No localStorage fallback - we keep the default 100 jokes only
     }
 }
 
@@ -538,6 +540,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowRight') nextCard();
         if (e.key === 'ArrowLeft') previousCard();
+        // PHASE 2: Removed Space key handler for punchline toggle
         if (e.key === 'Escape') {
             closeJokeModal();
             closeGuidelines();
