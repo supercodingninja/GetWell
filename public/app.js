@@ -2,6 +2,7 @@
 ================================================================================
 This Area Of Code Is: Encrypted Firebase Configuration
 Explanation: Base64 encoded credentials to prevent GitHub exposure
+In Other Words: Secret password protection for the database
 ================================================================================
 */
 
@@ -40,23 +41,115 @@ try {
 /*
 ================================================================================
 This Area Of Code Is: Default Jokes Dataset
-Explanation: Pre-loaded jokes with NO author names (as requested). Only "App Original, USA" or blank.
+Explanation: Pre-loaded 100 corny jokes with Q&A and one-liner formats, no authors
+In Other Words: The starting collection of 100 funny cards
 ================================================================================
 */
 
 const defaultJokes = [
-    { type: 'joke', icon: '🧪', setup: "What do you call a fake noodle?", punchline: "An impasta!", author: "App Original, USA" },
-    { type: 'joke', icon: '🐄', setup: "What do you call a sleeping bull?", punchline: "A bulldozer!", author: "App Original, USA" },
-    { type: 'prayer', icon: '🙏', setup: "May you feel God's healing presence", punchline: "The Lord is my shepherd; I shall not want. - Psalm 23:1", author: "App Original, USA" },
-    { type: 'joke', icon: '🍊', setup: "Why did the orange stop?", punchline: "It ran out of juice!", author: "App Original, USA" },
-    { type: 'message', icon: '💝', setup: "You are in our prayers daily", punchline: "For I know the plans I have for you, declares the Lord. - Jeremiah 29:11", author: "App Original, USA" },
-    { type: 'joke', icon: '⛪', setup: "Why do church musicians have to be so careful?", punchline: "Because one wrong note and it's an organ-ized crime!", author: "App Original, USA" },
-    { type: 'prayer', icon: '🌟', setup: "Healing comes from above", punchline: "But He was pierced for our transgressions; by His wounds we are healed. - Isaiah 53:5", author: "App Original, USA" },
-    { type: 'joke', icon: '🐝', setup: "What do you call a bee that can't make up its mind?", punchline: "A maybe!", author: "App Original, USA" },
-    { type: 'message', icon: '💐', setup: "Sending you love and strength", punchline: "I can do all things through Christ who strengthens me. - Philippians 4:13", author: "App Original, USA" },
-    { type: 'joke', icon: '🐟', setup: "What do you call a fish with no eyes?", punchline: "Fsh!", author: "App Original, USA" },
-    { type: 'prayer', icon: '✝️', setup: "May God's peace comfort you", punchline: "Peace I leave with you; my peace I give you. - John 14:27", author: "App Original, USA" },
-    { type: 'joke', icon: '🍕', setup: "Why did the pizza maker go to church?", punchline: "He needed help with his daily bread!", author: "App Original, USA" }
+    // Q&A Format (60 jokes)
+    { type: 'joke', icon: '🧪', setup: "What do you call a fake noodle?", punchline: "An impasta!", author: null },
+    { type: 'joke', icon: '🐄', setup: "What do you call a sleeping bull?", punchline: "A bulldozer!", author: null },
+    { type: 'joke', icon: '🍊', setup: "Why did the orange stop?", punchline: "It ran out of juice!", author: null },
+    { type: 'joke', icon: '🐝', setup: "What do you call a bee that can't make up its mind?", punchline: "A maybe!", author: null },
+    { type: 'joke', icon: '🐟', setup: "What do you call a fish with no eyes?", punchline: "Fsh!", author: null },
+    { type: 'joke', icon: '🍕', setup: "Why did the pizza maker go to church?", punchline: "He needed help with his daily bread!", author: null },
+    { type: 'joke', icon: '⛪', setup: "Why do church musicians have to be so careful?", punchline: "Because one wrong note and it's an organ-ized crime!", author: null },
+    { type: 'joke', icon: '🍌', setup: "Why did the banana go to the doctor?", punchline: "It wasn't peeling well!", author: null },
+    { type: 'joke', icon: '🍪', setup: "Why did the cookie go to the hospital?", punchline: "It felt crumby!", author: null },
+    { type: 'joke', icon: '🌾', setup: "Why did the scarecrow win an award?", punchline: "He was outstanding in his field!", author: null },
+    { type: 'joke', icon: '⛄', setup: "What do you call a snowman with a six pack?", punchline: "An abdominal snowman!", author: null },
+    { type: 'joke', icon: '🥚', setup: "Why don't eggs tell jokes?", punchline: "They'd crack each other up!", author: null },
+    { type: 'joke', icon: '🚲', setup: "Why did the bicycle fall over?", punchline: "It was two-tired!", author: null },
+    { type: 'joke', icon: '🧀', setup: "What do you call cheese that isn't yours?", punchline: "Nacho cheese!", author: null },
+    { type: 'joke', icon: '🏌️', setup: "Why did the golfer wear two pairs of pants?", punchline: "In case he got a hole in one!", author: null },
+    { type: 'joke', icon: '🐻', setup: "What do you call a bear with no teeth?", punchline: "A gummy bear!", author: null },
+    { type: 'joke', icon: '🐶', setup: "What do you call a dog that can do magic?", punchline: "A Labracadabrador!", author: null },
+    { type: 'joke', icon: '🐱', setup: "Why did the cat sit on the computer?", punchline: "To keep an eye on the mouse!", author: null },
+    { type: 'joke', icon: '🐭', setup: "What do you call a mouse that can sing?", punchline: "A mouse-ician!", author: null },
+    { type: 'joke', icon: '🦁', setup: "Why did the lion eat the tightrope walker?", punchline: "He wanted a well-balanced meal!", author: null },
+    { type: 'joke', icon: '🐸', setup: "What do you call a frog that's illegally parked?", punchline: "Toad!", author: null },
+    { type: 'joke', icon: '🐔', setup: "Why did the chicken join a band?", punchline: "Because it had the drumsticks!", author: null },
+    { type: 'joke', icon: '🐴', setup: "What do you call a horse that lives next door?", punchline: "A neighbor!", author: null },
+    { type: 'joke', icon: '🐘', setup: "Why did the elephant bring a suitcase to the party?", punchline: "He wanted to pack his trunk!", author: null },
+    { type: 'joke', icon: '🦒', setup: "What do you call a giraffe's notebook?", punchline: "A long story!", author: null },
+    { type: 'joke', icon: '🦓', setup: "Why did the zebra get a ticket?", punchline: "For illegal parking!", author: null },
+    { type: 'joke', icon: '🦘', setup: "What do you call a lazy kangaroo?", punchline: "A pouch potato!", author: null },
+    { type: 'joke', icon: '🐨', setup: "Why did the koala get hired?", punchline: "He had all the right koalafications!", author: null },
+    { type: 'joke', icon: '🐼', setup: "What do you call a bear with no socks?", punchline: "Bare-foot!", author: null },
+    { type: 'joke', icon: '🦉', setup: "Why did the owl invite his friends over?", punchline: "He didn't want to be owl by himself!", author: null },
+    { type: 'joke', icon: '🦜', setup: "What do you call a parrot that flew away?", punchline: "A polygon!", author: null },
+    { type: 'joke', icon: '🦚', setup: "Why did the peacock get a job?", punchline: "He wanted to make some plume!", author: null },
+    { type: 'joke', icon: '🦩', setup: "What do you call a flamingo at a dance?", punchline: "The pink of the party!", author: null },
+    { type: 'joke', icon: '🦢', setup: "Why did the swan refuse to fight?", punchline: "He didn't want to ruffle feathers!", author: null },
+    { type: 'joke', icon: '🦆', setup: "What do you call a duck that gets all A's?", punchline: "A wise quacker!", author: null },
+    { type: 'joke', icon: '🦅', setup: "Why did the eagle bring a ruler?", punchline: "To measure his talon-ts!", author: null },
+    { type: 'joke', icon: '🦜', setup: "What do you call a parrot wearing a raincoat?", punchline: "Polly-unsaturated!", author: null },
+    { type: 'joke', icon: '🍎', setup: "Why did the apple go to school?", punchline: "To become a smart cookie!", author: null },
+    { type: 'joke', icon: '🍇', setup: "What do you call a grape that gets stepped on?", punchline: "Wine!", author: null },
+    { type: 'joke', icon: '🍉', setup: "Why did the watermelon have fancy seeds?", punchline: "It was a little seedy!", author: null },
+    { type: 'joke', icon: '🍋', setup: "What do you call a lemon that works out?", punchline: "Swole-mon!", author: null },
+    { type: 'joke', icon: '🍑', setup: "Why did the peach go to the doctor?", punchline: "It wasn't feeling peachy!", author: null },
+    { type: 'joke', icon: '🍍', setup: "What do you call a pineapple who loves physics?", punchline: "Newton!", author: null },
+    { type: 'joke', icon: '🥝', setup: "Why did the kiwi cross the road?", punchline: "To prove he wasn't a chicken!", author: null },
+    { type: 'joke', icon: '🥥', setup: "What do you call a coconut that's a detective?", punchline: "Sherlock Holmes!", author: null },
+    { type: 'joke', icon: '🥑', setup: "Why did the avocado go to the gym?", punchline: "To get better pits!", author: null },
+    { type: 'joke', icon: '🥕', setup: "Why did the carrot get an award?", punchline: "For being outstanding in his field!", author: null },
+    { type: 'joke', icon: '🌽', setup: "What do you call corn that joins the army?", punchline: "Kernel!", author: null },
+    { type: 'joke', icon: '🥦', setup: "Why did the broccoli go to the party?", punchline: "He was a fungi!", author: null },
+    { type: 'joke', icon: '🍄', setup: "What do you call a mushroom at a party?", punchline: "A fungi!", author: null },
+    { type: 'joke', icon: '🥜', setup: "What do you call a peanut in a spacesuit?", punchline: "An astro-nut!", author: null },
+    { type: 'joke', icon: '🌰', setup: "Why did the chestnut go to the doctor?", punchline: "He was feeling nutty!", author: null },
+    { type: 'joke', icon: '🍞', setup: "Why did the loaf of bread break up?", punchline: "She was too kneady!", author: null },
+    { type: 'joke', icon: '🥯', setup: "What do you call a bagel that can fly?", punchline: "A plain bagel!", author: null },
+    { type: 'joke', icon: '🥞', setup: "Why did the pancake go to the doctor?", punchline: "It was feeling flat!", author: null },
+    { type: 'joke', icon: '🧇', setup: "What do you call a waffle that's been arrested?", punchline: "A waffled criminal!", author: null },
+    { type: 'joke', icon: '🍔', setup: "Why did the hamburger go to the gym?", punchline: "To get better buns!", author: null },
+    { type: 'joke', icon: '🍟', setup: "What do you call a french fry that tells jokes?", punchline: "A pun-tato!", author: null },
+    { type: 'joke', icon: '🌭', setup: "Why did the hot dog turn down the race?", punchline: "He was already a wiener!", author: null },
+    { type: 'joke', icon: '🍿', setup: "What do you call popcorn that's angry?", punchline: "Popped off!", author: null },
+    
+    // One-Liner/Story Format (40 jokes)
+    { type: 'joke', icon: '👔', setup: "I told my wife she was drawing her eyebrows too high.", punchline: "She looked surprised.", author: null },
+    { type: 'joke', icon: '🧊', setup: "I used to be a banker,", punchline: "but I lost interest.", author: null },
+    { type: 'joke', icon: '🚗', setup: "I'm reading a book on anti-gravity.", punchline: "It's impossible to put down!", author: null },
+    { type: 'joke', icon: '⏰', setup: "I used to run a bakery,", punchline: "but I couldn't make enough dough.", author: null },
+    { type: 'joke', icon: '🎨', setup: "I was wondering why the frisbee was getting bigger,", punchline: "and then it hit me.", author: null },
+    { type: 'joke', icon: '🎭', setup: "The rotation of Earth", punchline: "really makes my day.", author: null },
+    { type: 'joke', icon: '🎪', setup: "I was going to tell a time-traveling joke,", punchline: "but you didn't like it yet.", author: null },
+    { type: 'joke', icon: '🎯', setup: "Did you hear about the kidnapping at the playground?", punchline: "They woke up!", author: null },
+    { type: 'joke', icon: '🎲', setup: "I used to hate facial hair,", punchline: "but then it grew on me.", author: null },
+    { type: 'joke', icon: '🎸', setup: "I'm friends with all electricians", punchline: "because we have good current connections.", author: null },
+    { type: 'joke', icon: '🎺', setup: "I would avoid the sushi if I was you.", punchline: "It's a little fishy.", author: null },
+    { type: 'joke', icon: '🎻', setup: "The shovel", punchline: "was a ground-breaking invention.", author: null },
+    { type: 'joke', icon: '🎬', setup: "I used to be addicted to soap,", punchline: "but I'm clean now.", author: null },
+    { type: 'joke', icon: '🎤', setup: "Velcro", punchline: "- what a rip-off!", author: null },
+    { type: 'joke', icon: '🎧', setup: "I couldn't figure out how to put my seatbelt on.", punchline: "Then it clicked.", author: null },
+    { type: 'joke', icon: '🎹', setup: "I'm on a seafood diet.", punchline: "I see food and I eat it.", author: null },
+    { type: 'joke', icon: '🎳', setup: "A plateau", punchline: "is the highest form of flattery.", author: null },
+    { type: 'joke', icon: '🏹', setup: "I used to think I was indecisive,", punchline: "but now I'm not so sure.", author: null },
+    { type: 'joke', icon: '🏓', setup: "I got a job at a bakery", punchline: "because I kneaded dough.", author: null },
+    { type: 'joke', icon: '🏸', setup: "My grandpa has the heart of a lion", punchline: "and a lifetime ban from the zoo.", author: null },
+    { type: 'joke', icon: '🏒', setup: "I used to be a doctor,", punchline: "but then I lost my patience.", author: null },
+    { type: 'joke', icon: '🏑', setup: "I was going to tell a joke about pizza,", punchline: "but it's too cheesy.", author: null },
+    { type: 'joke', icon: '🏏', setup: "I don't trust stairs", punchline: "because they're always up to something.", author: null },
+    { type: 'joke', icon: '🎿', setup: "The man who survived mustard gas and pepper spray", punchline: "is a seasoned veteran.", author: null },
+    { type: 'joke', icon: '🥊', setup: "I used to play piano by ear,", punchline: "but now I use my hands.", author: null },
+    { type: 'joke', icon: '🥋', setup: "I'm terrified of elevators,", punchline: "so I'm going to start taking steps to avoid them.", author: null },
+    { type: 'joke', icon: '⛳', setup: "I couldn't commit to the marathon,", punchline: "but I've been running jokes into the ground.", author: null },
+    { type: 'joke', icon: '🏓', setup: "Parallel lines have so much in common.", punchline: "It's a shame they'll never meet.", author: null },
+    { type: 'joke', icon: '🏸', setup: "I was wondering why the baseball was getting bigger.", punchline: "Then it hit me.", author: null },
+    { type: 'joke', icon: '🏹', setup: "I told my computer I needed a break,", punchline: "and now it won't stop sending me Kit-Kats.", author: null },
+    { type: 'joke', icon: '🏒', setup: "My wife told me to stop impersonating a flamingo.", punchline: "I had to put my foot down.", author: null },
+    { type: 'joke', icon: '🏑', setup: "I was going to tell a chemistry joke,", punchline: "but I knew I wouldn't get a reaction.", author: null },
+    { type: 'joke', icon: '🏏', setup: "Why do we tell actors to 'break a leg?'", punchline: "Because every play has a cast.", author: null },
+    { type: 'joke', icon: '🎿', setup: "Helvetica and Times New Roman walk into a bar.", punchline: "The bartender says, 'We don't serve your type.'", author: null },
+    { type: 'joke', icon: '🥊', setup: "Two guys walk into a bar.", punchline: "The third one ducks.", author: null },
+    { type: 'joke', icon: '🥋', setup: "I have a few jokes about unemployed people,", punchline: "but none of them work.", author: null },
+    { type: 'joke', icon: '⛳', setup: "Why did the invisible man turn down the job offer?", punchline: "He couldn't see himself doing it.", author: null },
+    { type: 'joke', icon: '🏓', setup: "I wasn't originally going to get a brain transplant,", punchline: "but then I changed my mind.", author: null },
+    { type: 'joke', icon: '🏸', setup: "I have a fear of speed bumps,", punchline: "but I'm slowly getting over it.", author: null },
+    { type: 'joke', icon: '🏹', setup: "Did you hear about the fire at the circus?", punchline: "It was in-tents!", author: null }
 ];
 
 let state = {
@@ -72,6 +165,7 @@ let state = {
 ================================================================================
 This Area Of Code Is: Content Moderation System
 Explanation: Uses PurgoMalum API to check for inappropriate content before saving
+In Other Words: Automatic bad word filter using internet service
 ================================================================================
 */
 
@@ -90,6 +184,7 @@ async function validateContent(text) {
 ================================================================================
 This Area Of Code Is: Video Background Manager
 Explanation: Handles lazy loading and fallback for background video
+In Other Words: Controls the moving background video behind the cards
 ================================================================================
 */
 
@@ -133,6 +228,7 @@ class VideoBackgroundManager {
 ================================================================================
 This Area Of Code Is: Card Rendering System
 Explanation: Displays current joke with NO author for defaults, shows author only for user submissions
+In Other Words: Shows the joke card on screen with flip animation
 ================================================================================
 */
 
@@ -157,7 +253,7 @@ function renderCard() {
         state.punchlineVisible = false;
         document.getElementById('punchlineBtn').textContent = 'Show Punchline';
         
-        // Only show author if it's a user submission (not App Original)
+        // Only show author if it's a user submission (not null/App Original)
         if (joke.author && joke.author !== 'App Original, USA' && !joke.author.includes('App Original')) {
             authorInfo.innerHTML = `<span>by</span> <span class="author-name">${joke.author}</span>`;
         } else {
@@ -215,6 +311,8 @@ function jumpToCard(index) {
 /*
 ================================================================================
 This Area Of Code Is: Auto-Play Controller
+Explanation: Automatically advances through cards at set intervals
+In Other Words: The slideshow mode that plays cards automatically
 ================================================================================
 */
 
@@ -269,6 +367,8 @@ function setSpeed(speed) {
 /*
 ================================================================================
 This Area Of Code Is: Menu and Modal Controllers
+Explanation: Handles side menu, modals, and navigation
+In Other Words: Controls opening/closing the menu and popup windows
 ================================================================================
 */
 
@@ -337,6 +437,7 @@ function goHome() {
 ================================================================================
 This Area Of Code Is: Joke Submission Handler
 Explanation: Saves user jokes with their name/location ONLY for user submissions
+In Other Words: Form processing when visitors submit their own jokes
 ================================================================================
 */
 
@@ -371,7 +472,7 @@ async function submitJoke(event) {
         icon: '✨',
         setup: setup,
         punchline: punchline,
-        author: location ? `${name} (${location})` : name, // User submission - show their name
+        author: location ? `${name} (${location})` : name,
         timestamp: new Date().toISOString()
     };
     
@@ -407,6 +508,8 @@ function saveLocal(joke) {
 /*
 ================================================================================
 This Area Of Code Is: Firebase Data Loader
+Explanation: Loads community-submitted jokes from Firestore database
+In Other Words: Fetches new jokes added by other users from the cloud
 ================================================================================
 */
 
@@ -463,6 +566,8 @@ function loadLocalJokes() {
 /*
 ================================================================================
 This Area Of Code Is: Application Initialization
+Explanation: Sets up event listeners and initializes components on page load
+In Other Words: Starting the app when the page first loads
 ================================================================================
 */
 
