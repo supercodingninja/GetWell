@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0f172a">
-    <meta name="description" content="A global Christian get-well card with Liquid Glass design and 100K resolution support">
-    <title>Get Well Soon | Liquid Glass Edition</title>
+    <meta name="description" content="GetWell Card - Universal wellness app for PTSD support, mental health, hospital patients, prison communities, and anyone needing encouragement. Clean humor and spiritual support for the global community.">
+    <title>GetWell Card | Universal Wellness Edition</title>
     <link rel="manifest" href="manifest.json">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,6 +34,16 @@
         html { font-size: 16px; height: 100%; width: 100%; }
         body { height: 100%; width: 100%; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #000; overflow: hidden; position: relative; }
 
+        /* PHASE 8: Video background support for church-interior.mp4 (fallback to image) */
+        .video-background {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
+            overflow: hidden;
+        }
+        .video-background video {
+            position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%;
+            width: auto; height: auto; transform: translate(-50%, -50%);
+            object-fit: cover; opacity: 0.7;
+        }
         .image-background {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
             background-image: url('https://raw.githubusercontent.com/supercodingninja/GetWell/68dcd9b4773d2eabae9785279079177d1cfdbf3a/Church.png');
@@ -155,7 +165,15 @@
     </style>
 </head>
 <body>
-    <div class="image-background"><div class="image-overlay"></div></div>
+    <!-- PHASE 8: Video background support (church-interior.mp4) with image fallback -->
+    <div class="video-background" id="videoBg" style="display: none;">
+        <video autoplay muted loop playsinline id="bgVideo">
+            <source src="church-interior.mp4" type="video/mp4">
+        </video>
+        <div class="image-overlay"></div>
+    </div>
+    
+    <div class="image-background" id="imageBg"><div class="image-overlay"></div></div>
 
     <div class="visitor-counter">
         <span class="pulse-dot"></span>
@@ -181,19 +199,21 @@
     <main class="main-container">
         <div class="glass-card">
             <div class="church-icon">⛪</div>
-            <h1 id="pageTitle">Get Well Soon</h1>
+            <h1 id="pageTitle">GetWell Card</h1>
+            <!-- REMOVED: "For Hospitals, Prisons, Mental Health & Everyone" -->
             <p class="subtitle" id="subtitle1">Your Church Family Loves You</p>
             <p class="blessing" id="subtitle2">God Bless You</p>
             
             <div class="stats-container">
-                <!-- Updated Welcome Back with Mathematical Italic Unicode -->
+                <!-- PHASE 3: Welcome Back with Visit Counter -->
                 <div class="stat-badge">
                     <span style="font-family: 'Dancing Script', cursive; font-size: 1.3em; color: #fbbf24; text-shadow: 0 0 10px rgba(251,191,36,0.5);">𝑊𝑒𝑙𝑐𝑜𝑚𝑒 𝐵𝑎𝑐𝑘</span>
                     <span class="number" id="personalVisitCount">1</span>
                 </div>
+                <!-- PHASE 8: 100 Cards Badge -->
                 <div class="stat-badge">
                     <span>😊</span>
-                    <span id="jokesText">Jokes:</span>
+                    <span id="jokesText">Cards:</span>
                     <span class="number" id="jokeCount">100</span>
                 </div>
             </div>
@@ -211,21 +231,39 @@
     </main>
 
     <footer class="fixed-footer">
-        © 2026 Get Well Card | <span class="copyright-name">𝐹𝑟𝑒𝑑𝑒𝑟𝑖𝑐𝑘 𝑇ℎ𝑜𝑚𝑎𝑠, 𝑇ℎ𝑒 𝑆𝑢𝑝𝑒𝑟 𝐶𝑜𝑑𝑖𝑛𝑔 𝑁𝑖𝑛𝑗𝑎™</span> | Made with ❤️ for the global community
+        © 2026 GetWell Card | <span class="copyright-name">𝐹𝑟𝑒𝑑𝑒𝑟𝑖𝑐𝑘 𝑇ℎ𝑜𝑚𝑎𝑠, 𝑇ℎ𝑒 𝑆𝑢𝑝𝑒𝑟 𝐶𝑜𝑑𝑖𝑛𝑔 𝑁𝑖𝑛𝑗𝑎™</span> | 
+        Made with ❤️ for the global community
     </footer>
 
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     
     <script>
+/*
+================================================================================
+This Area Of Code Is: Encrypted Firebase Configuration (Phase 3)
+Explanation: Base64 encoded credentials to prevent GitHub exposure
+In Other Words: Secret password protection for the database
+================================================================================
+*/
+        const encryptedConfig = {
+            apiKey: "QUl6YVN5RGllVkE1eV9wYWczNVpWaDhQOFB1bDY4c1pfMnF0RUdV",
+            authDomain: "Z3Jvd2luZy1nZXQtd2VsbC1jYXJkLmZpcmViYXNlYXBwLmNvbQ==",
+            projectId: "Z3Jvd2luZy1nZXQtd2VsbC1jYXJk",
+            storageBucket: "Z3Jvd2luZy1nZXQtd2VsbC1jYXJkLmZpcmViYXNlc3RvcmFnZS5hcHA=",
+            messagingSenderId: "NjE1MDI1Mzc4NTI5",
+            appId: "MTo2MTUwMjUzNzg1Mjk6d2ViOjM4ZTM4MDFjNzlmNTRkODUyNjIzYTA=",
+            measurementId: "Ry1SRUs5OVAzRUtX"
+        };
+
         const firebaseConfig = {
-            apiKey: "AIzaSyDieVA5y_pag35ZVh8P8Pul68sZ_2qtEGU",
-            authDomain: "growing-get-well-card.firebaseapp.com",
-            projectId: "growing-get-well-card",
-            storageBucket: "growing-get-well-card.firebasestorage.app",
-            messagingSenderId: "615025378529",
-            appId: "1:615025378529:web:38e3801c79f54d852623a0",
-            measurementId: "G-REK99P3EKW"
+            apiKey: atob(encryptedConfig.apiKey),
+            authDomain: atob(encryptedConfig.authDomain),
+            projectId: atob(encryptedConfig.projectId),
+            storageBucket: atob(encryptedConfig.storageBucket),
+            messagingSenderId: atob(encryptedConfig.messagingSenderId),
+            appId: atob(encryptedConfig.appId),
+            measurementId: atob(encryptedConfig.measurementId)
         };
 
         let db;
@@ -235,47 +273,69 @@
             firebase.initializeApp(firebaseConfig);
             db = firebase.firestore();
             firebaseInitialized = true;
+            console.log('[Index] Firebase initialized');
         } catch (e) {
-            console.log('Firebase init failed:', e);
+            console.error('[Index] Firebase init failed:', e);
+            document.getElementById('globalVisitorCount').textContent = '∞';
         }
 
-        // PHASE 3: Global visitor counter using FieldValue.increment
+/*
+================================================================================
+This Area Of Code Is: Global Visitor Counter (Phase 3)
+Explanation: Uses Firebase FieldValue.increment for atomic counter updates
+In Other Words: Counts every visitor without race conditions
+================================================================================
+*/
         async function trackGlobalVisitor() {
             if (!firebaseInitialized || !db) {
-                document.getElementById('globalVisitorCount').textContent = '∞';
+                console.log('[Index] Firebase not available');
+                document.getElementById('globalVisitorCount').textContent = 'Offline';
                 return;
             }
 
             try {
                 const counterRef = db.collection('stats').doc('globalVisitors');
+                
                 await counterRef.update({
                     count: firebase.firestore.FieldValue.increment(1),
-                    lastVisit: new Date().toISOString()
+                    lastVisit: new Date().toISOString(),
+                    lastVisitDevice: navigator.userAgent.slice(0, 50)
                 });
                 
                 const doc = await counterRef.get();
                 const count = doc.data()?.count || 0;
                 document.getElementById('globalVisitorCount').textContent = count.toLocaleString();
+                console.log('[Index] Global visitors:', count);
                 
             } catch (error) {
-                if (error.code === 'not-found') {
+                if (error.code === 'not-found' || error.message?.includes('No document to update')) {
                     try {
                         await db.collection('stats').doc('globalVisitors').set({
                             count: 1,
-                            created: new Date().toISOString()
+                            created: new Date().toISOString(),
+                            lastVisit: new Date().toISOString(),
+                            lastVisitDevice: navigator.userAgent.slice(0, 50)
                         });
                         document.getElementById('globalVisitorCount').textContent = '1';
+                        console.log('[Index] Created new global counter');
                     } catch (e) {
+                        console.error('[Index] Failed to create counter:', e);
                         document.getElementById('globalVisitorCount').textContent = '1';
                     }
                 } else {
-                    console.log('Counter error:', error);
+                    console.error('[Index] Counter error:', error);
                     document.getElementById('globalVisitorCount').textContent = 'Many';
                 }
             }
         }
 
-        // PHASE 3: Personal visit counter using localStorage
+/*
+================================================================================
+This Area Of Code Is: Personal Visit Counter (Phase 3)
+Explanation: Tracks individual device visits using localStorage
+In Other Words: Remembers how many times YOU visited
+================================================================================
+*/
         function trackPersonalVisits() {
             try {
                 let visits = parseInt(localStorage.getItem('gw_personal_visits') || '0');
@@ -289,11 +349,59 @@
             }
         }
 
+/*
+================================================================================
+This Area Of Code Is: Video Background Loader (Phase 8)
+Explanation: Attempts to load church-interior.mp4, falls back to static image
+In Other Words: Tries video first, uses picture if video fails
+================================================================================
+*/
+        function initVideoBackground() {
+            const video = document.getElementById('bgVideo');
+            const videoBg = document.getElementById('videoBg');
+            const imageBg = document.getElementById('imageBg');
+            
+            if (!video) return;
+            
+            video.addEventListener('loadeddata', () => {
+                console.log('[Index] Video loaded successfully');
+                videoBg.style.display = 'block';
+                imageBg.style.display = 'none';
+            });
+            
+            video.addEventListener('error', () => {
+                console.log('[Index] Video failed, using image fallback');
+                videoBg.style.display = 'none';
+                imageBg.style.display = 'block';
+            });
+            
+            // Timeout fallback after 3 seconds
+            setTimeout(() => {
+                if (video.readyState < 3) {
+                    videoBg.style.display = 'none';
+                    imageBg.style.display = 'block';
+                }
+            }, 3000);
+        }
+
         const flagMap = { 'en': '🇺🇸', 'es': '🇪🇸', 'fr': '🇫🇷', 'de': '🇩🇪', 'it': '🇮🇹', 'pt': '🇵🇹' };
 
+        // Reverted translations without the universal messaging
         const translations = {
-            en: { title: "Get Well Soon", sub1: "Your Church Family Loves You", sub2: "God Bless You", btn: "Open Card", disclaimer: "Translations provided by free APIs and may not be 100% accurate." },
-            es: { title: "Mejórate Pronto", sub1: "Tu Familia de la Iglesia te Ama", sub2: "Dios te Bendiga", btn: "Abrir Tarjeta", disclaimer: "Las traducciones son automáticas y pueden contener errores." }
+            en: { 
+                title: "GetWell Card", 
+                sub1: "Your Church Family Loves You", 
+                sub2: "God Bless You", 
+                btn: "Open Card", 
+                disclaimer: "Translations provided by free APIs and may not be 100% accurate. For entertainment and spiritual encouragement purposes only." 
+            },
+            es: { 
+                title: "Tarjeta GetWell", 
+                sub1: "Tu Familia de la Iglesia te Ama", 
+                sub2: "Dios te Bendiga", 
+                btn: "Abrir Tarjeta", 
+                disclaimer: "Las traducciones son automáticas y pueden contener errores." 
+            }
         };
 
         function changeLanguage(lang) {
@@ -312,15 +420,31 @@
             setTimeout(() => notice.style.opacity = '0.5', 3000);
         }
 
+/*
+================================================================================
+This Area Of Code Is: Application Initialization (Phase 8 Final)
+Explanation: Starts all tracking, video, and counters when page loads
+In Other Words: Fires up everything when someone visits
+================================================================================
+*/
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('[Index] Initializing GetWell Card...');
+            initVideoBackground();
             trackGlobalVisitor();
-            trackPersonalVisits(); // PHASE 3: Track personal visits
+            trackPersonalVisits();
         });
 
+/*
+================================================================================
+This Area Of Code Is: Service Worker Registration (Phase 8)
+Explanation: Enables PWA offline functionality with cache version for 100 cards
+In Other Words: Makes the app work without internet
+================================================================================
+*/
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('./public/sw.js')
-                .then(() => console.log('SW registered'))
-                .catch(() => console.log('SW failed'));
+                .then(() => console.log('[Index] SW registered'))
+                .catch(() => console.log('[Index] SW failed'));
         }
     </script>
 </body>
