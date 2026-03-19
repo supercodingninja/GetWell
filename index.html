@@ -2,949 +2,231 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0f172a">
     <meta name="description" content="A global Christian get-well card with Liquid Glass design and 100K resolution support">
     <title>Get Well Soon | Liquid Glass Edition</title>
     <link rel="manifest" href="manifest.json">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
         :root {
             --glass-pure: rgba(255, 255, 255, 0.15);
             --glass-shine: rgba(255, 255, 255, 0.4);
             --glass-edge: rgba(255, 255, 255, 0.6);
+            --glass-depth: rgba(0, 0, 0, 0.2);
             --liquid-gold: linear-gradient(135deg, #ffd700 0%, #ffed4e 50%, #fdb931 100%);
+            --liquid-blue: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --liquid-dark: linear-gradient(180deg, rgba(15,23,42,0.9) 0%, rgba(30,41,59,0.95) 100%);
             --text-primary: #ffffff;
-            --safe-top: env(safe-area-inset-top);
-            --safe-bottom: env(safe-area-inset-bottom);
-            --safe-left: env(safe-area-inset-left);
-            --safe-right: env(safe-area-inset-right);
+            --text-glow: 0 0 20px rgba(255,255,255,0.5);
         }
 
-        html {
-            font-size: clamp(14px, 2vw, 24px);
-            height: 100%;
-            width: 100%;
-            overflow: hidden;
-        }
-
-        body {
-            height: 100dvh;
-            width: 100dvw;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #000;
-            overflow: hidden;
-            position: relative;
-            padding: var(--safe-top) var(--safe-right) var(--safe-bottom) var(--safe-left);
-        }
-
-        /* High Contrast Mode Support */
-        @media (prefers-contrast: high) {
-            :root {
-                --glass-pure: rgba(255, 255, 255, 0.3);
-                --text-primary: #ffffff;
-            }
-            .glass-card {
-                border: 3px solid #fff !important;
-            }
-        }
-
-        /* Reduced Motion Support */
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
-
-        /* 100K Resolution */
-        :root {
-            --scale-factor: clamp(0.6, calc(100vw / 1920), 52);
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+        :root { --scale-factor: clamp(0.5, calc(100vw / 1920), 10); --spacing-unit: calc(1vw + 1vh); }
+        
         @media (min-width: 100000px) {
-            :root { --scale-factor: 52; }
+            :root { --scale-factor: 52; --ultra-mode: true; }
             html { font-size: 832px; }
         }
 
-        .image-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            background-image: url('https://raw.githubusercontent.com/supercodingninja/GetWell/LivingCard/Church.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            image-rendering: -webkit-optimize-contrast;
-            will-change: transform;
-        }
+        html { font-size: 16px; height: 100%; width: 100%; }
+        body { height: 100%; width: 100%; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #000; overflow: hidden; position: relative; }
 
-        .image-background::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(15,23,42,0.5) 100%);
+        .image-background {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
+            background-image: url('https://raw.githubusercontent.com/supercodingninja/GetWell/68dcd9b4773d2eabae9785279079177d1cfdbf3a/Church.png');
+            background-size: cover; background-position: center; background-repeat: no-repeat;
+            image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges; will-change: transform;
+        }
+        .image-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.3) 0%, rgba(15,23,42,0.4) 100%);
         }
 
         .visitor-counter {
-            position: fixed;
-            top: calc(20px + var(--safe-top));
-            left: calc(20px + var(--safe-left));
-            z-index: 100;
+            position: fixed; top: 20px; left: 20px; z-index: 100;
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 50px;
-            padding: clamp(8px, 2vw, 24px) clamp(16px, 3vw, 32px);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: white;
-            font-size: clamp(12px, 3vw, 18px);
-            font-weight: 600;
-            box-shadow: 
-                inset 0 1px 0 rgba(255,255,255,0.4),
-                0 4px 20px rgba(0,0,0,0.3),
-                0 0 0 1px rgba(255,255,255,0.1);
+            padding: 12px 24px;
+            display: flex; align-items: center; gap: 10px;
+            color: white; font-size: 14px; font-weight: 600;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 4px 20px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.1);
             backdrop-filter: none;
         }
-
         .visitor-counter .count {
             background: linear-gradient(135deg, #ffd700, #ffed4e);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 700;
-            font-size: clamp(14px, 4vw, 22px);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            font-weight: 700; font-size: 18px;
             filter: drop-shadow(0 0 10px rgba(255,215,0,0.5));
-            min-width: 60px;
-            text-align: center;
         }
-
         .pulse-dot {
-            width: 8px;
-            height: 8px;
-            background: #10b981;
-            border-radius: 50%;
-            box-shadow: 0 0 10px #10b981;
-            animation: pulse 2s infinite;
+            width: 8px; height: 8px; background: #10b981; border-radius: 50%;
+            box-shadow: 0 0 10px #10b981; animation: pulse 2s infinite;
         }
-
         @keyframes pulse {
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.6; transform: scale(0.8); }
         }
 
-        /* Language Selector with Visible Flags */
-        .language-selector {
-            position: fixed;
-            top: calc(20px + var(--safe-top));
-            right: calc(20px + var(--safe-right));
-            z-index: 100;
-        }
-
+        .language-selector { position: fixed; top: 20px; right: 20px; z-index: 100; }
         .lang-dropdown {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 50px;
-            padding: clamp(8px, 2vw, 14px) clamp(16px, 3vw, 24px);
-            color: var(--text-primary);
-            font-size: clamp(13px, 3vw, 16px);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 
-                inset 0 1px 0 rgba(255,255,255,0.3),
-                0 8px 32px rgba(0,0,0,0.4),
-                0 0 0 1px rgba(255,255,255,0.1);
-            backdrop-filter: none;
-            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50px; padding: 12px 24px; color: var(--text-primary); font-size: 14px;
+            cursor: pointer; display: flex; align-items: center; gap: 10px;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.1);
+            backdrop-filter: none; transition: all 0.3s ease;
         }
-
-        .lang-dropdown:hover {
-            background: rgba(255, 255, 255, 0.15);
-            border-color: rgba(255, 255, 255, 0.6);
-            transform: translateY(-2px);
-        }
-
-        /* Custom Select Styling to Show Flags */
-        .custom-select-wrapper {
-            position: relative;
-            display: inline-block;
-        }
-
-        .custom-select-display {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: white;
-            font-size: clamp(13px, 3vw, 16px);
-            cursor: pointer;
-            min-width: 140px;
-        }
-
-        .custom-options {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            margin-top: 8px;
-            background: rgba(15, 23, 42, 0.98);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 16px;
-            padding: 8px;
-            min-width: 200px;
-            max-height: 300px;
-            overflow-y: auto;
-            display: none;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            z-index: 101;
-        }
-
-        .custom-options.open {
-            display: block;
-        }
-
-        .custom-option {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 12px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.2s;
-            color: white;
-        }
-
-        .custom-option:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .custom-option .flag {
-            font-size: 20px;
-        }
-
+        .lang-dropdown:hover { background: rgba(255, 255, 255, 0.15); border-color: rgba(255, 255, 255, 0.6); transform: translateY(-2px); }
+        .lang-dropdown select { background: transparent; border: none; color: white; font-size: 15px; cursor: pointer; outline: none; font-family: 'Inter', sans-serif; min-width: 140px; }
+        .lang-dropdown select option { background: #0f172a; color: white; padding: 12px; font-size: 15px; }
         .translation-notice {
-            position: fixed;
-            top: calc(70px + var(--safe-top));
-            right: calc(20px + var(--safe-right));
-            font-size: clamp(10px, 2.5vw, 13px);
-            color: rgba(255,255,255,0.8);
-            z-index: 100;
-            background: rgba(0,0,0,0.4);
-            padding: 6px 14px;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.2);
-            opacity: 0.7;
+            position: fixed; top: 70px; right: 20px; font-size: 12px; color: rgba(255,255,255,0.8);
+            z-index: 100; background: rgba(0,0,0,0.4); padding: 6px 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2);
         }
 
-        /* Main Container - Card Raised Higher */
-        .main-container {
-            position: relative;
-            z-index: 10;
-            height: 100dvh;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            /* Raised up by reducing bottom padding and adding negative margin adjustment */
-            padding: calc(10px + var(--safe-top)) calc(20px + var(--safe-right)) calc(5px + var(--safe-bottom)) calc(20px + var(--safe-left));
-            margin-top: -30px; /* Raises card higher on Y axis */
-        }
+        .main-container { position: relative; z-index: 10; height: 100vh; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
 
-        /* Glass Card */
         .glass-card {
-            position: relative;
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            border-radius: clamp(20px, 5vw, 40px);
-            padding: clamp(30px, 8vw, 60px) clamp(25px, 6vw, 50px);
-            max-width: min(90vw, 600px);
-            width: 100%;
-            text-align: center;
-            margin: auto;
-            box-shadow: 
-                inset 0 1px 0 rgba(255,255,255,0.6),
-                inset 0 -1px 0 rgba(255,255,255,0.2),
-                0 25px 50px -12px rgba(0,0,0,0.5),
-                0 0 0 1px rgba(255,255,255,0.1),
-                0 0 40px rgba(255,255,255,0.1);
-            overflow: hidden;
-            animation: cardFloat 6s ease-in-out infinite;
-            transform: translateY(-20px); /* Additional Y-axis lift */
+            position: relative; background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.5); border-radius: 30px;
+            padding: 50px 40px; max-width: 420px; width: 100%; text-align: center;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), inset 0 -1px 0 rgba(255,255,255,0.2), 0 25px 50px -12px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1), 0 0 40px rgba(255,255,255,0.1);
+            overflow: hidden; animation: cardFloat 6s ease-in-out infinite;
         }
-
         .glass-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent 0%,
-                rgba(255,255,255,0.3) 50%,
-                transparent 100%
-            );
-            animation: glassShimmer 3s infinite;
-            pointer-events: none;
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
+            animation: glassShimmer 4s infinite; pointer-events: none;
         }
+        @keyframes glassShimmer { 0% { left: -100%; } 100% { left: 100%; } }
+        @keyframes cardFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .glass-card:hover { transform: translateY(-5px); box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 30px 60px -12px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.1), 0 0 120px rgba(251, 191, 36, 0.15); }
 
-        @keyframes glassShimmer {
-            0% { left: -100%; }
-            100% { left: 200%; }
-        }
+        .church-icon { font-size: 48px; margin-bottom: 20px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5)); position: relative; z-index: 2; }
+        h1 { font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 600; color: #ffffff; margin-bottom: 15px; text-shadow: 0 4px 12px rgba(0,0,0,0.6), 0 0 40px rgba(0,0,0,0.4); letter-spacing: -0.5px; position: relative; z-index: 2; }
+        .subtitle { font-family: 'Inter', sans-serif; font-size: 18px; color: #ffffff; margin-bottom: 8px; font-weight: 500; position: relative; z-index: 2; text-shadow: 0 2px 8px rgba(0,0,0,0.6), 0 0 20px rgba(0,0,0,0.4); }
+        .blessing { font-family: 'Playfair Display', serif; font-style: italic; font-size: 20px; background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 30px; position: relative; z-index: 2; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
 
-        @keyframes cardFloat {
-            0%, 100% { transform: translateY(-20px); }
-            50% { transform: translateY(-30px); }
-        }
-
-        .church-icon {
-            font-size: clamp(36px, 10vw, 64px);
-            margin-bottom: clamp(15px, 4vw, 25px);
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
-            position: relative;
-            z-index: 2;
-        }
-
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(28px, 8vw, 52px);
-            font-weight: 600;
-            color: #ffffff;
-            margin-bottom: clamp(10px, 3vw, 20px);
-            text-shadow: 
-                0 4px 12px rgba(0,0,0,0.6),
-                0 0 40px rgba(0,0,0,0.4);
-            letter-spacing: -0.5px;
-            position: relative;
-            z-index: 2;
-            line-height: 1.2;
-        }
-
-        .subtitle {
-            font-family: 'Inter', sans-serif;
-            font-size: clamp(16px, 4vw, 22px);
-            color: #ffffff;
-            margin-bottom: 8px;
-            font-weight: 500;
-            position: relative;
-            z-index: 2;
-            text-shadow: 
-                0 2px 8px rgba(0,0,0,0.6),
-                0 0 20px rgba(0,0,0,0.4);
-        }
-
-        .blessing {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-size: clamp(18px, 5vw, 28px);
-            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: clamp(20px, 6vw, 40px);
-            position: relative;
-            z-index: 2;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-        }
-
-        .stats-container {
-            display: flex;
-            justify-content: center;
-            gap: clamp(10px, 3vw, 20px);
-            margin-bottom: clamp(20px, 6vw, 40px);
-            flex-wrap: wrap;
-            position: relative;
-            z-index: 2;
-        }
-
+        .stats-container { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; position: relative; z-index: 2; }
         .stat-badge {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50px;
-            padding: clamp(8px, 2vw, 14px) clamp(16px, 4vw, 24px);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: clamp(12px, 3vw, 16px);
-            color: white;
-            box-shadow: 
-                inset 0 1px 0 rgba(255,255,255,0.3),
-                0 4px 15px rgba(0,0,0,0.3);
+            background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px; padding: 10px 20px; display: flex; align-items: center; gap: 8px;
+            font-size: 14px; color: white;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 4px 15px rgba(0,0,0,0.3);
             backdrop-filter: none;
         }
-
         .stat-badge .number {
             background: linear-gradient(135deg, #ffd700, #ffed4e);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 700;
-            font-size: clamp(14px, 4vw, 20px);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            font-weight: 700; font-size: 16px;
             filter: drop-shadow(0 0 5px rgba(255,215,0,0.3));
         }
 
         .open-card-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            border-radius: 50px;
-            padding: clamp(14px, 4vw, 22px) clamp(32px, 8vw, 48px);
-            color: white;
-            font-size: clamp(16px, 4vw, 22px);
-            font-weight: 600;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 
-                inset 0 1px 0 rgba(255,255,255,0.4),
-                0 10px 30px rgba(0,0,0,0.4),
-                0 0 0 1px rgba(255,255,255,0.1);
-            position: relative;
-            z-index: 2;
-            overflow: hidden;
-            min-height: 44px;
-            min-width: 200px;
-            backdrop-filter: none;
+            display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+            background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50px; padding: 18px 40px; color: white; font-size: 18px; font-weight: 600;
+            text-decoration: none; cursor: pointer; transition: all 0.3s ease;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 10px 30px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.1);
+            position: relative; z-index: 2; overflow: hidden; width: 100%; max-width: 280px; backdrop-filter: none;
         }
+        .open-card-btn:hover { background: rgba(255, 255, 255, 0.25); border-color: rgba(255, 255, 255, 0.7); transform: translateY(-3px); box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 15px 40px rgba(0,0,0,0.5), 0 0 30px rgba(255,255,255,0.2); }
 
-        .open-card-btn:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.7);
-            transform: translateY(-3px);
-            box-shadow: 
-                inset 0 1px 0 rgba(255,255,255,0.5),
-                0 15px 40px rgba(0,0,0,0.5),
-                0 0 30px rgba(255,255,255,0.2);
-        }
-
-        .open-card-btn:active {
-            transform: translateY(-1px) scale(0.98);
-        }
-
-        .disclaimer {
-            margin-top: clamp(15px, 4vw, 30px);
-            font-size: clamp(10px, 2.5vw, 14px);
-            color: rgba(255,255,255,0.9);
-            line-height: 1.5;
-            max-width: 90%;
-            position: relative;
-            z-index: 2;
-            text-shadow: 0 1px 4px rgba(0,0,0,0.5);
-            margin-left: auto;
-            margin-right: auto;
-        }
+        .disclaimer { margin-top: 25px; font-size: 12px; color: rgba(255,255,255,0.9); line-height: 1.5; max-width: 320px; position: relative; z-index: 2; text-shadow: 0 1px 4px rgba(0,0,0,0.5); }
 
         .fixed-footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(15, 23, 42, 0.9);
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-            padding: clamp(10px, 3vw, 20px);
-            padding-bottom: calc(15px + var(--safe-bottom));
-            text-align: center;
-            z-index: 100;
-            font-size: clamp(11px, 2.8vw, 15px);
-            color: rgba(255, 255, 255, 0.9);
-            backdrop-filter: none;
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: rgba(15, 23, 42, 0.9); border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 15px 20px; text-align: center; z-index: 100; font-size: 13px;
+            color: rgba(255, 255, 255, 0.9); backdrop-filter: none;
         }
+        .copyright-name { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 600; background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        .copyright-name {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-weight: 600;
-            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* Accessibility Menu Button */
-        .accessibility-btn {
-            position: fixed;
-            bottom: calc(80px + var(--safe-bottom));
-            right: calc(20px + var(--safe-right));
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: 2px solid rgba(255,255,255,0.5);
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            z-index: 200;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .accessibility-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 30px rgba(102, 126, 234, 0.6);
-        }
-
-        /* Accessibility Modal */
-        .a11y-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.9);
-            z-index: 300;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s;
-        }
-
-        .a11y-modal.open {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .a11y-content {
-            background: rgba(15, 23, 42, 0.98);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 24px;
-            padding: 30px;
-            max-width: 500px;
-            width: 100%;
-            max-height: 80vh;
-            overflow-y: auto;
-            color: white;
-        }
-
-        .a11y-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .a11y-header h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 24px;
-        }
-
-        .a11y-section {
-            margin-bottom: 24px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .a11y-section:last-child {
-            border-bottom: none;
-        }
-
-        .a11y-section h3 {
-            font-size: 16px;
-            margin-bottom: 12px;
-            color: #ffd700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .a11y-option {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 12px;
-            margin-bottom: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .a11y-option:hover {
-            background: rgba(255,255,255,0.1);
-        }
-
-        .toggle-switch {
-            width: 50px;
-            height: 26px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 13px;
-            position: relative;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .toggle-switch.active {
-            background: #10b981;
-        }
-
-        .toggle-switch::after {
-            content: '';
-            position: absolute;
-            width: 22px;
-            height: 22px;
-            background: white;
-            border-radius: 50%;
-            top: 2px;
-            left: 2px;
-            transition: all 0.3s;
-        }
-
-        .toggle-switch.active::after {
-            left: 26px;
-        }
-
-        /* Dyslexia Font Support */
-        .dyslexia-font {
-            font-family: 'OpenDyslexic', 'Comic Sans MS', sans-serif !important;
-        }
-
-        /* High Contrast Mode */
-        .high-contrast {
-            filter: contrast(150%) saturate(150%) !important;
-        }
-
-        .high-contrast .glass-card {
-            background: rgba(0,0,0,0.8) !important;
-            border: 3px solid #fff !important;
-        }
-
-        /* Large Text Mode */
-        .large-text {
-            font-size: 1.3em !important;
-        }
-
-        /* Line Height for Readability */
-        .readable-line-height {
-            line-height: 1.8 !important;
-        }
-
-        /* Color Blind Modes */
-        .deuteranopia-mode {
-            filter: url('#deuteranopia-filter');
-        }
-
-        .protanopia-mode {
-            filter: url('#protanopia-filter');
-        }
-
-        .tritanopia-mode {
-            filter: url('#tritanopia-filter');
-        }
-
-        @media (min-width: 7680px) {
-            html { font-size: 48px; }
-            .glass-card { max-width: 1400px; border-radius: 60px; }
-            h1 { font-size: 120px; }
-        }
-
-        @media (min-width: 100000px) {
-            html { font-size: 832px; }
-            .glass-card { 
-                max-width: 18200px; 
-                border-radius: 780px;
-                animation: none;
-            }
-            .glass-card::before { animation: none; }
-        }
-
-        @media (max-width: 430px) {
-            .glass-card { padding: 30px 20px; }
-            .language-selector { top: calc(10px + var(--safe-top)); right: calc(10px + var(--safe-right)); }
-            .visitor-counter { top: calc(10px + var(--safe-top)); left: calc(10px + var(--safe-left)); }
-            .main-container { margin-top: -20px; }
+        @media (max-width: 480px) {
+            .glass-card { padding: 40px 25px; margin: 10px; }
+            h1 { font-size: 32px; }
+            .subtitle { font-size: 16px; }
+            .visitor-counter { font-size: 12px; padding: 8px 16px; top: 10px; left: 10px; }
+            .visitor-counter .count { font-size: 14px; }
         }
     </style>
 </head>
 <body>
-    <!-- SVG Filters for Color Blindness -->
-    <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" aria-hidden="true">
-        <defs>
-            <filter id="deuteranopia-filter">
-                <feColorMatrix type="matrix" values="0.625,0.375,0,0,0 0.7,0.3,0,0,0 0,0.3,0.7,0,0 0,0,0,1,0"/>
-            </filter>
-            <filter id="protanopia-filter">
-                <feColorMatrix type="matrix" values="0.567,0.433,0,0,0 0.558,0.442,0,0,0 0 0.242,0.758,0,0 0,0,0,1,0"/>
-            </filter>
-            <filter id="tritanopia-filter">
-                <feColorMatrix type="matrix" values="0.95,0.05,0,0,0 0,0.433,0.567,0,0 0,0.475,0.525,0,0 0,0,0,1,0"/>
-            </filter>
-        </defs>
-    </svg>
+    <div class="image-background"><div class="image-overlay"></div></div>
 
-    <!-- Church Photo Background -->
-    <div class="image-background" id="bgImage"></div>
-
-    <!-- Global Visitor Counter -->
-    <div class="visitor-counter" role="status" aria-live="polite" aria-label="Total website visitors">
-        <span class="pulse-dot" aria-hidden="true"></span>
+    <div class="visitor-counter">
+        <span class="pulse-dot"></span>
         <span>Total Visitors:</span>
-        <span class="count" id="globalVisitorCount" aria-live="polite">Loading...</span>
+        <span class="count" id="globalVisitorCount">Loading...</span>
     </div>
 
-    <!-- Language Selector with Working Flags -->
-    <div class="language-selector" role="combobox" aria-label="Select language">
-        <div class="lang-dropdown" id="langDropdown" onclick="toggleLangDropdown()">
+    <div class="language-selector">
+        <div class="lang-dropdown">
             <span id="currentFlag">🇺🇸</span>
-            <span id="currentLang">English</span>
-            <span style="margin-left: 5px;">▼</span>
-        </div>
-        <div class="custom-options" id="customOptions">
-            <div class="custom-option" onclick="changeLanguage('en', '🇺🇸', 'English')" role="option">
-                <span class="flag">🇺🇸</span> <span>English</span>
-            </div>
-            <div class="custom-option" onclick="changeLanguage('es', '🇪🇸', 'Español')" role="option">
-                <span class="flag">🇪🇸</span> <span>Español</span>
-            </div>
-            <div class="custom-option" onclick="changeLanguage('fr', '🇫🇷', 'Français')" role="option">
-                <span class="flag">🇫🇷</span> <span>Français</span>
-            </div>
-            <div class="custom-option" onclick="changeLanguage('de', '🇩🇪', 'Deutsch')" role="option">
-                <span class="flag">🇩🇪</span> <span>Deutsch</span>
-            </div>
-            <div class="custom-option" onclick="changeLanguage('it', '🇮🇹', 'Italiano')" role="option">
-                <span class="flag">🇮🇹</span> <span>Italiano</span>
-            </div>
-            <div class="custom-option" onclick="changeLanguage('pt', '🇵🇹', 'Português')" role="option">
-                <span class="flag">🇵🇹</span> <span>Português</span>
-            </div>
-            <div class="custom-option" onclick="changeLanguage('ru', '🇷🇺', 'Русский')" role="option">
-                <span class="flag">🇷🇺</span> <span>Русский</span>
-            </div>
-            <div class="custom-option" onclick="changeLanguage('ja', '🇯🇵', '日本語')" role="option">
-                <span class="flag">🇯🇵</span> <span>日本語</span>
-            </div>
-            <div class="custom-option" onclick="changeLanguage('ko', '🇰🇷', '한국어')" role="option">
-                <span class="flag">🇰🇷</span> <span>한국어</span>
-            </div>
-            <div class="custom-option" onclick="changeLanguage('zh', '🇨🇳', '中文')" role="option">
-                <span class="flag">🇨🇳</span> <span>中文</span>
-            </div>
-            <div class="custom-option" onclick="changeLanguage('ar', '🇸🇦', 'العربية')" role="option">
-                <span class="flag">🇸🇦</span> <span>العربية</span>
-            </div>
-            <div class="custom-option" onclick="changeLanguage('hi', '🇮🇳', 'हिन्दी')" role="option">
-                <span class="flag">🇮🇳</span> <span>हिन्दी</span>
-            </div>
-            <div class="custom-option" onclick="changeLanguage('sw', '🇰🇪', 'Kiswahili')" role="option">
-                <span class="flag">🇰🇪</span> <span>Kiswahili</span>
-            </div>
-            <div class="custom-option" onclick="changeLanguage('tl', '🇵🇭', 'Tagalog')" role="option">
-                <span class="flag">🇵🇭</span> <span>Tagalog</span>
-            </div>
-            <div class="custom-option" onclick="changeLanguage('vi', '🇻🇳', 'Tiếng Việt')" role="option">
-                <span class="flag">🇻🇳</span> <span>Tiếng Việt</span>
-            </div>
+            <select id="languageSelect" onchange="changeLanguage(this.value)">
+                <option value="en">🇺🇸 English</option>
+                <option value="es">🇪🇸 Español</option>
+                <option value="fr">🇫🇷 Français</option>
+                <option value="de">🇩🇪 Deutsch</option>
+                <option value="it">🇮🇹 Italiano</option>
+                <option value="pt">🇵🇹 Português</option>
+            </select>
         </div>
     </div>
-    <div class="translation-notice" id="translateNotice" role="note">Auto-translated • May contain errors</div>
+    <div class="translation-notice" id="translateNotice">Auto-translated • May contain errors</div>
 
-    <!-- Main Content - Card Raised Higher -->
-    <main class="main-container" role="main">
-        <div class="glass-card" role="article" aria-label="Get well greeting card">
-            <div class="church-icon" role="img" aria-label="Church emoji">⛪</div>
-            <h1 id="pageTitle" tabindex="0">Get Well Soon</h1>
+    <main class="main-container">
+        <div class="glass-card">
+            <div class="church-icon">⛪</div>
+            <h1 id="pageTitle">Get Well Soon</h1>
             <p class="subtitle" id="subtitle1">Your Church Family Loves You</p>
             <p class="blessing" id="subtitle2">God Bless You</p>
             
-            <div class="stats-container" role="group" aria-label="Statistics">
-                <div class="stat-badge" role="status" aria-label="Current viewers">
-                    <span aria-hidden="true">👥</span>
-                    <span id="viewersText">Viewing:</span>
-                    <span class="number" id="viewerCount" aria-live="polite">1</span>
+            <div class="stats-container">
+                <!-- PHASE 3: Changed Viewing to Welcome Back with Dancing Script font -->
+                <div class="stat-badge">
+                    <span>👋</span>
+                    <span style="font-family: 'Dancing Script', cursive; font-size: 1.3em; color: #fbbf24; text-shadow: 0 0 10px rgba(251,191,36,0.5);">𝓦𝓮𝓵𝓬𝓸𝓶𝓮 𝓑𝓪𝓬𝓛!</span>
+                    <span class="number" id="personalVisitCount">1</span>
                 </div>
-                <div class="stat-badge" role="status" aria-label="Total jokes">
-                    <span aria-hidden="true">😊</span>
+                <div class="stat-badge">
+                    <span>😊</span>
                     <span id="jokesText">Jokes:</span>
-                    <span class="number" id="jokeCount" aria-live="polite">24</span>
+                    <span class="number" id="jokeCount">100</span>
                 </div>
             </div>
 
-            <a href="./public/app.html" class="open-card-btn" id="openCardBtn" onclick="return handleOpenCard(event)" role="button" aria-label="Open the get well card application">
-                <span aria-hidden="true">📂</span>
+            <a href="./public/app.html" class="open-card-btn" id="openCardBtn">
+                <span>📂</span>
                 <span id="btnText">Open Card</span>
             </a>
 
-            <p class="disclaimer" id="disclaimer" role="note">
+            <p class="disclaimer" id="disclaimer">
                 Translations provided by free APIs and may not be 100% accurate. 
                 For entertainment and spiritual encouragement purposes only.
             </p>
         </div>
     </main>
 
-    <!-- Accessibility Button -->
-    <button class="accessibility-btn" onclick="openAccessibilityModal()" aria-label="Open accessibility options" title="Accessibility Options">
-        ♿
-    </button>
-
-    <!-- Accessibility Modal -->
-    <div class="a11y-modal" id="a11yModal" role="dialog" aria-label="Accessibility Settings" aria-modal="true">
-        <div class="a11y-content">
-            <div class="a11y-header">
-                <h2>Accessibility Settings</h2>
-                <button onclick="closeAccessibilityModal()" style="background:transparent;border:none;color:white;font-size:24px;cursor:pointer;" aria-label="Close accessibility settings">×</button>
-            </div>
-
-            <!-- Vision Impairments -->
-            <div class="a11y-section">
-                <h3>👁️ Vision</h3>
-                <div class="a11y-option" onclick="toggleHighContrast()" role="button" tabindex="0" aria-pressed="false" id="highContrastOption">
-                    <div>
-                        <strong>High Contrast Mode</strong>
-                        <div style="font-size:12px;color:rgba(255,255,255,0.6);">Enhanced contrast for low vision</div>
-                    </div>
-                    <div class="toggle-switch" id="highContrastToggle"></div>
-                </div>
-                <div class="a11y-option" onclick="toggleLargeText()" role="button" tabindex="0" aria-pressed="false" id="largeTextOption">
-                    <div>
-                        <strong>Large Text</strong>
-                        <div style="font-size:12px;color:rgba(255,255,255,0.6);">Increase text size by 30%</div>
-                    </div>
-                    <div class="toggle-switch" id="largeTextToggle"></div>
-                </div>
-            </div>
-
-            <!-- Color Blindness -->
-            <div class="a11y-section">
-                <h3>🎨 Color Blindness Support</h3>
-                <div class="a11y-option" onclick="setColorBlindMode('none')" role="button" tabindex="0" aria-pressed="true" id="colorNormal">
-                    <div><strong>Normal Vision</strong></div>
-                    <div class="toggle-switch active" id="toggleNormal"></div>
-                </div>
-                <div class="a11y-option" onclick="setColorBlindMode('deuteranopia')" role="button" tabindex="0" aria-pressed="false" id="colorDeuter">
-                    <div>
-                        <strong>Deuteranopia (Green-Blind)</strong>
-                        <div style="font-size:12px;color:rgba(255,255,255,0.6);">Red-green color blindness</div>
-                    </div>
-                    <div class="toggle-switch" id="toggleDeuter"></div>
-                </div>
-                <div class="a11y-option" onclick="setColorBlindMode('protanopia')" role="button" tabindex="0" aria-pressed="false" id="colorProtan">
-                    <div>
-                        <strong>Protanopia (Red-Blind)</strong>
-                        <div style="font-size:12px;color:rgba(255,255,255,0.6);">Red color deficiency</div>
-                    </div>
-                    <div class="toggle-switch" id="toggleProtan"></div>
-                </div>
-                <div class="a11y-option" onclick="setColorBlindMode('tritanopia')" role="button" tabindex="0" aria-pressed="false" id="colorTritan">
-                    <div>
-                        <strong>Tritanopia (Blue-Blind)</strong>
-                        <div style="font-size:12px;color:rgba(255,255,255,0.6);">Blue-yellow color blindness</div>
-                    </div>
-                    <div class="toggle-switch" id="toggleTritan"></div>
-                </div>
-            </div>
-
-            <!-- Cognitive & Mental Health -->
-            <div class="a11y-section">
-                <h3>🧠 Cognitive & Mental Health</h3>
-                <div class="a11y-option" onclick="toggleDyslexiaFont()" role="button" tabindex="0" aria-pressed="false" id="dyslexiaOption">
-                    <div>
-                        <strong>Dyslexia-Friendly Font</strong>
-                        <div style="font-size:12px;color:rgba(255,255,255,0.6);">OpenDyslexic font for easier reading</div>
-                    </div>
-                    <div class="toggle-switch" id="dyslexiaToggle"></div>
-                </div>
-                <div class="a11y-option" onclick="toggleReadableLines()" role="button" tabindex="0" aria-pressed="false" id="lineHeightOption">
-                    <div>
-                        <strong>Increased Line Spacing</strong>
-                        <div style="font-size:12px;color:rgba(255,255,255,0.6);">Better readability for autism/ADHD</div>
-                    </div>
-                    <div class="toggle-switch" id="lineHeightToggle"></div>
-                </div>
-                <div class="a11y-option" onclick="toggleReducedMotion()" role="button" tabindex="0" aria-pressed="false" id="reducedMotionOption">
-                    <div>
-                        <strong>Reduced Motion</strong>
-                        <div style="font-size:12px;color:rgba(255,255,255,0.6);">Stop animations (helps anxiety, PTSD, mania)</div>
-                    </div>
-                    <div class="toggle-switch" id="reducedMotionToggle"></div>
-                </div>
-                <div class="a11y-option" onclick="toggleCalmMode()" role="button" tabindex="0" aria-pressed="false" id="calmModeOption">
-                    <div>
-                        <strong>Calm Mode (Bipolar/PTSD/Schizophrenia)</strong>
-                        <div style="font-size:12px;color:rgba(255,255,255,0.6);">Muted colors, no sudden movements, stable layout</div>
-                    </div>
-                    <div class="toggle-switch" id="calmModeToggle"></div>
-                </div>
-            </div>
-
-            <!-- Screen Reader -->
-            <div class="a11y-section">
-                <h3>🔊 Screen Reader</h3>
-                <div class="a11y-option" onclick="toggleScreenReaderMode()" role="button" tabindex="0" aria-pressed="false" id="srOption">
-                    <div>
-                        <strong>Enhanced Screen Reader Mode</strong>
-                        <div style="font-size:12px;color:rgba(255,255,255,0.6);">Optimized for blind users with detailed descriptions</div>
-                    </div>
-                    <div class="toggle-switch" id="srToggle"></div>
-                </div>
-            </div>
-
-            <!-- Deaf/Hard of Hearing -->
-            <div class="a11y-section">
-                <h3>👂 Deaf & Hard of Hearing</h3>
-                <div class="a11y-option" onclick="toggleVisualAlerts()" role="button" tabindex="0" aria-pressed="false" id="visualAlertOption">
-                    <div>
-                        <strong>Visual Alerts</strong>
-                        <div style="font-size:12px;color:rgba(255,255,255,0.6);">Flash notifications instead of sounds</div>
-                    </div>
-                    <div class="toggle-switch" id="visualAlertToggle"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Fixed Footer -->
-    <footer class="fixed-footer" role="contentinfo">
-        © 2026 Get Well Card | <span class="copyright-name">𝐹𝑟𝑒𝑑𝑒𝑟𝑖𝑐𝑘 𝑇ℎ𝑜𝑚𝑎𝑠, 𝑇ℎ𝑒 𝑆𝑢𝑝𝑒𝑟 𝐶𝑜𝑑𝑖𝑛𝑔 𝑁𝑖𝑛𝑗𝑎™</span> | Made with ❤️ for the global church community
+    <footer class="fixed-footer">
+        © 2026 Get Well Card | <span class="copyright-name">𝐹𝑟𝑒𝑑𝑒𝑟𝑖𝑐𝑘 𝑇ℎ𝑜𝑚𝑎𝑠, 𝑇ℎ𝑒 𝑆𝑢𝑝𝑒𝑟 𝐶𝑜𝑑𝑖𝑛𝑔 𝑁𝑖𝑛𝑗𝑎™</span> | Made with ❤️ for the global community
     </footer>
 
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     
     <script>
-        // Encrypted Firebase Config
-        const encryptedConfig = {
-            apiKey: "QUl6YVN5RGllVkE1eV9wYWczNVpWaDhQOFB1bDY4c1pfMnF0RUdV",
-            authDomain: "Z3Jvd2luZy1nZXQtd2VsbC1jYXJkLmZpcmViYXNlYXBwLmNvbQ==",
-            projectId: "Z3Jvd2luZy1nZXQtd2VsbC1jYXJk",
-            storageBucket: "Z3Jvd2luZy1nZXQtd2VsbC1jYXJkLmZpcmViYXNlc3RvcmFnZS5hcHA=",
-            messagingSenderId: "NjE1MDI1Mzc4NTI5",
-            appId: "MTo2MTUwMjUzNzg1Mjk6d2ViOjM4ZTM4MDFjNzlmNTRkODUyNjIzYTA=",
-            measurementId: "Ry1SRUs5OVAzRUtX"
-        };
-
         const firebaseConfig = {
-            apiKey: atob(encryptedConfig.apiKey),
-            authDomain: atob(encryptedConfig.authDomain),
-            projectId: atob(encryptedConfig.projectId),
-            storageBucket: atob(encryptedConfig.storageBucket),
-            messagingSenderId: atob(encryptedConfig.messagingSenderId),
-            appId: atob(encryptedConfig.appId),
-            measurementId: atob(encryptedConfig.measurementId)
+            apiKey: "AIzaSyDieVA5y_pag35ZVh8P8Pul68sZ_2qtEGU",
+            authDomain: "growing-get-well-card.firebaseapp.com",
+            projectId: "growing-get-well-card",
+            storageBucket: "growing-get-well-card.firebasestorage.app",
+            messagingSenderId: "615025378529",
+            appId: "1:615025378529:web:38e3801c79f54d852623a0",
+            measurementId: "G-REK99P3EKW"
         };
 
         let db;
@@ -958,235 +240,89 @@
             console.log('Firebase init failed:', e);
         }
 
-        // Global Visitor Counter - Fixed
+        // PHASE 3: Global visitor counter using FieldValue.increment
         async function trackGlobalVisitor() {
-            const counterEl = document.getElementById('globalVisitorCount');
-            if (!counterEl) return;
-            
             if (!firebaseInitialized || !db) {
-                counterEl.textContent = 'Many';
+                document.getElementById('globalVisitorCount').textContent = '∞';
                 return;
             }
 
             try {
-                const counterRef = db.collection('stats').doc('visitors');
-                const doc = await counterRef.get();
+                const counterRef = db.collection('stats').doc('globalVisitors');
+                await counterRef.update({
+                    count: firebase.firestore.FieldValue.increment(1),
+                    lastVisit: new Date().toISOString()
+                });
                 
-                if (!doc.exists) {
-                    // Initialize if doesn't exist
-                    await counterRef.set({
-                        count: 1,
-                        created: new Date().toISOString(),
-                        lastVisit: new Date().toISOString()
-                    });
-                    counterEl.textContent = '1';
-                } else {
-                    // Increment existing
-                    await counterRef.update({
-                        count: firebase.firestore.FieldValue.increment(1),
-                        lastVisit: new Date().toISOString()
-                    });
-                    const newCount = doc.data().count + 1;
-                    counterEl.textContent = newCount.toLocaleString();
-                }
+                const doc = await counterRef.get();
+                const count = doc.data()?.count || 0;
+                document.getElementById('globalVisitorCount').textContent = count.toLocaleString();
+                
             } catch (error) {
-                console.error('Visitor counter error:', error);
-                counterEl.textContent = 'Many';
+                if (error.code === 'not-found') {
+                    try {
+                        await db.collection('stats').doc('globalVisitors').set({
+                            count: 1,
+                            created: new Date().toISOString()
+                        });
+                        document.getElementById('globalVisitorCount').textContent = '1';
+                    } catch (e) {
+                        document.getElementById('globalVisitorCount').textContent = '1';
+                    }
+                } else {
+                    console.log('Counter error:', error);
+                    document.getElementById('globalVisitorCount').textContent = 'Many';
+                }
             }
         }
 
-        // Language Dropdown with Flags
-        function toggleLangDropdown() {
-            const options = document.getElementById('customOptions');
-            options.classList.toggle('open');
+        // PHASE 3: Personal visit counter using localStorage
+        function trackPersonalVisits() {
+            try {
+                let visits = parseInt(localStorage.getItem('gw_personal_visits') || '0');
+                visits++;
+                localStorage.setItem('gw_personal_visits', visits.toString());
+                document.getElementById('personalVisitCount').textContent = visits;
+                console.log('[Index] Personal visit count:', visits);
+            } catch (e) {
+                console.log('[Index] localStorage not available');
+                document.getElementById('personalVisitCount').textContent = '1';
+            }
         }
 
-        function changeLanguage(lang, flag, name) {
-            document.getElementById('currentFlag').textContent = flag;
-            document.getElementById('currentLang').textContent = name;
-            document.getElementById('customOptions').classList.remove('open');
-            
-            if (lang === 'en') {
-                location.reload();
-                return;
-            }
-            
-            const translations = {
-                es: { title: "Mejórate Pronto", sub1: "Tu Familia de la Iglesia te Ama", sub2: "Dios te Bendiga", btn: "Abrir Tarjeta", viewing: "Viendo:", jokes: "Chistes:", disclaimer: "Las traducciones son automáticas y pueden contener errores." },
-                fr: { title: "Prompt Rétablissement", sub1: "Votre Famille d'Église Vous Aime", sub2: "Que Dieu vous Bénisse", btn: "Ouvrir", viewing: "Regarder:", jokes: "Blagues:", disclaimer: "Traductions automatiques." },
-                de: { title: "Gute Besserung", sub1: "Ihre Kirchgemeinde liebt Sie", sub2: "Gott segne Sie", btn: "Öffnen", viewing: "Besucher:", jokes: "Witze:", disclaimer: "Automatische Übersetzungen." }
-            };
-            
+        const flagMap = { 'en': '🇺🇸', 'es': '🇪🇸', 'fr': '🇫🇷', 'de': '🇩🇪', 'it': '🇮🇹', 'pt': '🇵🇹' };
+
+        const translations = {
+            en: { title: "Get Well Soon", sub1: "Your Church Family Loves You", sub2: "God Bless You", btn: "Open Card", disclaimer: "Translations provided by free APIs and may not be 100% accurate." },
+            es: { title: "Mejórate Pronto", sub1: "Tu Familia de la Iglesia te Ama", sub2: "Dios te Bendiga", btn: "Abrir Tarjeta", disclaimer: "Las traducciones son automáticas y pueden contener errores." }
+        };
+
+        function changeLanguage(lang) {
+            document.getElementById('currentFlag').textContent = flagMap[lang] || '🌐';
+            if (lang === 'en') { location.reload(); return; }
             const t = translations[lang];
             if (t) {
                 document.getElementById('pageTitle').textContent = t.title;
                 document.getElementById('subtitle1').textContent = t.sub1;
                 document.getElementById('subtitle2').textContent = t.sub2;
                 document.getElementById('btnText').textContent = t.btn;
-                document.getElementById('viewersText').textContent = t.viewing;
-                document.getElementById('jokesText').textContent = t.jokes;
                 document.getElementById('disclaimer').textContent = t.disclaimer;
             }
-            
             const notice = document.getElementById('translateNotice');
             notice.style.opacity = '1';
             setTimeout(() => notice.style.opacity = '0.5', 3000);
         }
 
-        // Close dropdown when clicking outside
-        document.addEventListener('click', (e) => {
-            const selector = document.querySelector('.language-selector');
-            if (!selector.contains(e.target)) {
-                document.getElementById('customOptions').classList.remove('open');
-            }
+        document.addEventListener('DOMContentLoaded', function() {
+            trackGlobalVisitor();
+            trackPersonalVisits(); // PHASE 3: Track personal visits
         });
 
-        function updateLocalStats() {
-            try {
-                let count = parseInt(localStorage.getItem('gw_viewers') || '0');
-                count++;
-                localStorage.setItem('gw_viewers', count);
-                document.getElementById('viewerCount').textContent = count;
-                
-                const jokes = JSON.parse(localStorage.getItem('gw_jokes') || '[]');
-                document.getElementById('jokeCount').textContent = 24 + jokes.length;
-            } catch (e) {}
-        }
-
-        function handleOpenCard(e) {
-            try {
-                const btn = e.currentTarget;
-                const href = btn.getAttribute('href');
-                if (!href) return false;
-                window.location.href = href;
-                return true;
-            } catch (err) {
-                return true;
-            }
-        }
-
-        // Accessibility Functions
-        function openAccessibilityModal() {
-            document.getElementById('a11yModal').classList.add('open');
-        }
-
-        function closeAccessibilityModal() {
-            document.getElementById('a11yModal').classList.remove('open');
-        }
-
-        function toggleHighContrast() {
-            document.body.classList.toggle('high-contrast');
-            toggleSwitch('highContrastToggle');
-        }
-
-        function toggleLargeText() {
-            document.body.classList.toggle('large-text');
-            toggleSwitch('largeTextToggle');
-        }
-
-        function toggleDyslexiaFont() {
-            document.body.classList.toggle('dyslexia-font');
-            toggleSwitch('dyslexiaToggle');
-        }
-
-        function toggleReadableLines() {
-            document.body.classList.toggle('readable-line-height');
-            toggleSwitch('lineHeightToggle');
-        }
-
-        function toggleReducedMotion() {
-            const body = document.body;
-            if (body.style.animationPlayState === 'paused') {
-                body.style.animationPlayState = 'running';
-            } else {
-                body.style.animationPlayState = 'paused';
-            }
-            toggleSwitch('reducedMotionToggle');
-        }
-
-        function toggleCalmMode() {
-            document.body.classList.toggle('calm-mode');
-            toggleSwitch('calmModeToggle');
-            // Apply calm mode styles
-            if (document.body.classList.contains('calm-mode')) {
-                document.body.style.filter = 'saturate(0.7) contrast(0.95)';
-                document.querySelectorAll('.pulse-dot').forEach(el => el.style.animation = 'none');
-            } else {
-                document.body.style.filter = '';
-                document.querySelectorAll('.pulse-dot').forEach(el => el.style.animation = '');
-            }
-        }
-
-        function setColorBlindMode(mode) {
-            document.body.classList.remove('deuteranopia-mode', 'protanopia-mode', 'tritanopia-mode');
-            document.getElementById('toggleNormal').classList.remove('active');
-            document.getElementById('toggleDeuter').classList.remove('active');
-            document.getElementById('toggleProtan').classList.remove('active');
-            document.getElementById('toggleTritan').classList.remove('active');
-            
-            if (mode === 'deuteranopia') {
-                document.body.classList.add('deuteranopia-mode');
-                document.getElementById('toggleDeuter').classList.add('active');
-            } else if (mode === 'protanopia') {
-                document.body.classList.add('protanopia-mode');
-                document.getElementById('toggleProtan').classList.add('active');
-            } else if (mode === 'tritanopia') {
-                document.body.classList.add('tritanopia-mode');
-                document.getElementById('toggleTritan').classList.add('active');
-            } else {
-                document.getElementById('toggleNormal').classList.add('active');
-            }
-        }
-
-        function toggleScreenReaderMode() {
-            // Add ARIA announcements and enhanced descriptions
-            const card = document.querySelector('.glass-card');
-            if (card) {
-                card.setAttribute('aria-describedby', 'card-description');
-                if (!document.getElementById('card-description')) {
-                    const desc = document.createElement('div');
-                    desc.id = 'card-description';
-                    desc.style.position = 'absolute';
-                    desc.style.left = '-10000px';
-                    desc.textContent = 'A beautiful glass-morphism greeting card with your church community photo in the background. Contains greeting message and statistics.';
-                    document.body.appendChild(desc);
-                }
-            }
-            toggleSwitch('srToggle');
-            alert('Screen reader enhancements activated. All elements now have enhanced descriptions.');
-        }
-
-        function toggleVisualAlerts() {
-            toggleSwitch('visualAlertToggle');
-            alert('Visual alerts enabled. The screen will flash for important notifications instead of playing sounds.');
-        }
-
-        function toggleSwitch(id) {
-            const toggle = document.getElementById(id);
-            toggle.classList.toggle('active');
-            const pressed = toggle.classList.contains('active');
-            toggle.parentElement.setAttribute('aria-pressed', pressed);
-        }
-
-        // Service Worker
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('./public/sw.js')
                 .then(() => console.log('SW registered'))
-                .catch(() => console.log('SW registration failed'));
+                .catch(() => console.log('SW failed'));
         }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            trackGlobalVisitor();
-            updateLocalStats();
-        });
-
-        // Keyboard accessibility
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeAccessibilityModal();
-                document.getElementById('customOptions').classList.remove('open');
-            }
-        });
     </script>
 </body>
 </html>
