@@ -154,7 +154,8 @@ let state = {
     currentIndex: 0,
     autoMode: false,
     autoSpeed: 6000,
-    autoInterval: null
+    autoInterval: null,
+    personalVisits: 1
 };
 
 /*
@@ -222,6 +223,67 @@ class VideoBackgroundManager {
 
 /*
 ================================================================================
+This Area Of Code Is: Metrics and Counter System (Phase 3)
+Explanation: Tracks personal visits via localStorage and global visitors via Firebase
+In Other Words: Counts how many times you visited and how many people worldwide
+================================================================================
+*/
+
+function updatePersonalVisitCounter() {
+    try {
+        let visits = parseInt(localStorage.getItem('gw_personal_visits') || '0');
+        visits++;
+        localStorage.setItem('gw_personal_visits', visits.toString());
+        state.personalVisits = visits;
+        
+        const visitEl = document.getElementById('personalVisits');
+        if (visitEl) {
+            visitEl.textContent = `Visit #${visits}`;
+        }
+        
+        console.log('[Metrics] Personal visit count:', visits);
+    } catch (e) {
+        console.log('[Metrics] localStorage not available');
+    }
+}
+
+async function updateGlobalVisitorCount() {
+    if (!firebaseInitialized || !db) {
+        console.log('[Metrics] Firebase not available for global count');
+        return;
+    }
+    
+    try {
+        const counterRef = db.collection('stats').doc('globalVisitors');
+        
+        // Use FieldValue.increment for atomic counter (fixes "Loading..." issue)
+        await counterRef.update({
+            count: firebase.firestore.FieldValue.increment(1),
+            lastVisit: new Date().toISOString(),
+            lastVisitDevice: navigator.userAgent.slice(0, 50) // First 50 chars of user agent
+        });
+        
+        console.log('[Metrics] Global visitor count incremented');
+    } catch (error) {
+        // If document doesn't exist, create it with count 1
+        if (error.code === 'not-found') {
+            try {
+                await db.collection('stats').doc('globalVisitors').set({
+                    count: 1,
+                    created: new Date().toISOString()
+                });
+                console.log('[Metrics] Global counter created');
+            } catch (e) {
+                console.error('[Metrics] Failed to create counter:', e);
+            }
+        } else {
+            console.error('[Metrics] Failed to increment:', error);
+        }
+    }
+}
+
+/*
+================================================================================
 This Area Of Code Is: Card Rendering System (Phase 2 Updated)
 Explanation: Displays setup and punchline immediately together (no toggle/hide)
 In Other Words: Shows the complete joke right away without waiting
@@ -264,6 +326,7 @@ function renderCard() {
 function updateCounter() {
     const counter = document.getElementById('cardCounter');
     const totalCards = document.getElementById('totalCards');
+    // PHASE 3: Show "Card X of 100" (updates to actual total if more added)
     if (counter) counter.textContent = `Card ${state.currentIndex + 1} of ${state.jokes.length}`;
     if (totalCards) totalCards.textContent = `${state.jokes.length} cards`;
 }
@@ -532,6 +595,10 @@ In Other Words: Starting the app when the page first loads
 document.addEventListener('DOMContentLoaded', () => {
     console.log('[App] Initializing...');
     
+    // PHASE 3: Initialize counters
+    updatePersonalVisitCounter();
+    updateGlobalVisitorCount();
+    
     new VideoBackgroundManager();
     loadCommunityJokes();
     renderCard();
@@ -540,7 +607,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowRight') nextCard();
         if (e.key === 'ArrowLeft') previousCard();
-        // PHASE 2: Removed Space key handler for punchline toggle
         if (e.key === 'Escape') {
             closeJokeModal();
             closeGuidelines();
@@ -549,13 +615,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    const viewerEl = document.getElementById('liveViewers');
-    if (viewerEl) {
-        setInterval(() => {
-            const count = Math.floor(Math.random() * 3) + 1;
-            viewerEl.textContent = `${count} online`;
-        }, 10000);
-    }
+    // PHASE 3: Removed random online users generation (no more fake "3 online")
+    // The liveViewers element now shows personal visits via updatePersonalVisitCounter()
     
     console.log('[App] Initialized with', state.jokes.length, 'cards');
 });
