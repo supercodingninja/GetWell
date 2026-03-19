@@ -40,7 +40,24 @@ try {
 
 /*
 ================================================================================
-This Area Of Code Is: Default Jokes Dataset (Phase 1)
+This Area Of Code Is: Universal Wellness Mission (Phase 8)
+Explanation: App mission constants for PTSD, mental health, hospital, prison, global support
+In Other Words: The heart of the app - bringing joy to everyone everywhere
+================================================================================
+*/
+
+const APP_MISSION = {
+    name: "GetWell Card",
+    tagline: "Universal Wellness for Everyone",
+    audience: ["PTSD survivors", "Mental health warriors", "Hospital patients", "Prison communities", "Anyone having a bad day", "Global community"],
+    values: ["Clean humor", "Spiritual encouragement", "Inclusive support", "Family-friendly content", "No political division"],
+    scripturesEnabled: true,
+    globalReach: true
+};
+
+/*
+================================================================================
+This Area Of Code Is: Default Jokes Dataset (Phase 1 Complete)
 Explanation: Pre-loaded 100 corny jokes with Q&A and one-liner formats, no authors
 In Other Words: The starting collection of 100 funny cards
 ================================================================================
@@ -149,6 +166,47 @@ const defaultJokes = [
     { type: 'joke', icon: '🏹', setup: "Did you hear about the fire at the circus?", punchline: "It was in-tents!", author: null }
 ];
 
+/*
+================================================================================
+This Area Of Code Is: KJV Scriptures Dataset (Phase 7 Complete)
+Explanation: Array of 30 uplifting King James Version scriptures for spiritual encouragement
+In Other Words: Bible verses to show as bonus encouragement every 10th card
+================================================================================
+*/
+
+const kjvScriptures = [
+    { reference: "Psalm 23:1-3", text: "The LORD is my shepherd; I shall not want. He maketh me to lie down in green pastures: he leadeth me beside the still waters. He restoreth my soul." },
+    { reference: "Psalm 27:1", text: "The LORD is my light and my salvation; whom shall I fear? the LORD is the strength of my life; of whom shall I be afraid?" },
+    { reference: "Psalm 34:17-18", text: "The righteous cry, and the LORD heareth, and delivereth them out of all their troubles. The LORD is nigh unto them that are of a broken heart." },
+    { reference: "Psalm 46:1", text: "God is our refuge and strength, a very present help in trouble." },
+    { reference: "Psalm 91:1-2", text: "He that dwelleth in the secret place of the most High shall abide under the shadow of the Almighty. I will say of the LORD, He is my refuge and my fortress." },
+    { reference: "Psalm 121:1-2", text: "I will lift up mine eyes unto the hills, from whence cometh my help. My help cometh from the LORD, which made heaven and earth." },
+    { reference: "Psalm 139:14", text: "I will praise thee; for I am fearfully and wonderfully made: marvellous are thy works; and that my soul knoweth right well." },
+    { reference: "Proverbs 3:5-6", text: "Trust in the LORD with all thine heart; and lean not unto thine own understanding. In all thy ways acknowledge him, and he shall direct thy paths." },
+    { reference: "Proverbs 17:22", text: "A merry heart doeth good like a medicine: but a broken spirit drieth the bones." },
+    { reference: "Isaiah 40:31", text: "But they that wait upon the LORD shall renew their strength; they shall mount up with wings as eagles; they shall run, and not be weary." },
+    { reference: "Isaiah 41:10", text: "Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee." },
+    { reference: "Jeremiah 29:11", text: "For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end." },
+    { reference: "Lamentations 3:22-23", text: "It is of the LORD'S mercies that we are not consumed, because his compassions fail not. They are new every morning: great is thy faithfulness." },
+    { reference: "Matthew 11:28", text: "Come unto me, all ye that labour and are heavy laden, and I will give you rest." },
+    { reference: "Matthew 19:26", text: "With God all things are possible." },
+    { reference: "John 14:27", text: "Peace I leave with you, my peace I give unto you: not as the world giveth, give I unto you. Let not your heart be troubled, neither let it be afraid." },
+    { reference: "John 16:33", text: "These things I have spoken unto you, that in me ye might have peace. In the world ye shall have tribulation: but be of good cheer; I have overcome the world." },
+    { reference: "Romans 8:28", text: "And we know that all things work together for good to them that love God, to them who are the called according to his purpose." },
+    { reference: "Romans 8:38-39", text: "For I am persuaded, that neither death, nor life, nor angels, nor principalities, nor powers, nor things present, nor things to come, shall be able to separate us from the love of God." },
+    { reference: "1 Corinthians 10:13", text: "God is faithful, who will not suffer you to be tempted above that ye are able; but will with the temptation also make a way to escape." },
+    { reference: "2 Corinthians 4:16-17", text: "For which cause we faint not; but though our outward man perish, yet the inward man is renewed day by day. For our light affliction, which is but for a moment, worketh for us a far more exceeding and eternal weight of glory." },
+    { reference: "2 Corinthians 5:17", text: "Therefore if any man be in Christ, he is a new creature: old things are passed away; behold, all things are become new." },
+    { reference: "Philippians 4:6-7", text: "Be careful for nothing; but in every thing by prayer and supplication with thanksgiving let your requests be made known unto God. And the peace of God, which passeth all understanding, shall keep your hearts and minds through Christ Jesus." },
+    { reference: "Philippians 4:13", text: "I can do all things through Christ which strengtheneth me." },
+    { reference: "Colossians 3:15", text: "And let the peace of God rule in your hearts, to the which also ye are called in one body; and be ye thankful." },
+    { reference: "Hebrews 11:1", text: "Now faith is the substance of things hoped for, the evidence of things not seen." },
+    { reference: "Hebrews 13:5-6", text: "For he hath said, I will never leave thee, nor forsake thee. So that we may boldly say, The Lord is my helper, and I will not fear what man shall do unto me." },
+    { reference: "James 1:2-3", text: "My brethren, count it all joy when ye fall into divers temptations; Knowing this, that the trying of your faith worketh patience." },
+    { reference: "1 Peter 5:7", text: "Casting all your care upon him; for he careth for you." },
+    { reference: "1 John 4:4", text: "Ye are of God, little children, and have overcome them: because greater is he that is in you, than he that is in the world." }
+];
+
 let state = {
     jokes: [...defaultJokes],
     currentIndex: 0,
@@ -160,9 +218,9 @@ let state = {
 
 /*
 ================================================================================
-This Area Of Code Is: Content Moderation System
-Explanation: Uses PurgoMalum API to check for inappropriate content before saving
-In Other Words: Automatic bad word filter using internet service
+This Area Of Code Is: Content Moderation System (Phase 8 - Universal Standards)
+Explanation: Uses PurgoMalum API to check for inappropriate content - keeping it clean for hospitals, prisons, schools worldwide
+In Other Words: Automatic bad word filter that works for everyone everywhere
 ================================================================================
 */
 
@@ -223,8 +281,8 @@ class VideoBackgroundManager {
 
 /*
 ================================================================================
-This Area Of Code Is: Metrics and Counter System (Phase 3)
-Explanation: Tracks personal visits via localStorage and global visitors via Firebase
+This Area Of Code Is: Metrics and Counter System (Phase 3 Complete)
+Explanation: Tracks personal visits via localStorage and global visitors via Firebase Firestore
 In Other Words: Counts how many times you visited and how many people worldwide
 ================================================================================
 */
@@ -250,13 +308,13 @@ function updatePersonalVisitCounter() {
 async function updateGlobalVisitorCount() {
     if (!firebaseInitialized || !db) {
         console.log('[Metrics] Firebase not available for global count');
+        updateGlobalDisplay(null);
         return;
     }
     
     try {
         const counterRef = db.collection('stats').doc('globalVisitors');
         
-        // Use FieldValue.increment for atomic counter (fixes "Loading..." issue)
         await counterRef.update({
             count: firebase.firestore.FieldValue.increment(1),
             lastVisit: new Date().toISOString(),
@@ -264,29 +322,182 @@ async function updateGlobalVisitorCount() {
         });
         
         console.log('[Metrics] Global visitor count incremented');
+        await loadGlobalStats();
+        
     } catch (error) {
-        // If document doesn't exist, create it with count 1
-        if (error.code === 'not-found') {
+        if (error.code === 'not-found' || error.message?.includes('No document to update')) {
             try {
                 await db.collection('stats').doc('globalVisitors').set({
                     count: 1,
-                    created: new Date().toISOString()
+                    created: new Date().toISOString(),
+                    lastVisit: new Date().toISOString(),
+                    lastVisitDevice: navigator.userAgent.slice(0, 50)
                 });
                 console.log('[Metrics] Global counter created');
+                updateGlobalDisplay(1);
             } catch (e) {
                 console.error('[Metrics] Failed to create counter:', e);
+                updateGlobalDisplay(null);
             }
         } else {
             console.error('[Metrics] Failed to increment:', error);
+            updateGlobalDisplay(null);
         }
+    }
+}
+
+async function loadGlobalStats() {
+    if (!firebaseInitialized || !db) {
+        updateGlobalDisplay(null);
+        return;
+    }
+    
+    try {
+        const doc = await db.collection('stats').doc('globalVisitors').get();
+        if (doc.exists) {
+            const data = doc.data();
+            const count = data.count || 0;
+            updateGlobalDisplay(count);
+            console.log('[Metrics] Global visitors loaded:', count);
+        } else {
+            updateGlobalDisplay(0);
+        }
+    } catch (error) {
+        console.error('[Metrics] Failed to load global stats:', error);
+        updateGlobalDisplay(null);
+    }
+}
+
+function updateGlobalDisplay(count) {
+    const globalEl = document.getElementById('globalVisitors');
+    if (!globalEl) return;
+    
+    if (count === null) {
+        globalEl.textContent = 'Offline';
+        globalEl.style.opacity = '0.5';
+    } else {
+        globalEl.textContent = count.toLocaleString();
+        globalEl.style.opacity = '1';
     }
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Card Rendering System (Phase 2)
-Explanation: Displays setup and punchline immediately together (no toggle/hide)
-In Other Words: Shows the complete joke right away without waiting
+This Area Of Code Is: Color Vision Accessibility Controller (Phase 6 Complete)
+Explanation: Manages 9 types of color blindness simulations with localStorage persistence
+In Other Words: Helps users with color vision deficiencies see the app better
+================================================================================
+*/
+
+const colorVisionTypes = [
+    'normal',
+    'deuteranomaly',    // Red-Green
+    'deuteranopia',     // Red-Green
+    'protanomaly',      // Red-Green
+    'protanopia',       // Red-Green
+    'tritanomaly',      // Blue-Yellow
+    'tritanopia',       // Blue-Yellow
+    'achromatopsia',    // Rod Monochromacy (Complete)
+    'cone-monochromacy', // Cone Monochromacy (Complete)
+    'blue-cone-monochromacy' // Blue Cone Monochromacy (Complete)
+];
+
+function openAccessibilityModal() {
+    const modal = document.getElementById('accessibilityModal');
+    if (!modal) return;
+    
+    modal.classList.add('open');
+    
+    const currentType = localStorage.getItem('gw_color_vision') || 'normal';
+    const radio = document.querySelector(`input[name="colorVision"][value="${currentType}"]`);
+    if (radio) radio.checked = true;
+}
+
+function closeAccessibilityModal() {
+    const modal = document.getElementById('accessibilityModal');
+    if (modal) modal.classList.remove('open');
+}
+
+function setColorVision(type) {
+    if (!type || !colorVisionTypes.includes(type)) {
+        type = 'normal';
+    }
+    
+    colorVisionTypes.forEach(t => {
+        document.body.classList.remove(`cv-${t}`);
+    });
+    
+    if (type !== 'normal') {
+        document.body.classList.add(`cv-${type}`);
+    }
+    
+    try {
+        localStorage.setItem('gw_color_vision', type);
+    } catch (e) {
+        console.log('[Accessibility] Could not save preference');
+    }
+    
+    console.log('[Accessibility] Color vision set to:', type);
+    
+    const radio = document.querySelector(`input[name="colorVision"][value="${type}"]`);
+    if (radio) radio.checked = true;
+}
+
+function loadColorVisionPreference() {
+    try {
+        const savedType = localStorage.getItem('gw_color_vision') || 'normal';
+        setColorVision(savedType);
+    } catch (e) {
+        console.log('[Accessibility] Could not load color vision preference');
+    }
+}
+
+/*
+================================================================================
+This Area Of Code Is: Scripture Display Controller (Phase 7 Complete)
+Explanation: Shows KJV scriptures every 10th card as bonus spiritual encouragement
+In Other Words: Adds a Bible verse banner to cards 10, 20, 30, etc.
+================================================================================
+*/
+
+function shouldShowScripture(cardIndex) {
+    // Show scripture every 10th card (index 9, 19, 29... which are cards 10, 20, 30)
+    if (!APP_MISSION.scripturesEnabled) return false;
+    return (cardIndex + 1) % 10 === 0;
+}
+
+function getScriptureForCard(cardIndex) {
+    // Cycle through scriptures based on card position
+    // Every 10th card gets the next scripture in sequence
+    const scriptureIndex = Math.floor((cardIndex + 1) / 10) - 1;
+    return kjvScriptures[scriptureIndex % kjvScriptures.length];
+}
+
+function renderScriptureBanner() {
+    const banner = document.getElementById('scriptureBanner');
+    if (!banner) return;
+    
+    if (shouldShowScripture(state.currentIndex)) {
+        const scripture = getScriptureForCard(state.currentIndex);
+        banner.innerHTML = `
+            <div class="scripture-content">
+                <span class="scripture-label">✨ Spiritual Boost</span>
+                <p class="scripture-text">"${scripture.text}"</p>
+                <span class="scripture-ref">— ${scripture.reference}</span>
+            </div>
+        `;
+        banner.classList.add('visible');
+    } else {
+        banner.classList.remove('visible');
+        banner.innerHTML = '';
+    }
+}
+
+/*
+================================================================================
+This Area Of Code Is: Card Rendering System (Phase 2 & 7 Integrated)
+Explanation: Displays setup and punchline immediately together, plus scripture banner every 10th card
+In Other Words: Shows the complete joke right away with bonus Bible verse on special cards
 ================================================================================
 */
 
@@ -308,10 +519,8 @@ function renderCard() {
         setupText.textContent = joke.setup;
         punchlineText.textContent = joke.punchline;
         
-        // PHASE 2: Always show punchline immediately
         punchlineText.classList.add('visible');
         
-        // Only show author if it's a user submission (not null/App Original)
         if (joke.author && joke.author !== 'App Original, USA' && !joke.author.includes('App Original')) {
             authorInfo.innerHTML = `<span>by</span> <span class="author-name">${joke.author}</span>`;
         } else {
@@ -320,13 +529,15 @@ function renderCard() {
         
         updateCounter();
         cardIcon.style.transform = 'scale(1)';
+        
+        // Phase 7: Render scripture banner if applicable
+        renderScriptureBanner();
     }, 150);
 }
 
 function updateCounter() {
     const counter = document.getElementById('cardCounter');
     const totalCards = document.getElementById('totalCards');
-    // PHASE 3 & 4: Show "Card X of 100" (updates to actual total if more added)
     if (counter) counter.textContent = `Card ${state.currentIndex + 1} of ${state.jokes.length}`;
     if (totalCards) totalCards.textContent = `${state.jokes.length} cards`;
 }
@@ -352,33 +563,7 @@ function jumpToCard(index) {
 
 /*
 ================================================================================
-This Area Of Code Is: Jump-to-Card Grid Generator (Phase 4)
-Explanation: Generates compact grid buttons for all 100 cards with emoji and number
-In Other Words: Creates the clickable grid of all card numbers in the side menu
-================================================================================
-*/
-
-function updateCardJumps() {
-    const container = document.getElementById('cardJumps');
-    if (!container) return;
-    
-    container.innerHTML = '';
-    // PHASE 4: Generate buttons for all 100+ cards in compact 5-column grid
-    state.jokes.forEach((joke, index) => {
-        const btn = document.createElement('button');
-        btn.className = 'jump-btn';
-        if (index === state.currentIndex) btn.classList.add('active');
-        // Compact format: emoji on top, number below
-        btn.innerHTML = `<span>${joke.icon}</span><small>${index + 1}</small>`;
-        btn.onclick = () => jumpToCard(index);
-        btn.title = `Card ${index + 1}: ${joke.setup.substring(0, 30)}...`;
-        container.appendChild(btn);
-    });
-}
-
-/*
-================================================================================
-This Area Of Code Is: Auto-Play Controller (Phase 2)
+This Area Of Code Is: Auto-Play Controller
 Explanation: Automatically advances through cards immediately without waiting for punchline
 In Other Words: Slideshow mode that moves to next card without delays
 ================================================================================
@@ -405,7 +590,6 @@ function toggleAutoMode() {
 
 function startAutoMode() {
     stopAutoMode();
-    // PHASE 2: Advance immediately without waiting for punchline reveal
     state.autoInterval = setInterval(() => {
         nextCard();
     }, state.autoSpeed);
@@ -458,17 +642,64 @@ function toggleMenu() {
     }
 }
 
+/*
+================================================================================
+This Area Of Code Is: Jump-to-Card Grid System (Phase 4 Complete)
+Explanation: Generates navigation grid buttons for all 100 cards with emoji indicators
+In Other Words: Creates the clickable grid to jump to any card - now handles 100 items
+================================================================================
+*/
+
+function updateCardJumps() {
+    const container = document.getElementById('cardJumps');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    
+    state.jokes.forEach((joke, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'jump-btn';
+        
+        if (index === state.currentIndex) {
+            btn.classList.add('active');
+        }
+        
+        // Phase 7: Add indicator for cards with scriptures (every 10th)
+        if ((index + 1) % 10 === 0) {
+            btn.classList.add('has-scripture');
+        }
+        
+        btn.innerHTML = `<span>${joke.icon}</span> ${index + 1}`;
+        btn.onclick = () => jumpToCard(index);
+        container.appendChild(btn);
+    });
+    
+    setTimeout(() => {
+        const activeBtn = container.querySelector('.jump-btn.active');
+        if (activeBtn) {
+            activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    }, 100);
+}
+
 function openJokeModal() {
     const modal = document.getElementById('jokeModal');
     if (modal) modal.classList.add('open');
 }
+
+/*
+================================================================================
+This Area Of Code Is: Close Joke Modal (Phase 5 Complete)
+Explanation: Closes modal and resets form with Country checked by default only
+In Other Words: Cleans up the form when you close it so Country is the only default checked option
+================================================================================
+*/
 
 function closeJokeModal() {
     const modal = document.getElementById('jokeModal');
     if (modal) modal.classList.remove('open');
     document.getElementById('jokeForm')?.reset();
     
-    // PHASE 5: Reset checkboxes to default (Country only)
     const countryCheck = document.getElementById('showCountry');
     const cityCheck = document.getElementById('showCity');
     const stateCheck = document.getElementById('showState');
@@ -477,9 +708,39 @@ function closeJokeModal() {
     if (stateCheck) stateCheck.checked = false;
 }
 
+/*
+================================================================================
+This Area Of Code Is: Community Guidelines Modal (Phase 8 - Universal)
+Explanation: Shows universal wellness guidelines for hospitals, prisons, mental health, PTSD support
+In Other Words: The rules popup that emphasizes global community support
+================================================================================
+*/
+
 function showGuidelines() {
     const modal = document.getElementById('guidelinesModal');
-    if (modal) modal.classList.add('open');
+    if (modal) {
+        // Phase 8: Update content dynamically if needed for universal messaging
+        const title = modal.querySelector('h3');
+        if (title) title.textContent = 'Community Guidelines';
+        
+        const content = modal.querySelector('.guidelines-content');
+        if (content) {
+            content.innerHTML = `
+                <p>Welcome to the GetWell Card - a <strong>Universal Wellness App</strong> for everyone, everywhere.</p>
+                <p style="margin-top: 10px; font-size: 13px; color: var(--text-muted);">For PTSD survivors, mental health warriors, hospital patients, prison communities, or anyone having a bad day.</p>
+                <ul style="margin: 15px 0;">
+                    <li>✓ Keep content family-friendly and clean (suitable for hospitals & schools)</li>
+                    <li>✓ No profanity, hate speech, or political division</li>
+                    <li>✓ Be kind, encouraging, and inclusive to all</li>
+                    <li>✓ Spiritual encouragement welcome (optional, never forced)</li>
+                    <li>✗ No offensive, explicit, or harmful content</li>
+                </ul>
+                <p style="font-size: 13px; font-style: italic;">All submissions are moderated to maintain a safe space for vulnerable populations.</p>
+                <button class="ok-btn" onclick="closeGuidelines()" style="margin-top: 15px;">I Understand</button>
+            `;
+        }
+        modal.classList.add('open');
+    }
 }
 
 function closeGuidelines() {
@@ -493,16 +754,15 @@ function goHome() {
 
 /*
 ================================================================================
-This Area Of Code Is: Joke Submission Handler (Phase 5)
-Explanation: Saves user jokes to Firebase with location validation and PurgoMalum check
-In Other Words: Sends new jokes to the cloud after checking at least one location option is selected
+This Area Of Code Is: Joke Submission Handler (Phase 5 Complete)
+Explanation: Saves user jokes to Firebase with location checkbox validation and filtered location display
+In Other Words: Sends new jokes to cloud after verifying at least one location option selected
 ================================================================================
 */
 
 async function submitJoke(event) {
     event.preventDefault();
     
-    // Block submission if Firebase isn't working
     if (!firebaseInitialized || !db) {
         alert('Unable to submit right now. Please check your internet connection and try again.');
         return;
@@ -513,12 +773,10 @@ async function submitJoke(event) {
     const setupInput = document.getElementById('jokeSetup');
     const punchlineInput = document.getElementById('jokePunchline');
     
-    // PHASE 5: Location checkbox validation
     const cityChecked = document.getElementById('showCity')?.checked || false;
     const stateChecked = document.getElementById('showState')?.checked || false;
     const countryChecked = document.getElementById('showCountry')?.checked || false;
     
-    // Validate at least one location option is selected if location field has content
     if (locationInput?.value.trim() && !cityChecked && !stateChecked && !countryChecked) {
         alert('Please select at least one location option (City, State/Province, or Country) to display.');
         return;
@@ -542,30 +800,43 @@ async function submitJoke(event) {
         return;
     }
     
+    let displayLocation = '';
+    if (location) {
+        const parts = location.split(',').map(p => p.trim());
+        const selectedParts = [];
+        
+        if (cityChecked && parts[0]) selectedParts.push(parts[0]);
+        if (stateChecked && parts[1]) selectedParts.push(parts[1]);
+        if (countryChecked && parts[2]) selectedParts.push(parts[2]);
+        
+        if (selectedParts.length === 0 && countryChecked) {
+            displayLocation = location;
+        } else {
+            displayLocation = selectedParts.join(', ');
+        }
+    }
+    
     const newJoke = {
         type: 'joke',
         icon: '✨',
         setup: setup,
         punchline: punchline,
-        author: location ? `${name} (${location})` : name,
+        author: displayLocation ? `${name} (${displayLocation})` : name,
         timestamp: new Date().toISOString()
     };
     
     try {
-        // Save to Firebase first
         await db.collection('jokes').add(newJoke);
         console.log('[Submit] Saved to Firebase successfully');
         
-        // ONLY update the app state and card count AFTER successful Firebase save
         state.jokes.push(newJoke);
         state.currentIndex = state.jokes.length - 1;
         
-        // Update the card counter automatically (shows "Card X of 101", "102", etc.)
         renderCard();
         updateCardJumps();
         closeJokeModal();
         
-        alert('Your joke was submitted successfully! Thank you!');
+        alert('Your joke was submitted successfully! Thank you for spreading joy!');
     } catch (e) {
         console.error('[Submit] Firebase failed:', e);
         alert('Failed to save your joke. Please check your connection and try again.');
@@ -574,9 +845,9 @@ async function submitJoke(event) {
 
 /*
 ================================================================================
-This Area Of Code Is: Firebase Data Loader (Cloud Only)
-Explanation: Loads community-submitted jokes from Firestore only
-In Other Words: Fetches new jokes from the cloud to add to the 100 defaults
+This Area Of Code Is: Firebase Data Loader
+Explanation: Loads community-submitted jokes from Firestore only.
+In Other Words: Fetches new jokes from the cloud only
 ================================================================================
 */
 
@@ -614,19 +885,26 @@ async function loadCommunityJokes() {
 
 /*
 ================================================================================
-This Area Of Code Is: Application Initialization
-Explanation: Sets up event listeners and initializes components on page load
-In Other Words: Starting the app when the page first loads
+This Area Of Code Is: Application Initialization (Phase 8 Final Integration)
+Explanation: Sets up all components on page load with complete feature set
+In Other Words: Starting the fully completed app with all 8 phases active
 ================================================================================
 */
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('[App] Initializing...');
+    console.log('[App] Initializing GetWell Card - Universal Wellness App...');
+    console.log(`[App] Mission: ${APP_MISSION.tagline}`);
     
-    // PHASE 3: Initialize counters
+    // Phase 3: Metrics
     updatePersonalVisitCounter();
-    updateGlobalVisitorCount();
+    loadGlobalStats().then(() => {
+        updateGlobalVisitorCount();
+    });
     
+    // Phase 6: Color Vision Accessibility
+    loadColorVisionPreference();
+    
+    // Phase 1 & 2: Load jokes and render initial card
     new VideoBackgroundManager();
     loadCommunityJokes();
     renderCard();
@@ -639,10 +917,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'Escape') {
             closeJokeModal();
             closeGuidelines();
+            closeAccessibilityModal();
             const menu = document.getElementById('sideMenu');
             if (menu?.classList.contains('open')) toggleMenu();
         }
     });
     
-    console.log('[App] Initialized with', state.jokes.length, 'cards');
+    console.log('[App] Initialization complete. Total cards:', state.jokes.length);
+    console.log('[App] Features active: 100 Jokes, Immediate Punchlines, Metrics, 100-Card Grid, Location Checkboxes, 9 Color Vision Modes, KJV Scriptures, Universal Messaging');
 });
