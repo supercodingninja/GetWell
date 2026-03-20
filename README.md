@@ -82,6 +82,7 @@
 
 ## ✨ Features
 
+```text
 | Feature | Description |
 |---------|-------------|
 | 🌍 **Global Reach** | Multi-language support (English, Español, Français, Deutsch, Italiano, Português) |
@@ -118,6 +119,9 @@
 
 ### Repository Structure
 
+## Repository Structure
+
+```text
 /GetWell/
 ├── 📄 index.html          # Main entry
 ├── 📜 app.js             # Core logic + Firebase integration
@@ -129,7 +133,6 @@
 ├── 📋 firestore.rules    # Database security
 ├── 🎬 videos/            # Background videos (GitHub Releases)
 └── 📸 screenshots/       # App screenshots
-
 
 ---
 
