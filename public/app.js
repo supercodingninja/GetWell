@@ -383,23 +383,32 @@ function updateGlobalDisplay(count) {
 
 /*
 ================================================================================
-This Area Of Code Is: Color Vision Accessibility Controller (Phase 6 Complete)
-Explanation: Manages 9 types of color blindness simulations with localStorage persistence
-In Other Words: Helps users with color vision deficiencies see the app better
+This Area Of Code Is: Universal Accessibility Controller (Full Implementation)
+Explanation: Manages all accessibility features - Vision, Neurodivergent, Mental Health, Hearing, Motor, Speech
+In Other Words: The complete system for all disability accommodations
 ================================================================================
 */
 
+// Color Vision Types
 const colorVisionTypes = [
-    'normal',
-    'deuteranomaly',    // Red-Green
-    'deuteranopia',     // Red-Green
-    'protanomaly',      // Red-Green
-    'protanopia',       // Red-Green
-    'tritanomaly',      // Blue-Yellow
-    'tritanopia',       // Blue-Yellow
-    'achromatopsia',    // Rod Monochromacy (Complete)
-    'cone-monochromacy', // Cone Monochromacy (Complete)
-    'blue-cone-monochromacy' // Blue Cone Monochromacy (Complete)
+    'normal', 'deuteranomaly', 'deuteranopia', 'protanomaly', 'protanopia',
+    'tritanomaly', 'tritanopia', 'achromatopsia', 'cone-monochromacy', 'blue-cone-monochromacy'
+];
+
+// All accessibility features list
+const accessibilityFeatures = [
+    // Neurodivergent
+    'autism', 'adhd', 'dyslexia', 'dyspraxia',
+    // Mental Health
+    'anxiety', 'ptsd', 'mania', 'cognitive',
+    // Vision (non-filter)
+    'screen-reader', 'high-contrast',
+    // Hearing
+    'sign-language', 'visual-alerts', 'captions',
+    // Motor
+    'large-targets', 'keyboard-only', 'extended-time', 'switch-control',
+    // Speech
+    'speech-input', 'simple-language'
 ];
 
 function openAccessibilityModal() {
@@ -407,10 +416,8 @@ function openAccessibilityModal() {
     if (!modal) return;
     
     modal.classList.add('open');
-    
-    const currentType = localStorage.getItem('gw_color_vision') || 'normal';
-    const radio = document.querySelector(`input[name="colorVision"][value="${currentType}"]`);
-    if (radio) radio.checked = true;
+    loadSavedAccessibilitySettings();
+    checkModalScroll();
 }
 
 function closeAccessibilityModal() {
@@ -418,38 +425,146 @@ function closeAccessibilityModal() {
     if (modal) modal.classList.remove('open');
 }
 
-function setColorVision(type) {
-    if (!type || !colorVisionTypes.includes(type)) {
-        type = 'normal';
+function checkModalScroll() {
+    const modalContent = document.getElementById('accessibilityContent');
+    const indicator = document.getElementById('scrollIndicator');
+    
+    if (!modalContent || !indicator) return;
+    
+    if (modalContent.scrollHeight > modalContent.clientHeight) {
+        indicator.classList.add('visible');
+        
+        modalContent.addEventListener('scroll', () => {
+            if (modalContent.scrollTop + modalContent.clientHeight >= modalContent.scrollHeight - 20) {
+                indicator.classList.remove('visible');
+            } else {
+                indicator.classList.add('visible');
+            }
+        });
     }
-    
-    colorVisionTypes.forEach(t => {
-        document.body.classList.remove(`cv-${t}`);
-    });
-    
-    if (type !== 'normal') {
-        document.body.classList.add(`cv-${type}`);
-    }
-    
-    try {
-        localStorage.setItem('gw_color_vision', type);
-    } catch (e) {
-        console.log('[Accessibility] Could not save preference');
-    }
-    
-    console.log('[Accessibility] Color vision set to:', type);
-    
-    const radio = document.querySelector(`input[name="colorVision"][value="${type}"]`);
-    if (radio) radio.checked = true;
 }
 
-function loadColorVisionPreference() {
-    try {
-        const savedType = localStorage.getItem('gw_color_vision') || 'normal';
-        setColorVision(savedType);
-    } catch (e) {
-        console.log('[Accessibility] Could not load color vision preference');
+function toggleFeature(element, feature) {
+    if (!element) return;
+    
+    element.classList.toggle('active');
+    const isActive = element.classList.contains('active');
+    
+    // Apply body class
+    document.body.classList.toggle(feature + '-mode', isActive);
+    
+    // Save to localStorage
+    localStorage.setItem('gw_access_' + feature, isActive);
+    
+    // Update aria
+    element.setAttribute('aria-checked', isActive);
+    
+    console.log('[Accessibility]', feature, 'mode:', isActive ? 'ON' : 'OFF');
+    
+    // Special handling for specific features
+    if (feature === 'high-contrast') {
+        if (isActive) {
+            document.body.classList.add('high-contrast-mode');
+        } else {
+            document.body.classList.remove('high-contrast-mode');
+        }
     }
+    
+    if (feature === 'large-targets') {
+        document.body.classList.toggle('large-targets-mode', isActive);
+    }
+    
+    // Announce to screen readers
+    announceChange(feature + ' mode ' + (isActive ? 'enabled' : 'disabled'));
+}
+
+function announceChange(message) {
+    const announcement = document.createElement('div');
+    announcement.setAttribute('role', 'status');
+    announcement.setAttribute('aria-live', 'polite');
+    announcement.className = 'sr-only';
+    announcement.style.cssText = 'position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden;';
+    announcement.textContent = message;
+    document.body.appendChild(announcement);
+    setTimeout(() => document.body.removeChild(announcement), 1000);
+}
+
+function applyColorFilter(filterType) {
+    // Remove all color vision classes
+    colorVisionTypes.forEach(type => {
+        document.body.classList.remove('cv-' + type);
+        document.body.classList.remove('filter-' + type);
+    });
+    
+    // Apply new filter
+    if (filterType && filterType !== 'none' && filterType !== 'normal') {
+        document.body.classList.add('cv-' + filterType);
+        document.body.classList.add('filter-' + filterType);
+    }
+    
+    // Save preference
+    localStorage.setItem('gw_color_filter', filterType);
+    
+    // Update UI
+    document.querySelectorAll('.access-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.filter === filterType || 
+            (filterType === 'none' && btn.dataset.filter === 'none')) {
+            btn.classList.add('active');
+        }
+    });
+    
+    console.log('[Accessibility] Color filter:', filterType);
+}
+
+function setColorVision(type) {
+    applyColorFilter(type);
+}
+
+function loadSavedAccessibilitySettings() {
+    // Load color filter
+    const savedFilter = localStorage.getItem('gw_color_filter');
+    if (savedFilter && savedFilter !== 'none' && savedFilter !== 'normal') {
+        document.body.classList.add('cv-' + savedFilter);
+        document.body.classList.add('filter-' + savedFilter);
+    }
+    
+    // Load all toggle features
+    accessibilityFeatures.forEach(feature => {
+        const saved = localStorage.getItem('gw_access_' + feature);
+        if (saved === 'true') {
+            document.body.classList.add(feature + '-mode');
+            
+            // Update toggle switches if they exist
+            const toggle = document.querySelector(`[data-feature="${feature}"]`);
+            if (toggle) {
+                toggle.classList.add('active');
+                toggle.setAttribute('aria-checked', 'true');
+            }
+        }
+    });
+    
+    // Update color buttons
+    if (savedFilter) {
+        document.querySelectorAll('.access-btn').forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.filter === savedFilter) {
+                btn.classList.add('active');
+            }
+        });
+    }
+}
+
+/*
+================================================================================
+This Area Of Code Is: Color Vision Accessibility Controller (Legacy Support)
+Explanation: Maintains compatibility with Phase 6 color vision system
+In Other Words: Still supports the original 9 color vision modes
+================================================================================
+*/
+
+function loadColorVisionPreference() {
+    loadSavedAccessibilitySettings();
 }
 
 /*
@@ -461,14 +576,11 @@ In Other Words: Adds a Bible verse banner to cards 10, 20, 30, etc.
 */
 
 function shouldShowScripture(cardIndex) {
-    // Show scripture every 10th card (index 9, 19, 29... which are cards 10, 20, 30)
     if (!APP_MISSION.scripturesEnabled) return false;
     return (cardIndex + 1) % 10 === 0;
 }
 
 function getScriptureForCard(cardIndex) {
-    // Cycle through scriptures based on card position
-    // Every 10th card gets the next scripture in sequence
     const scriptureIndex = Math.floor((cardIndex + 1) / 10) - 1;
     return kjvScriptures[scriptureIndex % kjvScriptures.length];
 }
@@ -530,7 +642,6 @@ function renderCard() {
         updateCounter();
         cardIcon.style.transform = 'scale(1)';
         
-        // Phase 7: Render scripture banner if applicable
         renderScriptureBanner();
     }, 150);
 }
@@ -664,7 +775,6 @@ function updateCardJumps() {
             btn.classList.add('active');
         }
         
-        // Phase 7: Add indicator for cards with scriptures (every 10th)
         if ((index + 1) % 10 === 0) {
             btn.classList.add('has-scripture');
         }
@@ -719,7 +829,6 @@ In Other Words: The rules popup that emphasizes global community support
 function showGuidelines() {
     const modal = document.getElementById('guidelinesModal');
     if (modal) {
-        // Phase 8: Update content dynamically if needed for universal messaging
         const title = modal.querySelector('h3');
         if (title) title.textContent = 'Community Guidelines';
         
@@ -901,8 +1010,8 @@ document.addEventListener('DOMContentLoaded', () => {
         updateGlobalVisitorCount();
     });
     
-    // Phase 6: Color Vision Accessibility
-    loadColorVisionPreference();
+    // Phase 6 & Full Accessibility: Load all saved settings
+    loadSavedAccessibilitySettings();
     
     // Phase 1 & 2: Load jokes and render initial card
     new VideoBackgroundManager();
@@ -924,7 +1033,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     console.log('[App] Initialization complete. Total cards:', state.jokes.length);
-    console.log('[App] Features active: 100 Jokes, Immediate Punchlines, Metrics, 100-Card Grid, Location Checkboxes, 9 Color Vision Modes, KJV Scriptures, Universal Messaging');
+    console.log('[App] Features active: 100 Jokes, Immediate Punchlines, Metrics, 100-Card Grid, Location Checkboxes, Full Universal Accessibility, KJV Scriptures');
 });
 
 /*
