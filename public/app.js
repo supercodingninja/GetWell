@@ -455,7 +455,7 @@ function loadColorVisionPreference() {
 /*
 ================================================================================
 This Area Of Code Is: Scripture Display Controller (Phase 7 Complete)
-Explanation: Shows KJV scriptures every 10th card as bonus spiritual encouragement
+Explanation: Shows KJV scriptures every 10th card as spiritual encouragement
 In Other Words: Adds a Bible verse banner to cards 10, 20, 30, etc.
 ================================================================================
 */
@@ -926,3 +926,13 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('[App] Initialization complete. Total cards:', state.jokes.length);
     console.log('[App] Features active: 100 Jokes, Immediate Punchlines, Metrics, 100-Card Grid, Location Checkboxes, 9 Color Vision Modes, KJV Scriptures, Universal Messaging');
 });
+
+/*
+================================================================================
+This Area Of Code Is: Copyright Notice
+Explanation: Legal copyright declaration for the application
+In Other Words: Who made this and who owns it
+================================================================================
+*/
+
+// © 2026 Get Well Card | 𝐹𝑟𝑒𝑑𝑒𝑟𝑖𝑐𝑘 𝑇ℎ𝑜𝑚𝑎𝑠,𝑇ℎ𝑒 𝑆𝑢𝑝𝑒𝑟 𝐶𝑜𝑑𝑖𝑛𝑔 𝑁𝑖𝑛𝑗𝑎™ | Made with ❤️ for the global community
