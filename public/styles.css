@@ -20,6 +20,8 @@ In Other Words: This sets up the colors, transparency levels, and viewport measu
     --bg-dark: #0f172a;
     --safe-top: env(safe-area-inset-top);
     --safe-bottom: env(safe-area-inset-bottom);
+    --calm-blue: #4a90e2;
+    --scripture-gold: #ffd700;
 }
 
 * {
@@ -479,6 +481,20 @@ In Other Words: This is the grid of buttons to jump to any of the 100 cards - no
     box-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
 }
 
+/* PHASE 7: Scripture indicator on jump buttons */
+.jump-btn.has-scripture {
+    border-color: var(--scripture-gold);
+    background: rgba(255, 215, 0, 0.1);
+}
+
+.jump-btn.has-scripture::after {
+    content: '✨';
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    font-size: 8px;
+}
+
 /* Responsive adjustments for smaller screens */
 @media (max-width: 380px) {
     .card-jumps {
@@ -600,20 +616,15 @@ In Other Words: This is the big see-through card in the middle showing the jokes
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
+/* PHASE 2: Punchline always visible - no toggle */
 .punchline-text {
     font-size: clamp(18px, 4vw, 22px);
     color: var(--primary-gold);
     font-weight: 500;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 1; /* Always visible */
+    transform: translateY(0); /* No slide animation */
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     min-height: 30px;
-}
-
-.punchline-text.visible {
-    opacity: 1;
-    transform: translateY(0);
 }
 
 .card-footer {
@@ -640,6 +651,67 @@ In Other Words: This is the big see-through card in the middle showing the jokes
 .author-name {
     font-style: italic;
     color: var(--text-secondary);
+}
+
+/*
+================================================================================
+This Area Of Code Is: Phase 7 - Scripture Banner Component
+Explanation: Displays KJV scriptures every 10th card as spiritual encouragement
+In Other Words: The golden banner that shows Bible verses on special cards
+================================================================================
+*/
+
+.scripture-banner {
+    position: absolute;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    width: 90%;
+    max-width: 500px;
+    background: rgba(255, 215, 0, 0.15);
+    border: 1px solid rgba(255, 215, 0, 0.4);
+    border-radius: 16px;
+    padding: 15px;
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s ease;
+    backdrop-filter: none;
+}
+
+.scripture-banner.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.scripture-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.scripture-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--scripture-gold);
+    font-weight: 700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.scripture-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: white;
+    font-style: italic;
+}
+
+.scripture-ref {
+    font-size: 12px;
+    color: var(--scripture-gold);
+    font-weight: 600;
 }
 
 /*
@@ -905,6 +977,7 @@ In Other Words: These are the popup windows for adding jokes and viewing guideli
     box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.1);
 }
 
+/* PHASE 5: Location checkbox group styling */
 .location-group {
     background: rgba(255, 255, 255, 0.03);
     padding: 15px;
@@ -931,6 +1004,7 @@ In Other Words: These are the popup windows for adding jokes and viewing guideli
 .checkbox-label input[type="checkbox"] {
     width: auto;
     cursor: pointer;
+    accent-color: var(--primary-gold);
 }
 
 .help-text {
@@ -992,6 +1066,136 @@ In Other Words: These are the popup windows for adding jokes and viewing guideli
     margin-top: 15px;
     line-height: 1.5;
 }
+
+/*
+================================================================================
+This Area Of Code Is: Phase 6 - Color Vision Accessibility Modal Styles
+Explanation: Styling for the comprehensive accessibility panel with 9 color vision options
+In Other Words: The popup that lets users choose color blindness filters
+================================================================================
+*/
+
+.accessibility-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+}
+
+.accessibility-modal.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.accessibility-content {
+    width: 100%;
+    max-width: 420px;
+    max-height: 85dvh;
+    overflow-y: auto;
+    background: rgba(15, 23, 42, 0.98);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    padding: 25px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9);
+}
+
+.accessibility-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.accessibility-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--primary-gold);
+    margin-bottom: 5px;
+}
+
+.accessibility-header p {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.access-section {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.access-section:last-of-type {
+    border-bottom: none;
+    margin-bottom: 15px;
+}
+
+.access-section-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--primary-gold);
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.vision-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.vision-option {
+    position: relative;
+}
+
+.vision-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.vision-label {
+    display: block;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 12px;
+}
+
+.vision-label:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--primary-gold);
+}
+
+.vision-option input[type="radio"]:checked + .vision-label {
+    background: rgba(251, 191, 36, 0.2);
+    border-color: var(--primary-gold);
+    color: var(--primary-gold);
+    font-weight: 600;
+}
+
+/* PHASE 6: Color Vision Filter Classes (9 Types) */
+.cv-deuteranomaly { filter: url('#deuteranomaly'); }
+.cv-deuteranopia { filter: url('#deuteranopia'); }
+.cv-protanomaly { filter: url('#protanomaly'); }
+.cv-protanopia { filter: url('#protanopia'); }
+.cv-tritanomaly { filter: url('#tritanomaly'); }
+.cv-tritanopia { filter: url('#tritanopia'); }
+.cv-achromatopsia { filter: grayscale(100%) brightness(1.1); }
+.cv-cone-monochromacy { filter: grayscale(70%) sepia(20%); }
+.cv-blue-cone-monochromacy { filter: grayscale(50%) hue-rotate(200deg); }
 
 .guidelines-content {
     line-height: 1.6;
@@ -1075,6 +1279,15 @@ In Other Words: This makes everything fit better on small phones.
     .jump-btn span {
         font-size: 14px;
     }
+    
+    /* Phase 6 & 7: Smaller accessibility and scripture elements */
+    .accessibility-content { padding: 20px; }
+    .vision-grid { grid-template-columns: 1fr; }
+    .scripture-banner { 
+        bottom: 60px; 
+        padding: 12px;
+    }
+    .scripture-text { font-size: 13px; }
 }
 
 @media (max-width: 360px) {
@@ -1084,5 +1297,11 @@ In Other Words: This makes everything fit better on small phones.
     /* Phase 4: Even smaller grid on very small screens */
     .card-jumps {
         grid-template-columns: repeat(3, 1fr);
+    }
+    
+    /* Phase 5: Stack location checkboxes */
+    .location-options {
+        flex-direction: column;
+        gap: 8px;
     }
 }
