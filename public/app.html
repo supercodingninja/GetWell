@@ -1,214 +1,134 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#0f172a">
-    <title>Get Well Card | Growing Collection</title>
-    <link rel="manifest" href="../manifest.json">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./styles.css">
-</head>
-<body>
-    <!-- Video Background -->
-    <div class="video-background">
-        <video autoplay muted loop playsinline id="appBgVideo">
-            <source src="https://github.com/supercodingninja/GetWell/releases/download/v1.1-video/video.mp4" type="video/mp4">
-        </video>
-        <div class="video-overlay"></div>
+<!-- Accessibility Modal (Phase 6 - 9 Color Vision Types) -->
+<div class="accessibility-modal" id="accessibilityModal">
+    <div class="accessibility-content">
+        <div class="accessibility-header">
+            <h3>Color Vision Accessibility</h3>
+            <p>Select a filter that helps you see better</p>
+            <button class="close-modal" onclick="closeAccessibilityModal()" aria-label="Close">×</button>
+        </div>
+
+        <!-- Normal Vision -->
+        <div class="access-section">
+            <div class="access-section-title">Normal Vision</div>
+            <div class="vision-grid">
+                <div class="vision-option">
+                    <input type="radio" name="colorVision" id="cv-normal" value="normal" checked>
+                    <label for="cv-normal" class="vision-label">
+                        <strong>Standard Colors</strong><br>
+                        <small>Default view</small>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Red-Green Deficiency (4 types) -->
+        <div class="access-section">
+            <div class="access-section-title">Red-Green Color Blindness</div>
+            <div class="vision-grid">
+                <div class="vision-option">
+                    <input type="radio" name="colorVision" id="cv-deuteranomaly" value="deuteranomaly">
+                    <label for="cv-deuteranomaly" class="vision-label">
+                        <strong>Deuteranomaly</strong><br>
+                        <small>Green-weak</small>
+                    </label>
+                </div>
+                <div class="vision-option">
+                    <input type="radio" name="colorVision" id="cv-deuteranopia" value="deuteranopia">
+                    <label for="cv-deuteranopia" class="vision-label">
+                        <strong>Deuteranopia</strong><br>
+                        <small>Green-blind</small>
+                    </label>
+                </div>
+                <div class="vision-option">
+                    <input type="radio" name="colorVision" id="cv-protanomaly" value="protanomaly">
+                    <label for="cv-protanomaly" class="vision-label">
+                        <strong>Protanomaly</strong><br>
+                        <small>Red-weak</small>
+                    </label>
+                </div>
+                <div class="vision-option">
+                    <input type="radio" name="colorVision" id="cv-protanopia" value="protanopia">
+                    <label for="cv-protanopia" class="vision-label">
+                        <strong>Protanopia</strong><br>
+                        <small>Red-blind</small>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blue-Yellow Deficiency (2 types) -->
+        <div class="access-section">
+            <div class="access-section-title">Blue-Yellow Color Blindness</div>
+            <div class="vision-grid">
+                <div class="vision-option">
+                    <input type="radio" name="colorVision" id="cv-tritanomaly" value="tritanomaly">
+                    <label for="cv-tritanomaly" class="vision-label">
+                        <strong>Tritanomaly</strong><br>
+                        <small>Blue-weak</small>
+                    </label>
+                </div>
+                <div class="vision-option">
+                    <input type="radio" name="colorVision" id="cv-tritanopia" value="tritanopia">
+                    <label for="cv-tritanopia" class="vision-label">
+                        <strong>Tritanopia</strong><br>
+                        <small>Blue-blind</small>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Complete Monochromacy (3 types) -->
+        <div class="access-section">
+            <div class="access-section-title">Complete Color Blindness</div>
+            <div class="vision-grid">
+                <div class="vision-option">
+                    <input type="radio" name="colorVision" id="cv-achromatopsia" value="achromatopsia">
+                    <label for="cv-achromatopsia" class="vision-label">
+                        <strong>Achromatopsia</strong><br>
+                        <small>Rod monochromacy</small>
+                    </label>
+                </div>
+                <div class="vision-option">
+                    <input type="radio" name="colorVision" id="cv-cone-monochromacy" value="cone-monochromacy">
+                    <label for="cv-cone-monochromacy" class="vision-label">
+                        <strong>Cone Monochromacy</strong><br>
+                        <small>Single cone type</small>
+                    </label>
+                </div>
+                <div class="vision-option">
+                    <input type="radio" name="colorVision" id="cv-blue-cone-monochromacy" value="blue-cone-monochromacy">
+                    <label for="cv-blue-cone-monochromacy" class="vision-label">
+                        <strong>Blue Cone Only</strong><br>
+                        <small>Blue monochromacy</small>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <button class="ok-btn" onclick="closeAccessibilityModal()">Apply Selection</button>
     </div>
+</div>
 
-    <!-- Header -->
-    <header class="app-header">
-        <button class="menu-btn" id="menuBtn" onclick="toggleMenu()" aria-label="Open menu">
-            <div class="hamburger" id="hamburgerIcon">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <div class="scn-logo" id="scnLogo">&lt;SCN/&gt;™</div>
-        </button>
-        
-        <h1 class="header-title">Get Well Soon</h1>
-        
-        <button class="home-btn" onclick="goHome()" aria-label="Go home">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                <polyline points="9 22 9 12 15 12 15 22"></polyline>
-            </svg>
-        </button>
-    </header>
-
-    <!-- Live Stats (Top Right) -->
-    <div class="live-stats">
-        <div class="welcome-badge">
-            <span style="font-family: 'Dancing Script', cursive; font-size: 1.3em; color: #fbbf24; text-shadow: 0 0 10px rgba(251,191,36,0.5);">𝑊𝑒𝑙𝑐𝑜𝑚𝑒 𝐵𝑎𝑐𝑘</span>
-            <span id="personalVisits" style="font-family: 'Inter', sans-serif; font-size: 13px; margin-left: 6px;">Visit #1</span>
-        </div>
-        <div class="cards-badge">
-            <span>😊</span>
-            <span id="totalCards">100 cards</span>
-        </div>
-    </div>
-
-    <!-- Side Menu -->
-    <nav class="side-menu" id="sideMenu">
-        <div class="menu-header">
-            <h3>Menu</h3>
-            <button class="close-menu" onclick="toggleMenu()" aria-label="Close menu">×</button>
-        </div>
-        <div class="menu-content">
-            <button class="menu-item" onclick="goHome()">
-                <span>🏠</span> Home
-            </button>
-            <div class="menu-divider"></div>
-            <p class="menu-label">Jump to Card (100 Total)</p>
-            <div class="card-jumps" id="cardJumps">
-                <!-- Generated by JS -->
-            </div>
-        </div>
-    </nav>
-    <div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
-
-    <!-- Main Content -->
-    <main class="app-main">
-        <!-- Card Display -->
-        <div class="card-container" id="cardContainer">
-            <div class="content-card" id="contentCard">
-                <div class="card-badge" id="cardBadge">JOKE</div>
-                <div class="card-icon" id="cardIcon">🧪</div>
-                <div class="card-content">
-                    <h2 class="setup-text" id="setupText">Loading...</h2>
-                    <p class="punchline-text visible" id="punchlineText"></p>
-                </div>
-                <div class="card-footer">
-                    <div class="author-info" id="authorInfo"></div>
-                    <span class="card-counter" id="cardCounter">Card 1 of 100</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Navigation Controls Row 1 -->
-        <div class="controls-row">
-            <button class="nav-btn" onclick="previousCard()" aria-label="Previous card">
-                <span>←</span> Back
-            </button>
-            <button class="nav-btn" onclick="nextCard()" aria-label="Next card">
-                Next <span>→</span>
-            </button>
-        </div>
-
-        <!-- Navigation Controls Row 2 -->
-        <div class="controls-row secondary">
-            <button class="add-joke-btn" onclick="openJokeModal()">
-                <span>+</span> Add Your Joke
-            </button>
-            <button class="auto-mode-btn" id="autoModeBtn" onclick="toggleAutoMode()">
-                <span>◉</span> <span id="autoModeText">Auto Mode</span>
-            </button>
-        </div>
-
-        <!-- Speed Controls (Hidden by default) -->
-        <div class="speed-controls" id="speedControls">
-            <button class="speed-btn" data-speed="8000" onclick="setSpeed(8000)">Slow<br><small>8-10s</small></button>
-            <button class="speed-btn active" data-speed="6000" onclick="setSpeed(6000)">Medium<br><small>5-7s</small></button>
-            <button class="speed-btn" data-speed="3500" onclick="setSpeed(3500)">Fast<br><small>3.5s</small></button>
-        </div>
-
-        <!-- Community Guidelines -->
-        <a href="#" class="guidelines-link" onclick="showGuidelines(); return false;">Community Guidelines</a>
-    </main>
-
-    <!-- Add Joke Modal - PHASE 5: Country checked by default -->
-    <div class="modal" id="jokeModal">
-        <div class="modal-content glass-modal">
-            <div class="modal-header">
-                <h3>Add Your Joke</h3>
-                <button class="close-modal" onclick="closeJokeModal()" aria-label="Close">×</button>
-            </div>
-            
-            <form id="jokeForm" onsubmit="submitJoke(event)">
-                <div class="form-group">
-                    <label for="userName">Your First Name *</label>
-                    <input type="text" id="userName" required placeholder="Enter your name" maxlength="30">
-                </div>
-
-                <div class="form-group location-group">
-                    <label>Location (Optional)</label>
-                    <div class="location-options">
-                        <!-- PHASE 5: Only Country checked by default -->
-                        <label class="checkbox-label">
-                            <input type="checkbox" id="showCity"> City
-                        </label>
-                        <label class="checkbox-label">
-                            <input type="checkbox" id="showState"> State/Province
-                        </label>
-                        <label class="checkbox-label">
-                            <input type="checkbox" id="showCountry" checked> Country
-                        </label>
-                    </div>
-                    <input type="text" id="userLocation" placeholder="e.g., Seattle, WA, USA" maxlength="50">
-                    <small class="help-text">Choose what to display with the checkboxes above</small>
-                </div>
-
-                <div class="form-group">
-                    <label for="jokeSetup">Joke Question / Message *</label>
-                    <textarea id="jokeSetup" required placeholder="What do you call..." rows="2" maxlength="200"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="jokePunchline">Punchline / Response *</label>
-                    <textarea id="jokePunchline" required placeholder="Because..." rows="2" maxlength="200"></textarea>
-                </div>
-
-                <div class="form-actions">
-                    <button type="submit" class="submit-btn">
-                        <span>🚀</span> Submit Joke
-                    </button>
-                    <button type="button" class="cancel-btn" onclick="closeJokeModal()">
-                        Cancel
-                    </button>
-                </div>
-                
-                <p class="form-disclaimer">
-                    By submitting, you agree to our community guidelines. 
-                    All content is moderated for appropriateness.
-                </p>
-            </form>
-        </div>
-    </div>
-
-    <!-- Guidelines Modal -->
-    <div class="modal" id="guidelinesModal">
-        <div class="modal-content glass-modal">
-            <div class="modal-header">
-                <h3>Community Guidelines</h3>
-                <button class="close-modal" onclick="closeGuidelines()" aria-label="Close">×</button>
-            </div>
-            <div class="guidelines-content">
-                <p>Welcome to the Growing Get Well Card! To keep this a safe, encouraging space:</p>
-                <ul>
-                    <li>✓ Keep content family-friendly and clean</li>
-                    <li>✓ No profanity or inappropriate language</li>
-                    <li>✓ Be kind and encouraging</li>
-                    <li>✓ Christian values appreciated</li>
-                    <li>✗ No offensive, political, or divisive content</li>
-                </ul>
-                <p>All submissions are checked by our moderation system.</p>
-                <button class="ok-btn" onclick="closeGuidelines()">I Understand</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Translation Notice -->
-    <div class="translation-bar" id="transBar">
-        <span>🌐 Translations provided by free APIs • May contain errors</span>
-    </div>
-
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    <script src="./app.js"></script>
-</body>
-</html>
+<!-- SVG Filters for Color Vision Simulation (hidden) -->
+<svg style="display: none;">
+    <defs>
+        <filter id="deuteranomaly">
+            <feColorMatrix type="matrix" values="0.8 0.2 0 0 0  0.258 0.742 0 0 0  0 0.142 0.858 0 0  0 0 0 1 0"/>
+        </filter>
+        <filter id="deuteranopia">
+            <feColorMatrix type="matrix" values="0.625 0.375 0 0 0  0.7 0.3 0 0 0  0 0.3 0.7 0 0  0 0 0 1 0"/>
+        </filter>
+        <filter id="protanomaly">
+            <feColorMatrix type="matrix" values="0.817 0.183 0 0 0  0.333 0.667 0 0 0  0 0.125 0.875 0 0  0 0 0 1 0"/>
+        </filter>
+        <filter id="protanopia">
+            <feColorMatrix type="matrix" values="0.567 0.433 0 0 0  0.558 0.442 0 0 0  0 0.242 0.758 0 0  0 0 0 1 0"/>
+        </filter>
+        <filter id="tritanomaly">
+            <feColorMatrix type="matrix" values="0.967 0.033 0 0 0  0 0.733 0.267 0 0  0 0.183 0.817 0 0  0 0 0 1 0"/>
+        </filter>
+        <filter id="tritanopia">
+            <feColorMatrix type="matrix" values="0.95 0.05 0 0 0  0 0.433 0.567 0 0  0 0.475 0.525 0 0  0 0 0 1 0"/>
+        </filter>
+    </defs>
+</svg>
