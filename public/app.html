@@ -12,38 +12,6 @@
     <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-    <!-- 
-    ================================================================================
-    This Area Of Code Is: SVG Color Vision Filters (Phase 6)
-    Explanation: Medical-grade color matrix filters for 9 types of color vision deficiency
-    In Other Words: The technology that helps color blind users see the app better
-    ================================================================================
-    -->
-    <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" aria-hidden="true">
-        <defs>
-            <!-- Red-Green Deficiencies -->
-            <filter id="deuteranomaly">
-                <feColorMatrix type="matrix" values="0.8 0.2 0 0 0  0.258 0.742 0 0 0  0 0.142 0.858 0 0  0 0 0 1 0"/>
-            </filter>
-            <filter id="deuteranopia">
-                <feColorMatrix type="matrix" values="0.625 0.375 0 0 0  0.7 0.3 0 0 0  0 0.3 0.7 0 0  0 0 0 1 0"/>
-            </filter>
-            <filter id="protanomaly">
-                <feColorMatrix type="matrix" values="0.817 0.183 0 0 0  0.333 0.667 0 0 0  0 0.125 0.875 0 0  0 0 0 1 0"/>
-            </filter>
-            <filter id="protanopia">
-                <feColorMatrix type="matrix" values="0.567 0.433 0 0 0  0.558 0.442 0 0 0  0 0.242 0.758 0 0  0 0 0 1 0"/>
-            </filter>
-            <!-- Blue-Yellow Deficiencies -->
-            <filter id="tritanomaly">
-                <feColorMatrix type="matrix" values="0.967 0.033 0 0 0  0 0.733 0.267 0 0  0 0.183 0.817 0 0  0 0 0 1 0"/>
-            </filter>
-            <filter id="tritanopia">
-                <feColorMatrix type="matrix" values="0.95 0.05 0 0 0  0 0.433 0.567 0 0  0 0.475 0.525 0 0  0 0 0 1 0"/>
-            </filter>
-        </defs>
-    </svg>
-
     <!-- Video Background -->
     <div class="video-background">
         <video autoplay muted loop playsinline id="appBgVideo">
@@ -95,9 +63,6 @@
             <button class="menu-item" onclick="goHome()">
                 <span>🏠</span> Home
             </button>
-            <button class="menu-item" onclick="openAccessibilityModal()">
-                <span>♿</span> Accessibility Options
-            </button>
             <div class="menu-divider"></div>
             <p class="menu-label">Jump to Card (100 Total)</p>
             <div class="card-jumps" id="cardJumps">
@@ -122,17 +87,6 @@
                     <div class="author-info" id="authorInfo"></div>
                     <span class="card-counter" id="cardCounter">Card 1 of 100</span>
                 </div>
-            </div>
-            
-            <!-- 
-            ================================================================================
-            This Area Of Code Is: Scripture Banner (Phase 7)
-            Explanation: Displays KJV scriptures every 10th card as spiritual encouragement
-            In Other Words: The golden banner showing Bible verses on cards 10, 20, 30...
-            ================================================================================
-            -->
-            <div class="scripture-banner" id="scriptureBanner" aria-live="polite">
-                <!-- Populated by JavaScript -->
             </div>
         </div>
 
@@ -167,13 +121,7 @@
         <a href="#" class="guidelines-link" onclick="showGuidelines(); return false;">Community Guidelines</a>
     </main>
 
-    <!-- 
-    ================================================================================
-    This Area Of Code Is: Add Joke Modal - PHASE 5: Country checked by default
-    Explanation: Form for submitting jokes with location checkboxes - only Country checked initially
-    In Other Words: The popup form with City/State/Country checkboxes where only Country starts checked
-    ================================================================================
-    -->
+    <!-- Add Joke Modal - PHASE 5: Country checked by default -->
     <div class="modal" id="jokeModal">
         <div class="modal-content glass-modal">
             <div class="modal-header">
@@ -254,153 +202,10 @@
         </div>
     </div>
 
-                transition: opacity 0.5s ease;
-            pointer-events: none;
-            z-index: 10;
-        }
-
-        .scroll-indicator.visible {
-            opacity: 1;
-        }
-
-        .scroll-text {
-            font-size: 10px;
-            color: rgba(255,215,0,0.8);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 600;
-            animation: fadePulse 2s infinite;
-        }
-
-        .scroll-mouse {
-            width: 26px;
-            height: 40px;
-            border: 2px solid rgba(255,215,0,0.6);
-            border-radius: 13px;
-            display: flex;
-            justify-content: center;
-            padding-top: 8px;
-            position: relative;
-            background: rgba(255,215,0,0.05);
-        }
-
-        .scroll-wheel {
-            width: 4px;
-            height: 8px;
-            background: #ffd700;
-            border-radius: 2px;
-            animation: scrollBounce 1.5s infinite;
-            box-shadow: 0 0 10px rgba(255,215,0,0.8);
-        }
-
-        .scroll-arrows {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 5px;
-        }
-
-        .scroll-arrow {
-            width: 0;
-            height: 0;
-            border-left: 5px solid transparent;
-            border-right: 5px solid transparent;
-            border-top: 5px solid rgba(255,215,0,0.6);
-            animation: arrowPulse 1.5s infinite;
-            margin: -2px 0;
-        }
-
-        .scroll-arrow:nth-child(2) {
-            animation-delay: 0.2s;
-            opacity: 0.6;
-        }
-
-        .scroll-arrow:nth-child(3) {
-            animation-delay: 0.4s;
-            opacity: 0.3;
-        }
-
-        @keyframes scrollBounce {
-            0%, 100% { transform: translateY(0); opacity: 1; }
-            50% { transform: translateY(8px); opacity: 0.5; }
-        }
-
-        @keyframes fadePulse {
-            0%, 100% { opacity: 0.8; }
-            50% { opacity: 0.4; }
-        }
-
-        @keyframes arrowPulse {
-            0%, 100% { transform: translateY(0); opacity: 1; }
-            50% { transform: translateY(3px); opacity: 0.5; }
-        }
-
-        /* Color Vision Filters */
-        .filter-deuteranomaly { filter: url('#deuteranomaly'); }
-        .filter-deuteranopia { filter: url('#deuteranopia'); }
-        .filter-protanomaly { filter: url('#protanomaly'); }
-        .filter-protanopia { filter: url('#protanopia'); }
-        .filter-tritanomaly { filter: url('#tritanomaly'); }
-        .filter-tritanopia { filter: url('#tritanopia'); }
-        .filter-achromatopsia { filter: grayscale(100%) brightness(1.1); }
-
-        /* Cognitive & Neurodivergent Mode Styles */
-        .autism-mode * { transition: all 0.5s ease !important; }
-        .autism-mode .glass-card { border-width: 3px; }
-        
-        .adhd-mode { font-family: 'Inter', sans-serif; }
-        .adhd-mode h1 { font-size: 36px; }
-        
-        .dyslexia-mode * { font-family: 'Inter', sans-serif; letter-spacing: 0.05em; }
-        .dyslexia-mode p { line-height: 1.8; }
-        
-        .anxiety-mode { 
-            --calm-color: #4a90e2; 
-        }
-        .anxiety-mode .glass-card {
-            border-color: rgba(74, 144, 226, 0.5);
-            box-shadow: 0 25px 50px -12px rgba(74, 144, 226, 0.2);
-        }
-        
-        .ptsd-mode {
-            animation: none !important;
-        }
-        .ptsd-mode .glass-card::before { display: none; }
-        .ptsd-mode * { animation-duration: 0s !important; transition-duration: 0.3s !important; }
-
-        .mania-mode {
-            --energy-color: #ffd700;
-        }
-
-        @media (max-width: 480px) {
-            .glass-card { padding: 30px 20px; }
-            h1 { font-size: 32px; }
-            .stats-row { flex-direction: column; gap: 8px; }
-            .accessibility-btn-container { width: 80px; height: 80px; }
-        }
-    </style>
-    
-    <svg style="position: absolute; width: 0; height: 0;">
-        <defs>
-            <filter id="deuteranomaly"><feColorMatrix type="matrix" values="0.8 0.2 0 0 0 0.258 0.742 0 0 0 0 0.142 0.858 0 0 0 0 0 1 0"/></filter>
-            <filter id="deuteranopia"><feColorMatrix type="matrix" values="0.625 0.375 0 0 0 0.7 0.3 0 0 0 0 0.3 0.7 0 0 0 0 0 1 0"/></filter>
-            <filter id="protanomaly"><feColorMatrix type="matrix" values="0.817 0.183 0 0 0 0.333 0.667 0 0 0 0 0.125 0.875 0 0 0 0 0 1 0"/></filter>
-            <filter id="protanopia"><feColorMatrix type="matrix" values="0.567 0.433 0 0 0 0.558 0.442 0 0 0 0 0.242 0.758 0 0 0 0 0 1 0"/></filter>
-            <filter id="tritanomaly"><feColorMatrix type="matrix" values="0.967 0.033 0 0 0 0 0.733 0.267 0 0 0 0.183 0.817 0 0 0 0 0 1 0"/></filter>
-            <filter id="tritanopia"><feColorMatrix type="matrix" values="0.95 0.05 0 0 0 0 0.433 0.567 0 0 0 0.475 0.525 0 0 0 0 0 1 0"/></filter>
-        </defs>
-    </svg>
-
     <!-- Translation Notice -->
     <div class="translation-bar" id="transBar">
         <span>🌐 Translations provided by free APIs • May contain errors</span>
     </div>
-
-    <!-- Footer -->
-    <footer class="fixed-footer">
-        © 2026 Get Well Card | <span class="footer-name">𝐹𝑟𝑒𝑑𝑒𝑟𝑖𝑐𝑘 𝑇ℎ𝑜𝑚𝑎𝑠,</span><span class="professional-title">𝑇ℎ𝑒 𝑆𝑢𝑝𝑒𝑟 𝐶𝑜𝑑𝑖𝑛𝑔 𝑁𝑖𝑛𝑗𝑎™</span> | 
-        Made with ❤️ for the global community
-    </footer>
 
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
