@@ -26,7 +26,13 @@
             position: relative;
         }
 
-        /* Video Background */
+        /* 
+        ================================================================================
+        This Area Of Code Is: Video & Image Background Management
+        Explanation: Handles fallback video backgrounds with image fallback for mobile
+        In Other Words: Shows a video if it works, otherwise shows a picture
+        ================================================================================
+        */
         .video-background {
             position: fixed; 
             top: 0; 
@@ -66,21 +72,27 @@
             background: linear-gradient(135deg, rgba(0,0,0,0.1) 0%, rgba(15,23,42,0.3) 100%);
         }
 
-        /* Accessibility Button with Curved Text */
+        /* 
+        ================================================================================
+        This Area Of Code Is: Accessibility Button with Curved Text
+        Explanation: SVG-based circular button with text curving along top and bottom arcs
+        In Other Words: The wheelchair icon button with "ACCESSIBILITY" on top curve and "OPTIONS" on bottom curve
+        ================================================================================
+        */
         .accessibility-btn-container {
             position: fixed; 
             top: 20px; 
             left: 20px; 
             z-index: 100;
-            width: 70px;
-            height: 70px;
+            width: 100px;
+            height: 100px;
             cursor: pointer;
             filter: drop-shadow(0 4px 20px rgba(0,0,0,0.4));
             transition: transform 0.3s ease;
         }
 
         .accessibility-btn-container:hover {
-            transform: scale(1.1) rotate(5deg);
+            transform: scale(1.15) rotate(5deg);
         }
 
         .accessibility-btn-svg {
@@ -90,43 +102,51 @@
         }
 
         .accessibility-bg {
-            fill: rgba(255, 255, 255, 0.1);
-            stroke: rgba(255, 255, 255, 0.4);
-            stroke-width: 1.5;
+            fill: rgba(255, 255, 255, 0.08);
+            stroke: rgba(255, 255, 255, 0.5);
+            stroke-width: 2;
             backdrop-filter: blur(10px);
             transition: all 0.3s;
         }
 
         .accessibility-btn-container:hover .accessibility-bg {
-            fill: rgba(255, 215, 0, 0.15);
-            stroke: rgba(255, 215, 0, 0.6);
+            fill: rgba(255, 215, 0, 0.2);
+            stroke: rgba(255, 215, 0, 0.8);
+            filter: drop-shadow(0 0 15px rgba(255,215,0,0.4));
         }
 
         .curved-text-top {
             fill: rgba(255, 255, 255, 0.95);
             font-family: 'Inter', sans-serif;
-            font-size: 9px;
-            font-weight: 600;
-            letter-spacing: 1px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
             text-transform: uppercase;
         }
 
         .curved-text-bottom {
-            fill: rgba(255, 255, 255, 0.8);
+            fill: rgba(255, 255, 255, 0.9);
             font-family: 'Inter', sans-serif;
-            font-size: 8px;
-            font-weight: 500;
-            letter-spacing: 0.5px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
             text-transform: uppercase;
         }
 
         .accessibility-icon {
-            font-size: 28px;
+            font-size: 36px;
             text-anchor: middle;
             dominant-baseline: central;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
         }
 
-        /* Language Selector - Clean Single Flag */
+        /* 
+        ================================================================================
+        This Area Of Code Is: Language Selector Dropdown
+        Explanation: Crystal clear glass morphism dropdown for language selection
+        In Other Words: The language picker with transparent glass effect (no frost)
+        ================================================================================
+        */
         .language-selector { 
             position: fixed; 
             top: 20px; 
@@ -135,8 +155,8 @@
         }
         
         .lang-dropdown {
-            background: rgba(255, 255, 255, 0.1); 
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.05); 
+            border: 1px solid rgba(255, 255, 255, 0.4);
             border-radius: 50px; 
             padding: 12px 20px; 
             color: white; 
@@ -145,16 +165,21 @@
             display: flex; 
             align-items: center; 
             gap: 10px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-            backdrop-filter: blur(10px);
+            box-shadow: 
+                0 8px 32px rgba(0,0,0,0.3),
+                inset 0 1px 0 rgba(255,255,255,0.2);
+            backdrop-filter: blur(2px) saturate(150%);
             transition: all 0.3s ease;
             min-width: 140px;
         }
         
         .lang-dropdown:hover { 
-            background: rgba(255, 255, 255, 0.2); 
-            border-color: rgba(255, 255, 255, 0.5); 
+            background: rgba(255, 255, 255, 0.1); 
+            border-color: rgba(255, 255, 255, 0.6); 
             transform: translateY(-2px);
+            box-shadow: 
+                0 12px 40px rgba(0,0,0,0.4),
+                inset 0 1px 0 rgba(255,255,255,0.3);
         }
         
         .lang-dropdown select { 
@@ -177,19 +202,25 @@
 
         .translation-notice {
             position: fixed; 
-            top: 70px; 
+            top: 75px; 
             right: 20px; 
             font-size: 11px; 
             color: rgba(255,255,255,0.7);
             z-index: 100; 
-            background: rgba(0,0,0,0.5); 
+            background: rgba(0,0,0,0.4); 
             padding: 6px 14px; 
             border-radius: 12px; 
             border: 1px solid rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(5px);
         }
 
-        /* Main Container */
+        /* 
+        ================================================================================
+        This Area Of Code Is: Main Layout Container
+        Explanation: Centers all content vertically and horizontally with responsive padding
+        In Other Words: The box that holds everything in the middle of the screen
+        ================================================================================
+        */
         .main-container { 
             position: relative; 
             z-index: 10; 
@@ -202,10 +233,16 @@
             padding: 20px; 
         }
 
-        /* Crystal Clear Glass Card */
+        /* 
+        ================================================================================
+        This Area Of Code Is: Crystal Glass Card Component
+        Explanation: Premium glass morphism card with animated shine effect and floating animation
+        In Other Words: The main clear glass box with the shiny sweep effect
+        ================================================================================
+        */
         .glass-card {
             position: relative; 
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.4); 
             border-radius: 30px;
             padding: 40px; 
@@ -231,7 +268,7 @@
             height: 100%;
             background: linear-gradient(90deg, 
                 transparent 0%, 
-                rgba(255,255,255,0.2) 50%, 
+                rgba(255,255,255,0.15) 50%, 
                 transparent 100%);
             animation: shineSweep 3s infinite;
             pointer-events: none;
@@ -282,9 +319,15 @@
             text-shadow: 0 2px 6px rgba(0,0,0,0.3); 
         }
 
-        /* Glass Pill Components */
+        /* 
+        ================================================================================
+        This Area Of Code Is: Glass Pill Components
+        Explanation: Reusable translucent pill-shaped containers for stats and indicators
+        In Other Words: The rounded clear buttons and info boxes
+        ================================================================================
+        */
         .glass-pill {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 50px;
             padding: 12px 24px;
@@ -299,7 +342,7 @@
         }
 
         .glass-pill:hover {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.1);
             border-color: rgba(255, 255, 255, 0.5);
             transform: translateY(-2px);
         }
@@ -315,13 +358,19 @@
             text-shadow: 0 0 10px rgba(255,215,0,0.4);
         }
 
-        /* Open Card Button */
+        /* 
+        ================================================================================
+        This Area Of Code Is: Open Card Button
+        Explanation: Primary CTA button with glass morphism - text only (no icons)
+        In Other Words: The main button to enter the app, clean text only
+        ================================================================================
+        */
         .open-card-btn {
             display: inline-flex; 
             align-items: center; 
             justify-content: center; 
             gap: 12px;
-            background: rgba(255, 255, 255, 0.12); 
+            background: rgba(255, 255, 255, 0.08); 
             border: 1px solid rgba(255, 255, 255, 0.4);
             border-radius: 50px; 
             padding: 18px 40px; 
@@ -338,17 +387,26 @@
             margin: 15px 0;
             width: 100%;
             max-width: 280px;
+            letter-spacing: 1px;
         }
         
         .open-card-btn:hover { 
-            background: rgba(255, 255, 255, 0.2); 
+            background: rgba(255, 255, 255, 0.15); 
             transform: translateY(-3px); 
             box-shadow: 
                 0 15px 40px rgba(0,0,0,0.4),
                 inset 0 1px 0 rgba(255,255,255,0.3);
+            border-color: rgba(255, 215, 0, 0.6);
+            color: #ffd700;
         }
 
-        /* Stats Row - Two Glass Pills Side by Side */
+        /* 
+        ================================================================================
+        This Area Of Code Is: Statistics Row Layout
+        Explanation: Flexbox row for visitor counters and welcome back pill
+        In Other Words: The two info boxes showing visitor counts
+        ================================================================================
+        */
         .stats-row {
             display: flex;
             justify-content: center;
@@ -359,7 +417,7 @@
         }
 
         .stat-pill {
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.25);
             border-radius: 50px;
             padding: 10px 20px;
@@ -373,7 +431,7 @@
         }
 
         .stat-pill:hover {
-            background: rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.1);
             border-color: rgba(255, 255, 255, 0.4);
         }
 
@@ -464,7 +522,13 @@
             text-shadow: 0 1px 3px rgba(0,0,0,0.5); 
         }
 
-        /* Who This Is For */
+        /* 
+        ================================================================================
+        This Area Of Code Is: "Who This Is For" Interactive Element
+        Explanation: Clickable text with tooltip showing target audience (PTSD, Veterans, etc.)
+        In Other Words: The clickable text at bottom showing who the app helps
+        ================================================================================
+        */
         .who-container {
             position: relative;
             margin-top: 15px;
@@ -554,7 +618,13 @@
             bottom: 140%;
         }
 
-        /* Footer with Shimmer ONLY on Professional Title */
+        /* 
+        ================================================================================
+        This Area Of Code Is: Footer with Professional Title Shimmer
+        Explanation: Fixed bottom footer with animated gradient text effect on title only
+        In Other Words: The bottom bar with your name and the shiny "Super Coding Ninja" text
+        ================================================================================
+        */
         .fixed-footer {
             position: fixed; 
             bottom: 0; 
@@ -594,34 +664,18 @@
             display: inline-block;
         }
 
-        /* Shimmer mask - only shows through text */
-        .professional-title::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, 
-                transparent 0%, 
-                rgba(255,255,255,0.6) 50%, 
-                transparent 100%);
-            animation: shimmerSweep 3s infinite;
-            mix-blend-mode: overlay;
-            -webkit-background-clip: text;
-        }
-
         @keyframes textShimmer {
             0% { background-position: 200% 0; }
             100% { background-position: -200% 0; }
         }
 
-        @keyframes shimmerSweep {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        /* Accessibility Modal */
+        /* 
+        ================================================================================
+        This Area Of Code Is: Universal Accessibility Modal
+        Explanation: Comprehensive accessibility options panel with scroll indicator
+        In Other Words: The popup with all disability options (Autism, ADHD, Vision, etc.)
+        ================================================================================
+        */
         .accessibility-modal {
             position: fixed;
             top: 0;
@@ -654,79 +708,53 @@
             position: relative;
         }
 
-        /* Floating Scroll Indicator */
-        .scroll-indicator {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 30px;
-            height: 50px;
-            border: 2px solid rgba(255,255,255,0.4);
-            border-radius: 15px;
-            display: flex;
-            justify-content: center;
-            padding-top: 8px;
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
-        }
-
-        .scroll-indicator.visible {
-            opacity: 1;
-        }
-
-        .scroll-dot {
-            width: 6px;
-            height: 6px;
-            background: #ffd700;
-            border-radius: 50%;
-            animation: scrollBounce 1.5s infinite;
-            box-shadow: 0 0 10px rgba(255,215,0,0.6);
-        }
-
-        @keyframes scrollBounce {
-            0%, 100% { transform: translateY(0); opacity: 1; }
-            50% { transform: translateY(12px); opacity: 0.5; }
-        }
-
         .access-category {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             border-bottom: 1px solid rgba(255,255,255,0.1);
             padding-bottom: 20px;
         }
         
+        .access-category:last-child {
+            border-bottom: none;
+        }
+        
         .access-category h3 {
-            color: rgba(255,255,255,0.95);
+            color: #ffd700;
             font-size: 16px;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
             gap: 10px;
             font-family: 'Playfair Display', serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .access-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8px;
+            gap: 10px;
         }
         
         .access-btn {
-            background: rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 10px;
-            padding: 10px;
+            border-radius: 12px;
+            padding: 12px 8px;
             color: white;
-            font-size: 13px;
+            font-size: 12px;
             cursor: pointer;
             transition: all 0.3s;
             text-align: center;
+            font-weight: 500;
+            line-height: 1.3;
         }
         
         .access-btn:hover, .access-btn.active {
             background: rgba(255,215,0,0.15);
             border-color: rgba(255,215,0,0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255,215,0,0.2);
         }
 
         .access-toggle {
@@ -735,18 +763,24 @@
             align-items: center;
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 10px;
-            padding: 12px 15px;
-            margin-bottom: 8px;
+            border-radius: 12px;
+            padding: 14px 15px;
+            margin-bottom: 10px;
             color: white;
             font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .access-toggle:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.25);
         }
         
         .toggle-switch {
-            width: 44px;
-            height: 24px;
+            width: 50px;
+            height: 26px;
             background: rgba(255,255,255,0.2);
-            border-radius: 12px;
+            border-radius: 13px;
             position: relative;
             cursor: pointer;
             transition: all 0.3s;
@@ -759,23 +793,23 @@
         .toggle-switch::after {
             content: '';
             position: absolute;
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             background: white;
             border-radius: 50%;
             top: 2px;
             left: 2px;
             transition: all 0.3s;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
         }
         
         .toggle-switch.active::after {
-            left: 22px;
+            left: 26px;
         }
 
         .close-modal {
             width: 100%;
-            padding: 14px;
+            padding: 16px;
             background: linear-gradient(135deg, #ffd700, #ffed4e);
             border: none;
             border-radius: 25px;
@@ -784,6 +818,112 @@
             cursor: pointer;
             margin-top: 10px;
             font-size: 16px;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(255,215,0,0.3);
+        }
+
+        .close-modal:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255,215,0,0.4);
+        }
+
+        /* 
+        ================================================================================
+        This Area Of Code Is: Animated Scroll Indicator
+        Explanation: Pulsing golden dot with bouncing animation to indicate scrollable content
+        In Other Words: The pretty bouncing dot that shows you can scroll down in the modal
+        ================================================================================
+        */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .scroll-indicator.visible {
+            opacity: 1;
+        }
+
+        .scroll-text {
+            font-size: 10px;
+            color: rgba(255,215,0,0.8);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            animation: fadePulse 2s infinite;
+        }
+
+        .scroll-mouse {
+            width: 26px;
+            height: 40px;
+            border: 2px solid rgba(255,215,0,0.6);
+            border-radius: 13px;
+            display: flex;
+            justify-content: center;
+            padding-top: 8px;
+            position: relative;
+            background: rgba(255,215,0,0.05);
+        }
+
+        .scroll-wheel {
+            width: 4px;
+            height: 8px;
+            background: #ffd700;
+            border-radius: 2px;
+            animation: scrollBounce 1.5s infinite;
+            box-shadow: 0 0 10px rgba(255,215,0,0.8);
+        }
+
+        .scroll-arrows {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 5px;
+        }
+
+        .scroll-arrow {
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid rgba(255,215,0,0.6);
+            animation: arrowPulse 1.5s infinite;
+            margin: -2px 0;
+        }
+
+        .scroll-arrow:nth-child(2) {
+            animation-delay: 0.2s;
+            opacity: 0.6;
+        }
+
+        .scroll-arrow:nth-child(3) {
+            animation-delay: 0.4s;
+            opacity: 0.3;
+        }
+
+        @keyframes scrollBounce {
+            0%, 100% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(8px); opacity: 0.5; }
+        }
+
+        @keyframes fadePulse {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 0.4; }
+        }
+
+        @keyframes arrowPulse {
+            0%, 100% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(3px); opacity: 0.5; }
         }
 
         /* Color Vision Filters */
@@ -795,10 +935,39 @@
         .filter-tritanopia { filter: url('#tritanopia'); }
         .filter-achromatopsia { filter: grayscale(100%) brightness(1.1); }
 
+        /* Cognitive & Neurodivergent Mode Styles */
+        .autism-mode * { transition: all 0.5s ease !important; }
+        .autism-mode .glass-card { border-width: 3px; }
+        
+        .adhd-mode { font-family: 'Inter', sans-serif; }
+        .adhd-mode h1 { font-size: 36px; }
+        
+        .dyslexia-mode * { font-family: 'Inter', sans-serif; letter-spacing: 0.05em; }
+        .dyslexia-mode p { line-height: 1.8; }
+        
+        .anxiety-mode { 
+            --calm-color: #4a90e2; 
+        }
+        .anxiety-mode .glass-card {
+            border-color: rgba(74, 144, 226, 0.5);
+            box-shadow: 0 25px 50px -12px rgba(74, 144, 226, 0.2);
+        }
+        
+        .ptsd-mode {
+            animation: none !important;
+        }
+        .ptsd-mode .glass-card::before { display: none; }
+        .ptsd-mode * { animation-duration: 0s !important; transition-duration: 0.3s !important; }
+
+        .mania-mode {
+            --energy-color: #ffd700;
+        }
+
         @media (max-width: 480px) {
             .glass-card { padding: 30px 20px; }
             h1 { font-size: 32px; }
             .stats-row { flex-direction: column; gap: 8px; }
+            .accessibility-btn-container { width: 80px; height: 80px; }
         }
     </style>
     
@@ -807,14 +976,20 @@
             <filter id="deuteranomaly"><feColorMatrix type="matrix" values="0.8 0.2 0 0 0 0.258 0.742 0 0 0 0 0.142 0.858 0 0 0 0 0 1 0"/></filter>
             <filter id="deuteranopia"><feColorMatrix type="matrix" values="0.625 0.375 0 0 0 0.7 0.3 0 0 0 0 0.3 0.7 0 0 0 0 0 1 0"/></filter>
             <filter id="protanomaly"><feColorMatrix type="matrix" values="0.817 0.183 0 0 0 0.333 0.667 0 0 0 0 0.125 0.875 0 0 0 0 0 1 0"/></filter>
-            <filter id="protanopia"><feColorMatrix type="atrix" values="0.567 0.433 0 0 0 0.558 0.442 0 0 0 0 0.242 0.758 0 0 0 0 0 1 0"/></filter>
+            <filter id="protanopia"><feColorMatrix type="matrix" values="0.567 0.433 0 0 0 0.558 0.442 0 0 0 0 0.242 0.758 0 0 0 0 0 1 0"/></filter>
             <filter id="tritanomaly"><feColorMatrix type="matrix" values="0.967 0.033 0 0 0 0 0.733 0.267 0 0 0 0.183 0.817 0 0 0 0 0 1 0"/></filter>
             <filter id="tritanopia"><feColorMatrix type="matrix" values="0.95 0.05 0 0 0 0 0.433 0.567 0 0 0 0.475 0.525 0 0 0 0 0 1 0"/></filter>
         </defs>
     </svg>
 </head>
 <body>
-    <!-- Video Background -->
+    <!-- 
+    ================================================================================
+    This Area Of Code Is: Background Layer Management
+    Explanation: Video background with image fallback for performance
+    In Other Words: Shows video if it loads, otherwise shows the church picture
+    ================================================================================
+    -->
     <div class="video-background" id="videoBg" style="display: none;">
         <video autoplay muted loop playsinline id="bgVideo">
             <source src="https://github.com/supercodingninja/GetWell/releases/download/v1.0-videos/church-interior.mp4" type="video/mp4">
@@ -826,14 +1001,20 @@
         <div class="image-overlay"></div>
     </div>
 
-    <!-- Accessibility Button with Curved Text -->
-    <div class="accessibility-btn-container" onclick="openAccessibilityModal()">
+    <!-- 
+    ================================================================================
+    This Area Of Code Is: Accessibility Options Button
+    Explanation: SVG circular button with curved text paths for "ACCESSIBILITY" (top) and "OPTIONS" (bottom)
+    In Other Words: The big wheelchair icon button with words curving around it
+    ================================================================================
+    -->
+    <div class="accessibility-btn-container" onclick="openAccessibilityModal()" role="button" aria-label="Open Accessibility Options">
         <svg class="accessibility-btn-svg" viewBox="0 0 100 100">
-            <!-- Background Circle -->
-            <circle class="accessibility-bg" cx="50" cy="50" r="35" />
+            <!-- Background Circle with Glass Effect -->
+            <circle class="accessibility-bg" cx="50" cy="50" r="42" />
             
             <!-- Top Arc Text: "ACCESSIBILITY" -->
-            <path id="topArc" d="M 20 50 A 30 30 0 0 1 80 50" fill="none" />
+            <path id="topArc" d="M 15 50 A 35 35 0 0 1 85 50" fill="none" />
             <text class="curved-text-top">
                 <textPath href="#topArc" startOffset="50%" text-anchor="middle">
                     ACCESSIBILITY
@@ -841,10 +1022,10 @@
             </text>
             
             <!-- Center Icon -->
-            <text x="50" y="48" class="accessibility-icon" text-anchor="middle" dominant-baseline="central">♿</text>
+            <text x="50" y="52" class="accessibility-icon" text-anchor="middle" dominant-baseline="central">♿</text>
             
             <!-- Bottom Arc Text: "OPTIONS" -->
-            <path id="bottomArc" d="M 25 55 A 28 28 0 0 0 75 55" fill="none" />
+            <path id="bottomArc" d="M 18 55 A 32 32 0 0 0 82 55" fill="none" />
             <text class="curved-text-bottom">
                 <textPath href="#bottomArc" startOffset="50%" text-anchor="middle">
                     OPTIONS
@@ -853,11 +1034,17 @@
         </svg>
     </div>
 
-    <!-- Language Selector -->
+    <!-- 
+    ================================================================================
+    This Area Of Code Is: Language Selection Interface
+    Explanation: Crystal clear glass dropdown for selecting translation language
+    In Other Words: The language picker with transparent glass effect (no frost)
+    ================================================================================
+    -->
     <div class="language-selector">
         <div class="lang-dropdown">
             <span id="currentFlag">🇺🇸</span>
-            <select id="languageSelect" onchange="changeLanguage(this.value)">
+            <select id="languageSelect" onchange="changeLanguage(this.value)" aria-label="Select Language">
                 <option value="en">English</option>
                 <option value="es">Español</option>
                 <option value="fr">Français</option>
@@ -885,13 +1072,18 @@
                 <span class="gold-text" id="cardsCount">100</span>
             </div>
 
-            <!-- Open Card Button -->
-            <a href="./public/app.html" class="open-card-btn">
-                <span>📂</span>
+            <!-- 
+            ================================================================================
+            This Area Of Code Is: Primary Call-to-Action Button
+            Explanation: Text-only button to enter the application (no icons)
+            In Other Words: The main "Open Card" button - clean text, no folder icon
+            ================================================================================
+            -->
+            <a href="./public/app.html" class="open-card-btn" role="button">
                 <span>Open Card</span>
             </a>
 
-            <!-- Stats Row - Two Glass Pills -->
+            <!-- Stats Row -->
             <div class="stats-row">
                 <div class="stat-pill">
                     <span style="color: rgba(255,255,255,0.7); font-size: 13px;">Total Visitors:</span>
@@ -939,24 +1131,74 @@
         </div>
     </main>
 
-    <!-- Accessibility Modal -->
-    <div class="accessibility-modal" id="accessibilityModal">
+    <!-- 
+    ================================================================================
+    This Area Of Code Is: Universal Accessibility Modal Panel
+    Explanation: Comprehensive accessibility settings covering Vision, Hearing, Motor, Neurodivergent, and Mental Health needs
+    In Other Words: The big settings panel with options for Autism, ADHD, PTSD, Color Blindness, etc.
+    ================================================================================
+    -->
+    <div class="accessibility-modal" id="accessibilityModal" role="dialog" aria-label="Accessibility Options">
         <div class="modal-content" id="modalContent">
             <div style="text-align: center; margin-bottom: 25px;">
-                <h2 style="color: #ffd700; font-family: 'Playfair Display', serif;">♿ Universal Access</h2>
-                <p style="color: rgba(255,255,255,0.7); font-size: 13px;">Customizable options for every ability</p>
+                <h2 style="color: #ffd700; font-family: 'Playfair Display', serif; font-size: 24px;">♿ Universal Access</h2>
+                <p style="color: rgba(255,255,255,0.7); font-size: 13px;">Customizable options for every ability and need</p>
             </div>
             
+            <!-- Neurodivergent Section -->
+            <div class="access-category">
+                <h3><span>🧠</span> Neurodivergent</h3>
+                <div class="access-toggle">
+                    <span>🧩 Autism-Friendly Mode (Calm)</span>
+                    <div class="toggle-switch" onclick="toggleFeature(this, 'autism')" role="switch" aria-checked="false"></div>
+                </div>
+                <div class="access-toggle">
+                    <span>⚡ ADHD Support (Focus)</span>
+                    <div class="toggle-switch" onclick="toggleFeature(this, 'adhd')" role="switch" aria-checked="false"></div>
+                </div>
+                <div class="access-toggle">
+                    <span>📖 Dyslexia-Friendly Font</span>
+                    <div class="toggle-switch" onclick="toggleFeature(this, 'dyslexia')" role="switch" aria-checked="false"></div>
+                </div>
+                <div class="access-toggle">
+                    <span>🎯 Dyspraxia Support</span>
+                    <div class="toggle-switch" onclick="toggleFeature(this, 'dyspraxia')" role="switch" aria-checked="false"></div>
+                </div>
+            </div>
+
+            <!-- Mental Health Section -->
+            <div class="access-category">
+                <h3><span>💙</span> Mental Health</h3>
+                <div class="access-toggle">
+                    <span>🌊 Anxiety Relief Mode</span>
+                    <div class="toggle-switch" onclick="toggleFeature(this, 'anxiety')" role="switch" aria-checked="false"></div>
+                </div>
+                <div class="access-toggle">
+                    <span>🎖️ PTSD Support (No Flash)</span>
+                    <div class="toggle-switch" onclick="toggleFeature(this, 'ptsd')" role="switch" aria-checked="false"></div>
+                </div>
+                <div class="access-toggle">
+                    <span>⚖️ Bipolar/Mania Support</span>
+                    <div class="toggle-switch" onclick="toggleFeature(this, 'mania')" role="switch" aria-checked="false"></div>
+                </div>
+                <div class="access-toggle">
+                    <span>🧘 Cognitive Load Reduction</span>
+                    <div class="toggle-switch" onclick="toggleFeature(this, 'cognitive')" role="switch" aria-checked="false"></div>
+                </div>
+            </div>
+            
+            <!-- Vision Section -->
             <div class="access-category">
                 <h3><span>👁️</span> Vision</h3>
                 <div class="access-toggle">
                     <span>🔍 Screen Reader Mode</span>
-                    <div class="toggle-switch" onclick="toggleFeature(this, 'screen-reader')"></div>
+                    <div class="toggle-switch" onclick="toggleFeature(this, 'screen-reader')" role="switch" aria-checked="false"></div>
                 </div>
                 <div class="access-toggle">
                     <span>🔆 High Contrast</span>
-                    <div class="toggle-switch" onclick="toggleFeature(this, 'high-contrast')"></div>
+                    <div class="toggle-switch" onclick="toggleFeature(this, 'high-contrast')" role="switch" aria-checked="false"></div>
                 </div>
+                <p style="color: rgba(255,255,255,0.6); font-size: 11px; margin: 10px 0 8px 0;">Color Vision Types:</p>
                 <div class="access-grid">
                     <button class="access-btn" onclick="applyFilter('deuteranomaly')">Deuteranomaly</button>
                     <button class="access-btn" onclick="applyFilter('deuteranopia')">Deuteranopia</button>
@@ -965,39 +1207,80 @@
                     <button class="access-btn" onclick="applyFilter('tritanomaly')">Tritanomaly</button>
                     <button class="access-btn" onclick="applyFilter('tritanopia')">Tritanopia</button>
                     <button class="access-btn" onclick="applyFilter('achromatopsia')">Achromatopsia</button>
-                    <button class="access-btn" onclick="applyFilter('none')">Normal Vision</button>
+                    <button class="access-btn active" onclick="applyFilter('none')">Normal Vision</button>
                 </div>
             </div>
             
+            <!-- Hearing Section -->
             <div class="access-category">
                 <h3><span>👂</span> Hearing</h3>
                 <div class="access-toggle">
-                    <span>🔇 Sign Language Mode</span>
-                    <div class="toggle-switch" onclick="toggleFeature(this, 'sign-language')"></div>
+                    <span>🤟 Sign Language Mode</span>
+                    <div class="toggle-switch" onclick="toggleFeature(this, 'sign-language')" role="switch" aria-checked="false"></div>
                 </div>
                 <div class="access-toggle">
                     <span>📢 Visual Alerts</span>
-                    <div class="toggle-switch" onclick="toggleFeature(this, 'visual-alerts')"></div>
+                    <div class="toggle-switch" onclick="toggleFeature(this, 'visual-alerts')" role="switch" aria-checked="false"></div>
+                </div>
+                <div class="access-toggle">
+                    <span>📋 Captions Always On</span>
+                    <div class="toggle-switch" onclick="toggleFeature(this, 'captions')" role="switch" aria-checked="false"></div>
                 </div>
             </div>
             
+            <!-- Motor & Physical Section -->
             <div class="access-category">
                 <h3><span>✋</span> Motor & Physical</h3>
                 <div class="access-toggle">
                     <span>🎯 Large Click Targets</span>
-                    <div class="toggle-switch" onclick="toggleFeature(this, 'large-targets')"></div>
+                    <div class="toggle-switch" onclick="toggleFeature(this, 'large-targets')" role="switch" aria-checked="false"></div>
                 </div>
                 <div class="access-toggle">
-                    <span>⌨️ Keyboard Navigation</span>
-                    <div class="toggle-switch" onclick="toggleFeature(this, 'keyboard-only')"></div>
+                    <span>⌨️ Keyboard Navigation Only</span>
+                    <div class="toggle-switch" onclick="toggleFeature(this, 'keyboard-only')" role="switch" aria-checked="false"></div>
+                </div>
+                <div class="access-toggle">
+                    <span>⏱️ Extended Time</span>
+                    <div class="toggle-switch" onclick="toggleFeature(this, 'extended-time')" role="switch" aria-checked="false"></div>
+                </div>
+                <div class="access-toggle">
+                    <span>🖱️ Switch Control Support</span>
+                    <div class="toggle-switch" onclick="toggleFeature(this, 'switch-control')" role="switch" aria-checked="false"></div>
+                </div>
+            </div>
+
+            <!-- Speech Section -->
+            <div class="access-category">
+                <h3><span>💬</span> Speech & Communication</h3>
+                <div class="access-toggle">
+                    <span>🗣️ Speech-to-Text Input</span>
+                    <div class="toggle-switch" onclick="toggleFeature(this, 'speech-input')" role="switch" aria-checked="false"></div>
+                </div>
+                <div class="access-toggle">
+                    <span>📖 Simplified Language</span>
+                    <div class="toggle-switch" onclick="toggleFeature(this, 'simple-language')" role="switch" aria-checked="false"></div>
                 </div>
             </div>
             
             <button class="close-modal" onclick="closeAccessibilityModal()">Close Settings</button>
             
-            <!-- Floating Scroll Indicator -->
+            <!-- 
+            ================================================================================
+            This Area Of Code Is: Animated Scroll Indicator
+            Explanation: Visual cue indicating more content below in the modal
+            In Other Words: The bouncing mouse animation at the bottom of the settings panel
+            ================================================================================
+            -->
             <div class="scroll-indicator" id="scrollIndicator">
-                <div class="scroll-dot"></div>
+                <span class="scroll-text">Scroll</span>
+                <div class="scroll-mouse">
+                    <div class="scroll-wheel"></div>
+                </div>
+                <div class="scroll-arrows">
+                    <div class="scroll-arrow"></div>
+                    <div class="scroll-arrow"></div>
+                    <div class="scroll-arrow"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -1012,7 +1295,13 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     
     <script>
-        // Firebase Configuration - ENCRYPTED
+        /*
+        ================================================================================
+        This Area Of Code Is: Firebase Encrypted Configuration
+        Explanation: Base64 encoded Firebase credentials for security
+        In Other Words: Hidden API keys to keep your database safe
+        ================================================================================
+        */
         const encryptedConfig = {
             apiKey: "QUl6YVN5RGllVkE1eV9wYWczNVpWaDhQOFB1bDY4c1pfMnF0RUdV",
             authDomain: "Z3Jvd2luZy1nZXQtd2VsbC1jYXJkLmZpcmViYXNlYXBwLmNvbQ==",
@@ -1036,7 +1325,6 @@
         let db;
         let firebaseInitialized = false;
         
-        // Initialize Firebase with error handling
         try {
             firebase.initializeApp(firebaseConfig);
             db = firebase.firestore();
@@ -1044,11 +1332,16 @@
             console.log('Firebase initialized successfully');
         } catch (e) {
             console.error('Firebase initialization failed:', e);
-            // Show fallback counter
             document.getElementById('counterDigits').innerHTML = '<div class="digit">1</div>';
         }
 
-        // Award-Winning Visitor Counter with Liquid Animation
+        /*
+        ================================================================================
+        This Area Of Code Is: Global Visitor Counter
+        Explanation: Tracks total site visits using Firebase atomic increment
+        In Other Words: Counts how many people visited the site worldwide
+        ================================================================================
+        */
         async function trackGlobalVisitor() {
             const counterElement = document.getElementById('counterDigits');
             const loader = document.getElementById('liquidLoader');
@@ -1059,37 +1352,28 @@
                 return;
             }
 
-            // Show liquid loader
             loader.classList.add('active');
             counterElement.style.opacity = '0';
 
             try {
                 const counterRef = db.collection('stats').doc('globalVisitors');
-                
-                // Atomically increment counter
                 await counterRef.update({
                     count: firebase.firestore.FieldValue.increment(1),
                     lastVisit: new Date().toISOString(),
                     lastVisitDevice: navigator.userAgent.slice(0, 50)
                 });
                 
-                // Get updated count
                 const doc = await counterRef.get();
                 const count = doc.data()?.count || 1;
                 
-                // Hide loader, show number with animation
                 setTimeout(() => {
                     loader.classList.remove('active');
                     counterElement.style.opacity = '1';
                     animateCounter(count);
                 }, 800);
                 
-                console.log('Global visitors:', count);
-                
             } catch (error) {
                 console.error('Counter error:', error);
-                
-                // If document doesn't exist, create it
                 if (error.code === 'not-found' || error.message?.includes('No document')) {
                     try {
                         await db.collection('stats').doc('globalVisitors').set({
@@ -1097,15 +1381,12 @@
                             created: new Date().toISOString(),
                             lastVisit: new Date().toISOString()
                         });
-                        
                         setTimeout(() => {
                             loader.classList.remove('active');
                             counterElement.style.opacity = '1';
                             animateCounter(1);
                         }, 800);
-                        
                     } catch (e) {
-                        console.error('Failed to create counter:', e);
                         showFallbackCounter();
                     }
                 } else {
@@ -1117,7 +1398,6 @@
         function showFallbackCounter() {
             const loader = document.getElementById('liquidLoader');
             const counterElement = document.getElementById('counterDigits');
-            
             setTimeout(() => {
                 loader.classList.remove('active');
                 counterElement.style.opacity = '1';
@@ -1128,18 +1408,22 @@
         function animateCounter(number) {
             const counterElement = document.getElementById('counterDigits');
             const digits = number.toString().split('');
-            
             let html = '';
             digits.forEach((digit, index) => {
                 html += `<div class="digit" style="animation: slideIn 0.5s ease ${index * 0.1}s both;">${digit}</div>`;
             });
-            
             counterElement.innerHTML = html;
             counterElement.style.flexDirection = 'row';
             counterElement.style.gap = '2px';
         }
 
-        // Personal Visit Counter
+        /*
+        ================================================================================
+        This Area Of Code Is: Personal Visit Tracker
+        Explanation: LocalStorage-based counter for individual user visits
+        In Other Words: Counts how many times YOU specifically visited
+        ================================================================================
+        */
         function trackPersonalVisits() {
             try {
                 let visits = parseInt(localStorage.getItem('gw_personal_visits') || '0');
@@ -1157,7 +1441,13 @@
             }
         }
 
-        // Video Background
+        /*
+        ================================================================================
+        This Area Of Code Is: Video Background Manager
+        Explanation: Handles video loading with image fallback for performance
+        In Other Words: Tries to play video, shows picture if video fails
+        ================================================================================
+        */
         function initVideoBackground() {
             const video = document.getElementById('bgVideo');
             const videoBg = document.getElementById('videoBg');
@@ -1183,7 +1473,13 @@
             }, 3000);
         }
 
-        // Language Switcher
+        /*
+        ================================================================================
+        This Area Of Code Is: Internationalization System
+        Explanation: Multi-language support with flag display
+        In Other Words: Changes the text to Spanish, French, etc.
+        ================================================================================
+        */
         const translations = {
             en: { title: "Get Well Card", subtitle: "Your Church Family Loves You", godBless: "God Bless You", btn: "Open Card", cards: "100" },
             es: { title: "Tarjeta GetWell", subtitle: "Tu Familia de la Iglesia te Ama", godBless: "Dios te Bendiga", btn: "Abrir Tarjeta", cards: "100" },
@@ -1205,12 +1501,18 @@
                 document.querySelector('h1').textContent = t.title;
                 document.querySelector('.subtitle').textContent = t.subtitle;
                 document.querySelector('.god-bless-top').textContent = t.godBless;
-                document.querySelector('.open-card-btn span:last-child').textContent = t.btn;
+                document.querySelector('.open-card-btn span').textContent = t.btn;
                 document.getElementById('cardsCount').textContent = t.cards;
             }
         }
 
-        // Who Tooltip
+        /*
+        ================================================================================
+        This Area Of Code Is: Audience Tooltip Toggle
+        Explanation: Shows/hides the "Who this is for" information popup
+        In Other Words: Click to see who the app helps (Veterans, PTSD, etc.)
+        ================================================================================
+        */
         function toggleWhoTooltip() {
             const tooltip = document.getElementById('whoTooltip');
             tooltip.classList.toggle('show');
@@ -1227,7 +1529,13 @@
             }
         });
 
-        // Accessibility Modal with Scroll Indicator
+        /*
+        ================================================================================
+        This Area Of Code Is: Accessibility Modal Controller
+        Explanation: Opens/closes the comprehensive accessibility panel with scroll detection
+        In Other Words: The popup that shows all the disability options
+        ================================================================================
+        */
         function openAccessibilityModal() {
             document.getElementById('accessibilityModal').classList.add('show');
             checkScroll();
@@ -1244,7 +1552,6 @@
             if (modalContent.scrollHeight > modalContent.clientHeight) {
                 indicator.classList.add('visible');
                 
-                // Hide indicator when scrolled to bottom
                 modalContent.addEventListener('scroll', () => {
                     if (modalContent.scrollTop + modalContent.clientHeight >= modalContent.scrollHeight - 20) {
                         indicator.classList.remove('visible');
@@ -1255,7 +1562,13 @@
             }
         }
 
-        // Toggle Features
+        /*
+        ================================================================================
+        This Area Of Code Is: Accessibility Feature Toggles
+        Explanation: Applies specific CSS classes and saves preferences for accessibility modes
+        In Other Words: Turns on Autism mode, ADHD mode, Color filters, etc.
+        ================================================================================
+        */
         function toggleFeature(element, feature) {
             element.classList.toggle('active');
             const isActive = element.classList.contains('active');
@@ -1267,6 +1580,17 @@
             } else if (feature === 'high-contrast') {
                 document.body.classList.remove('high-contrast');
             }
+
+            // Announce change to screen readers
+            const announcement = document.createElement('div');
+            announcement.setAttribute('role', 'status');
+            announcement.setAttribute('aria-live', 'polite');
+            announcement.className = 'sr-only';
+            announcement.style.position = 'absolute';
+            announcement.style.left = '-10000px';
+            announcement.textContent = feature + ' mode ' + (isActive ? 'enabled' : 'disabled');
+            document.body.appendChild(announcement);
+            setTimeout(() => document.body.removeChild(announcement), 1000);
         }
 
         function applyFilter(filterType) {
@@ -1282,22 +1606,44 @@
             }
             
             localStorage.setItem('gw_color_filter', filterType);
+            
+            // Update active button state
+            document.querySelectorAll('.access-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
         }
 
-        // Initialization
+        /*
+        ================================================================================
+        This Area Of Code Is: Application Initialization
+        Explanation: Sets up all systems when page loads (Firebase, counters, video, saved settings)
+        In Other Words: Starts everything up when you open the page
+        ================================================================================
+        */
         document.addEventListener('DOMContentLoaded', function() {
             initVideoBackground();
             trackGlobalVisitor();
             trackPersonalVisits();
             
-            // Load saved settings
+            // Load saved accessibility settings
             const savedFilter = localStorage.getItem('gw_color_filter');
             if (savedFilter && savedFilter !== 'none') {
                 document.body.classList.add('filter-' + savedFilter);
             }
+
+            // Load saved toggles
+            ['autism', 'adhd', 'dyslexia', 'dyspraxia', 'anxiety', 'ptsd', 'mania', 'cognitive',
+             'screen-reader', 'high-contrast', 'sign-language', 'visual-alerts', 'captions',
+             'large-targets', 'keyboard-only', 'extended-time', 'switch-control', 
+             'speech-input', 'simple-language'].forEach(feature => {
+                if (localStorage.getItem('gw_access_' + feature) === 'true') {
+                    document.body.classList.add(feature + '-mode');
+                }
+            });
         });
 
-        // Service Worker
+        // Service Worker Registration
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('./public/sw.js').catch(() => {});
         }
