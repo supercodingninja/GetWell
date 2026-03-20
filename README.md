@@ -95,6 +95,7 @@
 | ⌨️ **Keyboard Nav** | Arrow keys, spacebar, escape for full navigation |
 | 🎨 **Glass Morphism** | Modern frosted glass UI with video backgrounds |
 | 👤 **Personal Touch** | Every message shows author's first name and location |
+```
 
 ---
 
@@ -133,6 +134,7 @@
 ├── 📋 firestore.rules    # Database security
 ├── 🎬 videos/            # Background videos (GitHub Releases)
 └── 📸 screenshots/       # App screenshots
+```
 
 ---
 
