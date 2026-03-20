@@ -47,7 +47,7 @@ In Other Words: The heart of the app - bringing joy to everyone everywhere
 */
 
 const APP_MISSION = {
-    name: "Get Well Card",
+    name: "GetWell Card",
     tagline: "Universal Wellness for Everyone",
     audience: ["PTSD survivors", "Mental health warriors", "Hospital patients", "Prison communities", "Anyone having a bad day", "Global community"],
     values: ["Clean humor", "Spiritual encouragement", "Inclusive support", "Family-friendly content", "No political division"],
