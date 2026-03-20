@@ -12,6 +12,38 @@
     <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
+    <!-- 
+    ================================================================================
+    This Area Of Code Is: SVG Color Vision Filters (Phase 6)
+    Explanation: Medical-grade color matrix filters for 9 types of color vision deficiency
+    In Other Words: The technology that helps color blind users see the app better
+    ================================================================================
+    -->
+    <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" aria-hidden="true">
+        <defs>
+            <!-- Red-Green Deficiencies -->
+            <filter id="deuteranomaly">
+                <feColorMatrix type="matrix" values="0.8 0.2 0 0 0  0.258 0.742 0 0 0  0 0.142 0.858 0 0  0 0 0 1 0"/>
+            </filter>
+            <filter id="deuteranopia">
+                <feColorMatrix type="matrix" values="0.625 0.375 0 0 0  0.7 0.3 0 0 0  0 0.3 0.7 0 0  0 0 0 1 0"/>
+            </filter>
+            <filter id="protanomaly">
+                <feColorMatrix type="matrix" values="0.817 0.183 0 0 0  0.333 0.667 0 0 0  0 0.125 0.875 0 0  0 0 0 1 0"/>
+            </filter>
+            <filter id="protanopia">
+                <feColorMatrix type="matrix" values="0.567 0.433 0 0 0  0.558 0.442 0 0 0  0 0.242 0.758 0 0  0 0 0 1 0"/>
+            </filter>
+            <!-- Blue-Yellow Deficiencies -->
+            <filter id="tritanomaly">
+                <feColorMatrix type="matrix" values="0.967 0.033 0 0 0  0 0.733 0.267 0 0  0 0.183 0.817 0 0  0 0 0 1 0"/>
+            </filter>
+            <filter id="tritanopia">
+                <feColorMatrix type="matrix" values="0.95 0.05 0 0 0  0 0.433 0.567 0 0  0 0.475 0.525 0 0  0 0 0 1 0"/>
+            </filter>
+        </defs>
+    </svg>
+
     <!-- Video Background -->
     <div class="video-background">
         <video autoplay muted loop playsinline id="appBgVideo">
@@ -63,6 +95,9 @@
             <button class="menu-item" onclick="goHome()">
                 <span>🏠</span> Home
             </button>
+            <button class="menu-item" onclick="openAccessibilityModal()">
+                <span>♿</span> Accessibility Options
+            </button>
             <div class="menu-divider"></div>
             <p class="menu-label">Jump to Card (100 Total)</p>
             <div class="card-jumps" id="cardJumps">
@@ -87,6 +122,17 @@
                     <div class="author-info" id="authorInfo"></div>
                     <span class="card-counter" id="cardCounter">Card 1 of 100</span>
                 </div>
+            </div>
+            
+            <!-- 
+            ================================================================================
+            This Area Of Code Is: Scripture Banner (Phase 7)
+            Explanation: Displays KJV scriptures every 10th card as spiritual encouragement
+            In Other Words: The golden banner showing Bible verses on cards 10, 20, 30...
+            ================================================================================
+            -->
+            <div class="scripture-banner" id="scriptureBanner" aria-live="polite">
+                <!-- Populated by JavaScript -->
             </div>
         </div>
 
@@ -121,7 +167,13 @@
         <a href="#" class="guidelines-link" onclick="showGuidelines(); return false;">Community Guidelines</a>
     </main>
 
-    <!-- Add Joke Modal - PHASE 5: Country checked by default -->
+    <!-- 
+    ================================================================================
+    This Area Of Code Is: Add Joke Modal - PHASE 5: Country checked by default
+    Explanation: Form for submitting jokes with location checkboxes - only Country checked initially
+    In Other Words: The popup form with City/State/Country checkboxes where only Country starts checked
+    ================================================================================
+    -->
     <div class="modal" id="jokeModal">
         <div class="modal-content glass-modal">
             <div class="modal-header">
@@ -199,6 +251,75 @@
                 <p>All submissions are checked by our moderation system.</p>
                 <button class="ok-btn" onclick="closeGuidelines()">I Understand</button>
             </div>
+        </div>
+    </div>
+
+    <!-- 
+    ================================================================================
+    This Area Of Code Is: Color Vision Accessibility Modal (Phase 6)
+    Explanation: Comprehensive accessibility panel with 9 color vision deficiency options
+    In Other Words: The popup with color blindness filters to help users see better
+    ================================================================================
+    -->
+    <div class="modal accessibility-modal" id="accessibilityModal" role="dialog" aria-label="Accessibility Options">
+        <div class="modal-content accessibility-content">
+            <div class="accessibility-header">
+                <h3>♿ Accessibility Options</h3>
+                <p>Customize your viewing experience</p>
+                <button class="close-modal" onclick="closeAccessibilityModal()" aria-label="Close accessibility options" style="position: absolute; top: 20px; right: 20px;">×</button>
+            </div>
+
+            <!-- Color Vision Section -->
+            <div class="access-section">
+                <div class="access-section-title">👁️ Color Vision</div>
+                <div class="vision-grid">
+                    <div class="vision-option">
+                        <input type="radio" name="colorVision" id="cv-normal" value="normal" checked onchange="setColorVision('normal')">
+                        <label for="cv-normal" class="vision-label">Normal Vision</label>
+                    </div>
+                    <!-- Red-Green Deficiencies -->
+                    <div class="vision-option">
+                        <input type="radio" name="colorVision" id="cv-deuteranomaly" value="deuteranomaly" onchange="setColorVision('deuteranomaly')">
+                        <label for="cv-deuteranomaly" class="vision-label">Deuteranomaly</label>
+                    </div>
+                    <div class="vision-option">
+                        <input type="radio" name="colorVision" id="cv-deuteranopia" value="deuteranopia" onchange="setColorVision('deuteranopia')">
+                        <label for="cv-deuteranopia" class="vision-label">Deuteranopia</label>
+                    </div>
+                    <div class="vision-option">
+                        <input type="radio" name="colorVision" id="cv-protanomaly" value="protanomaly" onchange="setColorVision('protanomaly')">
+                        <label for="cv-protanomaly" class="vision-label">Protanomaly</label>
+                    </div>
+                    <div class="vision-option">
+                        <input type="radio" name="colorVision" id="cv-protanopia" value="protanopia" onchange="setColorVision('protanopia')">
+                        <label for="cv-protanopia" class="vision-label">Protanopia</label>
+                    </div>
+                    <!-- Blue-Yellow Deficiencies -->
+                    <div class="vision-option">
+                        <input type="radio" name="colorVision" id="cv-tritanomaly" value="tritanomaly" onchange="setColorVision('tritanomaly')">
+                        <label for="cv-tritanomaly" class="vision-label">Tritanomaly</label>
+                    </div>
+                    <div class="vision-option">
+                        <input type="radio" name="colorVision" id="cv-tritanopia" value="tritanopia" onchange="setColorVision('tritanopia')">
+                        <label for="cv-tritanopia" class="vision-label">Tritanopia</label>
+                    </div>
+                    <!-- Monochromacy -->
+                    <div class="vision-option">
+                        <input type="radio" name="colorVision" id="cv-achromatopsia" value="achromatopsia" onchange="setColorVision('achromatopsia')">
+                        <label for="cv-achromatopsia" class="vision-label">Achromatopsia</label>
+                    </div>
+                    <div class="vision-option">
+                        <input type="radio" name="colorVision" id="cv-cone" value="cone-monochromacy" onchange="setColorVision('cone-monochromacy')">
+                        <label for="cv-cone" class="vision-label">Cone Monochromacy</label>
+                    </div>
+                    <div class="vision-option">
+                        <input type="radio" name="colorVision" id="cv-blue-cone" value="blue-cone-monochromacy" onchange="setColorVision('blue-cone-monochromacy')">
+                        <label for="cv-blue-cone" class="vision-label">Blue Cone Mono</label>
+                    </div>
+                </div>
+            </div>
+
+            <button class="ok-btn" onclick="closeAccessibilityModal()">Close Settings</button>
         </div>
     </div>
 
