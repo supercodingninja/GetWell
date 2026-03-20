@@ -12,7 +12,7 @@
 </h1>
 
 <p align="center">
-  <em>"A merry heart doeth good like a medicine" - Proverbs 17:22</em>
+  <em>"A merry heart doeth good like a medicine: but a broken spirit drieth the bones. — Proverbs 17:22 KJV</em>
 </p>
 
 <p align="center">
