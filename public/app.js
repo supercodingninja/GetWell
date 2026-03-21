@@ -43,7 +43,7 @@ This Area Of Code Is: Complete Card Dataset (100 Cards - 85 Jokes, 10 Scriptures
 */
 
 const defaultCards = [
-    // JOKES 1-85 (with punchlines)
+    // JOKES 1-85 (with punchlines - HIDDEN by default, click Show Punchline to reveal)
     { type: 'joke', icon: '🧪', setup: "What do you call a fake noodle?", punchline: "An impasta!", author: null },
     { type: 'joke', icon: '🐄', setup: "What do you call a sleeping bull?", punchline: "A bulldozer!", author: null },
     { type: 'joke', icon: '🍊', setup: "Why did the orange stop?", punchline: "It ran out of juice!", author: null },
@@ -137,7 +137,7 @@ const defaultCards = [
     { type: 'joke', icon: '🧊', setup: "Why did the ice cube break up with the water?", punchline: "It needed some space!", author: null },
     { type: 'joke', icon: '🍩', setup: "Why did the donut go to the dentist?", punchline: "It needed a filling!", author: null },
     
-    // SCRIPTURES 86-95 (no punchlines)
+    // SCRIPTURES 86-95 (no punchlines - show setup only with reference)
     { type: 'scripture', icon: '✨', setup: "The LORD is my shepherd; I shall not want. He maketh me to lie down in green pastures: he leadeth me beside the still waters.", punchline: null, reference: "Psalm 23:1-3", author: null },
     { type: 'scripture', icon: '🕊️', setup: "The LORD is my light and my salvation; whom shall I fear? the LORD is the strength of my life; of whom shall I be afraid?", punchline: null, reference: "Psalm 27:1", author: null },
     { type: 'scripture', icon: '💙', setup: "The righteous cry, and the LORD heareth, and delivereth them out of all their troubles. The LORD is nigh unto them that are of a broken heart.", punchline: null, reference: "Psalm 34:17-18", author: null },
@@ -164,8 +164,8 @@ let state = {
     autoSpeed: 6000,
     autoInterval: null,
     personalVisits: 1,
-    punchlineVisible: false,  // Track if punchline is currently shown
-    onlineUsers: 3  // Simulated online users count
+    punchlineVisible: false,  // HIDDEN by default
+    onlineUsers: 3
 };
 
 /*
@@ -229,7 +229,7 @@ class VideoBackgroundManager {
 
 /*
 ================================================================================
-This Area Of Code Is: Metrics and Online Users System
+This Area Of Code Is: Metrics and Online Users System (RESTORED)
 ================================================================================
 */
 
@@ -250,9 +250,9 @@ function updatePersonalVisitCounter() {
 }
 
 function updateOnlineUsers() {
-    // Simulate fluctuating online users (2-8 range)
+    // Simulate realistic fluctuating online users
     const baseUsers = 3;
-    const variance = Math.floor(Math.random() * 5) - 2; // -2 to +2
+    const variance = Math.floor(Math.random() * 5) - 2;
     state.onlineUsers = Math.max(2, Math.min(8, baseUsers + variance));
     
     const onlineEl = document.getElementById('onlineUsers');
@@ -297,7 +297,7 @@ async function updateGlobalVisitorCount() {
 
 /*
 ================================================================================
-This Area Of Code Is: Punchline Toggle System (RESTORED)
+This Area Of Code Is: Show/Hide Punchline System (RESTORED)
 ================================================================================
 */
 
@@ -320,10 +320,12 @@ function updatePunchlineButton() {
     // Only show button for jokes
     if (card.type !== 'joke') {
         btn.style.display = 'none';
+        btn.style.visibility = 'hidden';
         return;
     }
     
     btn.style.display = 'flex';
+    btn.style.visibility = 'visible';
     
     if (state.punchlineVisible) {
         btn.innerHTML = '<span>👁️</span> Hide Punchline';
@@ -462,7 +464,7 @@ function loadSavedAccessibilitySettings() {
 
 /*
 ================================================================================
-This Area Of Code Is: Card Rendering System (with Punchline Toggle)
+This Area Of Code Is: Card Rendering System (Punchline Hidden by Default)
 ================================================================================
 */
 
@@ -496,10 +498,10 @@ function renderCard() {
             cardBadge.style.color = 'rgba(255, 255, 255, 0.9)';
         }
         
-        // Setup text (all types have this)
+        // Setup text (all types)
         setupText.textContent = card.setup;
         
-        // Punchline logic - ONLY for jokes, AND only if visible
+        // Punchline logic - HIDDEN by default for jokes
         if (card.type === 'joke' && card.punchline) {
             if (state.punchlineVisible) {
                 punchlineText.textContent = card.punchline;
@@ -526,7 +528,7 @@ function renderCard() {
         }
         
         updateCounter();
-        updatePunchlineButton();  // Update the button state
+        updatePunchlineButton();
         cardIcon.style.transform = 'scale(1)';
     }, 150);
 }
@@ -540,21 +542,21 @@ function updateCounter() {
 
 function nextCard() {
     state.currentIndex = (state.currentIndex + 1) % state.cards.length;
-    state.punchlineVisible = false;  // Reset punchline visibility on card change
+    state.punchlineVisible = false;  // Reset on card change
     renderCard();
     updateCardJumps();
 }
 
 function previousCard() {
     state.currentIndex = (state.currentIndex - 1 + state.cards.length) % state.cards.length;
-    state.punchlineVisible = false;  // Reset punchline visibility on card change
+    state.punchlineVisible = false;  // Reset on card change
     renderCard();
     updateCardJumps();
 }
 
 function jumpToCard(index) {
     state.currentIndex = index;
-    state.punchlineVisible = false;  // Reset punchline visibility
+    state.punchlineVisible = false;  // Reset on jump
     renderCard();
     updateCardJumps();
     toggleMenu();
@@ -838,12 +840,10 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('[App] Initializing GetWell Card - Universal Wellness App...');
     console.log(`[App] Total cards in deck: ${state.cards.length}`);
     
-    // Initialize systems
     updatePersonalVisitCounter();
-    updateOnlineUsers();  // Set initial online users
+    updateOnlineUsers();
     updateGlobalVisitorCount();
     
-    // Update online users every 30 seconds
     setInterval(updateOnlineUsers, 30000);
     
     loadSavedAccessibilitySettings();
@@ -852,7 +852,6 @@ document.addEventListener('DOMContentLoaded', () => {
     renderCard();
     updateCardJumps();
     
-    // Keyboard controls
     document.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowRight') nextCard();
         if (e.key === 'ArrowLeft') previousCard();
