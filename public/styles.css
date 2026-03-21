@@ -45,6 +45,7 @@ html, body {
 body {
     position: relative;
     min-height: 100dvh;
+    min-height: -webkit-fill-available;
 }
 
 .sr-only {
@@ -61,7 +62,7 @@ body {
 
 /*
 ================================================================================
-This Area Of Code Is: Video Background
+This Area Of Code Is: Video Background - Golden Particles
 ================================================================================
 */
 
@@ -86,7 +87,7 @@ This Area Of Code Is: Video Background
     height: auto;
     transform: translate(-50%, -50%);
     object-fit: cover;
-    opacity: 0.6;
+    opacity: 0.5;
 }
 
 .video-overlay {
@@ -95,12 +96,12 @@ This Area Of Code Is: Video Background
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(15, 23, 42, 0.7) 50%, rgba(15, 23, 42, 0.9) 100%);
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.75) 50%, rgba(15, 23, 42, 0.95) 100%);
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Fixed Header with Hamburger-to-SCN Morph
+This Area Of Code Is: Fixed Header
 ================================================================================
 */
 
@@ -111,7 +112,7 @@ This Area Of Code Is: Fixed Header with Hamburger-to-SCN Morph
     right: 0;
     height: calc(var(--header-height) + var(--safe-top));
     padding-top: var(--safe-top);
-    background: rgba(15, 23, 42, 0.9);
+    background: rgba(15, 23, 42, 0.85);
     border-bottom: 1px solid var(--glass-border);
     display: flex;
     align-items: center;
@@ -184,6 +185,7 @@ This Area Of Code Is: Fixed Header with Hamburger-to-SCN Morph
     font-weight: 600;
     color: var(--text-primary);
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
 }
 
 .home-btn {
@@ -207,18 +209,18 @@ This Area Of Code Is: Fixed Header with Hamburger-to-SCN Morph
 
 /*
 ================================================================================
-This Area Of Code Is: Live Stats - FIXED OVERLAP
+This Area Of Code Is: Live Stats - WELCOME BADGE REMOVED, CLEAN 2-BADGE LAYOUT
 ================================================================================
 */
 
 .live-stats {
     position: fixed;
-    top: calc(75px + var(--safe-top));
+    top: calc(var(--header-height) + var(--safe-top) + 10px);
     right: 15px;
     z-index: 50;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
     align-items: flex-end;
     pointer-events: none;
 }
@@ -229,7 +231,7 @@ This Area Of Code Is: Live Stats - FIXED OVERLAP
 
 /* Online Users Badge */
 .online-badge {
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.75);
     border: 1px solid rgba(16, 185, 129, 0.4);
     border-radius: 20px;
     padding: 8px 14px;
@@ -240,9 +242,9 @@ This Area Of Code Is: Live Stats - FIXED OVERLAP
     font-size: 13px;
     font-weight: 600;
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     white-space: nowrap;
-    margin-bottom: 4px;
 }
 
 .pulse-dot {
@@ -259,39 +261,9 @@ This Area Of Code Is: Live Stats - FIXED OVERLAP
     50% { opacity: 0.8; transform: scale(0.9); box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
 }
 
-/* Welcome Back Badge - FIXED SPACING */
-.welcome-badge {
-    font-family: 'Dancing Script', cursive;
-    font-size: 18px;
-    background: rgba(0, 0, 0, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 20px;
-    padding: 8px 16px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: white;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    white-space: nowrap;
-    backdrop-filter: blur(10px);
-    margin-bottom: 4px;
-}
-
-.welcome-badge span:first-child {
-    color: var(--primary-gold);
-    text-shadow: 0 0 10px rgba(251,191,36,0.5);
-    font-weight: 700;
-}
-
-#personalVisits {
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    color: var(--primary-gold);
-    font-weight: 600;
-}
-
+/* Cards Count Badge */
 .cards-badge {
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.75);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 20px;
     padding: 8px 14px;
@@ -302,13 +274,14 @@ This Area Of Code Is: Live Stats - FIXED OVERLAP
     color: white;
     font-weight: 500;
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     white-space: nowrap;
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Side Menu with 5-Column Card Grid
+This Area Of Code Is: Side Menu
 ================================================================================
 */
 
@@ -318,6 +291,7 @@ This Area Of Code Is: Side Menu with 5-Column Card Grid
     left: 0;
     width: min(85vw, 360px);
     height: 100dvh;
+    height: -webkit-fill-available;
     background: rgba(15, 23, 42, 0.98);
     border-right: 1px solid var(--glass-border);
     z-index: 200;
@@ -420,7 +394,7 @@ This Area Of Code Is: Side Menu with 5-Column Card Grid
 
 /*
 ================================================================================
-This Area Of Code Is: Jump-to-Card Grid (5 Columns for 100 Cards)
+This Area Of Code Is: Jump-to-Card Grid
 ================================================================================
 */
 
@@ -491,20 +465,26 @@ This Area Of Code Is: Main Layout
     position: relative;
     z-index: 10;
     min-height: 100dvh;
-    padding: calc(90px + var(--safe-top)) 15px calc(100px + var(--safe-bottom));
+    min-height: -webkit-fill-available;
+    padding: calc(var(--header-height) + var(--safe-top) + 70px) 15px calc(100px + var(--safe-bottom));
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 15px;
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Content Card (True Glass)
+This Area Of Code Is: Content Card
 ================================================================================
 */
 
-.card-container { width: 100%; max-width: 600px; perspective: 1000px; margin-top: 20px; }
+.card-container { 
+    width: 100%; 
+    max-width: 600px; 
+    perspective: 1000px; 
+    margin-top: 0; 
+}
 
 .content-card {
     background: var(--glass-bg-card);
@@ -576,7 +556,6 @@ This Area Of Code Is: Content Card (True Glass)
     font-weight: 600;
 }
 
-/* Punchline - Hidden by default, shown with .visible class */
 .punchline-text {
     font-size: clamp(18px, 4vw, 22px);
     color: var(--primary-gold);
@@ -620,7 +599,7 @@ This Area Of Code Is: Content Card (True Glass)
 
 /*
 ================================================================================
-This Area Of Code Is: Control Buttons WITH SHOW PUNCHLINE BUTTON
+This Area Of Code Is: Control Buttons
 ================================================================================
 */
 
@@ -633,21 +612,11 @@ This Area Of Code Is: Control Buttons WITH SHOW PUNCHLINE BUTTON
     max-width: 600px;
 }
 
-/* Main controls row - 3 buttons */
 .controls-row.main-controls {
     display: grid;
     grid-template-columns: 1fr 1.2fr 1fr;
     gap: 10px;
 }
-
-@media (max-width: 480px) {
-    .controls-row.main-controls {
-        grid-template-columns: 1fr;
-    }
-    .punchline-btn { order: -1; }
-}
-
-.controls-row.secondary { margin-top: 5px; }
 
 .nav-btn {
     min-height: 48px;
@@ -674,7 +643,6 @@ This Area Of Code Is: Control Buttons WITH SHOW PUNCHLINE BUTTON
     border-color: var(--primary-gold);
 }
 
-/* Show Punchline Button - Special Styling */
 .punchline-btn {
     background: rgba(251, 191, 36, 0.15);
     border-color: rgba(251, 191, 36, 0.4);
@@ -711,11 +679,12 @@ This Area Of Code Is: Control Buttons WITH SHOW PUNCHLINE BUTTON
     box-shadow: 0 0 20px rgba(251, 191, 36, 0.4);
 }
 
-/* Hide punchline button for non-joke cards */
 .punchline-btn.hidden {
     display: none !important;
     visibility: hidden !important;
 }
+
+.controls-row.secondary { margin-top: 5px; }
 
 .add-joke-btn {
     min-height: 48px;
@@ -848,6 +817,7 @@ This Area Of Code Is: Modal System
     width: 100%;
     max-width: 480px;
     max-height: 85dvh;
+    max-height: -webkit-fill-available;
     overflow-y: auto;
     transform: scale(0.9) translateY(20px);
     transition: transform 0.3s;
@@ -959,6 +929,8 @@ This Area Of Code Is: Accessibility Modal
     left: 0;
     width: 100%;
     height: 100%;
+    height: 100dvh;
+    height: -webkit-fill-available;
     background: rgba(0, 0, 0, 0.9);
     z-index: 400;
     display: flex;
@@ -976,6 +948,7 @@ This Area Of Code Is: Accessibility Modal
     width: 100%;
     max-width: 500px;
     max-height: 85dvh;
+    max-height: -webkit-fill-available;
     background: linear-gradient(135deg, rgba(15,23,42,0.98) 0%, rgba(30,41,59,0.99) 100%);
     border: 1px solid rgba(255,255,255,0.2);
     border-radius: var(--border-radius);
@@ -1078,35 +1051,6 @@ This Area Of Code Is: Accessibility Modal
 
 .close-modal-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(251, 191, 36, 0.4); }
 
-/* Scroll Indicator */
-.scroll-indicator {
-    position: absolute;
-    bottom: 80px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    pointer-events: none;
-    z-index: 10;
-}
-
-.scroll-indicator.visible { opacity: 1; }
-.scroll-text { font-size: 10px; color: rgba(251, 191, 36, 0.8); text-transform: uppercase; letter-spacing: 2px; font-weight: 700; animation: fadePulse 2s infinite; }
-.scroll-mouse { width: 26px; height: 40px; border: 2px solid rgba(251, 191, 36, 0.6); border-radius: 13px; display: flex; justify-content: center; padding-top: 8px; position: relative; background: rgba(251, 191, 36, 0.05); }
-.scroll-wheel { width: 4px; height: 8px; background: var(--primary-gold); border-radius: 2px; animation: scrollBounce 1.5s infinite; }
-.scroll-arrows { display: flex; flex-direction: column; align-items: center; margin-top: 5px; }
-.scroll-arrow { width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 5px solid rgba(251, 191, 36, 0.6); animation: arrowPulse 1.5s infinite; margin: -2px 0; }
-.scroll-arrow:nth-child(2) { animation-delay: 0.2s; opacity: 0.6; }
-.scroll-arrow:nth-child(3) { animation-delay: 0.4s; opacity: 0.3; }
-
-@keyframes scrollBounce { 0%, 100% { transform: translateY(0); opacity: 1; } 50% { transform: translateY(8px); opacity: 0.5; } }
-@keyframes fadePulse { 0%, 100% { opacity: 0.8; } 50% { opacity: 0.4; } }
-@keyframes arrowPulse { 0%, 100% { transform: translateY(0); opacity: 1; } 50% { transform: translateY(3px); opacity: 0.5; } }
-
 /*
 ================================================================================
 This Area Of Code Is: Translation Bar
@@ -1126,11 +1070,13 @@ This Area Of Code Is: Translation Bar
     border: 1px solid var(--glass-border);
     z-index: 50;
     white-space: nowrap;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Color Vision Filters (9 Types)
+This Area Of Code Is: Color Vision Filters
 ================================================================================
 */
 
@@ -1177,66 +1123,98 @@ This Area Of Code Is: Accessibility Modes
 
 /*
 ================================================================================
-This Area Of Code Is: Responsive Design - FIXED OVERLAP
+This Area Of Code Is: Mobile Responsive
 ================================================================================
 */
 
 @media (max-width: 480px) {
-    .app-main { padding: calc(85px + var(--safe-top)) 12px calc(90px + var(--safe-bottom)); }
-    
-    /* FIXED: Live stats spacing on mobile */
-    .live-stats {
-        top: calc(70px + var(--safe-top));
-        right: 10px;
-        gap: 8px;
+    .app-main { 
+        padding: calc(var(--header-height) + var(--safe-top) + 60px) 12px calc(90px + var(--safe-bottom)); 
     }
     
-    .online-badge, .welcome-badge, .cards-badge {
-        padding: 6px 10px;
+    .live-stats {
+        top: calc(var(--header-height) + var(--safe-top) + 8px);
+        right: 10px;
+        gap: 6px;
+    }
+    
+    .online-badge, .cards-badge {
+        padding: 6px 12px;
         font-size: 12px;
     }
     
-    .welcome-badge {
-        font-size: 16px;
+    .content-card { 
+        padding: 25px 15px; 
+        min-height: 280px; 
+        border-radius: 20px;
+    }
+    
+    .setup-text { 
+        font-size: clamp(20px, 5.5vw, 28px); 
+    }
+    
+    .punchline-text { 
+        font-size: clamp(16px, 4vw, 20px); 
+    }
+    
+    .controls-row.main-controls {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    
+    .punchline-btn { 
+        order: -1; 
+    }
+    
+    .controls-row.secondary {
+        flex-direction: column;
+    }
+    
+    .nav-btn, .add-joke-btn, .auto-mode-btn { 
+        width: 100%;
+        min-height: 44px;
+        font-size: 14px;
     }
     
     .glass-modal { padding: 20px; }
-    .setup-text { font-size: 22px; }
-    .punchline-text { font-size: 18px; }
-    .content-card { padding: 25px 15px; min-height: 280px; }
-    .nav-btn, .add-joke-btn, .auto-mode-btn { padding: 10px 18px; font-size: 14px; min-height: 44px; }
     .accessibility-content { padding: 20px; }
-    .card-jumps { max-height: 50vh; }
 }
 
 @media (max-width: 360px) {
-    .controls-row { flex-direction: column; }
-    .nav-btn, .add-joke-btn, .auto-mode-btn { width: 100%; }
-    .welcome-badge { font-size: 14px; padding: 5px 10px; }
-    #personalVisits { font-size: 11px; }
+    .header-title {
+        font-size: 16px;
+    }
     
-    /* FIXED: Smaller badges on tiny screens */
-    .live-stats {
-        gap: 6px;
+    .online-badge, .cards-badge {
+        padding: 5px 10px;
+        font-size: 11px;
     }
 }
 
 @media (max-height: 600px) and (orientation: landscape) {
-    .content-card { min-height: 200px; padding: 20px; }
-    .card-icon { font-size: 32px; margin-bottom: 10px; }
-    .setup-text { font-size: 20px; margin-bottom: 10px; }
-    .punchline-text { font-size: 16px; }
-    .card-footer { padding-top: 15px; margin-top: 15px; }
-    .card-jumps { max-height: 40vh; }
-    
-    /* FIXED: Compact live stats in landscape */
-    .live-stats {
-        gap: 6px;
+    .app-main {
+        padding: calc(var(--header-height) + var(--safe-top) + 20px) 15px calc(60px + var(--safe-bottom));
     }
     
-    .welcome-badge {
-        font-size: 16px;
-        padding: 6px 12px;
+    .live-stats {
+        flex-direction: row;
+        top: calc(var(--header-height) + var(--safe-top) + 5px);
+        right: 10px;
+        gap: 8px;
+    }
+    
+    .content-card { 
+        min-height: 200px; 
+        padding: 20px; 
+    }
+    
+    .card-icon { 
+        font-size: 32px; 
+        margin-bottom: 10px; 
+    }
+    
+    .setup-text { 
+        font-size: 20px; 
     }
 }
 
