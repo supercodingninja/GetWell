@@ -13,11 +13,10 @@
     <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-    <!-- Video Background -->
+    <!-- Video Background - Golden Particles -->
     <div class="video-background">
         <video autoplay muted loop playsinline id="appBgVideo">
-            <source src="https://github.com/supercodingninja/GetWell/releases/download/v1.0-videos/church-interior.mp4" type="video/mp4">
-            <source src="https://github.com/supercodingninja/GetWell/releases/download/v1.0-videos/video.mp4" type="video/mp4">
+            <source src="https://cdn.pixabay.com/video/2023/10/15/48569-878644805_large.mp4" type="video/mp4">
         </video>
         <div class="video-overlay"></div>
     </div>
@@ -43,15 +42,11 @@
         </button>
     </header>
 
-    <!-- Live Stats (Top Right) - WITH ONLINE USERS RESTORED -->
+    <!-- Live Stats - WELCOME BADGE REMOVED -->
     <div class="live-stats">
         <div class="online-badge" id="onlineBadge">
             <span class="pulse-dot"></span>
-            <span id="onlineUsers">3 online</span>
-        </div>
-        <div class="welcome-badge">
-            <span>Welcome Back!</span>
-            <span id="personalVisits">Visit #1</span>
+            <span id="onlineUsers">2 online</span>
         </div>
         <div class="cards-badge">
             <span>😊</span>
@@ -99,7 +94,7 @@
             </div>
         </div>
 
-        <!-- Navigation Controls Row 1 - WITH SHOW PUNCHLINE BUTTON -->
+        <!-- Navigation Controls Row 1 -->
         <div class="controls-row main-controls">
             <button class="nav-btn" onclick="previousCard()" aria-label="Previous card">
                 <span>←</span> Back
@@ -238,10 +233,6 @@
                     <span>📖 Dyslexia-Friendly Font</span>
                     <div class="toggle-switch"></div>
                 </div>
-                <div class="access-toggle" data-feature="dyspraxia" onclick="toggleFeature(this, 'dyspraxia')" role="switch" aria-checked="false" tabindex="0">
-                    <span>🎯 Dyspraxia Support</span>
-                    <div class="toggle-switch"></div>
-                </div>
             </div>
 
             <!-- Mental Health Section -->
@@ -255,23 +246,11 @@
                     <span>🎖️ PTSD Support (No Flash)</span>
                     <div class="toggle-switch"></div>
                 </div>
-                <div class="access-toggle" data-feature="mania" onclick="toggleFeature(this, 'mania')" role="switch" aria-checked="false" tabindex="0">
-                    <span>⚖️ Bipolar/Mania Support</span>
-                    <div class="toggle-switch"></div>
-                </div>
-                <div class="access-toggle" data-feature="cognitive" onclick="toggleFeature(this, 'cognitive')" role="switch" aria-checked="false" tabindex="0">
-                    <span>🧘 Cognitive Load Reduction</span>
-                    <div class="toggle-switch"></div>
-                </div>
             </div>
             
             <!-- Vision Section -->
             <div class="access-category">
                 <h3><span>👁️</span> Vision (9 Color Types)</h3>
-                <div class="access-toggle" data-feature="screen-reader" onclick="toggleFeature(this, 'screen-reader')" role="switch" aria-checked="false" tabindex="0">
-                    <span>🔍 Screen Reader Mode</span>
-                    <div class="toggle-switch"></div>
-                </div>
                 <div class="access-toggle" data-feature="high-contrast" onclick="toggleFeature(this, 'high-contrast')" role="switch" aria-checked="false" tabindex="0">
                     <span>🔆 High Contrast</span>
                     <div class="toggle-switch"></div>
@@ -291,77 +270,12 @@
                     <div class="filter-group-label">Complete</div>
                     <button class="access-btn" data-filter="achromatopsia" onclick="applyColorFilter('achromatopsia')">Achromatopsia</button>
                     <button class="access-btn" data-filter="cone-monochromacy" onclick="applyColorFilter('cone-monochromacy')">Cone Mono.</button>
-                    <button class="access-btn" data-filter="blue-cone-monochromacy" onclick="applyColorFilter('blue-cone-monochromacy')">Blue Cone</button>
                     
                     <button class="access-btn active" data-filter="none" onclick="applyColorFilter('none')">Normal Vision</button>
                 </div>
             </div>
             
-            <!-- Hearing Section -->
-            <div class="access-category">
-                <h3><span>👂</span> Hearing</h3>
-                <div class="access-toggle" data-feature="sign-language" onclick="toggleFeature(this, 'sign-language')" role="switch" aria-checked="false" tabindex="0">
-                    <span>🤟 Sign Language Mode</span>
-                    <div class="toggle-switch"></div>
-                </div>
-                <div class="access-toggle" data-feature="visual-alerts" onclick="toggleFeature(this, 'visual-alerts')" role="switch" aria-checked="false" tabindex="0">
-                    <span>📢 Visual Alerts</span>
-                    <div class="toggle-switch"></div>
-                </div>
-                <div class="access-toggle" data-feature="captions" onclick="toggleFeature(this, 'captions')" role="switch" aria-checked="false" tabindex="0">
-                    <span>📋 Captions Always On</span>
-                    <div class="toggle-switch"></div>
-                </div>
-            </div>
-            
-            <!-- Motor Section -->
-            <div class="access-category">
-                <h3><span>✋</span> Motor & Physical</h3>
-                <div class="access-toggle" data-feature="large-targets" onclick="toggleFeature(this, 'large-targets')" role="switch" aria-checked="false" tabindex="0">
-                    <span>🎯 Large Click Targets</span>
-                    <div class="toggle-switch"></div>
-                </div>
-                <div class="access-toggle" data-feature="keyboard-only" onclick="toggleFeature(this, 'keyboard-only')" role="switch" aria-checked="false" tabindex="0">
-                    <span>⌨️ Keyboard Navigation Only</span>
-                    <div class="toggle-switch"></div>
-                </div>
-                <div class="access-toggle" data-feature="extended-time" onclick="toggleFeature(this, 'extended-time')" role="switch" aria-checked="false" tabindex="0">
-                    <span>⏱️ Extended Time</span>
-                    <div class="toggle-switch"></div>
-                </div>
-                <div class="access-toggle" data-feature="switch-control" onclick="toggleFeature(this, 'switch-control')" role="switch" aria-checked="false" tabindex="0">
-                    <span>🖱️ Switch Control Support</span>
-                    <div class="toggle-switch"></div>
-                </div>
-            </div>
-
-            <!-- Speech Section -->
-            <div class="access-category">
-                <h3><span>💬</span> Speech & Communication</h3>
-                <div class="access-toggle" data-feature="speech-input" onclick="toggleFeature(this, 'speech-input')" role="switch" aria-checked="false" tabindex="0">
-                    <span>🗣️ Speech-to-Text Input</span>
-                    <div class="toggle-switch"></div>
-                </div>
-                <div class="access-toggle" data-feature="simple-language" onclick="toggleFeature(this, 'simple-language')" role="switch" aria-checked="false" tabindex="0">
-                    <span>📖 Simplified Language</span>
-                    <div class="toggle-switch"></div>
-                </div>
-            </div>
-            
             <button class="close-modal-btn" onclick="closeAccessibilityModal()">Close Settings</button>
-            
-            <!-- Scroll Indicator -->
-            <div class="scroll-indicator" id="scrollIndicator">
-                <span class="scroll-text">Scroll</span>
-                <div class="scroll-mouse">
-                    <div class="scroll-wheel"></div>
-                </div>
-                <div class="scroll-arrows">
-                    <div class="scroll-arrow"></div>
-                    <div class="scroll-arrow"></div>
-                    <div class="scroll-arrow"></div>
-                </div>
-            </div>
         </div>
     </div>
 
