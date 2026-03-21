@@ -1,53 +1,29 @@
 /*
 ================================================================================
 This Area Of Code Is: CSS Variables and Design Tokens
-Explanation: Defines colors, transparency values, spacing, and dynamic viewport units (dvh/dvw) for responsive design
-In Other Words: The color palette and measurements used throughout the app
 ================================================================================
 */
 
 :root {
-    /* Glass Transparency Values */
     --glass-bg: rgba(255, 255, 255, 0.08);
     --glass-bg-strong: rgba(255, 255, 255, 0.15);
     --glass-bg-card: rgba(255, 255, 255, 0.15);
     --glass-border: rgba(255, 255, 255, 0.25);
     --glass-border-light: rgba(255, 255, 255, 0.1);
-    
-    /* Accent Colors */
     --primary-gold: #fbbf24;
     --primary-gold-dark: #f59e0b;
     --success-green: #10b981;
-    --scripture-gold: #fbbf24;
-    --message-green: #10b981;
-    
-    /* Text Colors */
+    --online-green: #10b981;
     --text-primary: #ffffff;
     --text-secondary: rgba(255, 255, 255, 0.85);
     --text-muted: rgba(255, 255, 255, 0.6);
-    
-    /* Background */
     --bg-dark: #0f172a;
-    --bg-overlay: rgba(15, 23, 42, 0.85);
-    
-    /* Safe Areas for iPhone Notch/Home Indicator */
     --safe-top: env(safe-area-inset-top);
     --safe-bottom: env(safe-area-inset-bottom);
-    
-    /* Spacing */
     --header-height: 60px;
     --border-radius: 24px;
     --border-radius-sm: 12px;
-    --border-radius-lg: 30px;
 }
-
-/*
-================================================================================
-This Area Of Code Is: Reset and Base Styles
-Explanation: CSS reset for consistent cross-browser rendering and base typography
-In Other Words: Making sure everything looks the same on all devices
-================================================================================
-*/
 
 * {
     margin: 0;
@@ -59,7 +35,7 @@ In Other Words: Making sure everything looks the same on all devices
 html, body {
     height: 100dvh;
     height: -webkit-fill-available;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     background: var(--bg-dark);
     color: var(--text-primary);
     overflow-x: hidden;
@@ -71,7 +47,6 @@ body {
     min-height: 100dvh;
 }
 
-/* Screen reader only text */
 .sr-only {
     position: absolute;
     width: 1px;
@@ -86,9 +61,7 @@ body {
 
 /*
 ================================================================================
-This Area Of Code Is: Video Background Layer
-Explanation: Fixed video background with true transparency overlay (no blur for performance)
-In Other Words: The moving background that stays fixed while content scrolls
+This Area Of Code Is: Video Background
 ================================================================================
 */
 
@@ -122,20 +95,12 @@ In Other Words: The moving background that stays fixed while content scrolls
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-        135deg, 
-        rgba(15, 23, 42, 0.85) 0%, 
-        rgba(15, 23, 42, 0.7) 50%, 
-        rgba(15, 23, 42, 0.9) 100%
-    );
-    pointer-events: none;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(15, 23, 42, 0.7) 50%, rgba(15, 23, 42, 0.9) 100%);
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Fixed Application Header
-Explanation: Sticky header with hamburger-to-SCN morph, glass styling, and safe area support
-In Other Words: The top navigation bar that stays fixed while scrolling
+This Area Of Code Is: Fixed Header with Hamburger-to-SCN Morph
 ================================================================================
 */
 
@@ -156,7 +121,6 @@ In Other Words: The top navigation bar that stays fixed while scrolling
     z-index: 100;
 }
 
-/* Menu Button with Morph Animation */
 .menu-btn {
     width: 50px;
     height: 44px;
@@ -187,7 +151,6 @@ In Other Words: The top navigation bar that stays fixed while scrolling
     background: white;
     border-radius: 2px;
     transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    transform-origin: center;
 }
 
 .scn-logo {
@@ -201,35 +164,13 @@ In Other Words: The top navigation bar that stays fixed while scrolling
     transform: scale(0) rotate(-180deg);
     transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     white-space: nowrap;
-    letter-spacing: -0.5px;
 }
 
-/* Morph Animation Active State */
-.menu-btn.active .hamburger {
-    opacity: 0;
-    transform: scale(0);
-}
-
-.menu-btn.active .hamburger span:nth-child(1) {
-    transform: translateY(7px) rotate(45deg);
-    opacity: 0;
-}
-
-.menu-btn.active .hamburger span:nth-child(2) {
-    opacity: 0;
-    transform: scaleX(0);
-}
-
-.menu-btn.active .hamburger span:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg);
-    opacity: 0;
-}
-
-.menu-btn.active .scn-logo {
-    opacity: 1;
-    transform: scale(1) rotate(0deg);
-    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.9));
-}
+.menu-btn.active .hamburger { opacity: 0; transform: scale(0); }
+.menu-btn.active .hamburger span:nth-child(1) { transform: translateY(7px) rotate(45deg); opacity: 0; }
+.menu-btn.active .hamburger span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.menu-btn.active .hamburger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); opacity: 0; }
+.menu-btn.active .scn-logo { opacity: 1; transform: scale(1) rotate(0deg); }
 
 .menu-btn:hover {
     background: var(--glass-bg-strong);
@@ -237,18 +178,14 @@ In Other Words: The top navigation bar that stays fixed while scrolling
     border-color: var(--primary-gold);
 }
 
-/* Header Title */
 .header-title {
     font-family: 'Playfair Display', serif;
     font-size: clamp(18px, 5vw, 24px);
     font-weight: 600;
     color: var(--text-primary);
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    letter-spacing: -0.3px;
-    margin: 0;
 }
 
-/* Home Button */
 .home-btn {
     width: 44px;
     height: 44px;
@@ -266,19 +203,11 @@ In Other Words: The top navigation bar that stays fixed while scrolling
 .home-btn:hover {
     background: var(--glass-bg-strong);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-}
-
-.home-btn svg {
-    width: 20px;
-    height: 20px;
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Live Statistics Display (Phase 3)
-Explanation: Floating badges in top-right with Dancing Script "Welcome Back" styling
-In Other Words: The corner badges showing visit count and total cards
+This Area Of Code Is: Live Stats with ONLINE USERS RESTORED
 ================================================================================
 */
 
@@ -293,6 +222,37 @@ In Other Words: The corner badges showing visit count and total cards
     align-items: flex-end;
 }
 
+/* Online Users Badge - RESTORED */
+.online-badge {
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    border-radius: 20px;
+    padding: 6px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #6ee7b7;
+    font-size: 13px;
+    font-weight: 600;
+    backdrop-filter: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.pulse-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--online-green);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+    50% { opacity: 0.8; transform: scale(0.9); box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+}
+
+/* Welcome Back Badge - TYPO FIXED */
 .welcome-badge {
     font-family: 'Dancing Script', cursive;
     font-size: 20px;
@@ -319,7 +279,6 @@ In Other Words: The corner badges showing visit count and total cards
     font-size: 13px;
     color: var(--primary-gold);
     font-weight: 600;
-    margin-left: 4px;
 }
 
 .cards-badge {
@@ -337,9 +296,7 @@ In Other Words: The corner badges showing visit count and total cards
 
 /*
 ================================================================================
-This Area Of Code Is: Side Navigation Menu
-Explanation: Slide-out drawer with 5-column card jump grid and glass styling
-In Other Words: The left-side menu that slides in with 100 card buttons
+This Area Of Code Is: Side Menu with 5-Column Card Grid
 ================================================================================
 */
 
@@ -349,7 +306,6 @@ In Other Words: The left-side menu that slides in with 100 card buttons
     left: 0;
     width: min(85vw, 360px);
     height: 100dvh;
-    height: -webkit-fill-available;
     background: rgba(15, 23, 42, 0.98);
     border-right: 1px solid var(--glass-border);
     z-index: 200;
@@ -360,9 +316,7 @@ In Other Words: The left-side menu that slides in with 100 card buttons
     padding-bottom: var(--safe-bottom);
 }
 
-.side-menu.open {
-    transform: translateX(0);
-}
+.side-menu.open { transform: translateX(0); }
 
 .menu-overlay {
     position: fixed;
@@ -377,10 +331,7 @@ In Other Words: The left-side menu that slides in with 100 card buttons
     transition: all 0.3s;
 }
 
-.menu-overlay.open {
-    opacity: 1;
-    visibility: visible;
-}
+.menu-overlay.open { opacity: 1; visibility: visible; }
 
 .menu-header {
     display: flex;
@@ -398,7 +349,6 @@ In Other Words: The left-side menu that slides in with 100 card buttons
     font-family: 'Playfair Display', serif;
     font-size: 24px;
     color: white;
-    margin: 0;
 }
 
 .close-menu {
@@ -414,17 +364,11 @@ In Other Words: The left-side menu that slides in with 100 card buttons
     align-items: center;
     justify-content: center;
     transition: all 0.3s;
-    line-height: 1;
 }
 
-.close-menu:hover {
-    background: rgba(255, 255, 255, 0.1);
-    transform: rotate(90deg);
-}
+.close-menu:hover { background: rgba(255, 255, 255, 0.1); transform: rotate(90deg); }
 
-.menu-content {
-    padding: 15px;
-}
+.menu-content { padding: 15px; }
 
 .menu-item {
     width: 100%;
@@ -450,15 +394,7 @@ In Other Words: The left-side menu that slides in with 100 card buttons
     border-color: var(--primary-gold);
 }
 
-.menu-item span {
-    font-size: 20px;
-}
-
-.menu-divider {
-    height: 1px;
-    background: var(--glass-border);
-    margin: 20px 0;
-}
+.menu-divider { height: 1px; background: var(--glass-border); margin: 20px 0; }
 
 .menu-label {
     font-size: 12px;
@@ -472,9 +408,7 @@ In Other Words: The left-side menu that slides in with 100 card buttons
 
 /*
 ================================================================================
-This Area Of Code Is: Jump-to-Card Grid System (Phase 4 - 5 Columns for 100 Cards)
-Explanation: Responsive 5-column grid (4 on small screens, 3 on tiny) with emoji icons and type indicators
-In Other Words: The grid of 100 buttons to jump to any card - compact and scrollable
+This Area Of Code Is: Jump-to-Card Grid (5 Columns for 100 Cards)
 ================================================================================
 */
 
@@ -485,23 +419,11 @@ In Other Words: The grid of 100 buttons to jump to any card - compact and scroll
     max-height: 55vh;
     overflow-y: auto;
     padding-right: 5px;
-    scrollbar-width: thin;
-    scrollbar-color: var(--glass-border) transparent;
 }
 
-/* Custom scrollbar for webkit browsers */
-.card-jumps::-webkit-scrollbar {
-    width: 6px;
-}
-
-.card-jumps::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.card-jumps::-webkit-scrollbar-thumb {
-    background: var(--glass-border);
-    border-radius: 3px;
-}
+.card-jumps::-webkit-scrollbar { width: 6px; }
+.card-jumps::-webkit-scrollbar-track { background: transparent; }
+.card-jumps::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 3px; }
 
 .jump-btn {
     padding: 8px 4px;
@@ -521,11 +443,7 @@ In Other Words: The grid of 100 buttons to jump to any card - compact and scroll
     font-family: inherit;
 }
 
-.jump-btn span {
-    font-size: 16px;
-    line-height: 1;
-    margin-bottom: 2px;
-}
+.jump-btn span { font-size: 16px; line-height: 1; margin-bottom: 2px; }
 
 .jump-btn:hover, .jump-btn.active {
     background: var(--glass-bg-strong);
@@ -541,44 +459,19 @@ In Other Words: The grid of 100 buttons to jump to any card - compact and scroll
     font-weight: 600;
 }
 
-/* Type indicators for special cards */
-.jump-btn.is-scripture {
-    border-color: rgba(251, 191, 36, 0.4);
-}
+.jump-btn.is-scripture { border-color: rgba(251, 191, 36, 0.4); }
+.jump-btn.is-message { border-color: rgba(16, 185, 129, 0.4); }
 
-.jump-btn.is-message {
-    border-color: rgba(16, 185, 129, 0.4);
-}
-
-/* Responsive grid adjustments */
-@media (max-width: 380px) {
-    .card-jumps {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-
-@media (max-width: 320px) {
-    .card-jumps {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 4px;
-    }
-    
-    .jump-btn {
-        padding: 6px 2px;
-        font-size: 10px;
-        min-height: 40px;
-    }
-    
-    .jump-btn span {
-        font-size: 14px;
-    }
+@media (max-width: 380px) { .card-jumps { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 320px) { 
+    .card-jumps { grid-template-columns: repeat(3, 1fr); gap: 4px; }
+    .jump-btn { padding: 6px 2px; font-size: 10px; min-height: 40px; }
+    .jump-btn span { font-size: 14px; }
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Main Application Layout
-Explanation: Flex column layout accounting for header height and safe areas
-In Other Words: The main area below the header where the card and controls live
+This Area Of Code Is: Main Layout
 ================================================================================
 */
 
@@ -595,18 +488,11 @@ In Other Words: The main area below the header where the card and controls live
 
 /*
 ================================================================================
-This Area Of Code Is: Content Card Component (True Glass - No Blur)
-Explanation: Premium glass card with setup text, punchline area (conditional), badge, and footer
-In Other Words: The big see-through card showing jokes, scriptures, or messages
+This Area Of Code Is: Content Card (True Glass)
 ================================================================================
 */
 
-.card-container {
-    width: 100%;
-    max-width: 600px;
-    perspective: 1000px;
-    margin-top: 10px;
-}
+.card-container { width: 100%; max-width: 600px; perspective: 1000px; margin-top: 10px; }
 
 .content-card {
     background: var(--glass-bg-card);
@@ -620,15 +506,11 @@ In Other Words: The big see-through card showing jokes, scriptures, or messages
     justify-content: center;
     text-align: center;
     position: relative;
-    box-shadow: 
-        0 25px 50px -12px rgba(0, 0, 0, 0.5),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3),
-        0 0 100px rgba(251, 191, 36, 0.1);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 100px rgba(251, 191, 36, 0.1);
     transition: transform 0.3s, box-shadow 0.3s;
     overflow: hidden;
 }
 
-/* Shimmer animation */
 .content-card::before {
     content: '';
     position: absolute;
@@ -638,23 +520,15 @@ In Other Words: The big see-through card showing jokes, scriptures, or messages
     height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
     animation: shimmer 3s infinite;
-    pointer-events: none;
 }
 
-@keyframes shimmer {
-    0% { left: -100%; }
-    100% { left: 200%; }
-}
+@keyframes shimmer { 0% { left: -100%; } 100% { left: 200%; } }
 
 .content-card:hover {
     transform: translateY(-5px);
-    box-shadow: 
-        0 30px 60px -12px rgba(0, 0, 0, 0.6),
-        inset 0 1px 0 rgba(255, 255, 255, 0.4),
-        0 0 120px rgba(251, 191, 36, 0.15);
+    box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 0 120px rgba(251, 191, 36, 0.15);
 }
 
-/* Card Badge (JOKE, WORD, HEALING) */
 .card-badge {
     position: absolute;
     top: 15px;
@@ -668,10 +542,8 @@ In Other Words: The big see-through card showing jokes, scriptures, or messages
     letter-spacing: 1.5px;
     text-transform: uppercase;
     color: var(--text-secondary);
-    transition: all 0.3s;
 }
 
-/* Icon with float animation */
 .card-icon {
     font-size: clamp(40px, 10vw, 56px);
     margin-bottom: 20px;
@@ -680,12 +552,8 @@ In Other Words: The big see-through card showing jokes, scriptures, or messages
     line-height: 1;
 }
 
-@keyframes iconFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
-}
+@keyframes iconFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 
-/* Setup Text (All card types) */
 .setup-text {
     font-family: 'Playfair Display', serif;
     font-size: clamp(24px, 6vw, 32px);
@@ -696,7 +564,7 @@ In Other Words: The big see-through card showing jokes, scriptures, or messages
     font-weight: 600;
 }
 
-/* Punchline Text (Jokes only - hidden by default, shown via .visible) */
+/* Punchline - Hidden by default, shown with .visible class */
 .punchline-text {
     font-size: clamp(18px, 4vw, 22px);
     color: var(--primary-gold);
@@ -715,14 +583,12 @@ In Other Words: The big see-through card showing jokes, scriptures, or messages
     margin-top: 10px;
 }
 
-/* Scripture reference styling (when punchline is used for reference) */
 .punchline-text[style*="italic"] {
     color: var(--text-secondary);
     font-size: clamp(16px, 3.5vw, 18px);
     font-weight: 400;
 }
 
-/* Card Footer with Author and Counter */
 .card-footer {
     margin-top: auto;
     padding-top: 30px;
@@ -736,30 +602,13 @@ In Other Words: The big see-through card showing jokes, scriptures, or messages
     margin-top: 30px;
 }
 
-.author-info {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.author-name {
-    font-style: italic;
-    color: var(--text-secondary);
-    font-weight: 500;
-}
-
-.card-counter {
-    font-weight: 600;
-    color: var(--primary-gold);
-    font-size: 12px;
-    letter-spacing: 0.5px;
-}
+.author-info { display: flex; align-items: center; gap: 6px; }
+.author-name { font-style: italic; color: var(--text-secondary); font-weight: 500; }
+.card-counter { font-weight: 600; color: var(--primary-gold); font-size: 12px; letter-spacing: 0.5px; }
 
 /*
 ================================================================================
-This Area Of Code Is: Control Buttons and Navigation
-Explanation: Glass morphism buttons for navigation, auto-mode, and submission
-In Other Words: The Back, Next, Add Joke, and Auto Mode buttons
+This Area Of Code Is: Control Buttons WITH SHOW PUNCHLINE BUTTON
 ================================================================================
 */
 
@@ -772,13 +621,25 @@ In Other Words: The Back, Next, Add Joke, and Auto Mode buttons
     max-width: 600px;
 }
 
-.controls-row.secondary {
-    margin-top: 5px;
+/* Main controls row - 3 buttons */
+.controls-row.main-controls {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1fr;
+    gap: 10px;
 }
 
-.nav-btn, .action-btn {
+@media (max-width: 480px) {
+    .controls-row.main-controls {
+        grid-template-columns: 1fr;
+    }
+    .punchline-btn { order: -1; }
+}
+
+.controls-row.secondary { margin-top: 5px; }
+
+.nav-btn {
     min-height: 48px;
-    padding: 12px 28px;
+    padding: 12px 20px;
     border-radius: 50px;
     border: 1px solid var(--glass-border);
     background: var(--glass-bg);
@@ -790,9 +651,7 @@ In Other Words: The Back, Next, Add Joke, and Auto Mode buttons
     align-items: center;
     gap: 8px;
     transition: all 0.3s;
-    flex: 1;
     justify-content: center;
-    min-width: 120px;
     font-family: inherit;
 }
 
@@ -803,7 +662,49 @@ In Other Words: The Back, Next, Add Joke, and Auto Mode buttons
     border-color: var(--primary-gold);
 }
 
-/* Add Joke Button - Green accent */
+/* Show Punchline Button - Special Styling */
+.punchline-btn {
+    background: rgba(251, 191, 36, 0.15);
+    border-color: rgba(251, 191, 36, 0.4);
+    color: var(--primary-gold);
+    position: relative;
+    overflow: hidden;
+}
+
+.punchline-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(251,191,36,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.punchline-btn:hover::before {
+    left: 100%;
+}
+
+.punchline-btn:hover {
+    background: rgba(251, 191, 36, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(251, 191, 36, 0.3);
+    border-color: var(--primary-gold);
+}
+
+.punchline-btn.active {
+    background: rgba(251, 191, 36, 0.35);
+    border-color: var(--primary-gold);
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.4);
+}
+
+/* Hide punchline button for non-joke cards */
+.punchline-btn.hidden {
+    display: none !important;
+    visibility: hidden !important;
+}
+
 .add-joke-btn {
     min-height: 48px;
     padding: 12px 24px;
@@ -828,14 +729,8 @@ In Other Words: The Back, Next, Add Joke, and Auto Mode buttons
     background: rgba(16, 185, 129, 0.25);
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
-    border-color: var(--success-green);
 }
 
-.add-joke-btn span {
-    font-size: 18px;
-}
-
-/* Auto Mode Button - Blue accent with golden pulse when active */
 .auto-mode-btn {
     min-height: 48px;
     padding: 12px 24px;
@@ -854,8 +749,6 @@ In Other Words: The Back, Next, Add Joke, and Auto Mode buttons
     justify-content: center;
     min-width: 140px;
     font-family: inherit;
-    position: relative;
-    overflow: hidden;
 }
 
 .auto-mode-btn:hover {
@@ -876,24 +769,9 @@ In Other Words: The Back, Next, Add Joke, and Auto Mode buttons
     50% { box-shadow: 0 0 20px 5px rgba(251, 191, 36, 0.2); }
 }
 
-/* Speed Controls (Hidden by default) */
-.speed-controls {
-    display: none;
-    gap: 12px;
-    justify-content: center;
-    width: 100%;
-    max-width: 400px;
-    animation: slideDown 0.3s ease;
-}
-
-.speed-controls.visible {
-    display: flex;
-}
-
-@keyframes slideDown {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+.speed-controls { display: none; gap: 12px; justify-content: center; width: 100%; max-width: 400px; }
+.speed-controls.visible { display: flex; animation: slideDown 0.3s ease; }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
 .speed-btn {
     padding: 12px 20px;
@@ -911,29 +789,10 @@ In Other Words: The Back, Next, Add Joke, and Auto Mode buttons
     font-weight: 500;
 }
 
-.speed-btn small {
-    display: block;
-    font-size: 11px;
-    opacity: 0.7;
-    margin-top: 4px;
-    font-weight: 400;
-}
+.speed-btn small { display: block; font-size: 11px; opacity: 0.7; margin-top: 4px; font-weight: 400; }
+.speed-btn:hover { background: var(--glass-bg-strong); color: white; }
+.speed-btn.active { background: var(--primary-gold); color: #0f172a; border-color: var(--primary-gold); font-weight: 700; }
 
-.speed-btn:hover {
-    background: var(--glass-bg-strong);
-    color: white;
-    border-color: rgba(255,255,255,0.4);
-}
-
-.speed-btn.active {
-    background: var(--primary-gold);
-    color: #0f172a;
-    border-color: var(--primary-gold);
-    font-weight: 700;
-    box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
-}
-
-/* Guidelines Link */
 .guidelines-link {
     color: var(--text-muted);
     font-size: 13px;
@@ -946,15 +805,11 @@ In Other Words: The Back, Next, Add Joke, and Auto Mode buttons
     font-family: inherit;
 }
 
-.guidelines-link:hover {
-    color: var(--text-secondary);
-}
+.guidelines-link:hover { color: var(--text-secondary); }
 
 /*
 ================================================================================
-This Area Of Code Is: Modal Dialog System
-Explanation: Centered modals with glass styling for jokes, guidelines, and accessibility
-In Other Words: The popup windows that appear over the app
+This Area Of Code Is: Modal System
 ================================================================================
 */
 
@@ -975,10 +830,7 @@ In Other Words: The popup windows that appear over the app
     transition: all 0.3s;
 }
 
-.modal.open {
-    opacity: 1;
-    visibility: visible;
-}
+.modal.open { opacity: 1; visibility: visible; }
 
 .modal-content {
     width: 100%;
@@ -987,12 +839,9 @@ In Other Words: The popup windows that appear over the app
     overflow-y: auto;
     transform: scale(0.9) translateY(20px);
     transition: transform 0.3s;
-    position: relative;
 }
 
-.modal.open .modal-content {
-    transform: scale(1) translateY(0);
-}
+.modal.open .modal-content { transform: scale(1) translateY(0); }
 
 .glass-modal {
     background: rgba(15, 23, 42, 0.98);
@@ -1002,19 +851,8 @@ In Other Words: The popup windows that appear over the app
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
 }
 
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-}
-
-.modal-header h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 24px;
-    color: white;
-    margin: 0;
-}
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+.modal-header h3 { font-family: 'Playfair Display', serif; font-size: 24px; color: white; }
 
 .close-modal {
     width: 36px;
@@ -1029,31 +867,13 @@ In Other Words: The popup windows that appear over the app
     align-items: center;
     justify-content: center;
     transition: all 0.3s;
-    line-height: 1;
-    padding: 0;
 }
 
-.close-modal:hover {
-    background: rgba(255, 255, 255, 0.1);
-    transform: rotate(90deg);
-    border-color: var(--primary-gold);
-}
+.close-modal:hover { background: rgba(255, 255, 255, 0.1); transform: rotate(90deg); }
 
-/* Form Styling */
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-group label {
-    display: block;
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: var(--text-secondary);
-}
-
-.form-group input,
-.form-group textarea {
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--text-secondary); }
+.form-group input, .form-group textarea {
     width: 100%;
     padding: 14px 16px;
     border-radius: var(--border-radius-sm);
@@ -1065,65 +885,20 @@ In Other Words: The popup windows that appear over the app
     transition: all 0.3s;
 }
 
-.form-group input:focus,
-.form-group textarea:focus {
+.form-group input:focus, .form-group textarea:focus {
     outline: none;
     border-color: var(--primary-gold);
     background: rgba(0, 0, 0, 0.5);
     box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.1);
 }
 
-.form-group textarea {
-    resize: vertical;
-    min-height: 60px;
-}
+.location-group { background: rgba(255, 255, 255, 0.03); padding: 15px; border-radius: var(--border-radius-sm); border: 1px solid var(--glass-border-light); }
+.location-options { display: flex; gap: 20px; margin-bottom: 12px; flex-wrap: wrap; }
+.checkbox-label { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-secondary); cursor: pointer; }
+.checkbox-label input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--primary-gold); }
+.help-text { display: block; font-size: 12px; color: var(--text-muted); margin-top: 6px; font-style: italic; }
 
-/* Location Group with Checkboxes */
-.location-group {
-    background: rgba(255, 255, 255, 0.03);
-    padding: 15px;
-    border-radius: var(--border-radius-sm);
-    border: 1px solid var(--glass-border-light);
-}
-
-.location-options {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 12px;
-    flex-wrap: wrap;
-}
-
-.checkbox-label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-    color: var(--text-secondary);
-    cursor: pointer;
-    font-weight: 400;
-}
-
-.checkbox-label input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-    accent-color: var(--primary-gold);
-}
-
-.help-text {
-    display: block;
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 6px;
-    font-style: italic;
-}
-
-.form-actions {
-    display: flex;
-    gap: 12px;
-    margin-top: 25px;
-}
-
+.form-actions { display: flex; gap: 12px; margin-top: 25px; }
 .submit-btn, .cancel-btn, .ok-btn {
     flex: 1;
     padding: 14px 24px;
@@ -1147,80 +922,22 @@ In Other Words: The popup windows that appear over the app
     box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
 }
 
-.submit-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
-}
+.submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5); }
+.cancel-btn { background: var(--glass-bg); color: var(--text-secondary); border: 1px solid var(--glass-border); }
+.cancel-btn:hover { background: var(--glass-bg-strong); color: white; }
+.form-disclaimer { font-size: 12px; color: var(--text-muted); text-align: center; margin-top: 15px; line-height: 1.5; font-style: italic; }
 
-.cancel-btn {
-    background: var(--glass-bg);
-    color: var(--text-secondary);
-    border: 1px solid var(--glass-border);
-}
-
-.cancel-btn:hover {
-    background: var(--glass-bg-strong);
-    color: white;
-}
-
-.form-disclaimer {
-    font-size: 12px;
-    color: var(--text-muted);
-    text-align: center;
-    margin-top: 15px;
-    line-height: 1.5;
-    font-style: italic;
-}
-
-/* Guidelines Content */
-.guidelines-content {
-    line-height: 1.7;
-}
-
-.guidelines-content p {
-    margin-bottom: 15px;
-    color: var(--text-secondary);
-    font-size: 15px;
-}
-
-.guidelines-content ul {
-    list-style: none;
-    margin-bottom: 20px;
-    padding: 0;
-}
-
-.guidelines-content li {
-    padding: 10px 0;
-    color: var(--text-secondary);
-    border-bottom: 1px solid var(--glass-border-light);
-    font-size: 14px;
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-}
-
-.guidelines-content li:last-child {
-    border-bottom: none;
-}
-
-.ok-btn {
-    background: var(--primary-gold);
-    color: #0f172a;
-    width: 100%;
-    margin-top: 10px;
-}
-
-.ok-btn:hover {
-    background: var(--primary-gold-dark);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
-}
+.guidelines-content { line-height: 1.7; }
+.guidelines-content p { margin-bottom: 15px; color: var(--text-secondary); font-size: 15px; }
+.guidelines-content ul { list-style: none; margin-bottom: 20px; padding: 0; }
+.guidelines-content li { padding: 10px 0; color: var(--text-secondary); border-bottom: 1px solid var(--glass-border-light); font-size: 14px; display: flex; align-items: flex-start; gap: 8px; }
+.guidelines-content li:last-child { border-bottom: none; }
+.ok-btn { background: var(--primary-gold); color: #0f172a; width: 100%; margin-top: 10px; }
+.ok-btn:hover { background: var(--primary-gold-dark); transform: translateY(-2px); }
 
 /*
 ================================================================================
-This Area Of Code Is: Accessibility Modal (Phase 6 - 9 Color Vision Types)
-Explanation: Comprehensive accessibility panel styling with grouped color filters
-In Other Words: The big settings panel with all the accessibility options
+This Area Of Code Is: Accessibility Modal
 ================================================================================
 */
 
@@ -1241,10 +958,7 @@ In Other Words: The big settings panel with all the accessibility options
     transition: all 0.3s;
 }
 
-.accessibility-modal.open {
-    opacity: 1;
-    visibility: visible;
-}
+.accessibility-modal.open { opacity: 1; visibility: visible; }
 
 .accessibility-content {
     width: 100%;
@@ -1259,58 +973,15 @@ In Other Words: The big settings panel with all the accessibility options
     position: relative;
 }
 
-.accessibility-header {
-    text-align: center;
-    margin-bottom: 25px;
-    position: relative;
-}
+.accessibility-header { text-align: center; margin-bottom: 25px; position: relative; }
+.accessibility-header h2 { color: var(--primary-gold); font-family: 'Playfair Display', serif; font-size: 26px; margin-bottom: 8px; }
+.accessibility-header p { color: var(--text-muted); font-size: 14px; }
+.accessibility-header .close-modal { position: absolute; top: -10px; right: -10px; }
 
-.accessibility-header h2 {
-    color: var(--primary-gold);
-    font-family: 'Playfair Display', serif;
-    font-size: 26px;
-    margin-bottom: 8px;
-}
+.access-category { margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 20px; }
+.access-category:last-child { border-bottom: none; margin-bottom: 15px; }
+.access-category h3 { color: var(--primary-gold); font-size: 16px; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-family: 'Playfair Display', serif; text-transform: uppercase; letter-spacing: 1px; }
 
-.accessibility-header p {
-    color: var(--text-muted);
-    font-size: 14px;
-}
-
-.accessibility-header .close-modal {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-}
-
-.access-category {
-    margin-bottom: 25px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    padding-bottom: 20px;
-}
-
-.access-category:last-child {
-    border-bottom: none;
-    margin-bottom: 15px;
-}
-
-.access-category h3 {
-    color: var(--primary-gold);
-    font-size: 16px;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-family: 'Playfair Display', serif;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.access-category h3 span {
-    font-size: 20px;
-}
-
-/* Toggle Switches */
 .access-toggle {
     display: flex;
     justify-content: space-between;
@@ -1326,15 +997,8 @@ In Other Words: The big settings panel with all the accessibility options
     cursor: pointer;
 }
 
-.access-toggle:hover {
-    background: rgba(255,255,255,0.08);
-    border-color: rgba(255,255,255,0.25);
-}
-
-.access-toggle.active {
-    background: rgba(251, 191, 36, 0.1);
-    border-color: rgba(251, 191, 36, 0.4);
-}
+.access-toggle:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.25); }
+.access-toggle.active { background: rgba(251, 191, 36, 0.1); border-color: rgba(251, 191, 36, 0.4); }
 
 .toggle-switch {
     width: 50px;
@@ -1344,7 +1008,6 @@ In Other Words: The big settings panel with all the accessibility options
     position: relative;
     cursor: pointer;
     transition: all 0.3s;
-    flex-shrink: 0;
 }
 
 .toggle-switch::after {
@@ -1360,39 +1023,12 @@ In Other Words: The big settings panel with all the accessibility options
     box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 
-.access-toggle.active .toggle-switch {
-    background: var(--primary-gold);
-}
+.access-toggle.active .toggle-switch { background: var(--primary-gold); }
+.access-toggle.active .toggle-switch::after { left: 26px; }
 
-.access-toggle.active .toggle-switch::after {
-    left: 26px;
-}
-
-/* Color Filter Grid */
-.color-filter-label {
-    color: rgba(255,255,255,0.6);
-    font-size: 12px;
-    margin: 15px 0 10px 0;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.access-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-}
-
-.filter-group-label {
-    grid-column: 1 / -1;
-    font-size: 11px;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-top: 8px;
-    margin-bottom: 4px;
-    padding-left: 4px;
-}
+.color-filter-label { color: rgba(255,255,255,0.6); font-size: 12px; margin: 15px 0 10px 0; text-transform: uppercase; letter-spacing: 1px; }
+.access-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.filter-group-label { grid-column: 1 / -1; font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 8px; margin-bottom: 4px; padding-left: 4px; }
 
 .access-btn {
     background: rgba(255,255,255,0.05);
@@ -1405,21 +1041,11 @@ In Other Words: The big settings panel with all the accessibility options
     transition: all 0.3s;
     text-align: center;
     font-weight: 500;
-    line-height: 1.2;
     font-family: inherit;
 }
 
-.access-btn:hover, .access-btn.active {
-    background: rgba(251, 191, 36, 0.15);
-    border-color: rgba(251, 191, 36, 0.6);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(251, 191, 36, 0.2);
-}
-
-.access-btn.active {
-    background: rgba(251, 191, 36, 0.25);
-    font-weight: 600;
-}
+.access-btn:hover, .access-btn.active { background: rgba(251, 191, 36, 0.15); border-color: rgba(251, 191, 36, 0.6); transform: translateY(-2px); }
+.access-btn.active { background: rgba(251, 191, 36, 0.25); font-weight: 600; }
 
 .close-modal-btn {
     width: 100%;
@@ -1438,12 +1064,9 @@ In Other Words: The big settings panel with all the accessibility options
     font-family: inherit;
 }
 
-.close-modal-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(251, 191, 36, 0.4);
-}
+.close-modal-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(251, 191, 36, 0.4); }
 
-/* Scroll Indicator in Modal */
+/* Scroll Indicator */
 .scroll-indicator {
     position: absolute;
     bottom: 80px;
@@ -1459,80 +1082,22 @@ In Other Words: The big settings panel with all the accessibility options
     z-index: 10;
 }
 
-.scroll-indicator.visible {
-    opacity: 1;
-}
-
-.scroll-text {
-    font-size: 10px;
-    color: rgba(251, 191, 36, 0.8);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-weight: 700;
-    animation: fadePulse 2s infinite;
-}
-
-.scroll-mouse {
-    width: 26px;
-    height: 40px;
-    border: 2px solid rgba(251, 191, 36, 0.6);
-    border-radius: 13px;
-    display: flex;
-    justify-content: center;
-    padding-top: 8px;
-    position: relative;
-    background: rgba(251, 191, 36, 0.05);
-}
-
-.scroll-wheel {
-    width: 4px;
-    height: 8px;
-    background: var(--primary-gold);
-    border-radius: 2px;
-    animation: scrollBounce 1.5s infinite;
-    box-shadow: 0 0 10px rgba(251, 191, 36, 0.8);
-}
-
-.scroll-arrows {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 5px;
-}
-
-.scroll-arrow {
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 5px solid rgba(251, 191, 36, 0.6);
-    animation: arrowPulse 1.5s infinite;
-    margin: -2px 0;
-}
-
+.scroll-indicator.visible { opacity: 1; }
+.scroll-text { font-size: 10px; color: rgba(251, 191, 36, 0.8); text-transform: uppercase; letter-spacing: 2px; font-weight: 700; animation: fadePulse 2s infinite; }
+.scroll-mouse { width: 26px; height: 40px; border: 2px solid rgba(251, 191, 36, 0.6); border-radius: 13px; display: flex; justify-content: center; padding-top: 8px; position: relative; background: rgba(251, 191, 36, 0.05); }
+.scroll-wheel { width: 4px; height: 8px; background: var(--primary-gold); border-radius: 2px; animation: scrollBounce 1.5s infinite; }
+.scroll-arrows { display: flex; flex-direction: column; align-items: center; margin-top: 5px; }
+.scroll-arrow { width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 5px solid rgba(251, 191, 36, 0.6); animation: arrowPulse 1.5s infinite; margin: -2px 0; }
 .scroll-arrow:nth-child(2) { animation-delay: 0.2s; opacity: 0.6; }
 .scroll-arrow:nth-child(3) { animation-delay: 0.4s; opacity: 0.3; }
 
-@keyframes scrollBounce {
-    0%, 100% { transform: translateY(0); opacity: 1; }
-    50% { transform: translateY(8px); opacity: 0.5; }
-}
-
-@keyframes fadePulse {
-    0%, 100% { opacity: 0.8; }
-    50% { opacity: 0.4; }
-}
-
-@keyframes arrowPulse {
-    0%, 100% { transform: translateY(0); opacity: 1; }
-    50% { transform: translateY(3px); opacity: 0.5; }
-}
+@keyframes scrollBounce { 0%, 100% { transform: translateY(0); opacity: 1; } 50% { transform: translateY(8px); opacity: 0.5; } }
+@keyframes fadePulse { 0%, 100% { opacity: 0.8; } 50% { opacity: 0.4; } }
+@keyframes arrowPulse { 0%, 100% { transform: translateY(0); opacity: 1; } 50% { transform: translateY(3px); opacity: 0.5; } }
 
 /*
 ================================================================================
-This Area Of Code Is: Translation Notice Bar
-Explanation: Fixed bottom notice about translation accuracy
-In Other Words: The small bar at the bottom about auto-translations
+This Area Of Code Is: Translation Bar
 ================================================================================
 */
 
@@ -1549,335 +1114,93 @@ In Other Words: The small bar at the bottom about auto-translations
     border: 1px solid var(--glass-border);
     z-index: 50;
     white-space: nowrap;
-    backdrop-filter: none;
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Color Vision Deficiency Filters (Phase 6 - 9 Types)
-Explanation: Medical-grade CSS filters for all 9 color vision types applied to body
-In Other Words: The styles that simulate color blindness for accessibility testing
+This Area Of Code Is: Color Vision Filters (9 Types)
 ================================================================================
 */
 
-/* Red-Green Deficiencies */
-.filter-deuteranomaly, .cv-deuteranomaly {
-    filter: url('#deuteranomaly');
-}
-
-.filter-deuteranopia, .cv-deuteranopia {
-    filter: url('#deuteranopia');
-}
-
-.filter-protanomaly, .cv-protanomaly {
-    filter: url('#protanomaly');
-}
-
-.filter-protanopia, .cv-protanopia {
-    filter: url('#protanopia');
-}
-
-/* Blue-Yellow Deficiencies */
-.filter-tritanomaly, .cv-tritanomaly {
-    filter: url('#tritanomaly');
-}
-
-.filter-tritanopia, .cv-tritanopia {
-    filter: url('#tritanopia');
-}
-
-/* Complete Color Blindness */
-.filter-achromatopsia, .cv-achromatopsia {
-    filter: grayscale(100%) brightness(1.1) contrast(1.1);
-}
-
-.filter-cone-monochromacy, .cv-cone-monochromacy {
-    filter: grayscale(100%) sepia(20%);
-}
-
-.filter-blue-cone-monochromacy, .cv-blue-cone-monochromacy {
-    filter: url('#tritanopia') grayscale(50%);
-}
+.filter-deuteranomaly, .cv-deuteranomaly { filter: url('#deuteranomaly'); }
+.filter-deuteranopia, .cv-deuteranopia { filter: url('#deuteranopia'); }
+.filter-protanomaly, .cv-protanomaly { filter: url('#protanomaly'); }
+.filter-protanopia, .cv-protanopia { filter: url('#protanopia'); }
+.filter-tritanomaly, .cv-tritanomaly { filter: url('#tritanomaly'); }
+.filter-tritanopia, .cv-tritanopia { filter: url('#tritanopia'); }
+.filter-achromatopsia, .cv-achromatopsia { filter: grayscale(100%) brightness(1.1) contrast(1.1); }
+.filter-cone-monochromacy, .cv-cone-monochromacy { filter: grayscale(100%) sepia(20%); }
+.filter-blue-cone-monochromacy, .cv-blue-cone-monochromacy { filter: url('#tritanopia') grayscale(50%); }
 
 /*
 ================================================================================
-This Area Of Code Is: Accessibility Mode Styles
-Explanation: Special styling for Autism, PTSD, ADHD, Anxiety, and other modes
-In Other Words: How the app looks when accessibility features are turned on
+This Area Of Code Is: Accessibility Modes
 ================================================================================
 */
 
-/* Autism Mode - Calm, reduced motion, clear borders */
-.autism-mode * {
-    transition-duration: 0.5s !important;
-    animation-duration: 2s !important;
-}
+.autism-mode * { transition-duration: 0.5s !important; animation-duration: 2s !important; }
+.autism-mode .content-card { border-width: 3px; border-color: rgba(255, 255, 255, 0.5); }
+.autism-mode .card-icon { animation: none; }
 
-.autism-mode .content-card {
-    border-width: 3px;
-    border-color: rgba(255, 255, 255, 0.5);
-}
+.ptsd-mode * { animation: none !important; transition-duration: 0.2s !important; }
+.ptsd-mode .content-card::before { display: none; }
+.ptsd-mode .card-icon { animation: none; }
+.ptsd-mode .auto-mode-btn.active { animation: none; box-shadow: 0 0 15px rgba(251, 191, 36, 0.4); }
 
-.autism-mode .card-icon {
-    animation: none;
-}
+.adhd-mode .setup-text { font-size: clamp(26px, 7vw, 34px); line-height: 1.3; }
+.adhd-mode .punchline-text { font-size: clamp(20px, 5vw, 24px); color: #60a5fa; }
 
-/* PTSD Mode - No animations, no flashing, static */
-.ptsd-mode * {
-    animation: none !important;
-    transition-duration: 0.2s !important;
-}
+.dyslexia-mode * { letter-spacing: 0.05em; word-spacing: 0.1em; }
+.dyslexia-mode .setup-text { line-height: 1.6; }
 
-.ptsd-mode .content-card::before {
-    display: none;
-}
+.anxiety-mode .content-card { border-color: rgba(96, 165, 250, 0.4); box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.2); }
+.anxiety-mode .card-badge { background: rgba(59, 130, 246, 0.2); color: #93c5fd; }
 
-.ptsd-mode .card-icon {
-    animation: none;
-}
+.high-contrast-mode * { border-color: white !important; }
+.high-contrast-mode .content-card { background: rgba(0, 0, 0, 0.8); border: 2px solid white; }
+.high-contrast-mode .setup-text, .high-contrast-mode .punchline-text { color: white; text-shadow: none; }
 
-.ptsd-mode .auto-mode-btn.active {
-    animation: none;
-    box-shadow: 0 0 15px rgba(251, 191, 36, 0.4);
-}
-
-/* ADHD Mode - High contrast focus, clear typography */
-.adhd-mode {
-    font-family: 'Inter', sans-serif;
-}
-
-.adhd-mode .setup-text {
-    font-size: clamp(26px, 7vw, 34px);
-    line-height: 1.3;
-}
-
-.adhd-mode .punchline-text {
-    font-size: clamp(20px, 5vw, 24px);
-    color: #60a5fa;
-}
-
-/* Dyslexia Mode - OpenDyslexic-friendly spacing */
-.dyslexia-mode * {
-    letter-spacing: 0.05em;
-    word-spacing: 0.1em;
-}
-
-.dyslexia-mode .setup-text {
-    line-height: 1.6;
-}
-
-/* Anxiety Mode - Calming blue tones */
-.anxiety-mode .content-card {
-    border-color: rgba(96, 165, 250, 0.4);
-    box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.2);
-}
-
-.anxiety-mode .card-badge {
-    background: rgba(59, 130, 246, 0.2);
-    color: #93c5fd;
-}
-
-/* Mania Mode - Softer energy */
-.mania-mode .content-card {
-    border-color: rgba(167, 139, 250, 0.4);
-}
-
-/* High Contrast Mode */
-.high-contrast-mode * {
-    border-color: white !important;
-}
-
-.high-contrast-mode .content-card {
-    background: rgba(0, 0, 0, 0.8);
-    border: 2px solid white;
-}
-
-.high-contrast-mode .setup-text,
-.high-contrast-mode .punchline-text {
-    color: white;
-    text-shadow: none;
-}
-
-/* Large Targets Mode */
-.large-targets-mode .nav-btn,
-.large-targets-mode .add-joke-btn,
-.large-targets-mode .auto-mode-btn,
-.large-targets-mode .jump-btn {
-    min-height: 56px;
-    padding: 16px 28px;
-}
-
-.large-targets-mode .jump-btn {
-    min-height: 52px;
-}
-
-/* Screen Reader Mode - Visual enhancements */
-.screen-reader-mode .card-badge {
-    font-size: 13px;
-    padding: 6px 16px;
-}
-
-/* Cognitive Load Reduction - Simplified UI */
-.cognitive-load-mode .card-footer {
-    display: none;
-}
-
-.cognitive-load-mode .guidelines-link {
-    display: none;
-}
+.large-targets-mode .nav-btn, .large-targets-mode .add-joke-btn, .large-targets-mode .auto-mode-btn, .large-targets-mode .jump-btn { min-height: 56px; padding: 16px 28px; }
+.large-targets-mode .jump-btn { min-height: 52px; }
 
 /*
 ================================================================================
-This Area Of Code Is: Responsive Design Media Queries
-Explanation: Mobile-first responsive adjustments for various screen sizes
-In Other Words: Making sure the app looks good on all phones and tablets
+This Area Of Code Is: Responsive Design
 ================================================================================
 */
 
 @media (max-width: 480px) {
-    .app-main {
-        padding: calc(70px + var(--safe-top)) 12px calc(90px + var(--safe-bottom));
-    }
-    
-    .glass-modal {
-        padding: 20px;
-    }
-    
-    .setup-text {
-        font-size: 22px;
-    }
-    
-    .punchline-text {
-        font-size: 18px;
-    }
-    
-    .content-card {
-        padding: 25px 15px;
-        min-height: 280px;
-    }
-    
-    .nav-btn, .add-joke-btn, .auto-mode-btn {
-        padding: 10px 18px;
-        font-size: 14px;
-        min-height: 44px;
-    }
-    
-    .accessibility-content {
-        padding: 20px;
-    }
-    
-    .card-jumps {
-        max-height: 50vh;
-    }
+    .app-main { padding: calc(70px + var(--safe-top)) 12px calc(90px + var(--safe-bottom)); }
+    .glass-modal { padding: 20px; }
+    .setup-text { font-size: 22px; }
+    .punchline-text { font-size: 18px; }
+    .content-card { padding: 25px 15px; min-height: 280px; }
+    .nav-btn, .add-joke-btn, .auto-mode-btn { padding: 10px 18px; font-size: 14px; min-height: 44px; }
+    .accessibility-content { padding: 20px; }
+    .card-jumps { max-height: 50vh; }
+    .live-stats { gap: 6px; }
+    .welcome-badge { font-size: 18px; padding: 5px 12px; }
+    .online-badge { padding: 5px 10px; font-size: 12px; }
 }
 
 @media (max-width: 360px) {
-    .controls-row {
-        flex-direction: column;
-    }
-    
-    .nav-btn, .add-joke-btn, .auto-mode-btn {
-        width: 100%;
-    }
-    
-    .welcome-badge {
-        font-size: 16px;
-        padding: 5px 10px;
-    }
-    
-    #personalVisits {
-        font-size: 12px;
-    }
+    .controls-row { flex-direction: column; }
+    .nav-btn, .add-joke-btn, .auto-mode-btn { width: 100%; }
+    .welcome-badge { font-size: 16px; padding: 5px 10px; }
+    #personalVisits { font-size: 12px; }
 }
 
-/* Landscape mode adjustments */
 @media (max-height: 600px) and (orientation: landscape) {
-    .content-card {
-        min-height: 200px;
-        padding: 20px;
-    }
-    
-    .card-icon {
-        font-size: 32px;
-        margin-bottom: 10px;
-    }
-    
-    .setup-text {
-        font-size: 20px;
-        margin-bottom: 10px;
-    }
-    
-    .punchline-text {
-        font-size: 16px;
-    }
-    
-    .card-footer {
-        padding-top: 15px;
-        margin-top: 15px;
-    }
-    
-    .card-jumps {
-        max-height: 40vh;
-    }
+    .content-card { min-height: 200px; padding: 20px; }
+    .card-icon { font-size: 32px; margin-bottom: 10px; }
+    .setup-text { font-size: 20px; margin-bottom: 10px; }
+    .punchline-text { font-size: 16px; }
+    .card-footer { padding-top: 15px; margin-top: 15px; }
+    .card-jumps { max-height: 40vh; }
 }
 
-/* Reduced Motion Respect */
 @media (prefers-reduced-motion: reduce) {
-    * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
-    
-    .content-card::before {
-        display: none;
-    }
-    
-    .card-icon {
-        animation: none;
-    }
-}
-
-/*
-================================================================================
-This Area Of Code Is: Copyright Footer
-Explanation: Fixed position copyright notice matching index.html format
-In Other Words: The bottom text with your name in mathematical italics
-================================================================================
-*/
-
-.app-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(15, 23, 42, 0.9);
-    border-top: 1px solid var(--glass-border);
-    padding: 12px 20px calc(12px + var(--safe-bottom));
-    text-align: center;
-    font-size: 12px;
-    color: var(--text-secondary);
-    z-index: 50;
-}
-
-.footer-name {
-    color: white;
-    font-family: 'Playfair Display', serif;
-    font-weight: 600;
-}
-
-.professional-title {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-weight: 700;
-    background: linear-gradient(90deg, #6b21a8, #cd7f32, #ffd700, #cd7f32, #6b21a8);
-    background-size: 200% 100%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: textShimmer 3s linear infinite;
-}
-
-@keyframes textShimmer {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
+    * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+    .content-card::before { display: none; }
+    .card-icon { animation: none; }
 }
