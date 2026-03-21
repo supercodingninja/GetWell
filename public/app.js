@@ -1,8 +1,6 @@
 /*
 ================================================================================
 This Area Of Code Is: Encrypted Firebase Configuration
-Explanation: Base64 encoded credentials to prevent GitHub exposure
-In Other Words: Secret password protection for the database
 ================================================================================
 */
 
@@ -40,26 +38,7 @@ try {
 
 /*
 ================================================================================
-This Area Of Code Is: Universal Wellness Mission (Phase 8)
-Explanation: App mission constants for PTSD, mental health, hospital, prison, global support
-In Other Words: The heart of the app - bringing joy to everyone everywhere
-================================================================================
-*/
-
-const APP_MISSION = {
-    name: "GetWell Card",
-    tagline: "Universal Wellness for Everyone",
-    audience: ["PTSD survivors", "Mental health warriors", "Hospital patients", "Prison communities", "Anyone having a bad day", "Global community"],
-    values: ["Clean humor", "Spiritual encouragement", "Inclusive support", "Family-friendly content", "No political division"],
-    scripturesEnabled: true,
-    globalReach: true
-};
-
-/*
-================================================================================
-This Area Of Code Is: Universal Card Content Dataset (Phase 1 Corrected)
-Explanation: 100 cards mixed: 85 jokes (with punchlines), 10 scriptures (no punchline), 5 positive messages (no punchline)
-In Other Words: The complete deck with different card types properly separated
+This Area Of Code Is: Complete Card Dataset (100 Cards - 85 Jokes, 10 Scriptures, 5 Messages)
 ================================================================================
 */
 
@@ -148,8 +127,17 @@ const defaultCards = [
     { type: 'joke', icon: '🏒', setup: "I used to be a doctor,", punchline: "but then I lost my patience.", author: null },
     { type: 'joke', icon: '🏑', setup: "I was going to tell a joke about pizza,", punchline: "but it's too cheesy.", author: null },
     { type: 'joke', icon: '🏏', setup: "I don't trust stairs", punchline: "because they're always up to something.", author: null },
+    { type: 'joke', icon: '🎿', setup: "The man who survived mustard gas and pepper spray", punchline: "is a seasoned veteran.", author: null },
+    { type: 'joke', icon: '🥊', setup: "I used to play piano by ear,", punchline: "but now I use my hands.", author: null },
+    { type: 'joke', icon: '🥋', setup: "I'm terrified of elevators,", punchline: "so I'm going to start taking steps to avoid them.", author: null },
+    { type: 'joke', icon: '⛳', setup: "I couldn't commit to the marathon,", punchline: "but I've been running jokes into the ground.", author: null },
+    { type: 'joke', icon: '🏓', setup: "Parallel lines have so much in common.", punchline: "It's a shame they'll never meet.", author: null },
     
-    // SCRIPTURES 86-95 (no punchlines - just spiritual encouragement)
+    // Adding 2 more jokes to reach 85 total jokes
+    { type: 'joke', icon: '🧊', setup: "Why did the ice cube break up with the water?", punchline: "It needed some space!", author: null },
+    { type: 'joke', icon: '🍩', setup: "Why did the donut go to the dentist?", punchline: "It needed a filling!", author: null },
+    
+    // SCRIPTURES 86-95 (no punchlines)
     { type: 'scripture', icon: '✨', setup: "The LORD is my shepherd; I shall not want. He maketh me to lie down in green pastures: he leadeth me beside the still waters.", punchline: null, reference: "Psalm 23:1-3", author: null },
     { type: 'scripture', icon: '🕊️', setup: "The LORD is my light and my salvation; whom shall I fear? the LORD is the strength of my life; of whom shall I be afraid?", punchline: null, reference: "Psalm 27:1", author: null },
     { type: 'scripture', icon: '💙', setup: "The righteous cry, and the LORD heareth, and delivereth them out of all their troubles. The LORD is nigh unto them that are of a broken heart.", punchline: null, reference: "Psalm 34:17-18", author: null },
@@ -161,7 +149,7 @@ const defaultCards = [
     { type: 'scripture', icon: '🦋', setup: "But they that wait upon the LORD shall renew their strength; they shall mount up with wings as eagles; they shall run, and not be weary.", punchline: null, reference: "Isaiah 40:31", author: null },
     { type: 'scripture', icon: '💪', setup: "Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee.", punchline: null, reference: "Isaiah 41:10", author: null },
     
-    // POSITIVE MESSAGES 96-100 (no punchlines - just encouragement)
+    // POSITIVE MESSAGES 96-100 (no punchlines)
     { type: 'message', icon: '🌅', setup: "You are stronger than you know, braver than you believe, and more loved than you imagine. This moment is temporary, but your strength is permanent.", punchline: null, author: null },
     { type: 'message', icon: '🌱', setup: "Growth takes time. Be patient with yourself. Just like a seed buried in darkness before it breaks through the soil, your breakthrough is coming.", punchline: null, author: null },
     { type: 'message', icon: '🤗', setup: "You matter. Your story matters. Your presence makes a difference in this world, even when you don't see it. Keep going.", punchline: null, author: null },
@@ -169,28 +157,20 @@ const defaultCards = [
     { type: 'message', icon: '🎆', setup: "Your current situation is not your final destination. Better days are ahead. You are worthy of peace, joy, and love. Never forget that.", punchline: null, author: null }
 ];
 
-/*
-================================================================================
-This Area Of Code Is: Application State Management
-Explanation: Tracks current card index, auto-play settings, and user preferences
-In Other Words: The memory of where you are in the deck and what settings are on
-================================================================================
-*/
-
 let state = {
     cards: [...defaultCards],
     currentIndex: 0,
     autoMode: false,
     autoSpeed: 6000,
     autoInterval: null,
-    personalVisits: 1
+    personalVisits: 1,
+    punchlineVisible: false,  // Track if punchline is currently shown
+    onlineUsers: 3  // Simulated online users count
 };
 
 /*
 ================================================================================
-This Area Of Code Is: Content Moderation System (Phase 8)
-Explanation: Uses PurgoMalum API to check for inappropriate content
-In Other Words: Automatic bad word filter using external API
+This Area Of Code Is: Content Moderation (PurgoMalum API)
 ================================================================================
 */
 
@@ -208,8 +188,6 @@ async function validateContent(text) {
 /*
 ================================================================================
 This Area Of Code Is: Video Background Manager
-Explanation: Handles lazy loading and fallback for background video
-In Other Words: Controls the moving background video behind the cards
 ================================================================================
 */
 
@@ -251,9 +229,7 @@ class VideoBackgroundManager {
 
 /*
 ================================================================================
-This Area Of Code Is: Metrics and Counter System (Phase 3)
-Explanation: Tracks personal visits via localStorage and global visitors via Firebase
-In Other Words: Counts your visits and total visitors worldwide
+This Area Of Code Is: Metrics and Online Users System
 ================================================================================
 */
 
@@ -270,6 +246,18 @@ function updatePersonalVisitCounter() {
         }
     } catch (e) {
         console.log('[Metrics] localStorage not available');
+    }
+}
+
+function updateOnlineUsers() {
+    // Simulate fluctuating online users (2-8 range)
+    const baseUsers = 3;
+    const variance = Math.floor(Math.random() * 5) - 2; // -2 to +2
+    state.onlineUsers = Math.max(2, Math.min(8, baseUsers + variance));
+    
+    const onlineEl = document.getElementById('onlineUsers');
+    if (onlineEl) {
+        onlineEl.textContent = `${state.onlineUsers} online`;
     }
 }
 
@@ -302,32 +290,53 @@ async function updateGlobalVisitorCount() {
         }
         
         console.log('[Metrics] Global visitor counted');
-        await loadGlobalStats();
-        
     } catch (error) {
         console.error('[Metrics] Failed to track global visitor:', error);
     }
 }
 
-async function loadGlobalStats() {
-    if (!firebaseInitialized || !db) return;
+/*
+================================================================================
+This Area Of Code Is: Punchline Toggle System (RESTORED)
+================================================================================
+*/
+
+function togglePunchline() {
+    const card = state.cards[state.currentIndex];
     
-    try {
-        const doc = await db.collection('stats').doc('globalVisitors').get();
-        if (doc.exists) {
-            const count = doc.data().count || 0;
-            console.log('[Metrics] Global visitors:', count);
-        }
-    } catch (error) {
-        console.error('[Metrics] Failed to load global stats:', error);
+    // Only allow toggle for jokes
+    if (card.type !== 'joke') return;
+    
+    state.punchlineVisible = !state.punchlineVisible;
+    renderCard();
+}
+
+function updatePunchlineButton() {
+    const btn = document.getElementById('punchlineBtn');
+    const card = state.cards[state.currentIndex];
+    
+    if (!btn) return;
+    
+    // Only show button for jokes
+    if (card.type !== 'joke') {
+        btn.style.display = 'none';
+        return;
+    }
+    
+    btn.style.display = 'flex';
+    
+    if (state.punchlineVisible) {
+        btn.innerHTML = '<span>👁️</span> Hide Punchline';
+        btn.classList.add('active');
+    } else {
+        btn.innerHTML = '<span>👁️</span> Show Punchline';
+        btn.classList.remove('active');
     }
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Universal Accessibility Controller
-Explanation: Manages all accessibility features - Vision, Neurodivergent, Mental Health, Hearing, Motor, Speech
-In Other Words: Complete system for all disability accommodations with localStorage persistence
+This Area Of Code Is: Accessibility Controller (9 Color Vision Types)
 ================================================================================
 */
 
@@ -397,23 +406,6 @@ function toggleFeature(element, feature) {
     if (feature === 'large-targets') {
         document.body.classList.toggle('large-targets-mode', isActive);
     }
-    
-    announceChange(feature + ' mode ' + (isActive ? 'enabled' : 'disabled'));
-}
-
-function announceChange(message) {
-    const announcement = document.createElement('div');
-    announcement.setAttribute('role', 'status');
-    announcement.setAttribute('aria-live', 'polite');
-    announcement.className = 'sr-only';
-    announcement.style.cssText = 'position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden;';
-    announcement.textContent = message;
-    document.body.appendChild(announcement);
-    setTimeout(() => {
-        if (announcement.parentNode) {
-            document.body.removeChild(announcement);
-        }
-    }, 1000);
 }
 
 function applyColorFilter(filterType) {
@@ -470,9 +462,7 @@ function loadSavedAccessibilitySettings() {
 
 /*
 ================================================================================
-This Area Of Code Is: Card Rendering System (CORRECTED)
-Explanation: Shows punchline ONLY for jokes. Scriptures and messages show setup only with reference/label.
-In Other Words: Jokes have punchlines, scriptures/messages don't - fixed logic!
+This Area Of Code Is: Card Rendering System (with Punchline Toggle)
 ================================================================================
 */
 
@@ -487,7 +477,6 @@ function renderCard() {
     if (!cardIcon || !setupText || !punchlineText || !cardBadge) return;
 
     cardIcon.style.transform = 'scale(0)';
-    punchlineText.classList.remove('visible');
     
     setTimeout(() => {
         cardIcon.textContent = card.icon;
@@ -510,10 +499,15 @@ function renderCard() {
         // Setup text (all types have this)
         setupText.textContent = card.setup;
         
-        // Punchline - ONLY show for jokes!
+        // Punchline logic - ONLY for jokes, AND only if visible
         if (card.type === 'joke' && card.punchline) {
-            punchlineText.textContent = card.punchline;
-            punchlineText.classList.add('visible');
+            if (state.punchlineVisible) {
+                punchlineText.textContent = card.punchline;
+                punchlineText.classList.add('visible');
+            } else {
+                punchlineText.textContent = '';
+                punchlineText.classList.remove('visible');
+            }
         } else if (card.type === 'scripture' && card.reference) {
             punchlineText.textContent = `— ${card.reference}`;
             punchlineText.style.fontStyle = 'italic';
@@ -532,6 +526,7 @@ function renderCard() {
         }
         
         updateCounter();
+        updatePunchlineButton();  // Update the button state
         cardIcon.style.transform = 'scale(1)';
     }, 150);
 }
@@ -545,18 +540,21 @@ function updateCounter() {
 
 function nextCard() {
     state.currentIndex = (state.currentIndex + 1) % state.cards.length;
+    state.punchlineVisible = false;  // Reset punchline visibility on card change
     renderCard();
     updateCardJumps();
 }
 
 function previousCard() {
     state.currentIndex = (state.currentIndex - 1 + state.cards.length) % state.cards.length;
+    state.punchlineVisible = false;  // Reset punchline visibility on card change
     renderCard();
     updateCardJumps();
 }
 
 function jumpToCard(index) {
     state.currentIndex = index;
+    state.punchlineVisible = false;  // Reset punchline visibility
     renderCard();
     updateCardJumps();
     toggleMenu();
@@ -565,8 +563,6 @@ function jumpToCard(index) {
 /*
 ================================================================================
 This Area Of Code Is: Auto-Play Controller
-Explanation: Automatically advances through cards at selected speed
-In Other Words: Slideshow mode that moves to next card automatically
 ================================================================================
 */
 
@@ -616,9 +612,7 @@ function setSpeed(speed) {
 
 /*
 ================================================================================
-This Area Of Code Is: Menu and Navigation Controllers
-Explanation: Handles side menu, modals, and card jump grid
-In Other Words: Controls opening/closing the menu and the grid of 100 card buttons
+This Area Of Code Is: Menu and Navigation
 ================================================================================
 */
 
@@ -657,7 +651,6 @@ function updateCardJumps() {
             btn.classList.add('active');
         }
         
-        // Mark special cards
         if (card.type === 'scripture') {
             btn.classList.add('is-scripture');
         } else if (card.type === 'message') {
@@ -690,7 +683,6 @@ function closeJokeModal() {
     const form = document.getElementById('jokeForm');
     if (form) form.reset();
     
-    // Reset checkboxes to default: Country checked only
     const countryCheck = document.getElementById('showCountry');
     const cityCheck = document.getElementById('showCity');
     const stateCheck = document.getElementById('showState');
@@ -715,9 +707,7 @@ function goHome() {
 
 /*
 ================================================================================
-This Area Of Code Is: Joke Submission Handler (Phase 5)
-Explanation: Saves user jokes to Firebase with location checkbox validation
-In Other Words: Sends new jokes to cloud after checking content is clean
+This Area Of Code Is: Joke Submission Handler
 ================================================================================
 */
 
@@ -738,7 +728,6 @@ async function submitJoke(event) {
     const stateChecked = document.getElementById('showState')?.checked || false;
     const countryChecked = document.getElementById('showCountry')?.checked || false;
     
-    // Validation: At least one location checkbox must be checked if location is provided
     if (locationInput?.value.trim() && !cityChecked && !stateChecked && !countryChecked) {
         alert('Please select at least one location option (City, State/Province, or Country) to display.');
         return;
@@ -762,7 +751,6 @@ async function submitJoke(event) {
         return;
     }
     
-    // Build display location based on checkboxes
     let displayLocation = '';
     if (location) {
         const parts = location.split(',').map(p => p.trim());
@@ -801,14 +789,6 @@ async function submitJoke(event) {
         alert('Failed to save your joke. Please check your connection and try again.');
     }
 }
-
-/*
-================================================================================
-This Area Of Code Is: Firebase Data Loader
-Explanation: Loads community-submitted jokes from Firestore and appends to deck
-In Other Words: Fetches new community content from the cloud
-================================================================================
-*/
 
 async function loadCommunityJokes() {
     if (!firebaseInitialized || !db) {
@@ -851,8 +831,6 @@ async function loadCommunityJokes() {
 /*
 ================================================================================
 This Area Of Code Is: Application Initialization
-Explanation: Sets up all components on page load
-In Other Words: Starting the app with all features active
 ================================================================================
 */
 
@@ -860,16 +838,15 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('[App] Initializing GetWell Card - Universal Wellness App...');
     console.log(`[App] Total cards in deck: ${state.cards.length}`);
     
-    // Phase 3: Metrics
+    // Initialize systems
     updatePersonalVisitCounter();
-    loadGlobalStats().then(() => {
-        updateGlobalVisitorCount();
-    });
+    updateOnlineUsers();  // Set initial online users
+    updateGlobalVisitorCount();
     
-    // Phase 6: Load all saved accessibility settings
+    // Update online users every 30 seconds
+    setInterval(updateOnlineUsers, 30000);
+    
     loadSavedAccessibilitySettings();
-    
-    // Phase 1 & 2: Initialize video, load community content, render first card
     new VideoBackgroundManager();
     loadCommunityJokes();
     renderCard();
@@ -881,7 +858,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'ArrowLeft') previousCard();
         if (e.key === ' ' && !e.target.matches('input, textarea')) {
             e.preventDefault();
-            nextCard();
+            if (state.cards[state.currentIndex].type === 'joke') {
+                togglePunchline();
+            } else {
+                nextCard();
+            }
         }
         if (e.key === 'Escape') {
             closeJokeModal();
@@ -893,15 +874,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     console.log('[App] Initialization complete.');
-    console.log('[App] Features: 100 Cards (85 Jokes, 10 Scriptures, 5 Messages), Firebase, Accessibility, Metrics, Auto-Play');
 });
-
-/*
-================================================================================
-This Area Of Code Is: Copyright Notice
-Explanation: Legal copyright declaration for the application
-In Other Words: Who made this and who owns it
-================================================================================
-*/
 
 // © 2026 Get Well Card | 𝐹𝑟𝑒𝑑𝑒𝑟𝑖𝑐𝑘 𝑇ℎ𝑜𝑚𝑎𝑠,𝑇ℎ𝑒 𝑆𝑢𝑝𝑒𝑟 𝐶𝑜𝑑𝑖𝑛𝑔 𝑁𝑖𝑛𝑗𝑎™ | Made with ❤️ for the global community
