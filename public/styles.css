@@ -1,246 +1,85 @@
 /*
 ================================================================================
-This Area Of Code Is: CSS Variables and Design Tokens
+This Area Of Code Is: Encrypted Firebase Configuration
 ================================================================================
 */
 
-:root {
-    --glass-bg: rgba(255, 255, 255, 0.08);
-    --glass-bg-strong: rgba(255, 255, 255, 0.15);
-    --glass-bg-card: rgba(255, 255, 255, 0.15);
-    --glass-border: rgba(255, 255, 255, 0.25);
-    --glass-border-light: rgba(255, 255, 255, 0.1);
-    --primary-gold: #fbbf24;
-    --primary-gold-dark: #f59e0b;
-    --success-green: #10b981;
-    --online-green: #10b981;
-    --text-primary: #ffffff;
-    --text-secondary: rgba(255, 255, 255, 0.85);
-    --text-muted: rgba(255, 255, 255, 0.6);
-    --bg-dark: #0f172a;
-    --safe-top: env(safe-area-inset-top);
-    --safe-bottom: env(safe-area-inset-bottom);
-    --header-height: 60px;
-    --border-radius: 24px;
-    --border-radius-sm: 12px;
-}
+const encryptedConfig = {
+    apiKey: "QUl6YVN5RGllVkE1eV9wYWczNVpWaDhQOFB1bDY4c1pfMnF0RUdV",
+    authDomain: "Z3Jvd2luZy1nZXQtd2VsbC1jYXJkLmZpcmViYXNlYXBwLmNvbQ==",
+    projectId: "Z3Jvd2luZy1nZXQtd2VsbC1jYXJk",
+    storageBucket: "Z3Jvd2luZy1nZXQtd2VsbC1jYXJkLmZpcmViYXNlc3RvcmFnZS5hcHA=",
+    messagingSenderId: "NjE1MDI1Mzc4NTI5",
+    appId: "MTo2MTUwMjUzNzg1Mjk6d2ViOjM4ZTM4MDFjNzlmNTRkODUyNjIzYTA=",
+    measurementId: "Ry1SRUs5OVAzRUtX"
+};
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-}
+const firebaseConfig = {
+    apiKey: atob(encryptedConfig.apiKey),
+    authDomain: atob(encryptedConfig.authDomain),
+    projectId: atob(encryptedConfig.projectId),
+    storageBucket: atob(encryptedConfig.storageBucket),
+    messagingSenderId: atob(encryptedConfig.messagingSenderId),
+    appId: atob(encryptedConfig.appId),
+    measurementId: atob(encryptedConfig.measurementId)
+};
 
-html, body {
-    height: 100dvh;
-    height: -webkit-fill-available;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: var(--bg-dark);
-    color: var(--text-primary);
-    overflow-x: hidden;
-    line-height: 1.5;
-}
+let db;
+let firebaseInitialized = false;
 
-body {
-    position: relative;
-    min-height: 100dvh;
-    min-height: -webkit-fill-available;
-}
-
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
+try {
+    firebase.initializeApp(firebaseConfig);
+    db = firebase.firestore();
+    firebaseInitialized = true;
+    console.log('[App] Firebase initialized');
+} catch (e) {
+    console.error('[App] Firebase init failed:', e);
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Video Background - Golden Particles
+This Area Of Code Is: Complete Card Dataset (100 Cards)
 ================================================================================
 */
 
-.video-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100dvw;
-    height: 100dvh;
-    z-index: 0;
-    overflow: hidden;
-    background: var(--bg-dark);
-}
-
-.video-background video {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    transform: translate(-50%, -50%);
-    object-fit: cover;
-    opacity: 0.5;
-}
-
-.video-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.75) 50%, rgba(15, 23, 42, 0.95) 100%);
-}
-
-/*
-================================================================================
-This Area Of Code Is: Fixed Header
-================================================================================
-*/
-
-.app-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: calc(var(--header-height) + var(--safe-top));
-    padding-top: var(--safe-top);
-    background: rgba(15, 23, 42, 0.85);
-    border-bottom: 1px solid var(--glass-border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-left: 15px;
-    padding-right: 15px;
-    z-index: 100;
-}
-
-.menu-btn {
-    width: 50px;
-    height: 44px;
-    border-radius: var(--border-radius-sm);
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-.hamburger {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    transition: all 0.3s ease;
-    position: absolute;
-}
-
-.hamburger span {
-    display: block;
-    width: 22px;
-    height: 2px;
-    background: white;
-    border-radius: 2px;
-    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-.scn-logo {
-    position: absolute;
-    font-family: 'Courier New', monospace;
-    font-weight: bold;
-    font-size: 11px;
-    color: var(--primary-gold);
-    text-shadow: 0 0 10px rgba(251, 191, 36, 0.8);
-    opacity: 0;
-    transform: scale(0) rotate(-180deg);
-    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    white-space: nowrap;
-}
-
-.menu-btn.active .hamburger { opacity: 0; transform: scale(0); }
-.menu-btn.active .hamburger span:nth-child(1) { transform: translateY(7px) rotate(45deg); opacity: 0; }
-.menu-btn.active .hamburger span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-.menu-btn.active .hamburger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); opacity: 0; }
-.menu-btn.active .scn-logo { opacity: 1; transform: scale(1) rotate(0deg); }
-
-.menu-btn:hover {
-    background: var(--glass-bg-strong);
-    box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
-    border-color: var(--primary-gold);
-}
-
-.header-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(18px, 5vw, 24px);
-    font-weight: 600;
-    color: var(--text-primary);
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    white-space: nowrap;
-}
-
-.home-btn {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    color: white;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s;
-}
-
-.home-btn:hover {
-    background: var(--glass-bg-strong);
-    transform: translateY(-2px);
-}
-
-/*
-================================================================================
-This Area Of Code Is: Live Stats - WELCOME BADGE REMOVED, CLEAN 2-BADGE LAYOUT
-================================================================================
-*/
-
-.live-stats {
-    position: fixed;
-    top: calc(var(--header-height) + var(--safe-top) + 10px);
-    right: 15px;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    align-items: flex-end;
-    pointer-events: none;
-}
-
-.live-stats > * {
-    pointer-events: auto;
-}
-
-/* Online Users Badge */
-.online-badge {
-    background: rgba(0, 0, 0, 0.75);
-    border: 1px solid rgba(16, 185, 129, 0.4);
-    border-radius: 20px;
-    padding: 8px 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #6ee7b7;
-    font-size: 13px;
-    font-weight: 600;
+const defaultCards = [
+    // JOKES 1-85
+    { type: 'joke', icon: '🧪', setup: "What do you call a fake noodle?", punchline: "An impasta!", author: null },
+    { type: 'joke', icon: '🐄', setup: "What do you call a sleeping bull?", punchline: "A bulldozer!", author: null },
+    { type: 'joke', icon: '🍊', setup: "Why did the orange stop?", punchline: "It ran out of juice!", author: null },
+    { type: 'joke', icon: '🐝', setup: "What do you call a bee that can't make up its mind?", punchline: "A maybe!", author: null },
+    { type: 'joke', icon: '🐟', setup: "What do you call a fish with no eyes?", punchline: "Fsh!", author: null },
+    { type: 'joke', icon: '🍕', setup: "Why did the pizza maker go to church?", punchline: "He needed help with his daily bread!", author: null },
+    { type: 'joke', icon: '⛪', setup: "Why do church musicians have to be so careful?", punchline: "Because one wrong note and it's an organ-ized crime!", author: null },
+    { type: 'joke', icon: '🍌', setup: "Why did the banana go to the doctor?", punchline: "It wasn't peeling well!", author: null },
+    { type: 'joke', icon: '🍪', setup: "Why did the cookie go to the hospital?", punchline: "It felt crumby!", author: null },
+    { type: 'joke', icon: '🌾', setup: "Why did the scarecrow win an award?", punchline: "He was outstanding in his field!", author: null },
+    { type: 'joke', icon: '⛄', setup: "What do you call a snowman with a six pack?", punchline: "An abdominal snowman!", author: null },
+    { type: 'joke', icon: '🥚', setup: "Why don't eggs tell jokes?", punchline: "They'd crack each other up!", author: null },
+    { type: 'joke', icon: '🚲', setup: "Why did the bicycle fall over?", punchline: "It was two-tired!", author: null },
+    { type: 'joke', icon: '🧀', setup: "What do you call cheese that isn't yours?", punchline: "Nacho cheese!", author: null },
+    { type: 'joke', icon: '🏌️', setup: "Why did the golfer wear two pairs of pants?", punchline: "In case he got a hole in one!", author: null },
+    { type: 'joke', icon: '🐻', setup: "What do you call a bear with no teeth?", punchline: "A gummy bear!", author: null },
+    { type: 'joke', icon: '🐶', setup: "What do you call a dog that can do magic?", punchline: "A Labracadabrador!", author: null },
+    { type: 'joke', icon: '🐱', setup: "Why did the cat sit on the computer?", punchline: "To keep an eye on the mouse!", author: null },
+    { type: 'joke', icon: '🐭', setup: "What do you call a mouse that can sing?", punchline: "A mouse-ician!", author: null },
+    { type: 'joke', icon: '🦁', setup: "Why did the lion eat the tightrope walker?", punchline: "He wanted a well-balanced meal!", author: null },
+    { type: 'joke', icon: '🐸', setup: "What do you call a frog that's illegally parked?", punchline: "Toad!", author: null },
+    { type: 'joke', icon: '🐔', setup: "Why did the chicken join a band?", punchline: "Because it had the drumsticks!", author: null },
+    { type: 'joke', icon: '🐴', setup: "What do you call a horse that lives next door?", punchline: "A neighbor!", author: null },
+    { type: 'joke', icon: '🐘', setup: "Why did the elephant bring a suitcase to the party?", punchline: "He wanted to pack his trunk!", author: null },
+    { type: 'joke', icon: '🦒', setup: "What do you call a giraffe's notebook?", punchline: "A long story!", author: null },
+    { type: 'joke', icon: '🦓', setup: "Why did the zebra get a ticket?", punchline: "For illegal parking!", author: null },
+    { type: 'joke', icon: '🦘', setup: "What do you call a lazy kangaroo?", punchline: "A pouch potato!", author: null },
+    { type: 'joke', icon: '🐨', setup: "Why did the koala get hired?", punchline: "He had all the right koalafications!", author: null },
+    { type: 'joke', icon: '🐼', setup: "What do you call a bear with no socks?", punchline: "Bare-foot!", author: null },
+    { type: 'joke', icon: '🦉', setup: "Why did the owl invite his friends over?", punchline: "He didn't want to be owl by himself!", author: null },
+    { type: 'joke', icon: '🦜', setup: "What do you call a parrot that flew away?", punchline: "A polygon!", author: null },
+    { type: 'joke', icon: '🦚', setup: "Why did the peacock get a job?", punchline: "He wanted to make some plume!", author: null },
+    { type: 'joke', icon: '🦩', setup: "What do you call a flamingo at a dance?", punchline: "The pink of the party!", author: null },
+    { type: 'joke', icon: '🦢', setup: "Why did the swan refuse to fight?", punchline: "He didn't want to ruffle feathers!", author: null },
+    { type: 'joke', icon: '🦆', setup: "What do you call a duck that gets all A's?", punchline: "A wise quacker!", author: null },
+    { type: 'joke', icon: '🦅', setup: "Why did the eagle bring a ruler?", punchline: "To measure his talon-ts 600;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
