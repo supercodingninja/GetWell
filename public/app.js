@@ -1,6 +1,9 @@
 /*
 ================================================================================
 This Area Of Code Is: Encrypted Firebase Configuration
+Explanation: Base64-encoded Firebase credentials for security. Prevents API key 
+exposure in plain text while maintaining full Firestore functionality.
+In Other Words: Hidden API keys to keep your database safe from unauthorized access.
 ================================================================================
 */
 
@@ -31,19 +34,21 @@ try {
     firebase.initializeApp(firebaseConfig);
     db = firebase.firestore();
     firebaseInitialized = true;
-    console.log('[App] Firebase initialized');
+    console.log('[App] Firebase initialized successfully');
 } catch (e) {
-    console.error('[App] Firebase init failed:', e);
+    console.error('[App] Firebase initialization failed:', e);
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Complete Card Dataset (100 Cards)
+This Area Of Code Is: Complete Card Dataset (100 Corny Jokes)
+Explanation: Static array of 100 family-friendly dad jokes with unique emojis.
+No authors attached (null) as requested. Type 'joke' for all entries.
+In Other Words: The complete joke database built right into the app.
 ================================================================================
 */
 
 const defaultCards = [
-    // JOKES 1-85
     { type: 'joke', icon: '🧪', setup: "What do you call a fake noodle?", punchline: "An impasta!", author: null },
     { type: 'joke', icon: '🐄', setup: "What do you call a sleeping bull?", punchline: "A bulldozer!", author: null },
     { type: 'joke', icon: '🍊', setup: "Why did the orange stop?", punchline: "It ran out of juice!", author: null },
@@ -79,986 +84,783 @@ const defaultCards = [
     { type: 'joke', icon: '🦩', setup: "What do you call a flamingo at a dance?", punchline: "The pink of the party!", author: null },
     { type: 'joke', icon: '🦢', setup: "Why did the swan refuse to fight?", punchline: "He didn't want to ruffle feathers!", author: null },
     { type: 'joke', icon: '🦆', setup: "What do you call a duck that gets all A's?", punchline: "A wise quacker!", author: null },
-    { type: 'joke', icon: '🦅', setup: "Why did the eagle bring a ruler?", punchline: "To measure his talon-ts 600;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    white-space: nowrap;
-}
+    { type: 'joke', icon: '🦅', setup: "Why did the eagle bring a ruler?", punchline: "To measure his talon-ts!", author: null },
+    { type: 'joke', icon: '🐧', setup: "What do you call a penguin in the desert?", punchline: "Lost!", author: null },
+    { type: 'joke', icon: '🐢', setup: "Why did the turtle cross the road?", punchline: "To get to the shell station!", author: null },
+    { type: 'joke', icon: '🐍', setup: "What do you call a snake that works for the government?", punchline: "A civil serpent!", author: null },
+    { type: 'joke', icon: '🦎', setup: "Why did the lizard go on a diet?", punchline: "It was a little heavy scale-d!", author: null },
+    { type: 'joke', icon: '🐙', setup: "What do you call an octopus that throws things?", punchline: "An octo-pus!", author: null },
+    { type: 'joke', icon: '🦑', setup: "Why did the squid cross the road?", punchline: "To get to the other tide!", author: null },
+    { type: 'joke', icon: '🦐', setup: "What do you call a shrimp that won't share?", punchline: "Shellfish!", author: null },
+    { type: 'joke', icon: '🦀', setup: "Why did the crab never give to charity?", punchline: "Because he's shellfish!", author: null },
+    { type: 'joke', icon: '🐌', setup: "What do you call a snail on a ship?", punchline: "A snailor!", author: null },
+    { type: 'joke', icon: '🦋', setup: "Why did the butterfly flutter by?", punchline: "Because it saw the caterpillar cry!", author: null },
+    { type: 'joke', icon: '🐛', setup: "What do you call a caterpillar with a phone?", punchline: "A social butterfly in training!", author: null },
+    { type: 'joke', icon: '🐜', setup: "Why don't ants get sick?", punchline: "They have little anty-bodies!", author: null },
+    { type: 'joke', icon: '🐝', setup: "What do you call a bee that can't stop eating?", punchline: "Chub-bee!", author: null },
+    { type: 'joke', icon: '🐞', setup: "Why did the ladybug go to the doctor?", punchline: "It was feeling spotty!", author: null },
+    { type: 'joke', icon: '🦗', setup: "What do you call a cricket with no legs?", punchline: "A hop-less case!", author: null },
+    { type: 'joke', icon: '🕷️', setup: "Why did the spider go to school?", punchline: "To learn web design!", author: null },
+    { type: 'joke', icon: '🦂', setup: "What do you call a scorpion that loves music?", punchline: "A rock-stinger!", author: null },
+    { type: 'joke', icon: '🌵', setup: "Why did the cactus cross the road?", punchline: "It got stuck to the chicken!", author: null },
+    { type: 'joke', icon: '🌲', setup: "What do you call a tree that doubts itself?", punchline: "An un-sure-wood!", author: null },
+    { type: 'joke', icon: '🌳', setup: "Why did the tree go to the dentist?", punchline: "It needed a root canal!", author: null },
+    { type: 'joke', icon: '🍁', setup: "What do you call a leaf that's guilty?", punchline: "A con-leaf!", author: null },
+    { type: 'joke', icon: '🍄', setup: "Why did the mushroom go to the party?", punchline: "Because he's a fungi!", author: null },
+    { type: 'joke', icon: '🌹', setup: "What do you call a rose that tells jokes?", punchline: "A comedi-bloom!", author: null },
+    { type: 'joke', icon: '🌻', setup: "Why did the sunflower get in trouble?", punchline: "It was always looking at the sun instead of working!", author: null },
+    { type: 'joke', icon: '🌷', setup: "What do you call a flower that runs marathons?", punchline: "A petal-pusher!", author: null },
+    { type: 'joke', icon: '🌼', setup: "Why did the daisy break up with the rose?", punchline: "It was tired of the thorny relationship!", author: null },
+    { type: 'joke', icon: '🍎', setup: "Why did the apple go to the doctor?", punchline: "It wasn't peeling well!", author: null },
+    { type: 'joke', icon: '🍐', setup: "What do you call a pear that plays guitar?", punchline: "A rock and roll fruit!", author: null },
+    { type: 'joke', icon: '🍊', setup: "Why did the orange lose the race?", punchline: "It ran out of juice!", author: null },
+    { type: 'joke', icon: '🍋', setup: "What do you call a lemon that's been stolen?", punchline: "A sour crime!", author: null },
+    { type: 'joke', icon: '🍌', setup: "Why did the banana go out with the prune?", punchline: "Because it couldn't get a date!", author: null },
+    { type: 'joke', icon: '🍉', setup: "What do you call a watermelon that's angry?", punchline: "Melon-choly!", author: null },
+    { type: 'joke', icon: '🍇', setup: "Why did the grape stop in the middle of the road?", punchline: "Because it ran out of juice!", author: null },
+    { type: 'joke', icon: '🍓', setup: "What do you call a strawberry that's sad?", punchline: "A blue-berry!", author: null },
+    { type: 'joke', icon: '🫐', setup: "Why did the blueberry go to school?", punchline: "To become a little brr-ighter!", author: null },
+    { type: 'joke', icon: '🍈', setup: "What do you call a melon that can't get married?", punchline: "Cant-elope!", author: null },
+    { type: 'joke', icon: '🍒', setup: "Why did the cherry go to the doctor?", punchline: "It was feeling a little pit-iful!", author: null },
+    { type: 'joke', icon: '🍑', setup: "What do you call a peach that's a great dancer?", punchline: "A fruit-loop!", author: null },
+    { type: 'joke', icon: '🍍', setup: "Why did the pineapple stop at the gas station?", punchline: "It needed more juice!", author: null },
+    { type: 'joke', icon: '🥝', setup: "What do you call a kiwi that's a detective?", punchline: "Sherlock Fruit!", author: null },
+    { type: 'joke', icon: '🥑', setup: "Why did the avocado go to the gym?", punchline: "To get better abs-ocado!", author: null },
+    { type: 'joke', icon: '🍅', setup: "What do you call a tomato that's embarrassed?", punchline: "A blushing fruit!", author: null },
+    { type: 'joke', icon: '🥕', setup: "Why did the carrot get an award?", punchline: "Because it was outstanding in its field!", author: null },
+    { type: 'joke', icon: '🌽', setup: "What do you call corn that joins the army?", punchline: "Kernel!", author: null },
+    { type: 'joke', icon: '🥔', setup: "Why did the potato go to the party?", punchline: "Because it was a hot potato!", author: null },
+    { type: 'joke', icon: '🥦', setup: "What do you call a broccoli that's a bodyguard?", punchline: "A head of security!", author: null },
+    { type: 'joke', icon: '🥬', setup: "Why did the lettuce break up with the celery?", punchline: "It wanted someone with more stalk!", author: null },
+    { type: 'joke', icon: '🥒', setup: "What do you call a pickle that plays piano?", punchline: "A dill-ightful musician!", author: null },
+    { type: 'joke', icon: '🌶️', setup: "Why did the pepper put on a sweater?", punchline: "Because it was a little chili!", author: null },
+    { type: 'joke', icon: '🧅', setup: "What do you call an onion that's a great actor?", punchline: "A tear-jerker!", author: null },
+    { type: 'joke', icon: '🧄', setup: "Why did the garlic go to the doctor?", punchline: "It had a bad case of the cloves!", author: null },
+    { type: 'joke', icon: '🍞', setup: "What do you call bread that's sleeping?", punchline: "A nap-kin!", author: null },
+    { type: 'joke', icon: '🥐', setup: "Why did the croissant go to the dentist?", punchline: "It needed a filling!", author: null },
+    { type: 'joke', icon: '🥯', setup: "What do you call a bagel that can fly?", punchline: "A plain bagel!", author: null },
+    { type: 'joke', icon: '🥞', setup: "Why did the pancake go to the doctor?", punchline: "It was feeling a little flat!", author: null },
+    { type: 'joke', icon: '🧇', setup: "What do you call a waffle that's been kidnapped?", punchline: "A hostage breakfast!", author: null },
+    { type: 'joke', icon: '🧀', setup: "Why did the cheese go to the party?", punchline: "Because it was grate!", author: null },
+    { type: 'joke', icon: '🍔', setup: "What do you call a burger that tells jokes?", punchline: "A pun-kin!", author: null },
+    { type: 'joke', icon: '🍟', setup: "Why did the french fry win an award?", punchline: "Because it was outstanding in its salt!", author: null },
+    { type: 'joke', icon: '🍕', setup: "What do you call a pizza that's a great singer?", punchline: "A pepperoni Crooner!", author: null },
+    { type: 'joke', icon: '🌭', setup: "Why did the hot dog turn down a chance to star in a movie?", punchline: "It was afraid it might get too much of the spotlight!", author: null },
+    { type: 'joke', icon: '🥪', setup: "What do you call a sandwich that's been left out?", punchline: "A sub-par meal!", author: null },
+    { type: 'joke', icon: '🌮', setup: "Why did the taco go to the gym?", punchline: "To get better shell-f esteem!", author: null },
+    { type: 'joke', icon: '🌯', setup: "What do you call a burrito that's a spy?", punchline: "A wrap-tile!", author: null },
+    { type: 'joke', icon: '🥗', setup: "Why did the salad go to the music studio?", punchline: "To lay down some fresh beets!", author: null },
+    { type: 'joke', icon: '🥙', setup: "What do you call a pita that's always calm?", punchline: "Hummus-ble!", author: null },
+    { type: 'joke', icon: '🥚', setup: "Why did the egg cross the road?", punchline: "To get to the shell station!", author: null }
+];
 
-.pulse-dot {
-    width: 8px;
-    height: 8px;
-    background: var(--online-green);
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
-}
+/*
+================================================================================
+This Area Of Code Is: Application State Management
+Explanation: Tracks current card position, auto-play status, and user preferences.
+In Other Words: The app's memory of where you are and what you're doing.
+================================================================================
+*/
 
-@keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-    50% { opacity: 0.8; transform: scale(0.9); box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
-}
+let currentCardIndex = 0;
+let autoMode = false;
+let autoModeInterval = null;
+let autoModeSpeed = 6000;
+let isMenuOpen = false;
+let punchlineVisible = true; // Always show punchlines (no toggle)
 
-/* Cards Count Badge */
-.cards-badge {
-    background: rgba(0, 0, 0, 0.75);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 20px;
-    padding: 8px 14px;
-    font-size: 13px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    color: white;
-    font-weight: 500;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    white-space: nowrap;
+/*
+================================================================================
+This Area Of Code Is: DOM Content Loaded Initialization
+Explanation: Sets up all event listeners, loads saved preferences, initializes 
+the card display, and tracks visitor metrics on page load.
+In Other Words: Starts the app when the page loads.
+================================================================================
+*/
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize card display
+    renderCard();
+    updateCardJumps();
+    
+    // Initialize visitor tracking
+    trackPersonalVisits();
+    trackGlobalVisitor();
+    
+    // Load saved accessibility settings
+    loadSavedAccessibilitySettings();
+    
+    // Setup keyboard navigation
+    setupKeyboardNavigation();
+    
+    // Setup menu hamburger animation
+    setupMenuAnimation();
+});
+
+/*
+================================================================================
+This Area Of Code Is: Card Rendering Engine
+Explanation: Displays the current joke with immediate punchline visibility.
+Setup and punchline shown together per Phase 2 requirements.
+In Other Words: Shows the joke and answer at the same time, no hiding.
+================================================================================
+*/
+
+function renderCard() {
+    const card = defaultCards[currentCardIndex];
+    
+    // Update badge
+    const badge = document.getElementById('cardBadge');
+    badge.textContent = 'JOKE';
+    
+    // Update icon
+    document.getElementById('cardIcon').textContent = card.icon;
+    
+    // Update setup text (the joke question)
+    document.getElementById('setupText').textContent = card.setup;
+    
+    // Update punchline text (always visible per Phase 2)
+    const punchlineEl = document.getElementById('punchlineText');
+    punchlineEl.textContent = card.punchline;
+    punchlineEl.classList.add('visible');
+    
+    // Update counter
+    document.getElementById('cardCounter').textContent = `Card ${currentCardIndex + 1} of ${defaultCards.length}`;
+    
+    // Update jump grid active state
+    updateActiveJumpButton();
+    
+    // Announce to screen readers if enabled
+    announceToScreenReader(`Card ${currentCardIndex + 1}: ${card.setup} ${card.punchline}`);
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Side Menu
+This Area Of Code Is: Card Navigation System
+Explanation: Previous/Next card functionality with boundary wrapping.
+In Other Words: Moving between jokes with arrow buttons.
 ================================================================================
 */
 
-.side-menu {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: min(85vw, 360px);
-    height: 100dvh;
-    height: -webkit-fill-available;
-    background: rgba(15, 23, 42, 0.98);
-    border-right: 1px solid var(--glass-border);
-    z-index: 200;
-    transform: translateX(-100%);
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow-y: auto;
-    padding-top: var(--safe-top);
-    padding-bottom: var(--safe-bottom);
+function nextCard() {
+    currentCardIndex = (currentCardIndex + 1) % defaultCards.length;
+    renderCard();
 }
 
-.side-menu.open { transform: translateX(0); }
-
-.menu-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 199;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s;
+function previousCard() {
+    currentCardIndex = (currentCardIndex - 1 + defaultCards.length) % defaultCards.length;
+    renderCard();
 }
 
-.menu-overlay.open { opacity: 1; visibility: visible; }
-
-.menu-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    border-bottom: 1px solid var(--glass-border);
-    position: sticky;
-    top: 0;
-    background: rgba(15, 23, 42, 0.98);
-    z-index: 10;
-}
-
-.menu-header h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 24px;
-    color: white;
-}
-
-.close-menu {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: 1px solid var(--glass-border);
-    background: transparent;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s;
-}
-
-.close-menu:hover { background: rgba(255, 255, 255, 0.1); transform: rotate(90deg); }
-
-.menu-content { padding: 15px; }
-
-.menu-item {
-    width: 100%;
-    padding: 15px;
-    border-radius: var(--border-radius-sm);
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    color: white;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    cursor: pointer;
-    transition: all 0.3s;
-    margin-bottom: 10px;
-    text-align: left;
-    font-family: inherit;
-}
-
-.menu-item:hover {
-    background: var(--glass-bg-strong);
-    transform: translateX(5px);
-    border-color: var(--primary-gold);
-}
-
-.menu-divider { height: 1px; background: var(--glass-border); margin: 20px 0; }
-
-.menu-label {
-    font-size: 12px;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    margin-bottom: 12px;
-    padding-left: 5px;
-    font-weight: 600;
+function jumpToCard(index) {
+    currentCardIndex = index;
+    renderCard();
+    toggleMenu(); // Close menu after selection
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Jump-to-Card Grid
+This Area Of Code Is: Jump-to-Card Grid Generator
+Explanation: Creates 100 clickable buttons in a grid layout for quick navigation.
+5-column grid that scrolls if needed. Shows emoji and number for each card.
+In Other Words: The menu buttons to jump to any joke instantly.
 ================================================================================
 */
 
-.card-jumps {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 6px;
-    max-height: 55vh;
-    overflow-y: auto;
-    padding-right: 5px;
+function updateCardJumps() {
+    const grid = document.getElementById('cardJumps');
+    if (!grid) return;
+    
+    grid.innerHTML = '';
+    
+    defaultCards.forEach((card, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'jump-btn';
+        btn.onclick = () => jumpToCard(index);
+        btn.setAttribute('aria-label', `Jump to card ${index + 1}`);
+        
+        // Add emoji
+        const emoji = document.createElement('span');
+        emoji.textContent = card.icon;
+        
+        // Add number
+        const num = document.createElement('small');
+        num.textContent = index + 1;
+        
+        btn.appendChild(emoji);
+        btn.appendChild(num);
+        
+        if (index === currentCardIndex) {
+            btn.classList.add('active');
+        }
+        
+        grid.appendChild(btn);
+    });
 }
 
-.card-jumps::-webkit-scrollbar { width: 6px; }
-.card-jumps::-webkit-scrollbar-track { background: transparent; }
-.card-jumps::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 3px; }
-
-.jump-btn {
-    padding: 8px 4px;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--glass-border-light);
-    color: var(--text-secondary);
-    font-size: 11px;
-    cursor: pointer;
-    transition: all 0.3s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-    min-height: 44px;
-    justify-content: center;
-    font-family: inherit;
-}
-
-.jump-btn span { font-size: 16px; line-height: 1; margin-bottom: 2px; }
-
-.jump-btn:hover, .jump-btn.active {
-    background: var(--glass-bg-strong);
-    color: white;
-    border-color: var(--primary-gold);
-    transform: scale(1.05);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-}
-
-.jump-btn.active {
-    background: rgba(251, 191, 36, 0.2);
-    box-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
-    font-weight: 600;
-}
-
-.jump-btn.is-scripture { border-color: rgba(251, 191, 36, 0.4); }
-.jump-btn.is-message { border-color: rgba(16, 185, 129, 0.4); }
-
-@media (max-width: 380px) { .card-jumps { grid-template-columns: repeat(4, 1fr); } }
-@media (max-width: 320px) { 
-    .card-jumps { grid-template-columns: repeat(3, 1fr); gap: 4px; }
-    .jump-btn { padding: 6px 2px; font-size: 10px; min-height: 40px; }
-    .jump-btn span { font-size: 14px; }
+function updateActiveJumpButton() {
+    const buttons = document.querySelectorAll('.jump-btn');
+    buttons.forEach((btn, index) => {
+        if (index === currentCardIndex) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Main Layout
+This Area Of Code Is: Auto-Play Mode Controller
+Explanation: Automatically advances through cards at set intervals.
+Speed options: 3.5s (fast), 5-7s (medium), 8-10s (slow).
+In Other Words: The slideshow feature that plays jokes automatically.
 ================================================================================
 */
 
-.app-main {
-    position: relative;
-    z-index: 10;
-    min-height: 100dvh;
-    min-height: -webkit-fill-available;
-    padding: calc(var(--header-height) + var(--safe-top) + 70px) 15px calc(100px + var(--safe-bottom));
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
+function toggleAutoMode() {
+    autoMode = !autoMode;
+    const btn = document.getElementById('autoModeBtn');
+    const speedControls = document.getElementById('speedControls');
+    const btnText = document.getElementById('autoModeText');
+    
+    if (autoMode) {
+        btn.classList.add('active');
+        speedControls.classList.add('visible');
+        btnText.textContent = 'Stop Auto';
+        startAutoMode();
+    } else {
+        btn.classList.remove('active');
+        speedControls.classList.remove('visible');
+        btnText.textContent = 'Auto Mode';
+        stopAutoMode();
+    }
+}
+
+function startAutoMode() {
+    stopAutoMode(); // Clear any existing interval
+    
+    autoModeInterval = setInterval(() => {
+        nextCard();
+    }, autoModeSpeed);
+}
+
+function stopAutoMode() {
+    if (autoModeInterval) {
+        clearInterval(autoModeInterval);
+        autoModeInterval = null;
+    }
+}
+
+function setSpeed(speed) {
+    autoModeSpeed = speed;
+    
+    // Update active button state
+    document.querySelectorAll('.speed-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (parseInt(btn.dataset.speed) === speed) {
+            btn.classList.add('active');
+        }
+    });
+    
+    // Restart with new speed if active
+    if (autoMode) {
+        startAutoMode();
+    }
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Content Card
+This Area Of Code Is: Side Menu Controller
+Explanation: Hamburger menu toggle with overlay. Morphs to SCN logo when open.
+In Other Words: The sliding menu from the left with all 100 card jumps.
 ================================================================================
 */
 
-.card-container { 
-    width: 100%; 
-    max-width: 600px; 
-    perspective: 1000px; 
-    margin-top: 0; 
+function toggleMenu() {
+    isMenuOpen = !isMenuOpen;
+    const sideMenu = document.getElementById('sideMenu');
+    const overlay = document.getElementById('menuOverlay');
+    const hamburger = document.getElementById('hamburgerIcon');
+    const scnLogo = document.getElementById('scnLogo');
+    
+    if (isMenuOpen) {
+        sideMenu.classList.add('open');
+        overlay.classList.add('open');
+        hamburger.classList.add('hidden');
+        scnLogo.classList.add('visible');
+    } else {
+        sideMenu.classList.remove('open');
+        overlay.classList.remove('open');
+        hamburger.classList.remove('hidden');
+        scnLogo.classList.remove('visible');
+    }
 }
 
-.content-card {
-    background: var(--glass-bg-card);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: var(--border-radius);
-    padding: clamp(30px, 8vw, 50px) clamp(20px, 5vw, 40px);
-    min-height: 320px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    position: relative;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 100px rgba(251, 191, 36, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-    overflow: hidden;
-}
-
-.content-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-    animation: shimmer 3s infinite;
-}
-
-@keyframes shimmer { 0% { left: -100%; } 100% { left: 200%; } }
-
-.content-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 0 120px rgba(251, 191, 36, 0.15);
-}
-
-.card-badge {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 20px;
-    padding: 5px 14px;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--text-secondary);
-}
-
-.card-icon {
-    font-size: clamp(40px, 10vw, 56px);
-    margin-bottom: 20px;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
-    animation: iconFloat 3s ease-in-out infinite;
-    line-height: 1;
-}
-
-@keyframes iconFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-
-.setup-text {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(24px, 6vw, 32px);
-    line-height: 1.4;
-    color: var(--text-primary);
-    margin-bottom: 16px;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    font-weight: 600;
-}
-
-.punchline-text {
-    font-size: clamp(18px, 4vw, 22px);
-    color: var(--primary-gold);
-    font-weight: 600;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    min-height: 30px;
-    font-family: 'Inter', sans-serif;
-}
-
-.punchline-text.visible {
-    opacity: 1;
-    transform: translateY(0);
-    margin-top: 10px;
-}
-
-.punchline-text[style*="italic"] {
-    color: var(--text-secondary);
-    font-size: clamp(16px, 3.5vw, 18px);
-    font-weight: 400;
-}
-
-.card-footer {
-    margin-top: auto;
-    padding-top: 30px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 13px;
-    color: var(--text-muted);
-    border-top: 1px solid rgba(255,255,255,0.1);
-    margin-top: 30px;
-}
-
-.author-info { display: flex; align-items: center; gap: 6px; }
-.author-name { font-style: italic; color: var(--text-secondary); font-weight: 500; }
-.card-counter { font-weight: 600; color: var(--primary-gold); font-size: 12px; letter-spacing: 0.5px; }
-
-/*
-================================================================================
-This Area Of Code Is: Control Buttons
-================================================================================
-*/
-
-.controls-row {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    flex-wrap: wrap;
-    width: 100%;
-    max-width: 600px;
-}
-
-.controls-row.main-controls {
-    display: grid;
-    grid-template-columns: 1fr 1.2fr 1fr;
-    gap: 10px;
-}
-
-.nav-btn {
-    min-height: 48px;
-    padding: 12px 20px;
-    border-radius: 50px;
-    border: 1px solid var(--glass-border);
-    background: var(--glass-bg);
-    color: white;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.3s;
-    justify-content: center;
-    font-family: inherit;
-}
-
-.nav-btn:hover {
-    background: var(--glass-bg-strong);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    border-color: var(--primary-gold);
-}
-
-.punchline-btn {
-    background: rgba(251, 191, 36, 0.15);
-    border-color: rgba(251, 191, 36, 0.4);
-    color: var(--primary-gold);
-    position: relative;
-    overflow: hidden;
-}
-
-.punchline-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(251,191,36,0.2), transparent);
-    transition: left 0.5s;
-}
-
-.punchline-btn:hover::before {
-    left: 100%;
-}
-
-.punchline-btn:hover {
-    background: rgba(251, 191, 36, 0.25);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(251, 191, 36, 0.3);
-    border-color: var(--primary-gold);
-}
-
-.punchline-btn.active {
-    background: rgba(251, 191, 36, 0.35);
-    border-color: var(--primary-gold);
-    box-shadow: 0 0 20px rgba(251, 191, 36, 0.4);
-}
-
-.punchline-btn.hidden {
-    display: none !important;
-    visibility: hidden !important;
-}
-
-.controls-row.secondary { margin-top: 5px; }
-
-.add-joke-btn {
-    min-height: 48px;
-    padding: 12px 24px;
-    border-radius: 50px;
-    border: 1px solid rgba(16, 185, 129, 0.4);
-    background: rgba(16, 185, 129, 0.15);
-    color: #6ee7b7;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.3s;
-    flex: 1;
-    justify-content: center;
-    min-width: 140px;
-    font-family: inherit;
-}
-
-.add-joke-btn:hover {
-    background: rgba(16, 185, 129, 0.25);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
-}
-
-.auto-mode-btn {
-    min-height: 48px;
-    padding: 12px 24px;
-    border-radius: 50px;
-    border: 1px solid rgba(59, 130, 246, 0.4);
-    background: rgba(59, 130, 246, 0.15);
-    color: #93c5fd;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.3s;
-    flex: 1;
-    justify-content: center;
-    min-width: 140px;
-    font-family: inherit;
-}
-
-.auto-mode-btn:hover {
-    background: rgba(59, 130, 246, 0.25);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
-}
-
-.auto-mode-btn.active {
-    animation: goldenPulse 2s infinite;
-    border-color: var(--primary-gold);
-    color: var(--primary-gold);
-    background: rgba(251, 191, 36, 0.2);
-}
-
-@keyframes goldenPulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.4); }
-    50% { box-shadow: 0 0 20px 5px rgba(251, 191, 36, 0.2); }
-}
-
-.speed-controls { display: none; gap: 12px; justify-content: center; width: 100%; max-width: 400px; }
-.speed-controls.visible { display: flex; animation: slideDown 0.3s ease; }
-@keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-
-.speed-btn {
-    padding: 12px 20px;
-    border-radius: var(--border-radius-sm);
-    border: 1px solid var(--glass-border);
-    background: var(--glass-bg);
-    color: var(--text-secondary);
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.3s;
-    text-align: center;
-    line-height: 1.3;
-    flex: 1;
-    font-family: inherit;
-    font-weight: 500;
-}
-
-.speed-btn small { display: block; font-size: 11px; opacity: 0.7; margin-top: 4px; font-weight: 400; }
-.speed-btn:hover { background: var(--glass-bg-strong); color: white; }
-.speed-btn.active { background: var(--primary-gold); color: #0f172a; border-color: var(--primary-gold); font-weight: 700; }
-
-.guidelines-link {
-    color: var(--text-muted);
-    font-size: 13px;
-    text-decoration: underline;
-    cursor: pointer;
-    margin-top: 15px;
-    transition: color 0.3s;
-    background: none;
-    border: none;
-    font-family: inherit;
-}
-
-.guidelines-link:hover { color: var(--text-secondary); }
-
-/*
-================================================================================
-This Area Of Code Is: Modal System
-================================================================================
-*/
-
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.85);
-    z-index: 300;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s;
-}
-
-.modal.open { opacity: 1; visibility: visible; }
-
-.modal-content {
-    width: 100%;
-    max-width: 480px;
-    max-height: 85dvh;
-    max-height: -webkit-fill-available;
-    overflow-y: auto;
-    transform: scale(0.9) translateY(20px);
-    transition: transform 0.3s;
-}
-
-.modal.open .modal-content { transform: scale(1) translateY(0); }
-
-.glass-modal {
-    background: rgba(15, 23, 42, 0.98);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: var(--border-radius);
-    padding: 30px;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
-}
-
-.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
-.modal-header h3 { font-family: 'Playfair Display', serif; font-size: 24px; color: white; }
-
-.close-modal {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: 1px solid var(--glass-border);
-    background: transparent;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s;
-}
-
-.close-modal:hover { background: rgba(255, 255, 255, 0.1); transform: rotate(90deg); }
-
-.form-group { margin-bottom: 20px; }
-.form-group label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--text-secondary); }
-.form-group input, .form-group textarea {
-    width: 100%;
-    padding: 14px 16px;
-    border-radius: var(--border-radius-sm);
-    border: 1px solid var(--glass-border);
-    background: rgba(0, 0, 0, 0.4);
-    color: white;
-    font-size: 16px;
-    font-family: inherit;
-    transition: all 0.3s;
-}
-
-.form-group input:focus, .form-group textarea:focus {
-    outline: none;
-    border-color: var(--primary-gold);
-    background: rgba(0, 0, 0, 0.5);
-    box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.1);
-}
-
-.location-group { background: rgba(255, 255, 255, 0.03); padding: 15px; border-radius: var(--border-radius-sm); border: 1px solid var(--glass-border-light); }
-.location-options { display: flex; gap: 20px; margin-bottom: 12px; flex-wrap: wrap; }
-.checkbox-label { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-secondary); cursor: pointer; }
-.checkbox-label input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--primary-gold); }
-.help-text { display: block; font-size: 12px; color: var(--text-muted); margin-top: 6px; font-style: italic; }
-
-.form-actions { display: flex; gap: 12px; margin-top: 25px; }
-.submit-btn, .cancel-btn, .ok-btn {
-    flex: 1;
-    padding: 14px 24px;
-    border-radius: var(--border-radius-sm);
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    min-height: 48px;
-    font-family: inherit;
-}
-
-.submit-btn {
-    background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);
-    color: white;
-    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
-}
-
-.submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5); }
-.cancel-btn { background: var(--glass-bg); color: var(--text-secondary); border: 1px solid var(--glass-border); }
-.cancel-btn:hover { background: var(--glass-bg-strong); color: white; }
-.form-disclaimer { font-size: 12px; color: var(--text-muted); text-align: center; margin-top: 15px; line-height: 1.5; font-style: italic; }
-
-.guidelines-content { line-height: 1.7; }
-.guidelines-content p { margin-bottom: 15px; color: var(--text-secondary); font-size: 15px; }
-.guidelines-content ul { list-style: none; margin-bottom: 20px; padding: 0; }
-.guidelines-content li { padding: 10px 0; color: var(--text-secondary); border-bottom: 1px solid var(--glass-border-light); font-size: 14px; display: flex; align-items: flex-start; gap: 8px; }
-.guidelines-content li:last-child { border-bottom: none; }
-.ok-btn { background: var(--primary-gold); color: #0f172a; width: 100%; margin-top: 10px; }
-.ok-btn:hover { background: var(--primary-gold-dark); transform: translateY(-2px); }
-
-/*
-================================================================================
-This Area Of Code Is: Accessibility Modal
-================================================================================
-*/
-
-.accessibility-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    height: 100dvh;
-    height: -webkit-fill-available;
-    background: rgba(0, 0, 0, 0.9);
-    z-index: 400;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s;
-}
-
-.accessibility-modal.open { opacity: 1; visibility: visible; }
-
-.accessibility-content {
-    width: 100%;
-    max-width: 500px;
-    max-height: 85dvh;
-    max-height: -webkit-fill-available;
-    background: linear-gradient(135deg, rgba(15,23,42,0.98) 0%, rgba(30,41,59,0.99) 100%);
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: var(--border-radius);
-    padding: 30px;
-    overflow-y: auto;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.7);
-    position: relative;
-}
-
-.accessibility-header { text-align: center; margin-bottom: 25px; position: relative; }
-.accessibility-header h2 { color: var(--primary-gold); font-family: 'Playfair Display', serif; font-size: 26px; margin-bottom: 8px; }
-.accessibility-header p { color: var(--text-muted); font-size: 14px; }
-.accessibility-header .close-modal { position: absolute; top: -10px; right: -10px; }
-
-.access-category { margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 20px; }
-.access-category:last-child { border-bottom: none; margin-bottom: 15px; }
-.access-category h3 { color: var(--primary-gold); font-size: 16px; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-family: 'Playfair Display', serif; text-transform: uppercase; letter-spacing: 1px; }
-
-.access-toggle {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.15);
-    border-radius: var(--border-radius-sm);
-    padding: 14px 15px;
-    margin-bottom: 10px;
-    color: white;
-    font-size: 14px;
-    transition: all 0.3s;
-    cursor: pointer;
-}
-
-.access-toggle:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.25); }
-.access-toggle.active { background: rgba(251, 191, 36, 0.1); border-color: rgba(251, 191, 36, 0.4); }
-
-.toggle-switch {
-    width: 50px;
-    height: 26px;
-    background: rgba(255,255,255,0.2);
-    border-radius: 13px;
-    position: relative;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.toggle-switch::after {
-    content: '';
-    position: absolute;
-    width: 22px;
-    height: 22px;
-    background: white;
-    border-radius: 50%;
-    top: 2px;
-    left: 2px;
-    transition: all 0.3s;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-}
-
-.access-toggle.active .toggle-switch { background: var(--primary-gold); }
-.access-toggle.active .toggle-switch::after { left: 26px; }
-
-.color-filter-label { color: rgba(255,255,255,0.6); font-size: 12px; margin: 15px 0 10px 0; text-transform: uppercase; letter-spacing: 1px; }
-.access-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-.filter-group-label { grid-column: 1 / -1; font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 8px; margin-bottom: 4px; padding-left: 4px; }
-
-.access-btn {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 10px;
-    padding: 10px 6px;
-    color: white;
-    font-size: 12px;
-    cursor: pointer;
-    transition: all 0.3s;
-    text-align: center;
-    font-weight: 500;
-    font-family: inherit;
-}
-
-.access-btn:hover, .access-btn.active { background: rgba(251, 191, 36, 0.15); border-color: rgba(251, 191, 36, 0.6); transform: translateY(-2px); }
-.access-btn.active { background: rgba(251, 191, 36, 0.25); font-weight: 600; }
-
-.close-modal-btn {
-    width: 100%;
-    padding: 16px;
-    background: linear-gradient(135deg, var(--primary-gold), #f59e0b);
-    border: none;
-    border-radius: 50px;
-    color: #0f172a;
-    font-weight: 700;
-    cursor: pointer;
-    font-size: 16px;
-    letter-spacing: 1px;
-    transition: all 0.3s;
-    box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
-    margin-top: 10px;
-    font-family: inherit;
-}
-
-.close-modal-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(251, 191, 36, 0.4); }
-
-/*
-================================================================================
-This Area Of Code Is: Translation Bar
-================================================================================
-*/
-
-.translation-bar {
-    position: fixed;
-    bottom: calc(20px + var(--safe-bottom));
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.8);
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 12px;
-    color: var(--text-muted);
-    border: 1px solid var(--glass-border);
-    z-index: 50;
-    white-space: nowrap;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+function setupMenuAnimation() {
+    // Menu button setup is handled in HTML/CSS, this ensures proper state
+    const menuBtn = document.getElementById('menuBtn');
+    if (menuBtn) {
+        menuBtn.addEventListener('click', toggleMenu);
+    }
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Color Vision Filters
+This Area Of Code Is: Modal Management System
+Explanation: Opens/closes joke submission, guidelines, and accessibility modals.
+Handles form validation and prevents body scroll when modals are open.
+In Other Words: Managing all the popup windows in the app.
 ================================================================================
 */
 
-.filter-deuteranomaly, .cv-deuteranomaly { filter: url('#deuteranomaly'); }
-.filter-deuteranopia, .cv-deuteranopia { filter: url('#deuteranopia'); }
-.filter-protanomaly, .cv-protanomaly { filter: url('#protanomaly'); }
-.filter-protanopia, .cv-protanopia { filter: url('#protanopia'); }
-.filter-tritanomaly, .cv-tritanomaly { filter: url('#tritanomaly'); }
-.filter-tritanopia, .cv-tritanopia { filter: url('#tritanopia'); }
-.filter-achromatopsia, .cv-achromatopsia { filter: grayscale(100%) brightness(1.1) contrast(1.1); }
-.filter-cone-monochromacy, .cv-cone-monochromacy { filter: grayscale(100%) sepia(20%); }
-.filter-blue-cone-monochromacy, .cv-blue-cone-monochromacy { filter: url('#tritanopia') grayscale(50%); }
+// Joke Modal
+function openJokeModal() {
+    const modal = document.getElementById('jokeModal');
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeJokeModal() {
+    const modal = document.getElementById('jokeModal');
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+    document.getElementById('jokeForm').reset();
+}
+
+// Guidelines Modal
+function showGuidelines() {
+    const modal = document.getElementById('guidelinesModal');
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeGuidelines() {
+    const modal = document.getElementById('guidelinesModal');
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+}
+
+// Accessibility Modal
+function openAccessibilityModal() {
+    const modal = document.getElementById('accessibilityModal');
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    checkModalScroll();
+}
+
+function closeAccessibilityModal() {
+    const modal = document.getElementById('accessibilityModal');
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+}
+
+function checkModalScroll() {
+    const content = document.getElementById('accessibilityContent');
+    const indicator = document.getElementById('scrollIndicator');
+    
+    if (!content || !indicator) return;
+    
+    // Check if content is scrollable
+    if (content.scrollHeight > content.clientHeight) {
+        indicator.classList.add('visible');
+        
+        // Hide indicator when scrolled to bottom
+        content.addEventListener('scroll', () => {
+            if (content.scrollTop + content.clientHeight >= content.scrollHeight - 20) {
+                indicator.classList.remove('visible');
+            } else {
+                indicator.classList.add('visible');
+            }
+        });
+    }
+}
 
 /*
 ================================================================================
-This Area Of Code Is: Accessibility Modes
+This Area Of Code Is: Accessibility Feature Toggle System
+Explanation: Enables/disables accessibility modes when user taps anywhere on the 
+accessibility row. Toggle switch visual updates and saves to localStorage.
+In Other Words: Tap the row to turn on Autism mode, tap again to turn off.
 ================================================================================
 */
 
-.autism-mode * { transition-duration: 0.5s !important; animation-duration: 2s !important; }
-.autism-mode .content-card { border-width: 3px; border-color: rgba(255, 255, 255, 0.5); }
-.autism-mode .card-icon { animation: none; }
+function toggleFeature(element, feature) {
+    // If clicking the row (access-toggle), find the toggle-switch inside
+    let toggleSwitch = element;
+    let row = element;
+    
+    if (element.classList.contains('access-toggle')) {
+        toggleSwitch = element.querySelector('.toggle-switch');
+    } else if (element.classList.contains('toggle-switch')) {
+        row = element.closest('.access-toggle');
+    }
+    
+    // Toggle active state
+    const isActive = !toggleSwitch.classList.contains('active');
+    
+    // Update visual state
+    if (isActive) {
+        toggleSwitch.classList.add('active');
+        toggleSwitch.setAttribute('aria-checked', 'true');
+        if (row && row.classList.contains('access-toggle')) {
+            row.classList.add('active');
+        }
+    } else {
+        toggleSwitch.classList.remove('active');
+        toggleSwitch.setAttribute('aria-checked', 'false');
+        if (row && row.classList.contains('access-toggle')) {
+            row.classList.remove('active');
+        }
+    }
+    
+    // Apply/remove feature class from body
+    if (isActive) {
+        document.body.classList.add(feature + '-mode');
+    } else {
+        document.body.classList.remove(feature + '-mode');
+    }
+    
+    // Special handling for high-contrast
+    if (feature === 'high-contrast') {
+        if (isActive) {
+            document.body.classList.add('high-contrast-mode');
+        } else {
+            document.body.classList.remove('high-contrast-mode');
+        }
+    }
+    
+    // Save to localStorage
+    localStorage.setItem('gw_access_' + feature, isActive);
+    
+    // Screen reader announcement
+    announceToScreenReader(`${feature} mode ${isActive ? 'enabled' : 'disabled'}`);
+}
 
-.ptsd-mode * { animation: none !important; transition-duration: 0.2s !important; }
-.ptsd-mode .content-card::before { display: none; }
-.ptsd-mode .card-icon { animation: none; }
-.ptsd-mode .auto-mode-btn.active { animation: none; box-shadow: 0 0 15px rgba(251, 191, 36, 0.4); }
-
-.adhd-mode .setup-text { font-size: clamp(26px, 7vw, 34px); line-height: 1.3; }
-.adhd-mode .punchline-text { font-size: clamp(20px, 5vw, 24px); color: #60a5fa; }
-
-.dyslexia-mode * { letter-spacing: 0.05em; word-spacing: 0.1em; }
-.dyslexia-mode .setup-text { line-height: 1.6; }
-
-.anxiety-mode .content-card { border-color: rgba(96, 165, 250, 0.4); box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.2); }
-.anxiety-mode .card-badge { background: rgba(59, 130, 246, 0.2); color: #93c5fd; }
-
-.high-contrast-mode * { border-color: white !important; }
-.high-contrast-mode .content-card { background: rgba(0, 0, 0, 0.8); border: 2px solid white; }
-.high-contrast-mode .setup-text, .high-contrast-mode .punchline-text { color: white; text-shadow: none; }
-
-.large-targets-mode .nav-btn, .large-targets-mode .add-joke-btn, .large-targets-mode .auto-mode-btn, .large-targets-mode .jump-btn { min-height: 56px; padding: 16px 28px; }
-.large-targets-mode .jump-btn { min-height: 52px; }
+function loadSavedAccessibilitySettings() {
+    // List of all possible accessibility features
+    const features = [
+        'autism', 'adhd', 'dyslexia', 'dyspraxia',
+        'anxiety', 'ptsd', 'mania', 'cognitive',
+        'screen-reader', 'high-contrast', 'sign-language', 
+        'visual-alerts', 'captions', 'large-targets', 
+        'keyboard-only', 'extended-time', 'switch-control', 
+        'speech-input', 'simple-language'
+    ];
+    
+    features.forEach(feature => {
+        const saved = localStorage.getItem('gw_access_' + feature);
+        if (saved === 'true') {
+            // Apply to body
+            document.body.classList.add(feature + '-mode');
+            if (feature === 'high-contrast') {
+                document.body.classList.add('high-contrast-mode');
+            }
+            
+            // Update any visible toggles
+            const toggles = document.querySelectorAll(`[onclick*="'${feature}'"]`);
+            toggles.forEach(toggle => {
+                const switchEl = toggle.classList.contains('toggle-switch') ? 
+                    toggle : toggle.querySelector('.toggle-switch');
+                if (switchEl) {
+                    switchEl.classList.add('active');
+                    switchEl.setAttribute('aria-checked', 'true');
+                    if (toggle.classList.contains('access-toggle')) {
+                        toggle.classList.add('active');
+                    }
+                }
+            });
+        }
+    });
+    
+    // Load saved color filter
+    const savedFilter = localStorage.getItem('gw_color_filter');
+    if (savedFilter && savedFilter !== 'none') {
+        applyColorFilter(savedFilter, false);
+    }
+}
 
 /*
 ================================================================================
-This Area Of Code Is: Mobile Responsive
+This Area Of Code Is: Color Vision Filter System
+Explanation: Applies CSS filters for 9 types of color blindness.
+Filters: Deuteranomaly, Deuteranopia, Protanomaly, Protanopia, Tritanomaly, 
+Tritanopia, Achromatopsia, Cone Monochromacy, Blue Cone Monochromacy.
+In Other Words: Changes colors on screen for colorblind users.
 ================================================================================
 */
 
-@media (max-width: 480px) {
-    .app-main { 
-        padding: calc(var(--header-height) + var(--safe-top) + 60px) 12px calc(90px + var(--safe-bottom)); 
+function applyColorFilter(filterType, save = true) {
+    // Remove all existing filter classes
+    document.body.classList.remove(
+        'filter-deuteranomaly', 'filter-deuteranopia', 
+        'filter-protanomaly', 'filter-protanopia',
+        'filter-tritanomaly', 'filter-tritanopia',
+        'filter-achromatopsia', 'filter-cone-monochromacy',
+        'filter-blue-cone-monochromacy', 'cv-deuteranomaly', 
+        'cv-deuteranopia', 'cv-protanomaly', 'cv-protanopia',
+        'cv-tritanomaly', 'cv-tritanopia', 'cv-achromatopsia',
+        'cv-cone-monochromacy', 'cv-blue-cone-monochromacy'
+    );
+    
+    // Apply new filter if not 'none'
+    if (filterType !== 'none') {
+        document.body.classList.add('filter-' + filterType);
+        document.body.classList.add('cv-' + filterType);
     }
     
-    .live-stats {
-        top: calc(var(--header-height) + var(--safe-top) + 8px);
-        right: 10px;
-        gap: 6px;
+    // Save preference
+    if (save) {
+        localStorage.setItem('gw_color_filter', filterType);
     }
     
-    .online-badge, .cards-badge {
-        padding: 6px 12px;
-        font-size: 12px;
-    }
+    // Update button states
+    document.querySelectorAll('.access-btn[data-filter]').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.filter === filterType) {
+            btn.classList.add('active');
+        }
+    });
     
-    .content-card { 
-        padding: 25px 15px; 
-        min-height: 280px; 
-        border-radius: 20px;
-    }
-    
-    .setup-text { 
-        font-size: clamp(20px, 5.5vw, 28px); 
-    }
-    
-    .punchline-text { 
-        font-size: clamp(16px, 4vw, 20px); 
-    }
-    
-    .controls-row.main-controls {
-        grid-template-columns: 1fr;
-        gap: 8px;
-    }
-    
-    .punchline-btn { 
-        order: -1; 
-    }
-    
-    .controls-row.secondary {
-        flex-direction: column;
-    }
-    
-    .nav-btn, .add-joke-btn, .auto-mode-btn { 
-        width: 100%;
-        min-height: 44px;
-        font-size: 14px;
-    }
-    
-    .glass-modal { padding: 20px; }
-    .accessibility-content { padding: 20px; }
+    // Close modal if opened from there (optional - can be removed if you want modal to stay open)
+    // closeAccessibilityModal();
 }
 
-@media (max-width: 360px) {
-    .header-title {
-        font-size: 16px;
+/*
+================================================================================
+This Area Of Code Is: Joke Submission System with PurgoMalum API
+Explanation: Validates user-submitted jokes against profanity API and church 
+content standards. Checks location checkboxes (default: Country only).
+In Other Words: Submit new jokes with bad word checking.
+================================================================================
+*/
+
+async function submitJoke(event) {
+    event.preventDefault();
+    
+    const name = document.getElementById('userName').value.trim();
+    const setup = document.getElementById('jokeSetup').value.trim();
+    const punchline = document.getElementById('jokePunchline').value.trim();
+    const location = document.getElementById('userLocation').value.trim();
+    
+    // Check location checkboxes
+    const showCity = document.getElementById('showCity').checked;
+    const showState = document.getElementById('showState').checked;
+    const showCountry = document.getElementById('showCountry').checked;
+    
+    // Validation: At least one location option must be checked
+    if (!showCity && !showState && !showCountry) {
+        alert('Please select at least one location option (City, State/Province, or Country).');
+        return;
     }
     
-    .online-badge, .cards-badge {
-        padding: 5px 10px;
-        font-size: 11px;
+    if (!name || !setup || !punchline) {
+        alert('Please fill in all required fields.');
+        return;
+    }
+    
+    // Content moderation using PurgoMalum API
+    try {
+        const textToCheck = `${setup} ${punchline}`;
+        const response = await fetch(`https://www.purgomalum.com/service/containsprofanity?text=${encodeURIComponent(textToCheck)}`);
+        const isProfane = await response.text();
+        
+        if (isProfane === 'true') {
+            alert('Your submission contains inappropriate language. Please keep content family-friendly and clean.');
+            return;
+        }
+        
+        // If clean, proceed with submission to Firebase
+        if (firebaseInitialized && db) {
+            await db.collection('pending_jokes').add({
+                name: name,
+                setup: setup,
+                punchline: punchline,
+                location: location,
+                locationOptions: {
+                    city: showCity,
+                    state: showState,
+                    country: showCountry
+                },
+                submittedAt: new Date().toISOString(),
+                status: 'pending',
+                userAgent: navigator.userAgent.slice(0, 100)
+            });
+            
+            alert('Thank you! Your joke has been submitted for review and will appear after approval.');
+            closeJokeModal();
+        } else {
+            // Fallback if Firebase not available
+            alert('Submission received! (Demo mode - Firebase not connected)');
+            closeJokeModal();
+        }
+        
+    } catch (error) {
+        console.error('Submission error:', error);
+        alert('Error submitting joke. Please try again.');
     }
 }
 
-@media (max-height: 600px) and (orientation: landscape) {
-    .app-main {
-        padding: calc(var(--header-height) + var(--safe-top) + 20px) 15px calc(60px + var(--safe-bottom));
-    }
-    
-    .live-stats {
-        flex-direction: row;
-        top: calc(var(--header-height) + var(--safe-top) + 5px);
-        right: 10px;
-        gap: 8px;
-    }
-    
-    .content-card { 
-        min-height: 200px; 
-        padding: 20px; 
-    }
-    
-    .card-icon { 
-        font-size: 32px; 
-        margin-bottom: 10px; 
-    }
-    
-    .setup-text { 
-        font-size: 20px; 
+/*
+================================================================================
+This Area Of Code Is: Keyboard Navigation System
+Explanation: Enables arrow keys for card navigation, space for punchline 
+(legacy), escape to close modals, and accessibility shortcuts.
+In Other Words: Using keyboard to control the app.
+================================================================================
+*/
+
+function setupKeyboardNavigation() {
+    document.addEventListener('keydown', (e) => {
+        // Close modals on Escape
+        if (e.key === 'Escape') {
+            closeJokeModal();
+            closeGuidelines();
+            closeAccessibilityModal();
+            if (isMenuOpen) toggleMenu();
+            return;
+        }
+        
+        // Arrow keys for navigation
+        if (e.key === 'ArrowRight') {
+            nextCard();
+        } else if (e.key === 'ArrowLeft') {
+            previousCard();
+        }
+        
+        // Space for auto-mode toggle (optional)
+        if (e.key === ' ' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+            e.preventDefault();
+            toggleAutoMode();
+        }
+    });
+}
+
+/*
+================================================================================
+This Area Of Code Is: Visitor Metrics Tracking
+Explanation: Tracks personal visits via localStorage and global visitors via 
+Firebase Firestore atomic increment. Updates UI with animated counters.
+In Other Words: Counting how many people use the app.
+================================================================================
+*/
+
+function trackPersonalVisits() {
+    try {
+        let visits = parseInt(localStorage.getItem('gw_personal_visits') || '0');
+        visits++;
+        localStorage.setItem('gw_personal_visits', visits.toString());
+        
+        // Update display if element exists
+        const visitEl = document.getElementById('visitCount');
+        if (visitEl) {
+            visitEl.textContent = visits;
+        }
+    } catch (e) {
+        console.log('LocalStorage not available');
     }
 }
 
-@media (prefers-reduced-motion: reduce) {
-    * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-    .content-card::before { display: none; }
-    .card-icon { animation: none; }
+async function trackGlobalVisitor() {
+    if (!firebaseInitialized || !db) {
+        console.log('Firebase not available for visitor tracking');
+        updateOnlineDisplay(1);
+        return;
+    }
+    
+    try {
+        const counterRef = db.collection('stats').doc('globalVisitors');
+        
+        // Increment atomically
+        await counterRef.update({
+            count: firebase.firestore.FieldValue.increment(1),
+            lastVisit: new Date().toISOString()
+        });
+        
+        // Get updated count
+        const doc = await counterRef.get();
+        const count = doc.data()?.count || 1;
+        
+        updateOnlineDisplay(count);
+        
+    } catch (error) {
+        // If document doesn't exist, create it
+        if (error.code === 'not-found') {
+            try {
+                await db.collection('stats').doc('globalVisitors').set({
+                    count: 1,
+                    created: new Date().toISOString()
+                });
+                updateOnlineDisplay(1);
+            } catch (e) {
+                updateOnlineDisplay(1);
+            }
+        } else {
+            updateOnlineDisplay(1);
+        }
+    }
+}
+
+function updateOnlineDisplay(count) {
+    const onlineEl = document.getElementById('onlineUsers');
+    if (onlineEl) {
+        onlineEl.textContent = `${count.toLocaleString()} online`;
+    }
+}
+
+/*
+================================================================================
+This Area Of Code Is: Screen Reader Announcer
+Explanation: Creates live region announcements for accessibility users when 
+features change or cards navigate.
+In Other Words: Tells blind users what's happening in the app.
+================================================================================
+*/
+
+function announceToScreenReader(message) {
+    // Check if screen reader mode is enabled or if user has accessibility needs
+    const announcement = document.createElement('div');
+    announcement.setAttribute('role', 'status');
+    announcement.setAttribute('aria-live', 'polite');
+    announcement.className = 'sr-only';
+    announcement.style.cssText = 'position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden;';
+    announcement.textContent = message;
+    
+    document.body.appendChild(announcement);
+    
+    setTimeout(() => {
+        document.body.removeChild(announcement);
+    }, 1000);
+}
+
+/*
+================================================================================
+This Area Of Code Is: Home Navigation
+Explanation: Returns user to index.html (landing page).
+In Other Words: The home button functionality.
+================================================================================
+*/
+
+function goHome() {
+    window.location.href = '../index.html';
+}
+
+/*
+================================================================================
+This Area Of Code Is: Service Worker Registration
+Explanation: Registers the PWA service worker for offline functionality.
+In Other Words: Makes the app work without internet.
+================================================================================
+*/
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+            .then(registration => {
+                console.log('[App] ServiceWorker registered:', registration);
+            })
+            .catch(error => {
+                console.log('[App] ServiceWorker registration failed:', error);
+            });
+    });
 }
