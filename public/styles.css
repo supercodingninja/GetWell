@@ -207,35 +207,42 @@ This Area Of Code Is: Fixed Header with Hamburger-to-SCN Morph
 
 /*
 ================================================================================
-This Area Of Code Is: Live Stats with ONLINE USERS RESTORED
+This Area Of Code Is: Live Stats - FIXED OVERLAP
 ================================================================================
 */
 
 .live-stats {
     position: fixed;
-    top: calc(70px + var(--safe-top));
+    top: calc(75px + var(--safe-top));
     right: 15px;
     z-index: 50;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
     align-items: flex-end;
+    pointer-events: none;
 }
 
-/* Online Users Badge - RESTORED */
+.live-stats > * {
+    pointer-events: auto;
+}
+
+/* Online Users Badge */
 .online-badge {
     background: rgba(0, 0, 0, 0.7);
     border: 1px solid rgba(16, 185, 129, 0.4);
     border-radius: 20px;
-    padding: 6px 12px;
+    padding: 8px 14px;
     display: flex;
     align-items: center;
     gap: 8px;
     color: #6ee7b7;
     font-size: 13px;
     font-weight: 600;
-    backdrop-filter: none;
+    backdrop-filter: blur(10px);
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    white-space: nowrap;
+    margin-bottom: 4px;
 }
 
 .pulse-dot {
@@ -252,25 +259,27 @@ This Area Of Code Is: Live Stats with ONLINE USERS RESTORED
     50% { opacity: 0.8; transform: scale(0.9); box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
 }
 
-/* Welcome Back Badge - TYPO FIXED */
+/* Welcome Back Badge - FIXED SPACING */
 .welcome-badge {
     font-family: 'Dancing Script', cursive;
-    font-size: 20px;
-    background: rgba(0, 0, 0, 0.6);
+    font-size: 18px;
+    background: rgba(0, 0, 0, 0.7);
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 20px;
-    padding: 6px 14px;
+    padding: 8px 16px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     color: white;
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    white-space: nowrap;
+    backdrop-filter: blur(10px);
+    margin-bottom: 4px;
 }
 
 .welcome-badge span:first-child {
     color: var(--primary-gold);
     text-shadow: 0 0 10px rgba(251,191,36,0.5);
-    font-size: 1.2em;
     font-weight: 700;
 }
 
@@ -285,13 +294,16 @@ This Area Of Code Is: Live Stats with ONLINE USERS RESTORED
     background: rgba(0, 0, 0, 0.6);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 20px;
-    padding: 6px 12px;
+    padding: 8px 14px;
     font-size: 13px;
     display: flex;
     align-items: center;
     gap: 6px;
     color: white;
     font-weight: 500;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    white-space: nowrap;
 }
 
 /*
@@ -479,7 +491,7 @@ This Area Of Code Is: Main Layout
     position: relative;
     z-index: 10;
     min-height: 100dvh;
-    padding: calc(80px + var(--safe-top)) 15px calc(100px + var(--safe-bottom));
+    padding: calc(90px + var(--safe-top)) 15px calc(100px + var(--safe-bottom));
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -492,7 +504,7 @@ This Area Of Code Is: Content Card (True Glass)
 ================================================================================
 */
 
-.card-container { width: 100%; max-width: 600px; perspective: 1000px; margin-top: 10px; }
+.card-container { width: 100%; max-width: 600px; perspective: 1000px; margin-top: 20px; }
 
 .content-card {
     background: var(--glass-bg-card);
@@ -1165,12 +1177,29 @@ This Area Of Code Is: Accessibility Modes
 
 /*
 ================================================================================
-This Area Of Code Is: Responsive Design
+This Area Of Code Is: Responsive Design - FIXED OVERLAP
 ================================================================================
 */
 
 @media (max-width: 480px) {
-    .app-main { padding: calc(70px + var(--safe-top)) 12px calc(90px + var(--safe-bottom)); }
+    .app-main { padding: calc(85px + var(--safe-top)) 12px calc(90px + var(--safe-bottom)); }
+    
+    /* FIXED: Live stats spacing on mobile */
+    .live-stats {
+        top: calc(70px + var(--safe-top));
+        right: 10px;
+        gap: 8px;
+    }
+    
+    .online-badge, .welcome-badge, .cards-badge {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+    
+    .welcome-badge {
+        font-size: 16px;
+    }
+    
     .glass-modal { padding: 20px; }
     .setup-text { font-size: 22px; }
     .punchline-text { font-size: 18px; }
@@ -1178,16 +1207,18 @@ This Area Of Code Is: Responsive Design
     .nav-btn, .add-joke-btn, .auto-mode-btn { padding: 10px 18px; font-size: 14px; min-height: 44px; }
     .accessibility-content { padding: 20px; }
     .card-jumps { max-height: 50vh; }
-    .live-stats { gap: 6px; }
-    .welcome-badge { font-size: 18px; padding: 5px 12px; }
-    .online-badge { padding: 5px 10px; font-size: 12px; }
 }
 
 @media (max-width: 360px) {
     .controls-row { flex-direction: column; }
     .nav-btn, .add-joke-btn, .auto-mode-btn { width: 100%; }
-    .welcome-badge { font-size: 16px; padding: 5px 10px; }
-    #personalVisits { font-size: 12px; }
+    .welcome-badge { font-size: 14px; padding: 5px 10px; }
+    #personalVisits { font-size: 11px; }
+    
+    /* FIXED: Smaller badges on tiny screens */
+    .live-stats {
+        gap: 6px;
+    }
 }
 
 @media (max-height: 600px) and (orientation: landscape) {
@@ -1197,6 +1228,16 @@ This Area Of Code Is: Responsive Design
     .punchline-text { font-size: 16px; }
     .card-footer { padding-top: 15px; margin-top: 15px; }
     .card-jumps { max-height: 40vh; }
+    
+    /* FIXED: Compact live stats in landscape */
+    .live-stats {
+        gap: 6px;
+    }
+    
+    .welcome-badge {
+        font-size: 16px;
+        padding: 6px 12px;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
