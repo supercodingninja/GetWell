@@ -1,9 +1,6 @@
 /*
 ================================================================================
 This Area Of Code Is: Encrypted Firebase Configuration
-Explanation: Base64-encoded Firebase credentials for security. Prevents API key 
-exposure in plain text while maintaining full Firestore functionality.
-In Other Words: Hidden API keys to keep your database safe from unauthorized access.
 ================================================================================
 */
 
@@ -34,17 +31,13 @@ try {
     firebase.initializeApp(firebaseConfig);
     db = firebase.firestore();
     firebaseInitialized = true;
-    console.log('[App] Firebase initialized successfully');
 } catch (e) {
-    console.error('[App] Firebase initialization failed:', e);
+    // Silent fail - app works without Firebase
 }
 
 /*
 ================================================================================
 This Area Of Code Is: Complete Card Dataset (100 Corny Jokes)
-Explanation: Static array of 100 family-friendly dad jokes with unique emojis.
-No authors attached (null) as requested. Type 'joke' for all entries.
-In Other Words: The complete joke database built right into the app.
 ================================================================================
 */
 
@@ -156,9 +149,7 @@ const defaultCards = [
 
 /*
 ================================================================================
-This Area Of Code Is: Application State Management
-Explanation: Tracks current card position, auto-play status, and user preferences.
-In Other Words: The app's memory of where you are and what you're doing.
+This Area Of Code Is: Application State
 ================================================================================
 */
 
@@ -167,78 +158,115 @@ let autoMode = false;
 let autoModeInterval = null;
 let autoModeSpeed = 6000;
 let isMenuOpen = false;
-let punchlineVisible = true; // Always show punchlines (no toggle)
 
 /*
 ================================================================================
-This Area Of Code Is: DOM Content Loaded Initialization
-Explanation: Sets up all event listeners, loads saved preferences, initializes 
-the card display, and tracks visitor metrics on page load.
-In Other Words: Starts the app when the page loads.
+This Area Of Code Is: DOM Ready Initialization
 ================================================================================
 */
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize card display
+    // Initialize immediately
     renderCard();
     updateCardJumps();
     
-    // Initialize visitor tracking
-    trackPersonalVisits();
-    trackGlobalVisitor();
+    // Menu button setup
+    const menuBtn = document.getElementById('menuBtn');
+    if (menuBtn) {
+        menuBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleMenu();
+        });
+    }
     
-    // Load saved accessibility settings
+    // Keyboard controls
+    document.addEventListener('keydown', handleKeyPress);
+    
+    // Load saved settings
     loadSavedAccessibilitySettings();
-    
-    // Setup keyboard navigation
-    setupKeyboardNavigation();
-    
-    // Setup menu hamburger animation
-    setupMenuAnimation();
 });
 
 /*
 ================================================================================
-This Area Of Code Is: Card Rendering Engine
-Explanation: Displays the current joke with immediate punchline visibility.
-Setup and punchline shown together per Phase 2 requirements.
-In Other Words: Shows the joke and answer at the same time, no hiding.
+This Area Of Code Is: Card Rendering
 ================================================================================
 */
 
 function renderCard() {
     const card = defaultCards[currentCardIndex];
+    if (!card) return;
     
-    // Update badge
-    const badge = document.getElementById('cardBadge');
-    badge.textContent = 'JOKE';
+    const setupText = document.getElementById('setupText');
+    const punchlineText = document.getElementById('punchlineText');
+    const cardIcon = document.getElementById('cardIcon');
+    const cardCounter = document.getElementById('cardCounter');
     
-    // Update icon
-    document.getElementById('cardIcon').textContent = card.icon;
+    if (setupText) setupText.textContent = card.setup;
+    if (punchlineText) {
+        punchlineText.textContent = card.punchline;
+        punchlineText.classList.add('visible');
+    }
+    if (cardIcon) cardIcon.textContent = card.icon;
+    if (cardCounter) cardCounter.textContent = `Card ${currentCardIndex + 1} of ${defaultCards.length}`;
     
-    // Update setup text (the joke question)
-    document.getElementById('setupText').textContent = card.setup;
-    
-    // Update punchline text (always visible per Phase 2)
-    const punchlineEl = document.getElementById('punchlineText');
-    punchlineEl.textContent = card.punchline;
-    punchlineEl.classList.add('visible');
-    
-    // Update counter
-    document.getElementById('cardCounter').textContent = `Card ${currentCardIndex + 1} of ${defaultCards.length}`;
-    
-    // Update jump grid active state
     updateActiveJumpButton();
-    
-    // Announce to screen readers if enabled
-    announceToScreenReader(`Card ${currentCardIndex + 1}: ${card.setup} ${card.punchline}`);
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Card Navigation System
-Explanation: Previous/Next card functionality with boundary wrapping.
-In Other Words: Moving between jokes with arrow buttons.
+This Area Of Code Is: Menu Toggle (Hamburger → SCN Morph)
+================================================================================
+*/
+
+function toggleMenu() {
+    isMenuOpen = !isMenuOpen;
+    
+    const sideMenu = document.getElementById('sideMenu');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const hamburgerIcon = document.getElementById('hamburgerIcon');
+    const scnLogo = document.getElementById('scnLogo');
+    
+    if (isMenuOpen) {
+        if (sideMenu) sideMenu.classList.add('open');
+        if (menuOverlay) menuOverlay.classList.add('open');
+        
+        if (hamburgerIcon) {
+            hamburgerIcon.style.opacity = '0';
+            hamburgerIcon.style.transform = 'scale(0.8)';
+            setTimeout(() => { hamburgerIcon.style.display = 'none'; }, 200);
+        }
+        
+        if (scnLogo) {
+            scnLogo.style.display = 'flex';
+            setTimeout(() => {
+                scnLogo.style.opacity = '1';
+                scnLogo.style.transform = 'scale(1)';
+            }, 50);
+        }
+    } else {
+        if (sideMenu) sideMenu.classList.remove('open');
+        if (menuOverlay) menuOverlay.classList.remove('open');
+        
+        if (scnLogo) {
+            scnLogo.style.opacity = '0';
+            scnLogo.style.transform = 'scale(0.8)';
+            setTimeout(() => { scnLogo.style.display = 'none'; }, 200);
+        }
+        
+        if (hamburgerIcon) {
+            hamburgerIcon.style.display = 'flex';
+            setTimeout(() => {
+                hamburgerIcon.style.opacity = '1';
+                hamburgerIcon.style.transform = 'scale(1)';
+            }, 50);
+        }
+    }
+}
+
+/*
+================================================================================
+This Area Of Code Is: Card Navigation
 ================================================================================
 */
 
@@ -255,15 +283,12 @@ function previousCard() {
 function jumpToCard(index) {
     currentCardIndex = index;
     renderCard();
-    toggleMenu(); // Close menu after selection
+    toggleMenu();
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Jump-to-Card Grid Generator
-Explanation: Creates 100 clickable buttons in a grid layout for quick navigation.
-5-column grid that scrolls if needed. Shows emoji and number for each card.
-In Other Words: The menu buttons to jump to any joke instantly.
+This Area Of Code Is: Jump-to-Card Grid
 ================================================================================
 */
 
@@ -277,23 +302,17 @@ function updateCardJumps() {
         const btn = document.createElement('button');
         btn.className = 'jump-btn';
         btn.onclick = () => jumpToCard(index);
-        btn.setAttribute('aria-label', `Jump to card ${index + 1}`);
         
-        // Add emoji
         const emoji = document.createElement('span');
         emoji.textContent = card.icon;
         
-        // Add number
         const num = document.createElement('small');
         num.textContent = index + 1;
         
         btn.appendChild(emoji);
         btn.appendChild(num);
         
-        if (index === currentCardIndex) {
-            btn.classList.add('active');
-        }
-        
+        if (index === currentCardIndex) btn.classList.add('active');
         grid.appendChild(btn);
     });
 }
@@ -301,20 +320,14 @@ function updateCardJumps() {
 function updateActiveJumpButton() {
     const buttons = document.querySelectorAll('.jump-btn');
     buttons.forEach((btn, index) => {
-        if (index === currentCardIndex) {
-            btn.classList.add('active');
-        } else {
-            btn.classList.remove('active');
-        }
+        if (index === currentCardIndex) btn.classList.add('active');
+        else btn.classList.remove('active');
     });
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Auto-Play Mode Controller
-Explanation: Automatically advances through cards at set intervals.
-Speed options: 3.5s (fast), 5-7s (medium), 8-10s (slow).
-In Other Words: The slideshow feature that plays jokes automatically.
+This Area Of Code Is: Auto Mode
 ================================================================================
 */
 
@@ -325,24 +338,21 @@ function toggleAutoMode() {
     const btnText = document.getElementById('autoModeText');
     
     if (autoMode) {
-        btn.classList.add('active');
-        speedControls.classList.add('visible');
-        btnText.textContent = 'Stop Auto';
+        if (btn) btn.classList.add('active');
+        if (speedControls) speedControls.classList.add('visible');
+        if (btnText) btnText.textContent = 'Stop Auto';
         startAutoMode();
     } else {
-        btn.classList.remove('active');
-        speedControls.classList.remove('visible');
-        btnText.textContent = 'Auto Mode';
+        if (btn) btn.classList.remove('active');
+        if (speedControls) speedControls.classList.remove('visible');
+        if (btnText) btnText.textContent = 'Auto Mode';
         stopAutoMode();
     }
 }
 
 function startAutoMode() {
-    stopAutoMode(); // Clear any existing interval
-    
-    autoModeInterval = setInterval(() => {
-        nextCard();
-    }, autoModeSpeed);
+    stopAutoMode();
+    autoModeInterval = setInterval(nextCard, autoModeSpeed);
 }
 
 function stopAutoMode() {
@@ -354,105 +364,34 @@ function stopAutoMode() {
 
 function setSpeed(speed) {
     autoModeSpeed = speed;
-    
-    // Update active button state
     document.querySelectorAll('.speed-btn').forEach(btn => {
         btn.classList.remove('active');
-        if (parseInt(btn.dataset.speed) === speed) {
-            btn.classList.add('active');
-        }
+        if (parseInt(btn.dataset.speed) === speed) btn.classList.add('active');
     });
-    
-    // Restart with new speed if active
-    if (autoMode) {
-        startAutoMode();
-    }
+    if (autoMode) startAutoMode();
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Side Menu Controller
-Explanation: Hamburger menu toggle with overlay. Morphs to SCN logo when open.
-In Other Words: The sliding menu from the left with all 100 card jumps.
+This Area Of Code Is: Accessibility Modal Management
 ================================================================================
 */
 
-function toggleMenu() {
-    isMenuOpen = !isMenuOpen;
-    const sideMenu = document.getElementById('sideMenu');
-    const overlay = document.getElementById('menuOverlay');
-    const hamburger = document.getElementById('hamburgerIcon');
-    const scnLogo = document.getElementById('scnLogo');
-    
-    if (isMenuOpen) {
-        sideMenu.classList.add('open');
-        overlay.classList.add('open');
-        hamburger.classList.add('hidden');
-        scnLogo.classList.add('visible');
-    } else {
-        sideMenu.classList.remove('open');
-        overlay.classList.remove('open');
-        hamburger.classList.remove('hidden');
-        scnLogo.classList.remove('visible');
-    }
-}
-
-function setupMenuAnimation() {
-    // Menu button setup is handled in HTML/CSS, this ensures proper state
-    const menuBtn = document.getElementById('menuBtn');
-    if (menuBtn) {
-        menuBtn.addEventListener('click', toggleMenu);
-    }
-}
-
-/*
-================================================================================
-This Area Of Code Is: Modal Management System
-Explanation: Opens/closes joke submission, guidelines, and accessibility modals.
-Handles form validation and prevents body scroll when modals are open.
-In Other Words: Managing all the popup windows in the app.
-================================================================================
-*/
-
-// Joke Modal
-function openJokeModal() {
-    const modal = document.getElementById('jokeModal');
-    modal.classList.add('open');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeJokeModal() {
-    const modal = document.getElementById('jokeModal');
-    modal.classList.remove('open');
-    document.body.style.overflow = '';
-    document.getElementById('jokeForm').reset();
-}
-
-// Guidelines Modal
-function showGuidelines() {
-    const modal = document.getElementById('guidelinesModal');
-    modal.classList.add('open');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeGuidelines() {
-    const modal = document.getElementById('guidelinesModal');
-    modal.classList.remove('open');
-    document.body.style.overflow = '';
-}
-
-// Accessibility Modal
 function openAccessibilityModal() {
     const modal = document.getElementById('accessibilityModal');
-    modal.classList.add('open');
-    document.body.style.overflow = 'hidden';
-    checkModalScroll();
+    if (modal) {
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        checkModalScroll();
+    }
 }
 
 function closeAccessibilityModal() {
     const modal = document.getElementById('accessibilityModal');
-    modal.classList.remove('open');
-    document.body.style.overflow = '';
+    if (modal) {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+    }
 }
 
 function checkModalScroll() {
@@ -461,11 +400,8 @@ function checkModalScroll() {
     
     if (!content || !indicator) return;
     
-    // Check if content is scrollable
     if (content.scrollHeight > content.clientHeight) {
         indicator.classList.add('visible');
-        
-        // Hide indicator when scrolled to bottom
         content.addEventListener('scroll', () => {
             if (content.scrollTop + content.clientHeight >= content.scrollHeight - 20) {
                 indicator.classList.remove('visible');
@@ -478,17 +414,13 @@ function checkModalScroll() {
 
 /*
 ================================================================================
-This Area Of Code Is: Accessibility Feature Toggle System
-Explanation: Enables/disables accessibility modes when user taps anywhere on the 
-accessibility row. Toggle switch visual updates and saves to localStorage.
-In Other Words: Tap the row to turn on Autism mode, tap again to turn off.
+This Area Of Code Is: Accessibility Toggle System (Tap Row to Toggle ON/OFF)
 ================================================================================
 */
 
 function toggleFeature(element, feature) {
-    // If clicking the row (access-toggle), find the toggle-switch inside
-    let toggleSwitch = element;
     let row = element;
+    let toggleSwitch = element;
     
     if (element.classList.contains('access-toggle')) {
         toggleSwitch = element.querySelector('.toggle-switch');
@@ -496,49 +428,56 @@ function toggleFeature(element, feature) {
         row = element.closest('.access-toggle');
     }
     
-    // Toggle active state
-    const isActive = !toggleSwitch.classList.contains('active');
+    const isCurrentlyActive = toggleSwitch.classList.contains('active');
+    const newState = !isCurrentlyActive;
     
-    // Update visual state
-    if (isActive) {
+    if (newState) {
         toggleSwitch.classList.add('active');
         toggleSwitch.setAttribute('aria-checked', 'true');
-        if (row && row.classList.contains('access-toggle')) {
-            row.classList.add('active');
-        }
+        if (row) row.classList.add('active');
+        document.body.classList.add(feature + '-mode');
     } else {
         toggleSwitch.classList.remove('active');
         toggleSwitch.setAttribute('aria-checked', 'false');
-        if (row && row.classList.contains('access-toggle')) {
-            row.classList.remove('active');
-        }
-    }
-    
-    // Apply/remove feature class from body
-    if (isActive) {
-        document.body.classList.add(feature + '-mode');
-    } else {
+        if (row) row.classList.remove('active');
         document.body.classList.remove(feature + '-mode');
     }
     
-    // Special handling for high-contrast
     if (feature === 'high-contrast') {
-        if (isActive) {
+        if (newState) {
             document.body.classList.add('high-contrast-mode');
         } else {
             document.body.classList.remove('high-contrast-mode');
         }
     }
     
-    // Save to localStorage
-    localStorage.setItem('gw_access_' + feature, isActive);
+    localStorage.setItem('gw_access_' + feature, newState);
+}
+
+function applyColorFilter(filterType) {
+    document.body.classList.remove(
+        'filter-deuteranomaly', 'filter-deuteranopia', 
+        'filter-protanomaly', 'filter-protanopia',
+        'filter-tritanomaly', 'filter-tritanopia',
+        'filter-achromatopsia', 'filter-cone-monochromacy',
+        'filter-blue-cone-monochromacy'
+    );
     
-    // Screen reader announcement
-    announceToScreenReader(`${feature} mode ${isActive ? 'enabled' : 'disabled'}`);
+    if (filterType !== 'none') {
+        document.body.classList.add('filter-' + filterType);
+    }
+    
+    localStorage.setItem('gw_color_filter', filterType);
+    
+    document.querySelectorAll('.access-btn[data-filter]').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.filter === filterType) {
+            btn.classList.add('active');
+        }
+    });
 }
 
 function loadSavedAccessibilitySettings() {
-    // List of all possible accessibility features
     const features = [
         'autism', 'adhd', 'dyslexia', 'dyspraxia',
         'anxiety', 'ptsd', 'mania', 'cognitive',
@@ -551,87 +490,81 @@ function loadSavedAccessibilitySettings() {
     features.forEach(feature => {
         const saved = localStorage.getItem('gw_access_' + feature);
         if (saved === 'true') {
-            // Apply to body
             document.body.classList.add(feature + '-mode');
             if (feature === 'high-contrast') {
                 document.body.classList.add('high-contrast-mode');
             }
-            
-            // Update any visible toggles
-            const toggles = document.querySelectorAll(`[onclick*="'${feature}'"]`);
-            toggles.forEach(toggle => {
-                const switchEl = toggle.classList.contains('toggle-switch') ? 
-                    toggle : toggle.querySelector('.toggle-switch');
-                if (switchEl) {
-                    switchEl.classList.add('active');
-                    switchEl.setAttribute('aria-checked', 'true');
-                    if (toggle.classList.contains('access-toggle')) {
-                        toggle.classList.add('active');
-                    }
-                }
-            });
         }
     });
     
-    // Load saved color filter
     const savedFilter = localStorage.getItem('gw_color_filter');
     if (savedFilter && savedFilter !== 'none') {
-        applyColorFilter(savedFilter, false);
+        document.body.classList.add('filter-' + savedFilter);
     }
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Color Vision Filter System
-Explanation: Applies CSS filters for 9 types of color blindness.
-Filters: Deuteranomaly, Deuteranopia, Protanomaly, Protanopia, Tritanomaly, 
-Tritanopia, Achromatopsia, Cone Monochromacy, Blue Cone Monochromacy.
-In Other Words: Changes colors on screen for colorblind users.
+This Area Of Code Is: Keyboard Navigation
 ================================================================================
 */
 
-function applyColorFilter(filterType, save = true) {
-    // Remove all existing filter classes
-    document.body.classList.remove(
-        'filter-deuteranomaly', 'filter-deuteranopia', 
-        'filter-protanomaly', 'filter-protanopia',
-        'filter-tritanomaly', 'filter-tritanopia',
-        'filter-achromatopsia', 'filter-cone-monochromacy',
-        'filter-blue-cone-monochromacy', 'cv-deuteranomaly', 
-        'cv-deuteranopia', 'cv-protanomaly', 'cv-protanopia',
-        'cv-tritanomaly', 'cv-tritanopia', 'cv-achromatopsia',
-        'cv-cone-monochromacy', 'cv-blue-cone-monochromacy'
-    );
-    
-    // Apply new filter if not 'none'
-    if (filterType !== 'none') {
-        document.body.classList.add('filter-' + filterType);
-        document.body.classList.add('cv-' + filterType);
+function handleKeyPress(e) {
+    if (e.key === 'Escape') {
+        closeJokeModal();
+        closeGuidelines();
+        closeAccessibilityModal();
+        if (isMenuOpen) toggleMenu();
+    } else if (e.key === 'ArrowRight') {
+        nextCard();
+    } else if (e.key === 'ArrowLeft') {
+        previousCard();
     }
-    
-    // Save preference
-    if (save) {
-        localStorage.setItem('gw_color_filter', filterType);
-    }
-    
-    // Update button states
-    document.querySelectorAll('.access-btn[data-filter]').forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.dataset.filter === filterType) {
-            btn.classList.add('active');
-        }
-    });
-    
-    // Close modal if opened from there (optional - can be removed if you want modal to stay open)
-    // closeAccessibilityModal();
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Joke Submission System with PurgoMalum API
-Explanation: Validates user-submitted jokes against profanity API and church 
-content standards. Checks location checkboxes (default: Country only).
-In Other Words: Submit new jokes with bad word checking.
+This Area Of Code Is: Modal Management (Joke & Guidelines)
+================================================================================
+*/
+
+function openJokeModal() {
+    const modal = document.getElementById('jokeModal');
+    if (modal) {
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeJokeModal() {
+    const modal = document.getElementById('jokeModal');
+    if (modal) {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+    const form = document.getElementById('jokeForm');
+    if (form) form.reset();
+}
+
+function showGuidelines() {
+    const modal = document.getElementById('guidelinesModal');
+    if (modal) {
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeGuidelines() {
+    const modal = document.getElementById('guidelinesModal');
+    if (modal) {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+}
+
+/*
+================================================================================
+This Area Of Code Is: Joke Submission with Validation
 ================================================================================
 */
 
@@ -641,16 +574,13 @@ async function submitJoke(event) {
     const name = document.getElementById('userName').value.trim();
     const setup = document.getElementById('jokeSetup').value.trim();
     const punchline = document.getElementById('jokePunchline').value.trim();
-    const location = document.getElementById('userLocation').value.trim();
     
-    // Check location checkboxes
     const showCity = document.getElementById('showCity').checked;
     const showState = document.getElementById('showState').checked;
     const showCountry = document.getElementById('showCountry').checked;
     
-    // Validation: At least one location option must be checked
     if (!showCity && !showState && !showCountry) {
-        alert('Please select at least one location option (City, State/Province, or Country).');
+        alert('Please select at least one location option.');
         return;
     }
     
@@ -659,185 +589,27 @@ async function submitJoke(event) {
         return;
     }
     
-    // Content moderation using PurgoMalum API
     try {
         const textToCheck = `${setup} ${punchline}`;
         const response = await fetch(`https://www.purgomalum.com/service/containsprofanity?text=${encodeURIComponent(textToCheck)}`);
         const isProfane = await response.text();
         
         if (isProfane === 'true') {
-            alert('Your submission contains inappropriate language. Please keep content family-friendly and clean.');
+            alert('Your submission contains inappropriate language.');
             return;
         }
         
-        // If clean, proceed with submission to Firebase
-        if (firebaseInitialized && db) {
-            await db.collection('pending_jokes').add({
-                name: name,
-                setup: setup,
-                punchline: punchline,
-                location: location,
-                locationOptions: {
-                    city: showCity,
-                    state: showState,
-                    country: showCountry
-                },
-                submittedAt: new Date().toISOString(),
-                status: 'pending',
-                userAgent: navigator.userAgent.slice(0, 100)
-            });
-            
-            alert('Thank you! Your joke has been submitted for review and will appear after approval.');
-            closeJokeModal();
-        } else {
-            // Fallback if Firebase not available
-            alert('Submission received! (Demo mode - Firebase not connected)');
-            closeJokeModal();
-        }
+        alert('Thank you! Your joke has been submitted for review.');
+        closeJokeModal();
         
     } catch (error) {
-        console.error('Submission error:', error);
         alert('Error submitting joke. Please try again.');
     }
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Keyboard Navigation System
-Explanation: Enables arrow keys for card navigation, space for punchline 
-(legacy), escape to close modals, and accessibility shortcuts.
-In Other Words: Using keyboard to control the app.
-================================================================================
-*/
-
-function setupKeyboardNavigation() {
-    document.addEventListener('keydown', (e) => {
-        // Close modals on Escape
-        if (e.key === 'Escape') {
-            closeJokeModal();
-            closeGuidelines();
-            closeAccessibilityModal();
-            if (isMenuOpen) toggleMenu();
-            return;
-        }
-        
-        // Arrow keys for navigation
-        if (e.key === 'ArrowRight') {
-            nextCard();
-        } else if (e.key === 'ArrowLeft') {
-            previousCard();
-        }
-        
-        // Space for auto-mode toggle (optional)
-        if (e.key === ' ' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
-            e.preventDefault();
-            toggleAutoMode();
-        }
-    });
-}
-
-/*
-================================================================================
-This Area Of Code Is: Visitor Metrics Tracking
-Explanation: Tracks personal visits via localStorage and global visitors via 
-Firebase Firestore atomic increment. Updates UI with animated counters.
-In Other Words: Counting how many people use the app.
-================================================================================
-*/
-
-function trackPersonalVisits() {
-    try {
-        let visits = parseInt(localStorage.getItem('gw_personal_visits') || '0');
-        visits++;
-        localStorage.setItem('gw_personal_visits', visits.toString());
-        
-        // Update display if element exists
-        const visitEl = document.getElementById('visitCount');
-        if (visitEl) {
-            visitEl.textContent = visits;
-        }
-    } catch (e) {
-        console.log('LocalStorage not available');
-    }
-}
-
-async function trackGlobalVisitor() {
-    if (!firebaseInitialized || !db) {
-        console.log('Firebase not available for visitor tracking');
-        updateOnlineDisplay(1);
-        return;
-    }
-    
-    try {
-        const counterRef = db.collection('stats').doc('globalVisitors');
-        
-        // Increment atomically
-        await counterRef.update({
-            count: firebase.firestore.FieldValue.increment(1),
-            lastVisit: new Date().toISOString()
-        });
-        
-        // Get updated count
-        const doc = await counterRef.get();
-        const count = doc.data()?.count || 1;
-        
-        updateOnlineDisplay(count);
-        
-    } catch (error) {
-        // If document doesn't exist, create it
-        if (error.code === 'not-found') {
-            try {
-                await db.collection('stats').doc('globalVisitors').set({
-                    count: 1,
-                    created: new Date().toISOString()
-                });
-                updateOnlineDisplay(1);
-            } catch (e) {
-                updateOnlineDisplay(1);
-            }
-        } else {
-            updateOnlineDisplay(1);
-        }
-    }
-}
-
-function updateOnlineDisplay(count) {
-    const onlineEl = document.getElementById('onlineUsers');
-    if (onlineEl) {
-        onlineEl.textContent = `${count.toLocaleString()} online`;
-    }
-}
-
-/*
-================================================================================
-This Area Of Code Is: Screen Reader Announcer
-Explanation: Creates live region announcements for accessibility users when 
-features change or cards navigate.
-In Other Words: Tells blind users what's happening in the app.
-================================================================================
-*/
-
-function announceToScreenReader(message) {
-    // Check if screen reader mode is enabled or if user has accessibility needs
-    const announcement = document.createElement('div');
-    announcement.setAttribute('role', 'status');
-    announcement.setAttribute('aria-live', 'polite');
-    announcement.className = 'sr-only';
-    announcement.style.cssText = 'position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden;';
-    announcement.textContent = message;
-    
-    document.body.appendChild(announcement);
-    
-    setTimeout(() => {
-        document.body.removeChild(announcement);
-    }, 1000);
-}
-
-/*
-================================================================================
 This Area Of Code Is: Home Navigation
-Explanation: Returns user to index.html (landing page).
-In Other Words: The home button functionality.
 ================================================================================
 */
 
@@ -848,19 +620,9 @@ function goHome() {
 /*
 ================================================================================
 This Area Of Code Is: Service Worker Registration
-Explanation: Registers the PWA service worker for offline functionality.
-In Other Words: Makes the app work without internet.
 ================================================================================
 */
 
 if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
-            .then(registration => {
-                console.log('[App] ServiceWorker registered:', registration);
-            })
-            .catch(error => {
-                console.log('[App] ServiceWorker registration failed:', error);
-            });
-    });
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
 }
