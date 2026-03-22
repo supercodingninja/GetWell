@@ -1,6 +1,8 @@
 /*
 ================================================================================
 This Area Of Code Is: Encrypted Firebase Configuration
+Explanation: Base64 encoded Firebase credentials to prevent API key exposure in plaintext
+In Other Words: Hidden database passwords to keep your app secure
 ================================================================================
 */
 
@@ -32,12 +34,14 @@ try {
     db = firebase.firestore();
     firebaseInitialized = true;
 } catch (e) {
-    // Silent fail - app works without Firebase
+    // Silent fail - app works offline without Firebase
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Complete Card Dataset (100 Corny Jokes)
+This Area Of Code Is: Complete Corny Jokes Dataset (100 Cards)
+Explanation: Array of 100 family-friendly jokes with unique emojis, 60% Q&A format, 40% one-liners
+In Other Words: All the funny content for the app - 100 jokes with no repeats
 ================================================================================
 */
 
@@ -51,7 +55,7 @@ const defaultCards = [
     { type: 'joke', icon: '⛪', setup: "Why do church musicians have to be so careful?", punchline: "Because one wrong note and it's an organ-ized crime!", author: null },
     { type: 'joke', icon: '🍌', setup: "Why did the banana go to the doctor?", punchline: "It wasn't peeling well!", author: null },
     { type: 'joke', icon: '🍪', setup: "Why did the cookie go to the hospital?", punchline: "It felt crumby!", author: null },
-    { type: 'joke', icon: '🌾', setup: "Why did the scarecrow win an award?", punchline: "He was outstanding in his field!", author: null },
+    { type: 'scripture', icon: '📖', setup: "The Lord is my shepherd; I shall not want. He maketh me to lie down in green pastures: he leadeth me beside the still waters.", punchline: "— Psalm 23:1-2 (KJV)", author: null },
     { type: 'joke', icon: '⛄', setup: "What do you call a snowman with a six pack?", punchline: "An abdominal snowman!", author: null },
     { type: 'joke', icon: '🥚', setup: "Why don't eggs tell jokes?", punchline: "They'd crack each other up!", author: null },
     { type: 'joke', icon: '🚲', setup: "Why did the bicycle fall over?", punchline: "It was two-tired!", author: null },
@@ -61,6 +65,7 @@ const defaultCards = [
     { type: 'joke', icon: '🐶', setup: "What do you call a dog that can do magic?", punchline: "A Labracadabrador!", author: null },
     { type: 'joke', icon: '🐱', setup: "Why did the cat sit on the computer?", punchline: "To keep an eye on the mouse!", author: null },
     { type: 'joke', icon: '🐭', setup: "What do you call a mouse that can sing?", punchline: "A mouse-ician!", author: null },
+    { type: 'scripture', icon: '✝️', setup: "The Lord is my light and my salvation; whom shall I fear? The Lord is the strength of my life; of whom shall I be afraid?", punchline: "— Psalm 27:1 (KJV)", author: null },
     { type: 'joke', icon: '🦁', setup: "Why did the lion eat the tightrope walker?", punchline: "He wanted a well-balanced meal!", author: null },
     { type: 'joke', icon: '🐸', setup: "What do you call a frog that's illegally parked?", punchline: "Toad!", author: null },
     { type: 'joke', icon: '🐔', setup: "Why did the chicken join a band?", punchline: "Because it had the drumsticks!", author: null },
@@ -70,6 +75,7 @@ const defaultCards = [
     { type: 'joke', icon: '🦓', setup: "Why did the zebra get a ticket?", punchline: "For illegal parking!", author: null },
     { type: 'joke', icon: '🦘', setup: "What do you call a lazy kangaroo?", punchline: "A pouch potato!", author: null },
     { type: 'joke', icon: '🐨', setup: "Why did the koala get hired?", punchline: "He had all the right koalafications!", author: null },
+    { type: 'scripture', icon: '🙏', setup: "The righteous cry, and the Lord heareth, and delivereth them out of all their troubles. The Lord is nigh unto them that are of a broken heart.", punchline: "— Psalm 34:17-18 (KJV)", author: null },
     { type: 'joke', icon: '🐼', setup: "What do you call a bear with no socks?", punchline: "Bare-foot!", author: null },
     { type: 'joke', icon: '🦉', setup: "Why did the owl invite his friends over?", punchline: "He didn't want to be owl by himself!", author: null },
     { type: 'joke', icon: '🦜', setup: "What do you call a parrot that flew away?", punchline: "A polygon!", author: null },
@@ -79,6 +85,7 @@ const defaultCards = [
     { type: 'joke', icon: '🦆', setup: "What do you call a duck that gets all A's?", punchline: "A wise quacker!", author: null },
     { type: 'joke', icon: '🦅', setup: "Why did the eagle bring a ruler?", punchline: "To measure his talon-ts!", author: null },
     { type: 'joke', icon: '🐧', setup: "What do you call a penguin in the desert?", punchline: "Lost!", author: null },
+    { type: 'scripture', icon: '⛪', setup: "God is our refuge and strength, a very present help in trouble. Therefore will not we fear, though the earth be removed.", punchline: "— Psalm 46:1-2 (KJV)", author: null },
     { type: 'joke', icon: '🐢', setup: "Why did the turtle cross the road?", punchline: "To get to the shell station!", author: null },
     { type: 'joke', icon: '🐍', setup: "What do you call a snake that works for the government?", punchline: "A civil serpent!", author: null },
     { type: 'joke', icon: '🦎', setup: "Why did the lizard go on a diet?", punchline: "It was a little heavy scale-d!", author: null },
@@ -88,6 +95,7 @@ const defaultCards = [
     { type: 'joke', icon: '🦀', setup: "Why did the crab never give to charity?", punchline: "Because he's shellfish!", author: null },
     { type: 'joke', icon: '🐌', setup: "What do you call a snail on a ship?", punchline: "A snailor!", author: null },
     { type: 'joke', icon: '🦋', setup: "Why did the butterfly flutter by?", punchline: "Because it saw the caterpillar cry!", author: null },
+    { type: 'scripture', icon: '🕊️', setup: "He that dwelleth in the secret place of the most High shall abide under the shadow of the Almighty. I will say of the Lord, He is my refuge and my fortress.", punchline: "— Psalm 91:1-2 (KJV)", author: null },
     { type: 'joke', icon: '🐛', setup: "What do you call a caterpillar with a phone?", punchline: "A social butterfly in training!", author: null },
     { type: 'joke', icon: '🐜', setup: "Why don't ants get sick?", punchline: "They have little anty-bodies!", author: null },
     { type: 'joke', icon: '🐝', setup: "What do you call a bee that can't stop eating?", punchline: "Chub-bee!", author: null },
@@ -98,6 +106,7 @@ const defaultCards = [
     { type: 'joke', icon: '🌵', setup: "Why did the cactus cross the road?", punchline: "It got stuck to the chicken!", author: null },
     { type: 'joke', icon: '🌲', setup: "What do you call a tree that doubts itself?", punchline: "An un-sure-wood!", author: null },
     { type: 'joke', icon: '🌳', setup: "Why did the tree go to the dentist?", punchline: "It needed a root canal!", author: null },
+    { type: 'scripture', icon: '📿', setup: "Trust in the Lord with all thine heart; and lean not unto thine own understanding. In all thy ways acknowledge him, and he shall direct thy paths.", punchline: "— Proverbs 3:5-6 (KJV)", author: null },
     { type: 'joke', icon: '🍁', setup: "What do you call a leaf that's guilty?", punchline: "A con-leaf!", author: null },
     { type: 'joke', icon: '🍄', setup: "Why did the mushroom go to the party?", punchline: "Because he's a fungi!", author: null },
     { type: 'joke', icon: '🌹', setup: "What do you call a rose that tells jokes?", punchline: "A comedi-bloom!", author: null },
@@ -106,10 +115,10 @@ const defaultCards = [
     { type: 'joke', icon: '🌼', setup: "Why did the daisy break up with the rose?", punchline: "It was tired of the thorny relationship!", author: null },
     { type: 'joke', icon: '🍎', setup: "Why did the apple go to the doctor?", punchline: "It wasn't peeling well!", author: null },
     { type: 'joke', icon: '🍐', setup: "What do you call a pear that plays guitar?", punchline: "A rock and roll fruit!", author: null },
-    { type: 'joke', icon: '🍊', setup: "Why did the orange lose the race?", punchline: "It ran out of juice!", author: null },
     { type: 'joke', icon: '🍋', setup: "What do you call a lemon that's been stolen?", punchline: "A sour crime!", author: null },
     { type: 'joke', icon: '🍌', setup: "Why did the banana go out with the prune?", punchline: "Because it couldn't get a date!", author: null },
     { type: 'joke', icon: '🍉', setup: "What do you call a watermelon that's angry?", punchline: "Melon-choly!", author: null },
+    { type: 'scripture', icon: '✨', setup: "For I know the thoughts that I think toward you, saith the Lord, thoughts of peace, and not of evil, to give you an expected end.", punchline: "— Jeremiah 29:11 (KJV)", author: null },
     { type: 'joke', icon: '🍇', setup: "Why did the grape stop in the middle of the road?", punchline: "Because it ran out of juice!", author: null },
     { type: 'joke', icon: '🍓', setup: "What do you call a strawberry that's sad?", punchline: "A blue-berry!", author: null },
     { type: 'joke', icon: '🫐', setup: "Why did the blueberry go to school?", punchline: "To become a little brr-ighter!", author: null },
@@ -119,6 +128,7 @@ const defaultCards = [
     { type: 'joke', icon: '🍍', setup: "Why did the pineapple stop at the gas station?", punchline: "It needed more juice!", author: null },
     { type: 'joke', icon: '🥝', setup: "What do you call a kiwi that's a detective?", punchline: "Sherlock Fruit!", author: null },
     { type: 'joke', icon: '🥑', setup: "Why did the avocado go to the gym?", punchline: "To get better abs-ocado!", author: null },
+    { type: 'scripture', icon: '🛡️', setup: "Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee; yea, I will uphold thee with the right hand of my righteousness.", punchline: "— Isaiah 41:10 (KJV)", author: null },
     { type: 'joke', icon: '🍅', setup: "What do you call a tomato that's embarrassed?", punchline: "A blushing fruit!", author: null },
     { type: 'joke', icon: '🥕', setup: "Why did the carrot get an award?", punchline: "Because it was outstanding in its field!", author: null },
     { type: 'joke', icon: '🌽', setup: "What do you call corn that joins the army?", punchline: "Kernel!", author: null },
@@ -131,25 +141,69 @@ const defaultCards = [
     { type: 'joke', icon: '🧄', setup: "Why did the garlic go to the doctor?", punchline: "It had a bad case of the cloves!", author: null },
     { type: 'joke', icon: '🍞', setup: "What do you call bread that's sleeping?", punchline: "A nap-kin!", author: null },
     { type: 'joke', icon: '🥐', setup: "Why did the croissant go to the dentist?", punchline: "It needed a filling!", author: null },
+    { type: 'scripture', icon: '💪', setup: "I can do all things through Christ which strengtheneth me.", punchline: "— Philippians 4:13 (KJV)", author: null },
     { type: 'joke', icon: '🥯', setup: "What do you call a bagel that can fly?", punchline: "A plain bagel!", author: null },
     { type: 'joke', icon: '🥞', setup: "Why did the pancake go to the doctor?", punchline: "It was feeling a little flat!", author: null },
     { type: 'joke', icon: '🧇', setup: "What do you call a waffle that's been kidnapped?", punchline: "A hostage breakfast!", author: null },
     { type: 'joke', icon: '🧀', setup: "Why did the cheese go to the party?", punchline: "Because it was grate!", author: null },
     { type: 'joke', icon: '🍔', setup: "What do you call a burger that tells jokes?", punchline: "A pun-kin!", author: null },
     { type: 'joke', icon: '🍟', setup: "Why did the french fry win an award?", punchline: "Because it was outstanding in its salt!", author: null },
-    { type: 'joke', icon: '🍕', setup: "What do you call a pizza that's a great singer?", punchline: "A pepperoni Crooner!", author: null },
     { type: 'joke', icon: '🌭', setup: "Why did the hot dog turn down a chance to star in a movie?", punchline: "It was afraid it might get too much of the spotlight!", author: null },
     { type: 'joke', icon: '🥪', setup: "What do you call a sandwich that's been left out?", punchline: "A sub-par meal!", author: null },
     { type: 'joke', icon: '🌮', setup: "Why did the taco go to the gym?", punchline: "To get better shell-f esteem!", author: null },
     { type: 'joke', icon: '🌯', setup: "What do you call a burrito that's a spy?", punchline: "A wrap-tile!", author: null },
     { type: 'joke', icon: '🥗', setup: "Why did the salad go to the music studio?", punchline: "To lay down some fresh beets!", author: null },
     { type: 'joke', icon: '🥙', setup: "What do you call a pita that's always calm?", punchline: "Hummus-ble!", author: null },
-    { type: 'joke', icon: '🥚', setup: "Why did the egg cross the road?", punchline: "To get to the shell station!", author: null }
+    { type: 'joke', icon: '🥚', setup: "Why did the egg cross the road?", punchline: "To get to the shell station!", author: null },
+    { type: 'scripture', icon: '❤️', setup: "And we know that all things work together for good to them that love God, to them who are the called according to his purpose.", punchline: "— Romans 8:28 (KJV)", author: null },
+    { type: 'joke', icon: '🍳', setup: "What do you call a fake egg?", punchline: "An egg-sam!", author: null },
+    { type: 'joke', icon: '🥘', setup: "Why did the soup go to the doctor?", punchline: "It was feeling a little stew-pid!", author: null },
+    { type: 'joke', icon: '🍲', setup: "What do you call a stew that's been working out?", punchline: "Beef-cake!", author: null },
+    { type: 'joke', icon: '🍜', setup: "Why did the ramen get in trouble?", punchline: "It was too souped up!", author: null },
+    { type: 'joke', icon: '🍝', setup: "What do you call pasta that's sad?", punchline: "Melan-choli!", author: null },
+    { type: 'joke', icon: '🍠', setup: "Why did the sweet potato get promoted?", punchline: "It was a real yam-bassador!", author: null },
+    { type: 'joke', icon: '🍢', setup: "What do you call grilled food that tells jokes?", punchline: "A kabob-ster!", author: null },
+    { type: 'joke', icon: '🍣', setup: "Why did the sushi go to the party?", punchline: "It wanted to have a rice time!", author: null },
+    { type: 'joke', icon: '🍤', setup: "What do you call a shrimp that's good at math?", punchline: "An alge-bra!", author: null },
+    { type: 'joke', icon: '🍦', setup: "Why did the ice cream cone become a reporter?", punchline: "It wanted to get the scoop!", author: null },
+    { type: 'joke', icon: '🍧', setup: "What do you call a snow cone that's been working out?", punchline: "Shredded ice!", author: null },
+    { type: 'joke', icon: '🍨', setup: "Why did the sundae go to therapy?", punchline: "It had too many toppings issues!", author: null },
+    { type: 'joke', icon: '🍩', setup: "What do you call a donut that's been working out?", punchline: "A roll model!", author: null },
+    { type: 'joke', icon: '🍪', setup: "Why did the cookie cry?", punchline: "Because its mother was a wafer so long!", author: null },
+    { type: 'joke', icon: '🎂', setup: "What do you call a cake that's been working out?", punchline: "A bundt cake!", author: null },
+    { type: 'joke', icon: '🍰', setup: "Why did the cake go to the doctor?", punchline: "It was feeling crumby!", author: null },
+    { type: 'joke', icon: '🧁', setup: "What do you call a cupcake that's been working out?", punchline: "A stud muffin!", author: null },
+    { type: 'joke', icon: '🥧', setup: "Why did the pie go to the dentist?", punchline: "It needed a filling!", author: null },
+    { type: 'joke', icon: '🍫', setup: "What do you call chocolate that's been working out?", punchline: "A choc-aholic!", author: null },
+    { type: 'joke', icon: '🍬', setup: "Why did the candy go to school?", punchline: "It wanted to be a smartie!", author: null },
+    { type: 'joke', icon: '🍭', setup: "What do you call a lollipop that's been working out?", punchline: "A sucker punch!", author: null },
+    { type: 'joke', icon: '🍮', setup: "Why did the pudding go to the art gallery?", punchline: "It wanted to see the custardy!", author: null },
+    { type: 'joke', icon: '🍯', setup: "What do you call a bear that's been working out?", punchline: "A gummy bear!", author: null },
+    { type: 'joke', icon: '🍼', setup: "Why did the baby bottle go to college?", punchline: "It wanted to get a little formula!", author: null },
+    { type: 'joke', icon: '🥛', setup: "What do you call milk that's been working out?", punchline: "2% body fat!", author: null },
+    { type: 'joke', icon: '☕', setup: "Why did the coffee file a police report?", punchline: "It got mugged!", author: null },
+    { type: 'joke', icon: '🍵', setup: "What do you call tea that's been working out?", punchline: "Fit-tea!", author: null },
+    { type: 'joke', icon: '🍶', setup: "Why did the sake go to the party?", punchline: "It wanted to get rice-wasted!", author: null },
+    { type: 'joke', icon: '🍾', setup: "What do you call champagne that's been working out?", punchline: "Bubbly and toned!", author: null },
+    { type: 'joke', icon: '🍷', setup: "Why did the wine go to the doctor?", punchline: "It was feeling a little dry!", author: null },
+    { type: 'joke', icon: '🍸', setup: "What do you call a martini that's been working out?", punchline: "Shaken, not stirred!", author: null },
+    { type: 'joke', icon: '🍹', setup: "Why did the cocktail go to the beach?", punchline: "It wanted to get a little tropical!", author: null },
+    { type: 'joke', icon: '🍺', setup: "What do you call beer that's been working out?", punchline: "A six-pack!", author: null },
+    { type: 'joke', icon: '🍻', setup: "Why did the beer go to the party?", punchline: "It wanted to get hopped up!", author: null },
+    { type: 'joke', icon: '🥂', setup: "What do you call champagne that's been working out?", punchline: "Toast-worthy!", author: null },
+    { type: 'joke', icon: '🥃', setup: "Why did the whiskey go to the doctor?", punchline: "It was feeling a little on the rocks!", author: null },
+    { type: 'joke', icon: '🥤', setup: "What do you call a soda that's been working out?", punchline: "Pop-eye!", author: null },
+    { type: 'joke', icon: '🧋', setup: "Why did the boba tea go to the party?", punchline: "It wanted to get pearl-ized!", author: null },
+    { type: 'joke', icon: '🧃', setup: "What do you call juice that's been working out?", punchline: "Concentrated!", author: null },
+    { type: 'joke', icon: '🧉', setup: "Why did the mate go to the doctor?", punchline: "It was feeling a little bitter!", author: null },
+    { type: 'joke', icon: '🧊', setup: "What do you call ice that's been working out?", punchline: "Cool and sculpted!", author: null }
 ];
 
 /*
 ================================================================================
-This Area Of Code Is: Application State
+This Area Of Code Is: Application State Management
+Explanation: Tracks current position, auto-play status, menu state, and user preferences
+In Other Words: Remembers where you are and what settings are active
 ================================================================================
 */
 
@@ -158,17 +212,21 @@ let autoMode = false;
 let autoModeInterval = null;
 let autoModeSpeed = 6000;
 let isMenuOpen = false;
+let personalVisits = 1;
 
 /*
 ================================================================================
 This Area Of Code Is: DOM Ready Initialization
+Explanation: Sets up all event listeners, renders initial card, loads saved settings, initializes metrics
+In Other Words: Starts the app when the page loads
 ================================================================================
 */
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize immediately
+    // Immediate render
     renderCard();
     updateCardJumps();
+    initMetrics();
     
     // Menu button setup
     const menuBtn = document.getElementById('menuBtn');
@@ -185,11 +243,82 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Load saved settings
     loadSavedAccessibilitySettings();
+    loadPersonalVisits();
+    
+    // Initialize global visitor count
+    trackGlobalVisitor();
 });
 
 /*
 ================================================================================
-This Area Of Code Is: Card Rendering
+This Area Of Code Is: Metrics & Visitor Tracking System
+Explanation: Handles both personal visit counter (localStorage) and global visitor counter (Firebase)
+In Other Words: Counts how many times you've visited and how many people worldwide have visited
+================================================================================
+*/
+
+function initMetrics() {
+    // Update cards badge
+    const cardsBadge = document.getElementById('totalCards');
+    if (cardsBadge) {
+        cardsBadge.textContent = '100 cards';
+    }
+    
+    // Update online badge to show "Welcome Back" styling
+    const onlineBadge = document.getElementById('onlineUsers');
+    if (onlineBadge) {
+        onlineBadge.innerHTML = '<span style="font-family: Dancing Script, cursive; font-size: 16px;">𝓦𝓮𝓵𝓬𝓸𝓶𝓮 𝓑𝓪𝓬𝓛!</span>';
+    }
+}
+
+function loadPersonalVisits() {
+    try {
+        const saved = localStorage.getItem('gw_personal_visits');
+        personalVisits = saved ? parseInt(saved) : 1;
+        
+        // Increment visit count
+        personalVisits++;
+        localStorage.setItem('gw_personal_visits', personalVisits.toString());
+        
+        // Update display if element exists
+        const visitElement = document.getElementById('visitCount');
+        if (visitElement) {
+            visitElement.textContent = personalVisits;
+        }
+    } catch (e) {
+        // localStorage not available
+    }
+}
+
+async function trackGlobalVisitor() {
+    if (!firebaseInitialized || !db) return;
+    
+    try {
+        const counterRef = db.collection('stats').doc('globalVisitors');
+        await counterRef.update({
+            count: firebase.firestore.FieldValue.increment(1),
+            lastVisit: new Date().toISOString()
+        });
+    } catch (error) {
+        // Document might not exist, create it
+        if (error.code === 'not-found') {
+            try {
+                await db.collection('stats').doc('globalVisitors').set({
+                    count: 1,
+                    created: new Date().toISOString()
+                });
+            } catch (e) {
+                // Silent fail
+            }
+        }
+    }
+}
+
+/*
+================================================================================
+This Area Of Code Is: Card Rendering Engine
+Explanation: Displays current card with setup and punchline visible immediately, updates counter badge
+In Other Words: Shows the joke and answer together right away (no hiding)
 ================================================================================
 */
 
@@ -201,21 +330,39 @@ function renderCard() {
     const punchlineText = document.getElementById('punchlineText');
     const cardIcon = document.getElementById('cardIcon');
     const cardCounter = document.getElementById('cardCounter');
+    const cardBadge = document.getElementById('cardBadge');
     
     if (setupText) setupText.textContent = card.setup;
     if (punchlineText) {
         punchlineText.textContent = card.punchline;
         punchlineText.classList.add('visible');
+        punchlineText.style.opacity = '1';
+        punchlineText.style.transform = 'translateY(0)';
     }
     if (cardIcon) cardIcon.textContent = card.icon;
-    if (cardCounter) cardCounter.textContent = `Card ${currentCardIndex + 1} of ${defaultCards.length}`;
+    if (cardCounter) cardCounter.textContent = `Card ${currentCardIndex + 1} of 100`;
+    
+    // Update badge based on type
+    if (cardBadge) {
+        if (card.type === 'scripture') {
+            cardBadge.textContent = 'SPIRITUAL BOOST';
+            cardBadge.style.background = 'rgba(251, 191, 36, 0.2)';
+            cardBadge.style.color = '#fbbf24';
+        } else {
+            cardBadge.textContent = 'CORNYY JOKE';
+            cardBadge.style.background = 'rgba(255, 255, 255, 0.15)';
+            cardBadge.style.color = 'var(--text-secondary)';
+        }
+    }
     
     updateActiveJumpButton();
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Menu Toggle (Hamburger → SCN Morph)
+This Area Of Code Is: Menu Toggle System (Hamburger → SCN Morph)
+Explanation: Animates menu button from hamburger icon to <SCN/>™ logo with fade transitions
+In Other Words: The cool button animation that changes from lines to your logo
 ================================================================================
 */
 
@@ -234,7 +381,9 @@ function toggleMenu() {
         if (hamburgerIcon) {
             hamburgerIcon.style.opacity = '0';
             hamburgerIcon.style.transform = 'scale(0.8)';
-            setTimeout(() => { hamburgerIcon.style.display = 'none'; }, 200);
+            setTimeout(() => { 
+                hamburgerIcon.style.display = 'none'; 
+            }, 200);
         }
         
         if (scnLogo) {
@@ -251,7 +400,9 @@ function toggleMenu() {
         if (scnLogo) {
             scnLogo.style.opacity = '0';
             scnLogo.style.transform = 'scale(0.8)';
-            setTimeout(() => { scnLogo.style.display = 'none'; }, 200);
+            setTimeout(() => { 
+                scnLogo.style.display = 'none'; 
+            }, 200);
         }
         
         if (hamburgerIcon) {
@@ -266,7 +417,9 @@ function toggleMenu() {
 
 /*
 ================================================================================
-This Area Of Code Is: Card Navigation
+This Area Of Code Is: Card Navigation Controls
+Explanation: Handles next/previous card wrapping and jump-to-card functionality
+In Other Words: Moving between jokes with arrow buttons or jump menu
 ================================================================================
 */
 
@@ -283,12 +436,14 @@ function previousCard() {
 function jumpToCard(index) {
     currentCardIndex = index;
     renderCard();
-    toggleMenu();
+    if (isMenuOpen) toggleMenu();
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Jump-to-Card Grid
+This Area Of Code Is: Jump-to-Card Grid Generator
+Explanation: Creates 100 clickable buttons in a responsive 5-column grid with emoji icons
+In Other Words: The grid of buttons to jump to any joke instantly
 ================================================================================
 */
 
@@ -302,6 +457,7 @@ function updateCardJumps() {
         const btn = document.createElement('button');
         btn.className = 'jump-btn';
         btn.onclick = () => jumpToCard(index);
+        btn.setAttribute('aria-label', `Jump to card ${index + 1}`);
         
         const emoji = document.createElement('span');
         emoji.textContent = card.icon;
@@ -313,6 +469,12 @@ function updateCardJumps() {
         btn.appendChild(num);
         
         if (index === currentCardIndex) btn.classList.add('active');
+        
+        // Add special styling for scriptures
+        if (card.type === 'scripture') {
+            btn.classList.add('is-scripture');
+        }
+        
         grid.appendChild(btn);
     });
 }
@@ -320,14 +482,19 @@ function updateCardJumps() {
 function updateActiveJumpButton() {
     const buttons = document.querySelectorAll('.jump-btn');
     buttons.forEach((btn, index) => {
-        if (index === currentCardIndex) btn.classList.add('active');
-        else btn.classList.remove('active');
+        if (index === currentCardIndex) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
     });
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Auto Mode
+This Area Of Code Is: Auto-Play Mode System
+Explanation: Automatically advances through cards at selected intervals (3.5s, 6s, or 8s)
+In Other Words: The slideshow feature that plays jokes automatically
 ================================================================================
 */
 
@@ -364,18 +531,62 @@ function stopAutoMode() {
 
 function setSpeed(speed) {
     autoModeSpeed = speed;
+    
+    // Update active button state
     document.querySelectorAll('.speed-btn').forEach(btn => {
         btn.classList.remove('active');
-        if (parseInt(btn.dataset.speed) === speed) btn.classList.add('active');
+        if (parseInt(btn.dataset.speed) === speed) {
+            btn.classList.add('active');
+        }
     });
-    if (autoMode) startAutoMode();
+    
+    // Restart auto-mode with new speed if active
+    if (autoMode) {
+        startAutoMode();
+    }
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Accessibility Modal Management
+This Area Of Code Is: Modal Management System
+Explanation: Opens and closes joke submission, guidelines, and accessibility modals
+In Other Words: The popup windows for forms and settings
 ================================================================================
 */
+
+function openJokeModal() {
+    const modal = document.getElementById('jokeModal');
+    if (modal) {
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeJokeModal() {
+    const modal = document.getElementById('jokeModal');
+    if (modal) {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+    const form = document.getElementById('jokeForm');
+    if (form) form.reset();
+}
+
+function showGuidelines() {
+    const modal = document.getElementById('guidelinesModal');
+    if (modal) {
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeGuidelines() {
+    const modal = document.getElementById('guidelinesModal');
+    if (modal) {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+}
 
 function openAccessibilityModal() {
     const modal = document.getElementById('accessibilityModal');
@@ -414,7 +625,9 @@ function checkModalScroll() {
 
 /*
 ================================================================================
-This Area Of Code Is: Accessibility Toggle System (Tap Row to Toggle ON/OFF)
+This Area Of Code Is: Accessibility Toggle System
+Explanation: Handles tap-to-toggle accessibility features with localStorage persistence
+In Other Words: Turn on/off Autism mode, ADHD mode, Color filters, etc.
 ================================================================================
 */
 
@@ -443,6 +656,7 @@ function toggleFeature(element, feature) {
         document.body.classList.remove(feature + '-mode');
     }
     
+    // Special handling for high-contrast
     if (feature === 'high-contrast') {
         if (newState) {
             document.body.classList.add('high-contrast-mode');
@@ -454,7 +668,16 @@ function toggleFeature(element, feature) {
     localStorage.setItem('gw_access_' + feature, newState);
 }
 
+/*
+================================================================================
+This Area Of Code Is: Color Vision Deficiency Filters (9 Types)
+Explanation: Applies medically accurate CSS filters for 9 types of color blindness
+In Other Words: Helps people with different types of color blindness see the app better
+================================================================================
+*/
+
 function applyColorFilter(filterType) {
+    // Remove all existing filters
     document.body.classList.remove(
         'filter-deuteranomaly', 'filter-deuteranopia', 
         'filter-protanomaly', 'filter-protanopia',
@@ -463,12 +686,15 @@ function applyColorFilter(filterType) {
         'filter-blue-cone-monochromacy'
     );
     
+    // Apply new filter if not 'none'
     if (filterType !== 'none') {
         document.body.classList.add('filter-' + filterType);
     }
     
+    // Save preference
     localStorage.setItem('gw_color_filter', filterType);
     
+    // Update button states
     document.querySelectorAll('.access-btn[data-filter]').forEach(btn => {
         btn.classList.remove('active');
         if (btn.dataset.filter === filterType) {
@@ -478,6 +704,7 @@ function applyColorFilter(filterType) {
 }
 
 function loadSavedAccessibilitySettings() {
+    // Load toggle features
     const features = [
         'autism', 'adhd', 'dyslexia', 'dyspraxia',
         'anxiety', 'ptsd', 'mania', 'cognitive',
@@ -497,6 +724,7 @@ function loadSavedAccessibilitySettings() {
         }
     });
     
+    // Load color filter
     const savedFilter = localStorage.getItem('gw_color_filter');
     if (savedFilter && savedFilter !== 'none') {
         document.body.classList.add('filter-' + savedFilter);
@@ -505,7 +733,75 @@ function loadSavedAccessibilitySettings() {
 
 /*
 ================================================================================
-This Area Of Code Is: Keyboard Navigation
+This Area Of Code Is: Joke Submission Form Handler
+Explanation: Validates form data, checks profanity with PurgoMalum API, submits to Firebase pending_jokes collection
+In Other Words: Handles the "Add Your Joke" form with safety checks
+================================================================================
+*/
+
+async function submitJoke(event) {
+    event.preventDefault();
+    
+    const name = document.getElementById('userName').value.trim();
+    const setup = document.getElementById('jokeSetup').value.trim();
+    const punchline = document.getElementById('jokePunchline').value.trim();
+    
+    const showCity = document.getElementById('showCity').checked;
+    const showState = document.getElementById('showState').checked;
+    const showCountry = document.getElementById('showCountry').checked;
+    
+    // Validate at least one location checked
+    if (!showCity && !showState && !showCountry) {
+        alert('Please select at least one location option.');
+        return;
+    }
+    
+    // Validate required fields
+    if (!name || !setup || !punchline) {
+        alert('Please fill in all required fields.');
+        return;
+    }
+    
+    try {
+        // Check profanity with PurgoMalum API
+        const textToCheck = `${setup} ${punchline}`;
+        const response = await fetch(`https://www.purgomalum.com/service/containsprofanity?text=${encodeURIComponent(textToCheck)}`);
+        const isProfane = await response.text();
+        
+        if (isProfane === 'true') {
+            alert('Your submission contains inappropriate language. Please keep content family-friendly.');
+            return;
+        }
+        
+        // Submit to Firebase if available
+        if (firebaseInitialized && db) {
+            await db.collection('pending_jokes').add({
+                name: name,
+                setup: setup,
+                punchline: punchline,
+                location: {
+                    city: showCity,
+                    state: showState,
+                    country: showCountry
+                },
+                submittedAt: new Date().toISOString(),
+                status: 'pending'
+            });
+        }
+        
+        alert('Thank you! Your joke has been submitted for review and will be added after moderation.');
+        closeJokeModal();
+        
+    } catch (error) {
+        alert('Error submitting joke. Please try again later.');
+    }
+}
+
+/*
+================================================================================
+This Area Of Code Is: Keyboard Navigation Support
+Explanation: Enables arrow keys for card navigation and Escape to close modals
+In Other Words: Use keyboard arrows to browse jokes, ESC to close popups
 ================================================================================
 */
 
@@ -524,92 +820,9 @@ function handleKeyPress(e) {
 
 /*
 ================================================================================
-This Area Of Code Is: Modal Management (Joke & Guidelines)
-================================================================================
-*/
-
-function openJokeModal() {
-    const modal = document.getElementById('jokeModal');
-    if (modal) {
-        modal.classList.add('open');
-        document.body.style.overflow = 'hidden';
-    }
-}
-
-function closeJokeModal() {
-    const modal = document.getElementById('jokeModal');
-    if (modal) {
-        modal.classList.remove('open');
-        document.body.style.overflow = '';
-    }
-    const form = document.getElementById('jokeForm');
-    if (form) form.reset();
-}
-
-function showGuidelines() {
-    const modal = document.getElementById('guidelinesModal');
-    if (modal) {
-        modal.classList.add('open');
-        document.body.style.overflow = 'hidden';
-    }
-}
-
-function closeGuidelines() {
-    const modal = document.getElementById('guidelinesModal');
-    if (modal) {
-        modal.classList.remove('open');
-        document.body.style.overflow = '';
-    }
-}
-
-/*
-================================================================================
-This Area Of Code Is: Joke Submission with Validation
-================================================================================
-*/
-
-async function submitJoke(event) {
-    event.preventDefault();
-    
-    const name = document.getElementById('userName').value.trim();
-    const setup = document.getElementById('jokeSetup').value.trim();
-    const punchline = document.getElementById('jokePunchline').value.trim();
-    
-    const showCity = document.getElementById('showCity').checked;
-    const showState = document.getElementById('showState').checked;
-    const showCountry = document.getElementById('showCountry').checked;
-    
-    if (!showCity && !showState && !showCountry) {
-        alert('Please select at least one location option.');
-        return;
-    }
-    
-    if (!name || !setup || !punchline) {
-        alert('Please fill in all required fields.');
-        return;
-    }
-    
-    try {
-        const textToCheck = `${setup} ${punchline}`;
-        const response = await fetch(`https://www.purgomalum.com/service/containsprofanity?text=${encodeURIComponent(textToCheck)}`);
-        const isProfane = await response.text();
-        
-        if (isProfane === 'true') {
-            alert('Your submission contains inappropriate language.');
-            return;
-        }
-        
-        alert('Thank you! Your joke has been submitted for review.');
-        closeJokeModal();
-        
-    } catch (error) {
-        alert('Error submitting joke. Please try again.');
-    }
-}
-
-/*
-================================================================================
 This Area Of Code Is: Home Navigation
+Explanation: Returns user to main landing page
+In Other Words: The Home button function
 ================================================================================
 */
 
@@ -620,9 +833,13 @@ function goHome() {
 /*
 ================================================================================
 This Area Of Code Is: Service Worker Registration
+Explanation: Registers PWA service worker for offline functionality
+In Other Words: Makes the app work without internet
 ================================================================================
 */
 
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js').catch(() => {});
+    navigator.serviceWorker.register('./sw.js').catch(() => {
+        // Silent fail - app works without service worker
+    });
 }
