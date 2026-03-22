@@ -202,8 +202,8 @@ const defaultCards = [
 /*
 ================================================================================
 This Area Of Code Is: Application State Management
-Explanation: Tracks current position, auto-play status, menu state, and user preferences
-In Other Words: Remembers where you are and what settings are active
+Explanation: Tracks current position, auto-play status, menu state, punchline visibility, and user preferences
+In Other Words: Remembers where you are, what's showing, and what settings are active
 ================================================================================
 */
 
@@ -213,6 +213,7 @@ let autoModeInterval = null;
 let autoModeSpeed = 6000;
 let isMenuOpen = false;
 let personalVisits = 1;
+let punchlineVisible = false;
 
 /*
 ================================================================================
@@ -317,8 +318,8 @@ async function trackGlobalVisitor() {
 /*
 ================================================================================
 This Area Of Code Is: Card Rendering Engine
-Explanation: Displays current card with setup and punchline visible immediately, updates counter badge
-In Other Words: Shows the joke and answer together right away (no hiding)
+Explanation: Displays current card with setup visible and punchline hidden by default, updates counter badge
+In Other Words: Shows the joke question and hides the answer until you click "Show Punchline"
 ================================================================================
 */
 
@@ -331,16 +332,24 @@ function renderCard() {
     const cardIcon = document.getElementById('cardIcon');
     const cardCounter = document.getElementById('cardCounter');
     const cardBadge = document.getElementById('cardBadge');
+    const punchlineBtn = document.getElementById('punchlineBtn');
+    const punchlineBtnText = document.getElementById('punchlineBtnText');
     
     if (setupText) setupText.textContent = card.setup;
     if (punchlineText) {
         punchlineText.textContent = card.punchline;
-        punchlineText.classList.add('visible');
-        punchlineText.style.opacity = '1';
-        punchlineText.style.transform = 'translateY(0)';
+        // Reset punchline to hidden on new card
+        punchlineVisible = false;
+        punchlineText.classList.remove('visible');
+        punchlineText.style.opacity = '0';
+        punchlineText.style.transform = 'translateY(10px)';
     }
     if (cardIcon) cardIcon.textContent = card.icon;
     if (cardCounter) cardCounter.textContent = `Card ${currentCardIndex + 1} of 100`;
+    
+    // Reset punchline button text
+    if (punchlineBtnText) punchlineBtnText.textContent = 'Show Punchline';
+    if (punchlineBtn) punchlineBtn.classList.remove('active');
     
     // Update badge based on type
     if (cardBadge) {
@@ -348,14 +357,60 @@ function renderCard() {
             cardBadge.textContent = 'SPIRITUAL BOOST';
             cardBadge.style.background = 'rgba(251, 191, 36, 0.2)';
             cardBadge.style.color = '#fbbf24';
+            // Auto-show punchline for scriptures
+            if (punchlineText) {
+                punchlineVisible = true;
+                punchlineText.classList.add('visible');
+                punchlineText.style.opacity = '1';
+                punchlineText.style.transform = 'translateY(0)';
+            }
+            if (punchlineBtnText) punchlineBtnText.textContent = 'Hide Answer';
+            if (punchlineBtn) punchlineBtn.classList.add('active');
         } else {
-            cardBadge.textContent = 'CORNYY JOKE';
+            cardBadge.textContent = 'Corny Joke';
             cardBadge.style.background = 'rgba(255, 255, 255, 0.15)';
             cardBadge.style.color = 'var(--text-secondary)';
         }
     }
     
     updateActiveJumpButton();
+}
+
+/*
+================================================================================
+This Area Of Code Is: Punchline Toggle Control
+Explanation: Shows/hides the punchline when user clicks the button, updates button text
+In Other Words: The "Show Punchline" button functionality - click to reveal the answer
+================================================================================
+*/
+
+function togglePunchline() {
+    const punchlineText = document.getElementById('punchlineText');
+    const punchlineBtn = document.getElementById('punchlineBtn');
+    const punchlineBtnText = document.getElementById('punchlineBtnText');
+    const card = defaultCards[currentCardIndex];
+    
+    punchlineVisible = !punchlineVisible;
+    
+    if (punchlineVisible) {
+        // Show punchline
+        if (punchlineText) {
+            punchlineText.classList.add('visible');
+            punchlineText.style.opacity = '1';
+            punchlineText.style.transform = 'translateY(0)';
+        }
+        if (punchlineBtnText) punchlineBtnText.textContent = 'Hide Punchline';
+        if (punchlineBtn) punchlineBtn.classList.add('active');
+    } else {
+        // Hide punchline
+        if (punchlineText) {
+            punchlineText.classList.remove('visible');
+            punchlineText.style.opacity = '0';
+            punchlineText.style.transform = 'translateY(10px)';
+        }
+        if (punchlineBtnText) punchlineBtnText.textContent = 'Show Punchline';
+        if (punchlineBtn) punchlineBtn.classList.remove('active');
+    }
 }
 
 /*
