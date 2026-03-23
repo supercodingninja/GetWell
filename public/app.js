@@ -1,710 +1,1081 @@
 /*
 ================================================================================
-This Area Of Code Is: Encrypted Firebase Configuration
-Explanation: Base64 encoded Firebase credentials to prevent API key exposure
-In Other Words: Hidden database passwords for security
+This Area Of Code Is: CSS Variables & Reset
+Explanation: Defines color palette, glass effects, and resets browser defaults
+In Other Words: Sets up the colors and basic rules for the app
 ================================================================================
 */
 
-const encryptedConfig = {
-    apiKey: "QUl6YVN5RGllVkE1eV9wYWczNVpWaDhQOFB1bDY4c1pfMnF0RUdV",
-    authDomain: "Z3Jvd2luZy1nZXQtd2VsbC1jYXJkLmZpcmViYXNlYXBwLmNvbQ==",
-    projectId: "Z3Jvd2luZy1nZXQtd2VsbC1jYXJk",
-    storageBucket: "Z3Jvd2luZy1nZXQtd2VsbC1jYXJkLmZpcmViYXNlc3RvcmFnZS5hcHA=",
-    messagingSenderId: "NjE1MDI1Mzc4NTI5",
-    appId: "MTo2MTUwMjUzNzg1Mjk6d2ViOjM4ZTM4MDFjNzlmNTRkODUyNjIzYTA=",
-    measurementId: "Ry1SRUs5OVAzRUtX"
-};
+:root {
+    --primary-gold: #fbbf24;
+    --primary-gold-dark: #f59e0b;
+    --online-green: #10b981;
+    --success-green: #059669;
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.9);
+    --text-muted: rgba(255, 255, 255, 0.6);
+    --glass-bg: rgba(255, 255, 255, 0.08);
+    --glass-bg-strong: rgba(255, 255, 255, 0.15);
+    --glass-bg-card: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-border-light: rgba(255, 255, 255, 0.1);
+    --border-radius: 24px;
+    --border-radius-sm: 12px;
+    --header-height: 70px;
+    --safe-top: env(safe-area-inset-top);
+    --safe-bottom: env(safe-area-inset-bottom);
+}
 
-const firebaseConfig = {
-    apiKey: atob(encryptedConfig.apiKey),
-    authDomain: atob(encryptedConfig.authDomain),
-    projectId: atob(encryptedConfig.projectId),
-    storageBucket: atob(encryptedConfig.storageBucket),
-    messagingSenderId: atob(encryptedConfig.messagingSenderId),
-    appId: atob(encryptedConfig.appId),
-    measurementId: atob(encryptedConfig.measurementId)
-};
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-let db;
-let firebaseInitialized = false;
+html { font-size: 16px; height: 100%; }
 
-try {
-    firebase.initializeApp(firebaseConfig);
-    db = firebase.firestore();
-    firebaseInitialized = true;
-} catch (e) {
-    // Silent fail - works offline
+body { 
+    font-family: 'Inter', sans-serif; 
+    background: #0f172a; 
+    color: white; 
+    min-height: 100dvh; 
+    overflow-x: hidden;
+    line-height: 1.5;
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Complete Corny Jokes Dataset (EXACTLY 100 Cards)
-Explanation: 90 jokes + 10 scriptures mixed throughout = 100 total cards
-In Other Words: Exactly 100 cards with 10 spiritual boosts at positions 10,20,30,40,50,60,70,80,90,100
+This Area Of Code Is: Video Background Management
+Explanation: Full-screen video with overlay for glass morphism effect
+In Other Words: The moving background video with dark overlay
 ================================================================================
 */
 
-const defaultCards = [
-    // Cards 1-9: Jokes
-    { type: 'joke', icon: '🧪', setup: "What do you call a fake noodle?", punchline: "An impasta!", author: null },
-    { type: 'joke', icon: '🐄', setup: "What do you call a sleeping bull?", punchline: "A bulldozer!", author: null },
-    { type: 'joke', icon: '🍊', setup: "Why did the orange stop?", punchline: "It ran out of juice!", author: null },
-    { type: 'joke', icon: '🐝', setup: "What do you call a bee that can't make up its mind?", punchline: "A maybe!", author: null },
-    { type: 'joke', icon: '🐟', setup: "What do you call a fish with no eyes?", punchline: "Fsh!", author: null },
-    { type: 'joke', icon: '🍕', setup: "Why did the pizza maker go to church?", punchline: "He needed help with his daily bread!", author: null },
-    { type: 'joke', icon: '⛪', setup: "Why do church musicians have to be so careful?", punchline: "Because one wrong note and it's an organ-ized crime!", author: null },
-    { type: 'joke', icon: '🍌', setup: "Why did the banana go to the doctor?", punchline: "It wasn't peeling well!", author: null },
-    { type: 'joke', icon: '🍪', setup: "Why did the cookie go to the hospital?", punchline: "It felt crumby!", author: null },
-    // Card 10: Scripture
-    { type: 'scripture', icon: '📖', setup: "The Lord is my shepherd; I shall not want. He maketh me to lie down in green pastures: he leadeth me beside the still waters.", punchline: "— Psalm 23:1-2 (KJV)", author: null },
-    // Cards 11-19: Jokes
-    { type: 'joke', icon: '⛄', setup: "What do you call a snowman with a six pack?", punchline: "An abdominal snowman!", author: null },
-    { type: 'joke', icon: '🥚', setup: "Why don't eggs tell jokes?", punchline: "They'd crack each other up!", author: null },
-    { type: 'joke', icon: '🚲', setup: "Why did the bicycle fall over?", punchline: "It was two-tired!", author: null },
-    { type: 'joke', icon: '🧀', setup: "What do you call cheese that isn't yours?", punchline: "Nacho cheese!", author: null },
-    { type: 'joke', icon: '🏌️', setup: "Why did the golfer wear two pairs of pants?", punchline: "In case he got a hole in one!", author: null },
-    { type: 'joke', icon: '🐻', setup: "What do you call a bear with no teeth?", punchline: "A gummy bear!", author: null },
-    { type: 'joke', icon: '🐶', setup: "What do you call a dog that can do magic?", punchline: "A Labracadabrador!", author: null },
-    { type: 'joke', icon: '🐱', setup: "Why did the cat sit on the computer?", punchline: "To keep an eye on the mouse!", author: null },
-    { type: 'joke', icon: '🐭', setup: "What do you call a mouse that can sing?", punchline: "A mouse-ician!", author: null },
-    // Card 20: Scripture
-    { type: 'scripture', icon: '✝️', setup: "The Lord is my light and my salvation; whom shall I fear? The Lord is the strength of my life; of whom shall I be afraid?", punchline: "— Psalm 27:1 (KJV)", author: null },
-    // Cards 21-29: Jokes
-    { type: 'joke', icon: '🦁', setup: "Why did the lion eat the tightrope walker?", punchline: "He wanted a well-balanced meal!", author: null },
-    { type: 'joke', icon: '🐸', setup: "What do you call a frog that's illegally parked?", punchline: "Toad!", author: null },
-    { type: 'joke', icon: '🐔', setup: "Why did the chicken join a band?", punchline: "Because it had the drumsticks!", author: null },
-    { type: 'joke', icon: '🐴', setup: "What do you call a horse that lives next door?", punchline: "A neighbor!", author: null },
-    { type: 'joke', icon: '🐘', setup: "Why did the elephant bring a suitcase to the party?", punchline: "He wanted to pack his trunk!", author: null },
-    { type: 'joke', icon: '🦒', setup: "What do you call a giraffe's notebook?", punchline: "A long story!", author: null },
-    { type: 'joke', icon: '🦓', setup: "Why did the zebra get a ticket?", punchline: "For illegal parking!", author: null },
-    { type: 'joke', icon: '🦘', setup: "What do you call a lazy kangaroo?", punchline: "A pouch potato!", author: null },
-    { type: 'joke', icon: '🐨', setup: "Why did the koala get hired?", punchline: "He had all the right koalafications!", author: null },
-    // Card 30: Scripture
-    { type: 'scripture', icon: '🙏', setup: "The righteous cry, and the Lord heareth, and delivereth them out of all their troubles. The Lord is nigh unto them that are of a broken heart.", punchline: "— Psalm 34:17-18 (KJV)", author: null },
-    // Cards 31-39: Jokes
-    { type: 'joke', icon: '🐼', setup: "What do you call a bear with no socks?", punchline: "Bare-foot!", author: null },
-    { type: 'joke', icon: '🦉', setup: "Why did the owl invite his friends over?", punchline: "He didn't want to be owl by himself!", author: null },
-    { type: 'joke', icon: '🦜', setup: "What do you call a parrot that flew away?", punchline: "A polygon!", author: null },
-    { type: 'joke', icon: '🦚', setup: "Why did the peacock get a job?", punchline: "He wanted to make some plume!", author: null },
-    { type: 'joke', icon: '🦩', setup: "What do you call a flamingo at a dance?", punchline: "The pink of the party!", author: null },
-    { type: 'joke', icon: '🦢', setup: "Why did the swan refuse to fight?", punchline: "He didn't want to ruffle feathers!", author: null },
-    { type: 'joke', icon: '🦆', setup: "What do you call a duck that gets all A's?", punchline: "A wise quacker!", author: null },
-    { type: 'joke', icon: '🦅', setup: "Why did the eagle bring a ruler?", punchline: "To measure his talon-ts!", author: null },
-    { type: 'joke', icon: '🐧', setup: "What do you call a penguin in the desert?", punchline: "Lost!", author: null },
-    // Card 40: Scripture
-    { type: 'scripture', icon: '⛪', setup: "God is our refuge and strength, a very present help in trouble. Therefore will not we fear, though the earth be removed.", punchline: "— Psalm 46:1-2 (KJV)", author: null },
-    // Cards 41-49: Jokes
-    { type: 'joke', icon: '🐢', setup: "Why did the turtle cross the road?", punchline: "To get to the shell station!", author: null },
-    { type: 'joke', icon: '🐍', setup: "What do you call a snake that works for the government?", punchline: "A civil serpent!", author: null },
-    { type: 'joke', icon: '🦎', setup: "Why did the lizard go on a diet?", punchline: "It was a little heavy scale-d!", author: null },
-    { type: 'joke', icon: '🐙', setup: "What do you call an octopus that throws things?", punchline: "An octo-pus!", author: null },
-    { type: 'joke', icon: '🦑', setup: "Why did the squid cross the road?", punchline: "To get to the other tide!", author: null },
-    { type: 'joke', icon: '🦐', setup: "What do you call a shrimp that won't share?", punchline: "Shellfish!", author: null },
-    { type: 'joke', icon: '🦀', setup: "Why did the crab never give to charity?", punchline: "Because he's shellfish!", author: null },
-    { type: 'joke', icon: '🐌', setup: "What do you call a snail on a ship?", punchline: "A snailor!", author: null },
-    { type: 'joke', icon: '🦋', setup: "Why did the butterfly flutter by?", punchline: "Because it saw the caterpillar cry!", author: null },
-    // Card 50: Scripture
-    { type: 'scripture', icon: '🕊️', setup: "He that dwelleth in the secret place of the most High shall abide under the shadow of the Almighty. I will say of the Lord, He is my refuge and my fortress.", punchline: "— Psalm 91:1-2 (KJV)", author: null },
-    // Cards 51-59: Jokes
-    { type: 'joke', icon: '🐛', setup: "What do you call a caterpillar with a phone?", punchline: "A social butterfly in training!", author: null },
-    { type: 'joke', icon: '🐜', setup: "Why don't ants get sick?", punchline: "They have little anty-bodies!", author: null },
-    { type: 'joke', icon: '🐞', setup: "Why did the ladybug go to the doctor?", punchline: "It was feeling spotty!", author: null },
-    { type: 'joke', icon: '🕷️', setup: "Why did the spider go to school?", punchline: "To learn web design!", author: null },
-    { type: 'joke', icon: '🦂', setup: "What do you call a scorpion that loves music?", punchline: "A rock-stinger!", author: null },
-    { type: 'joke', icon: '🌵', setup: "Why did the cactus cross the road?", punchline: "It got stuck to the chicken!", author: null },
-    { type: 'joke', icon: '🌲', setup: "What do you call a tree that doubts itself?", punchline: "An un-sure-wood!", author: null },
-    { type: 'joke', icon: '🌳', setup: "Why did the tree go to the dentist?", punchline: "It needed a root canal!", author: null },
-    { type: 'joke', icon: '🍁', setup: "What do you call a leaf that's guilty?", punchline: "A con-leaf!", author: null },
-    // Card 60: Scripture
-    { type: 'scripture', icon: '📿', setup: "Trust in the Lord with all thine heart; and lean not unto thine own understanding. In all thy ways acknowledge him, and he shall direct thy paths.", punchline: "— Proverbs 3:5-6 (KJV)", author: null },
-    // Cards 61-69: Jokes
-    { type: 'joke', icon: '🍄', setup: "Why did the mushroom go to the party?", punchline: "Because he's a fungi!", author: null },
-    { type: 'joke', icon: '🌹', setup: "What do you call a rose that tells jokes?", punchline: "A comedi-bloom!", author: null },
-    { type: 'joke', icon: '🌻', setup: "Why did the sunflower get in trouble?", punchline: "It was always looking at the sun instead of working!", author: null },
-    { type: 'joke', icon: '🌷', setup: "What do you call a flower that runs marathons?", punchline: "A petal-pusher!", author: null },
-    { type: 'joke', icon: '🌼', setup: "Why did the daisy break up with the rose?", punchline: "It was tired of the thorny relationship!", author: null },
-    { type: 'joke', icon: '🍎', setup: "Why did the apple go to the doctor?", punchline: "It wasn't peeling well!", author: null },
-    { type: 'joke', icon: '🍐', setup: "What do you call a pear that plays guitar?", punchline: "A rock and roll fruit!", author: null },
-    { type: 'joke', icon: '🍋', setup: "What do you call a lemon that's been stolen?", punchline: "A sour crime!", author: null },
-    { type: 'joke', icon: '🍉', setup: "What do you call a watermelon that's angry?", punchline: "Melon-choly!", author: null },
-    // Card 70: Scripture
-    { type: 'scripture', icon: '✨', setup: "For I know the thoughts that I think toward you, saith the Lord, thoughts of peace, and not of evil, to give you an expected end.", punchline: "— Jeremiah 29:11 (KJV)", author: null },
-    // Cards 71-79: Jokes
-    { type: 'joke', icon: '🍇', setup: "Why did the grape stop in the middle of the road?", punchline: "Because it ran out of juice!", author: null },
-    { type: 'joke', icon: '🍓', setup: "What do you call a strawberry that's sad?", punchline: "A blue-berry!", author: null },
-    { type: 'joke', icon: '🫐', setup: "Why did the blueberry go to school?", punchline: "To become a little brr-ighter!", author: null },
-    { type: 'joke', icon: '🍈', setup: "What do you call a melon that can't get married?", punchline: "Cant-elope!", author: null },
-    { type: 'joke', icon: '🍒', setup: "Why did the cherry go to the doctor?", punchline: "It was feeling a little pit-iful!", author: null },
-    { type: 'joke', icon: '🍑', setup: "What do you call a peach that's a great dancer?", punchline: "A fruit-loop!", author: null },
-    { type: 'joke', icon: '🍍', setup: "Why did the pineapple stop at the gas station?", punchline: "It needed more juice!", author: null },
-    { type: 'joke', icon: '🥝', setup: "What do you call a kiwi that's a detective?", punchline: "Sherlock Fruit!", author: null },
-    { type: 'joke', icon: '🥑', setup: "Why did the avocado go to the gym?", punchline: "To get better abs-ocado!", author: null },
-    // Card 80: Scripture
-    { type: 'scripture', icon: '🛡️', setup: "Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee; yea, I will uphold thee with the right hand of my righteousness.", punchline: "— Isaiah 41:10 (KJV)", author: null },
-    // Cards 81-89: Jokes
-    { type: 'joke', icon: '🍅', setup: "What do you call a tomato that's embarrassed?", punchline: "A blushing fruit!", author: null },
-    { type: 'joke', icon: '🥕', setup: "Why did the carrot get an award?", punchline: "Because it was outstanding in its field!", author: null },
-    { type: 'joke', icon: '🌽', setup: "What do you call corn that joins the army?", punchline: "Kernel!", author: null },
-    { type: 'joke', icon: '🥔', setup: "Why did the potato go to the party?", punchline: "Because it was a hot potato!", author: null },
-    { type: 'joke', icon: '🥦', setup: "What do you call a broccoli that's a bodyguard?", punchline: "A head of security!", author: null },
-    { type: 'joke', icon: '🥬', setup: "Why did the lettuce break up with the celery?", punchline: "It wanted someone with more stalk!", author: null },
-    { type: 'joke', icon: '🥒', setup: "What do you call a pickle that plays piano?", punchline: "A dill-ightful musician!", author: null },
-    { type: 'joke', icon: '🌶️', setup: "Why did the pepper put on a sweater?", punchline: "Because it was a little chili!", author: null },
-    { type: 'joke', icon: '🧅', setup: "What do you call an onion that's a great actor?", punchline: "A tear-jerker!", author: null },
-    // Card 90: Scripture
-    { type: 'scripture', icon: '💪', setup: "I can do all things through Christ which strengtheneth me.", punchline: "— Philippians 4:13 (KJV)", author: null },
-    // Cards 91-99: Jokes
-    { type: 'joke', icon: '🧄', setup: "Why did the garlic go to the doctor?", punchline: "It had a bad case of the cloves!", author: null },
-    { type: 'joke', icon: '🍞', setup: "What do you call bread that's sleeping?", punchline: "A nap-kin!", author: null },
-    { type: 'joke', icon: '🥐', setup: "Why did the croissant go to the dentist?", punchline: "It needed a filling!", author: null },
-    { type: 'joke', icon: '🥯', setup: "What do you call a bagel that can fly?", punchline: "A plain bagel!", author: null },
-    { type: 'joke', icon: '🥞', setup: "Why did the pancake go to the doctor?", punchline: "It was feeling a little flat!", author: null },
-    { type: 'joke', icon: '🧇', setup: "What do you call a waffle that's been kidnapped?", punchline: "A hostage breakfast!", author: null },
-    { type: 'joke', icon: '🧀', setup: "Why did the cheese go to the party?", punchline: "Because it was grate!", author: null },
-    { type: 'joke', icon: '🍔', setup: "What do you call a burger that tells jokes?", punchline: "A pun-kin!", author: null },
-    { type: 'joke', icon: '🍟', setup: "Why did the french fry win an award?", punchline: "Because it was outstanding in its salt!", author: null },
-    // Card 100: Scripture
-    { type: 'scripture', icon: '❤️', setup: "And we know that all things work together for good to them that love God, to them who are the called according to his purpose.", punchline: "— Romans 8:28 (KJV)", author: null }
-];
-
-/*
-================================================================================
-This Area Of Code Is: Application State Management
-Explanation: Tracks current position, auto-play status, menu state, punchline visibility
-In Other Words: Remembers where you are and what's showing
-================================================================================
-*/
-
-let currentCardIndex = 0;
-let autoMode = false;
-let autoModeInterval = null;
-let autoModeSpeed = 6000;
-let isMenuOpen = false;
-let punchlineVisible = false;
-
-/*
-================================================================================
-This Area Of Code Is: DOM Ready Initialization
-Explanation: Sets up event listeners, renders initial card, loads settings
-In Other Words: Starts the app when page loads
-================================================================================
-*/
-
-document.addEventListener('DOMContentLoaded', function() {
-    renderCard();
-    updateCardJumps();
-    initMetrics();
-    loadPersonalVisits();
-    trackGlobalVisitor();
-    
-    const menuBtn = document.getElementById('menuBtn');
-    if (menuBtn) {
-        menuBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleMenu();
-        });
-    }
-    
-    document.addEventListener('keydown', handleKeyPress);
-    loadSavedAccessibilitySettings();
-});
-
-/*
-================================================================================
-This Area Of Code Is: Metrics System
-Explanation: Updates card count badge and visitor welcome message
-In Other Words: Shows "100 cards" and "Welcome Back" instead of "2 online"
-================================================================================
-*/
-
-function initMetrics() {
-    const cardsBadge = document.getElementById('totalCards');
-    if (cardsBadge) {
-        cardsBadge.textContent = '100 cards';
-    }
-    
-    const onlineBadge = document.getElementById('onlineUsers');
-    if (onlineBadge) {
-        onlineBadge.innerHTML = '<span style="font-family: \'Dancing Script\', cursive; font-size: 18px; color: white;">𝓦𝓮𝓵𝓬𝓸𝓶𝓮 𝓑𝓪𝓬𝓛!</span>';
-    }
+.video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
 }
 
-function loadPersonalVisits() {
-    try {
-        let visits = parseInt(localStorage.getItem('gw_personal_visits') || '0');
-        visits++;
-        localStorage.setItem('gw_personal_visits', visits.toString());
-        
-        const visitElement = document.getElementById('visitCount');
-        if (visitElement) {
-            visitElement.textContent = visits;
-        }
-    } catch (e) {}
+.video-background video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    opacity: 0.6;
 }
 
-async function trackGlobalVisitor() {
-    if (!firebaseInitialized || !db) return;
-    try {
-        const counterRef = db.collection('stats').doc('globalVisitors');
-        await counterRef.update({
-            count: firebase.firestore.FieldValue.increment(1),
-            lastVisit: new Date().toISOString()
-        });
-    } catch (error) {
-        if (error.code === 'not-found') {
-            await db.collection('stats').doc('globalVisitors').set({
-                count: 1,
-                created: new Date().toISOString()
-            });
-        }
-    }
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.4) 0%, rgba(0, 0, 0, 0.6) 100%);
+    backdrop-filter: blur(1px);
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Card Rendering Engine
-Explanation: Displays setup, hides punchline by default (click to show)
-In Other Words: Shows the joke question, hides answer until "Show Punchline" clicked
+This Area Of Code Is: App Header
+Explanation: Fixed header with menu button, title, and home button
+In Other Words: The top bar with hamburger menu and Get Well Soon title
 ================================================================================
 */
 
-function renderCard() {
-    const card = defaultCards[currentCardIndex];
-    if (!card) return;
-    
-    const setupText = document.getElementById('setupText');
-    const punchlineText = document.getElementById('punchlineText');
-    const cardIcon = document.getElementById('cardIcon');
-    const cardCounter = document.getElementById('cardCounter');
-    const cardBadge = document.getElementById('cardBadge');
-    const punchlineBtnText = document.getElementById('punchlineBtnText');
-    
-    if (setupText) setupText.textContent = card.setup;
-    if (cardIcon) cardIcon.textContent = card.icon;
-    if (cardCounter) cardCounter.textContent = `Card ${currentCardIndex + 1} of 100`;
-    
-    // Reset punchline visibility
-    punchlineVisible = false;
-    if (punchlineText) {
-        punchlineText.textContent = card.punchline;
-        punchlineText.classList.remove('visible');
-        punchlineText.style.opacity = '0';
-        punchlineText.style.transform = 'translateY(10px)';
-    }
-    
-    if (punchlineBtnText) punchlineBtnText.textContent = 'Show Punchline';
-    document.getElementById('punchlineBtn')?.classList.remove('active');
-    
-    // Update badge
-    if (cardBadge) {
-        if (card.type === 'scripture') {
-            cardBadge.textContent = 'SPIRITUAL BOOST';
-            cardBadge.style.background = 'rgba(251, 191, 36, 0.2)';
-            cardBadge.style.color = '#fbbf24';
-            // Auto-show for scriptures
-            togglePunchline();
-        } else {
-            cardBadge.textContent = 'Corny Joke';
-            cardBadge.style.background = 'rgba(255, 255, 255, 0.15)';
-            cardBadge.style.color = 'var(--text-secondary)';
-        }
-    }
-    
-    updateActiveJumpButton();
+.app-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: calc(var(--header-height) + var(--safe-top));
+    padding-top: var(--safe-top);
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--safe-top) 15px 0;
+}
+
+.menu-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.menu-btn:hover {
+    background: var(--glass-bg-strong);
+    transform: scale(1.05);
+}
+
+.hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    transition: all 0.3s;
+}
+
+.hamburger span {
+    width: 22px;
+    height: 2px;
+    background: white;
+    border-radius: 2px;
+    transition: all 0.3s;
+}
+
+.scn-logo {
+    position: absolute;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--primary-gold);
+    display: none;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.3s;
+}
+
+.header-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: white;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.home-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: white;
+    transition: all 0.3s;
+}
+
+.home-btn:hover {
+    background: var(--glass-bg-strong);
+    transform: translateY(-2px);
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Punchline Toggle Control
-Explanation: Shows/hides punchline when button clicked
-In Other Words: The "Show Punchline" / "Hide Punchline" button functionality
+This Area Of Code Is: Live Stats Display
+Explanation: Shows "Welcome Back" and card count badges
+In Other Words: The info badges below the header
 ================================================================================
 */
 
-function togglePunchline() {
-    const punchlineText = document.getElementById('punchlineText');
-    const punchlineBtn = document.getElementById('punchlineBtn');
-    const punchlineBtnText = document.getElementById('punchlineBtnText');
-    
-    punchlineVisible = !punchlineVisible;
-    
-    if (punchlineVisible) {
-        if (punchlineText) {
-            punchlineText.classList.add('visible');
-            punchlineText.style.opacity = '1';
-            punchlineText.style.transform = 'translateY(0)';
-        }
-        if (punchlineBtnText) punchlineBtnText.textContent = 'Hide Punchline';
-        if (punchlineBtn) punchlineBtn.classList.add('active');
-    } else {
-        if (punchlineText) {
-            punchlineText.classList.remove('visible');
-            punchlineText.style.opacity = '0';
-            punchlineText.style.transform = 'translateY(10px)';
-        }
-        if (punchlineBtnText) punchlineBtnText.textContent = 'Show Punchline';
-        if (punchlineBtn) punchlineBtn.classList.remove('active');
-    }
+.live-stats {
+    position: fixed;
+    top: calc(var(--header-height) + var(--safe-top) + 10px);
+    right: 15px;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-end;
+}
+
+.online-badge {
+    background: rgba(0, 0, 0, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 8px 14px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: white;
+    font-weight: 500;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.cards-badge {
+    background: rgba(0, 0, 0, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 8px 14px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: white;
+    font-weight: 500;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Menu Toggle System
-Explanation: Hamburger to SCN logo morph animation
-In Other Words: Menu button animation
+This Area Of Code Is: Side Menu Navigation
+Explanation: Slide-out menu with jump-to-card grid
+In Other Words: The menu that slides in from the left
 ================================================================================
 */
 
-function toggleMenu() {
-    isMenuOpen = !isMenuOpen;
-    const sideMenu = document.getElementById('sideMenu');
-    const menuOverlay = document.getElementById('menuOverlay');
-    const hamburgerIcon = document.getElementById('hamburgerIcon');
-    const scnLogo = document.getElementById('scnLogo');
-    
-    if (isMenuOpen) {
-        sideMenu?.classList.add('open');
-        menuOverlay?.classList.add('open');
-        if (hamburgerIcon) {
-            hamburgerIcon.style.opacity = '0';
-            hamburgerIcon.style.transform = 'scale(0.8)';
-            setTimeout(() => hamburgerIcon.style.display = 'none', 200);
-        }
-        if (scnLogo) {
-            scnLogo.style.display = 'flex';
-            setTimeout(() => {
-                scnLogo.style.opacity = '1';
-                scnLogo.style.transform = 'scale(1)';
-            }, 50);
-        }
-    } else {
-        sideMenu?.classList.remove('open');
-        menuOverlay?.classList.remove('open');
-        if (scnLogo) {
-            scnLogo.style.opacity = '0';
-            scnLogo.style.transform = 'scale(0.8)';
-            setTimeout(() => scnLogo.style.display = 'none', 200);
-        }
-        if (hamburgerIcon) {
-            hamburgerIcon.style.display = 'flex';
-            setTimeout(() => {
-                hamburgerIcon.style.opacity = '1';
-                hamburgerIcon.style.transform = 'scale(1)';
-            }, 50);
-        }
-    }
+.side-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: min(85vw, 360px);
+    height: 100dvh;
+    background: rgba(15, 23, 42, 0.98);
+    border-right: 1px solid var(--glass-border);
+    z-index: 200;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+    padding-top: var(--safe-top);
+    padding-bottom: var(--safe-bottom);
 }
 
-function nextCard() {
-    currentCardIndex = (currentCardIndex + 1) % defaultCards.length;
-    renderCard();
+.side-menu.open { transform: translateX(0); }
+
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 199;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
 }
 
-function previousCard() {
-    currentCardIndex = (currentCardIndex - 1 + defaultCards.length) % defaultCards.length;
-    renderCard();
+.menu-overlay.open { opacity: 1; visibility: visible; }
+
+.menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid var(--glass-border);
+    position: sticky;
+    top: 0;
+    background: rgba(15, 23, 42, 0.98);
+    z-index: 10;
 }
 
-function jumpToCard(index) {
-    currentCardIndex = index;
-    renderCard();
-    if (isMenuOpen) toggleMenu();
+.menu-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: white;
+}
+
+.close-menu {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--glass-border);
+    background: transparent;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.close-menu:hover { background: rgba(255, 255, 255, 0.1); transform: rotate(90deg); }
+
+.menu-content { padding: 15px; }
+
+.menu-item {
+    width: 100%;
+    padding: 15px;
+    border-radius: var(--border-radius-sm);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: white;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-bottom: 10px;
+    text-align: left;
+    font-family: inherit;
+}
+
+.menu-item:hover {
+    background: var(--glass-bg-strong);
+    transform: translateX(5px);
+    border-color: var(--primary-gold);
+}
+
+.menu-divider { height: 1px; background: var(--glass-border); margin: 20px 0; }
+
+.menu-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 12px;
+    padding-left: 5px;
+    font-weight: 600;
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Jump-to-Card Grid Generator
-Explanation: Creates 100 buttons in 5-column grid
-In Other Words: Menu grid to jump to any card
+This Area Of Code Is: Jump-to-Card Grid (100 Cards)
+Explanation: 5-column responsive grid for jumping to any card
+In Other Words: The grid of 100 buttons in the menu
 ================================================================================
 */
 
-function updateCardJumps() {
-    const grid = document.getElementById('cardJumps');
-    if (!grid) return;
-    grid.innerHTML = '';
-    
-    defaultCards.forEach((card, index) => {
-        const btn = document.createElement('button');
-        btn.className = 'jump-btn';
-        btn.onclick = () => jumpToCard(index);
-        
-        const emoji = document.createElement('span');
-        emoji.textContent = card.icon;
-        
-        const num = document.createElement('small');
-        num.textContent = index + 1;
-        
-        btn.appendChild(emoji);
-        btn.appendChild(num);
-        
-        if (index === currentCardIndex) btn.classList.add('active');
-        if (card.type === 'scripture') btn.classList.add('is-scripture');
-        
-        grid.appendChild(btn);
-    });
+.card-jumps {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    max-height: 55vh;
+    overflow-y: auto;
+    padding-right: 5px;
 }
 
-function updateActiveJumpButton() {
-    document.querySelectorAll('.jump-btn').forEach((btn, index) => {
-        if (index === currentCardIndex) btn.classList.add('active');
-        else btn.classList.remove('active');
-    });
+.card-jumps::-webkit-scrollbar { width: 6px; }
+.card-jumps::-webkit-scrollbar-track { background: transparent; }
+.card-jumps::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 3px; }
+
+.jump-btn {
+    padding: 8px 4px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border-light);
+    color: var(--text-secondary);
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    min-height: 44px;
+    justify-content: center;
+    font-family: inherit;
+}
+
+.jump-btn span { font-size: 16px; line-height: 1; margin-bottom: 2px; }
+
+.jump-btn:hover, .jump-btn.active {
+    background: var(--glass-bg-strong);
+    color: white;
+    border-color: var(--primary-gold);
+    transform: scale(1.05);
+}
+
+.jump-btn.active {
+    background: rgba(251, 191, 36, 0.2);
+    box-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
+}
+
+.jump-btn.is-scripture { border-color: rgba(251, 191, 36, 0.4); }
+
+@media (max-width: 380px) { .card-jumps { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 320px) { 
+    .card-jumps { grid-template-columns: repeat(3, 1fr); gap: 4px; }
+    .jump-btn { padding: 6px 2px; font-size: 10px; min-height: 40px; }
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Auto-Play Mode
-Explanation: Auto-advances cards at set intervals
-In Other Words: Slideshow mode
+This Area Of Code Is: Main Content Area
+Explanation: Centers the card and controls
+In Other Words: The middle section with the joke card
 ================================================================================
 */
 
-function toggleAutoMode() {
-    autoMode = !autoMode;
-    const btn = document.getElementById('autoModeBtn');
-    const speedControls = document.getElementById('speedControls');
-    const btnText = document.getElementById('autoModeText');
-    
-    if (autoMode) {
-        btn?.classList.add('active');
-        speedControls?.classList.add('visible');
-        if (btnText) btnText.textContent = 'Stop Auto';
-        startAutoMode();
-    } else {
-        btn?.classList.remove('active');
-        speedControls?.classList.remove('visible');
-        if (btnText) btnText.textContent = 'Auto Mode';
-        stopAutoMode();
-    }
-}
-
-function startAutoMode() {
-    stopAutoMode();
-    autoModeInterval = setInterval(nextCard, autoModeSpeed);
-}
-
-function stopAutoMode() {
-    if (autoModeInterval) {
-        clearInterval(autoModeInterval);
-        autoModeInterval = null;
-    }
-}
-
-function setSpeed(speed) {
-    autoModeSpeed = speed;
-    document.querySelectorAll('.speed-btn').forEach(btn => {
-        btn.classList.remove('active');
-        if (parseInt(btn.dataset.speed) === speed) btn.classList.add('active');
-    });
-    if (autoMode) startAutoMode();
+.app-main {
+    position: relative;
+    z-index: 10;
+    min-height: 100dvh;
+    padding: calc(var(--header-height) + var(--safe-top) + 70px) 15px calc(100px + var(--safe-bottom));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
 }
 
 /*
 ================================================================================
-This Area Of Code Is: Modal Management
-Explanation: Opens/closes joke submission and guidelines modals
-In Other Words: Popup window controls
+This Area Of Code Is: Content Card Display
+Explanation: Glass morphism card with joke content
+In Other Words: The main card showing the joke
 ================================================================================
 */
 
-function openJokeModal() {
-    document.getElementById('jokeModal')?.classList.add('open');
-    document.body.style.overflow = 'hidden';
+.card-container { 
+    width: 100%; 
+    max-width: 600px; 
+    perspective: 1000px; 
 }
 
-function closeJokeModal() {
-    document.getElementById('jokeModal')?.classList.remove('open');
-    document.body.style.overflow = '';
-    document.getElementById('jokeForm')?.reset();
+.content-card {
+    background: var(--glass-bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: var(--border-radius);
+    padding: clamp(30px, 8vw, 50px) clamp(20px, 5vw, 40px);
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 100px rgba(251, 191, 36, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
 }
 
-function showGuidelines() {
-    document.getElementById('guidelinesModal')?.classList.add('open');
-    document.body.style.overflow = 'hidden';
+.content-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    animation: shimmer 3s infinite;
+    pointer-events: none;
 }
 
-function closeGuidelines() {
-    document.getElementById('guidelinesModal')?.classList.remove('open');
-    document.body.style.overflow = '';
+@keyframes shimmer { 0% { left: -100%; } 100% { left: 200%; } }
+
+.content-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 0 120px rgba(251, 191, 36, 0.15);
 }
 
-function openAccessibilityModal() {
-    const modal = document.getElementById('accessibilityModal');
-    if (modal) {
-        modal.classList.add('open');
-        document.body.style.overflow = 'hidden';
-        checkModalScroll();
-    }
+.card-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
 }
 
-function closeAccessibilityModal() {
-    document.getElementById('accessibilityModal')?.classList.remove('open');
-    document.body.style.overflow = '';
+.card-icon {
+    font-size: clamp(40px, 10vw, 56px);
+    margin-bottom: 20px;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    animation: iconFloat 3s ease-in-out infinite;
+    line-height: 1;
 }
 
-function checkModalScroll() {
-    const content = document.getElementById('accessibilityContent');
-    const indicator = document.getElementById('scrollIndicator');
-    if (!content || !indicator) return;
-    
-    if (content.scrollHeight > content.clientHeight) {
-        indicator.classList.add('visible');
-        content.addEventListener('scroll', () => {
-            if (content.scrollTop + content.clientHeight >= content.scrollHeight - 20) {
-                indicator.classList.remove('visible');
-            } else {
-                indicator.classList.add('visible');
-            }
-        });
-    }
+@keyframes iconFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+.setup-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 6vw, 32px);
+    line-height: 1.4;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    font-weight: 600;
 }
+
+.punchline-text {
+    font-size: clamp(18px, 4vw, 22px);
+    color: var(--primary-gold);
+    font-weight: 600;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    min-height: 30px;
+}
+
+.punchline-text.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.card-footer {
+    margin-top: auto;
+    padding-top: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: var(--text-muted);
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.card-counter { font-weight: 600; color: var(--primary-gold); font-size: 12px; letter-spacing: 0.5px; }
 
 /*
 ================================================================================
-This Area Of Code Is: Accessibility Features
-Explanation: Toggle switches and color filters
-In Other Words: Settings for Autism, ADHD, PTSD, Color blindness modes
+This Area Of Code Is: Control Buttons
+Explanation: Navigation and action buttons with glass morphism
+In Other Words: The Back, Show Punchline, Next, Add Joke, Auto Mode buttons
 ================================================================================
 */
 
-function toggleFeature(element, feature) {
-    let toggleSwitch = element.classList.contains('toggle-switch') ? element : element.querySelector('.toggle-switch');
-    let row = element.classList.contains('access-toggle') ? element : element.closest('.access-toggle');
-    
-    const isActive = toggleSwitch.classList.contains('active');
-    const newState = !isActive;
-    
-    if (newState) {
-        toggleSwitch.classList.add('active');
-        toggleSwitch.setAttribute('aria-checked', 'true');
-        row?.classList.add('active');
-        document.body.classList.add(feature + '-mode');
-        if (feature === 'high-contrast') document.body.classList.add('high-contrast-mode');
-    } else {
-        toggleSwitch.classList.remove('active');
-        toggleSwitch.setAttribute('aria-checked', 'false');
-        row?.classList.remove('active');
-        document.body.classList.remove(feature + '-mode');
-        if (feature === 'high-contrast') document.body.classList.remove('high-contrast-mode');
-    }
-    
-    localStorage.setItem('gw_access_' + feature, newState);
+.controls-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 600px;
 }
 
-function applyColorFilter(filterType) {
-    document.body.classList.remove(
-        'filter-deuteranomaly', 'filter-deuteranopia', 
-        'filter-protanomaly', 'filter-protanopia',
-        'filter-tritanomaly', 'filter-tritanopia',
-        'filter-achromatopsia', 'filter-cone-monochromacy',
-        'filter-blue-cone-monochromacy'
-    );
-    
-    if (filterType !== 'none') {
-        document.body.classList.add('filter-' + filterType);
-    }
-    
-    localStorage.setItem('gw_color_filter', filterType);
-    
-    document.querySelectorAll('.access-btn[data-filter]').forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.dataset.filter === filterType) btn.classList.add('active');
-    });
+.controls-row.main-controls {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1fr;
+    gap: 10px;
 }
 
-function loadSavedAccessibilitySettings() {
-    const features = ['autism', 'adhd', 'dyslexia', 'dyspraxia', 'anxiety', 'ptsd', 'mania', 'cognitive',
-        'screen-reader', 'high-contrast', 'sign-language', 'visual-alerts', 'captions', 'large-targets', 
-        'keyboard-only', 'extended-time', 'switch-control', 'speech-input', 'simple-language'];
-    
-    features.forEach(feature => {
-        if (localStorage.getItem('gw_access_' + feature) === 'true') {
-            document.body.classList.add(feature + '-mode');
-            if (feature === 'high-contrast') document.body.classList.add('high-contrast-mode');
-        }
-    });
-    
-    const savedFilter = localStorage.getItem('gw_color_filter');
-    if (savedFilter && savedFilter !== 'none') {
-        document.body.classList.add('filter-' + savedFilter);
-    }
+.nav-btn {
+    min-height: 48px;
+    padding: 12px 20px;
+    border-radius: 50px;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+    justify-content: center;
+    font-family: inherit;
 }
+
+.nav-btn:hover {
+    background: var(--glass-bg-strong);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    border-color: var(--primary-gold);
+}
+
+.punchline-btn {
+    background: rgba(251, 191, 36, 0.15);
+    border-color: rgba(251, 191, 36, 0.4);
+    color: var(--primary-gold);
+}
+
+.punchline-btn.active {
+    background: rgba(251, 191, 36, 0.35);
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.4);
+}
+
+.controls-row.secondary { margin-top: 5px; }
+
+.add-joke-btn {
+    min-height: 48px;
+    padding: 12px 24px;
+    border-radius: 50px;
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    background: rgba(16, 185, 129, 0.15);
+    color: #6ee7b7;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+    flex: 1;
+    justify-content: center;
+    min-width: 140px;
+    font-family: inherit;
+}
+
+.add-joke-btn:hover {
+    background: rgba(16, 185, 129, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+}
+
+.auto-mode-btn {
+    min-height: 48px;
+    padding: 12px 24px;
+    border-radius: 50px;
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    background: rgba(59, 130, 246, 0.15);
+    color: #93c5fd;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+    flex: 1;
+    justify-content: center;
+    min-width: 140px;
+    font-family: inherit;
+}
+
+.auto-mode-btn:hover {
+    background: rgba(59, 130, 246, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+}
+
+.auto-mode-btn.active {
+    animation: goldenPulse 2s infinite;
+    border-color: var(--primary-gold);
+    color: var(--primary-gold);
+    background: rgba(251, 191, 36, 0.2);
+}
+
+@keyframes goldenPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.4); }
+    50% { box-shadow: 0 0 20px 5px rgba(251, 191, 36, 0.2); }
+}
+
+.speed-controls { display: none; gap: 12px; justify-content: center; width: 100%; max-width: 400px; }
+.speed-controls.visible { display: flex; animation: slideDown 0.3s ease; }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+.speed-btn {
+    padding: 12px 20px;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    color: var(--text-secondary);
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+    line-height: 1.3;
+    flex: 1;
+    font-family: inherit;
+    font-weight: 500;
+}
+
+.speed-btn small { display: block; font-size: 11px; opacity: 0.7; margin-top: 4px; font-weight: 400; }
+.speed-btn:hover { background: var(--glass-bg-strong); color: white; }
+.speed-btn.active { background: var(--primary-gold); color: #0f172a; border-color: var(--primary-gold); font-weight: 700; }
+
+.guidelines-link {
+    color: var(--text-muted);
+    font-size: 13px;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: color 0.3s;
+    background: none;
+    border: none;
+    font-family: inherit;
+}
+
+.guidelines-link:hover { color: var(--text-secondary); }
 
 /*
 ================================================================================
-This Area Of Code Is: Joke Submission Form
-Explanation: Validates form, checks profanity with PurgoMalum API, submits to Firebase
-In Other Words: "Add Your Joke" form handling
+This Area Of Code Is: Modal System
+Explanation: Glass morphism modals for forms and guidelines
+In Other Words: The popup windows
 ================================================================================
 */
 
-async function submitJoke(event) {
-    event.preventDefault();
-    
-    const name = document.getElementById('userName').value.trim();
-    const setup = document.getElementById('jokeSetup').value.trim();
-    const punchline = document.getElementById('jokePunchline').value.trim();
-    
-    const showCity = document.getElementById('showCity')?.checked;
-    const showState = document.getElementById('showState')?.checked;
-    const showCountry = document.getElementById('showCountry')?.checked;
-    
-    if (!showCity && !showState && !showCountry) {
-        alert('Please select at least one location option.');
-        return;
-    }
-    
-    if (!name || !setup || !punchline) {
-        alert('Please fill in all required fields.');
-        return;
-    }
-    
-    try {
-        const textToCheck = `${setup} ${punchline}`;
-        const response = await fetch(`https://www.purgomalum.com/service/containsprofanity?text=${encodeURIComponent(textToCheck)}`);
-        const isProfane = await response.text();
-        
-        if (isProfane === 'true') {
-            alert('Your submission contains inappropriate language. Please keep content family-friendly.');
-            return;
-        }
-        
-        if (firebaseInitialized && db) {
-            await db.collection('pending_jokes').add({
-                name, setup, punchline,
-                location: { city: showCity, state: showState, country: showCountry },
-                submittedAt: new Date().toISOString(),
-                status: 'pending'
-            });
-        }
-        
-        alert('Thank you! Your joke has been submitted for review.');
-        closeJokeModal();
-    } catch (error) {
-        alert('Error submitting joke. Please try again later.');
-    }
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
 }
 
-function handleKeyPress(e) {
-    if (e.key === 'Escape') {
-        closeJokeModal();
-        closeGuidelines();
-        closeAccessibilityModal();
-        if (isMenuOpen) toggleMenu();
-    } else if (e.key === 'ArrowRight') {
-        nextCard();
-    } else if (e.key === 'ArrowLeft') {
-        previousCard();
+.modal.open { opacity: 1; visibility: visible; }
+
+.modal-content {
+    width: 100%;
+    max-width: 480px;
+    max-height: 85dvh;
+    overflow-y: auto;
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.3s;
+}
+
+.modal.open .modal-content { transform: scale(1) translateY(0); }
+
+.glass-modal {
+    background: rgba(15, 23, 42, 0.98);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--border-radius);
+    padding: 30px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+}
+
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+.modal-header h3 { font-family: 'Playfair Display', serif; font-size: 24px; color: white; }
+
+.close-modal {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--glass-border);
+    background: transparent;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.close-modal:hover { background: rgba(255, 255, 255, 0.1); transform: rotate(90deg); }
+
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--text-secondary); }
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--glass-border);
+    background: rgba(0, 0, 0, 0.4);
+    color: white;
+    font-size: 16px;
+    font-family: inherit;
+    transition: all 0.3s;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-gold);
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.1);
+}
+
+.location-group { background: rgba(255, 255, 255, 0.03); padding: 15px; border-radius: var(--border-radius-sm); border: 1px solid var(--glass-border-light); }
+.location-options { display: flex; gap: 20px; margin-bottom: 12px; flex-wrap: wrap; }
+.checkbox-label { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-secondary); cursor: pointer; }
+.checkbox-label input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--primary-gold); }
+.help-text { display: block; font-size: 12px; color: var(--text-muted); margin-top: 6px; font-style: italic; }
+
+.form-actions { display: flex; gap: 12px; margin-top: 25px; }
+.submit-btn, .cancel-btn, .ok-btn {
+    flex: 1;
+    padding: 14px 24px;
+    border-radius: var(--border-radius-sm);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 48px;
+    font-family: inherit;
+}
+
+.submit-btn {
+    background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+}
+
+.submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5); }
+.cancel-btn { background: var(--glass-bg); color: var(--text-secondary); border: 1px solid var(--glass-border); }
+.cancel-btn:hover { background: var(--glass-bg-strong); color: white; }
+.form-disclaimer { font-size: 12px; color: var(--text-muted); text-align: center; margin-top: 15px; line-height: 1.5; font-style: italic; }
+
+.guidelines-content { line-height: 1.7; }
+.guidelines-content p { margin-bottom: 15px; color: var(--text-secondary); font-size: 15px; }
+.guidelines-content ul { list-style: none; margin-bottom: 20px; padding: 0; }
+.guidelines-content li { padding: 10px 0; color: var(--text-secondary); border-bottom: 1px solid var(--glass-border-light); font-size: 14px; display: flex; align-items: flex-start; gap: 8px; }
+.ok-btn { background: var(--primary-gold); color: #0f172a; width: 100%; margin-top: 10px; }
+.ok-btn:hover { background: var(--primary-gold-dark); transform: translateY(-2px); }
+
+/*
+================================================================================
+This Area Of Code Is: Accessibility Modal
+Explanation: Comprehensive accessibility options panel
+In Other Words: The settings popup for disabilities
+================================================================================
+*/
+
+.accessibility-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+}
+
+.accessibility-modal.open { opacity: 1; visibility: visible; }
+
+.accessibility-content {
+    width: 100%;
+    max-width: 500px;
+    max-height: 85dvh;
+    background: linear-gradient(135deg, rgba(15,23,42,0.98) 0%, rgba(30,41,59,0.99) 100%);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: var(--border-radius);
+    padding: 30px;
+    overflow-y: auto;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.7);
+    position: relative;
+}
+
+.accessibility-header { text-align: center; margin-bottom: 25px; position: relative; }
+.accessibility-header h2 { color: var(--primary-gold); font-family: 'Playfair Display', serif; font-size: 26px; margin-bottom: 8px; }
+.accessibility-header p { color: var(--text-muted); font-size: 14px; }
+
+.access-category { margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 20px; }
+.access-category:last-child { border-bottom: none; margin-bottom: 15px; }
+.access-category h3 { color: var(--primary-gold); font-size: 16px; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-family: 'Playfair Display', serif; text-transform: uppercase; letter-spacing: 1px; }
+
+.access-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: var(--border-radius-sm);
+    padding: 14px 15px;
+    margin-bottom: 10px;
+    color: white;
+    font-size: 14px;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.access-toggle:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.25); }
+.access-toggle.active { background: rgba(251, 191, 36, 0.1); border-color: rgba(251, 191, 36, 0.4); }
+
+.toggle-switch {
+    width: 50px;
+    height: 26px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 13px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.toggle-switch::after {
+    content: '';
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    background: white;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    transition: all 0.3s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+.access-toggle.active .toggle-switch { background: var(--primary-gold); }
+.access-toggle.active .toggle-switch::after { left: 26px; }
+
+.color-filter-label { color: rgba(255,255,255,0.6); font-size: 12px; margin: 15px 0 10px 0; text-transform: uppercase; letter-spacing: 1px; }
+.access-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.filter-group-label { grid-column: 1 / -1; font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 8px; margin-bottom: 4px; padding-left: 4px; }
+
+.access-btn {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+    padding: 10px 6px;
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+    font-weight: 500;
+    font-family: inherit;
+}
+
+.access-btn:hover, .access-btn.active { background: rgba(251, 191, 36, 0.15); border-color: rgba(251, 191, 36, 0.6); transform: translateY(-2px); }
+.access-btn.active { background: rgba(251, 191, 36, 0.25); font-weight: 600; }
+
+.close-modal-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--primary-gold), #f59e0b);
+    border: none;
+    border-radius: 50px;
+    color: #0f172a;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 16px;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
+    margin-top: 10px;
+    font-family: inherit;
+}
+
+.close-modal-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(251, 191, 36, 0.4); }
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.scroll-indicator.visible { opacity: 1; }
+
+/*
+================================================================================
+This Area Of Code Is: Color Vision Filters (9 Types)
+Explanation: CSS filters for color blindness accessibility
+In Other Words: Styles that help color blind users
+================================================================================
+*/
+
+.filter-deuteranomaly { filter: url('#deuteranomaly'); }
+.filter-deuteranopia { filter: url('#deuteranopia'); }
+.filter-protanomaly { filter: url('#protanomaly'); }
+.filter-protanopia { filter: url('#protanopia'); }
+.filter-tritanomaly { filter: url('#tritanomaly'); }
+.filter-tritanopia { filter: url('#tritanopia'); }
+.filter-achromatopsia { filter: grayscale(100%) brightness(1.1) contrast(1.1); }
+.filter-cone-monochromacy { filter: grayscale(100%) sepia(20%); }
+.filter-blue-cone-monochromacy { filter: url('#tritanopia') grayscale(50%); }
+
+/*
+================================================================================
+This Area Of Code Is: Accessibility Modes
+Explanation: Special styles for Autism, ADHD, PTSD, and other modes
+In Other Words: Adjustments for different disabilities
+================================================================================
+*/
+
+.autism-mode * { transition-duration: 0.5s !important; animation-duration: 2s !important; }
+.autism-mode .content-card { border-width: 3px; border-color: rgba(255, 255, 255, 0.5); }
+.autism-mode .card-icon { animation: none; }
+
+.ptsd-mode * { animation: none !important; transition-duration: 0.2s !important; }
+.ptsd-mode .content-card::before { display: none; }
+.ptsd-mode .card-icon { animation: none; }
+.ptsd-mode .auto-mode-btn.active { animation: none; box-shadow: 0 0 15px rgba(251, 191, 36, 0.4); }
+
+.adhd-mode .setup-text { font-size: clamp(26px, 7vw, 34px); line-height: 1.3; }
+.adhd-mode .punchline-text { font-size: clamp(20px, 5vw, 24px); color: #60a5fa; }
+
+.dyslexia-mode * { letter-spacing: 0.05em; word-spacing: 0.1em; }
+.dyslexia-mode .setup-text { line-height: 1.6; }
+
+.anxiety-mode .content-card { border-color: rgba(96, 165, 250, 0.4); box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.2); }
+
+.high-contrast-mode * { border-color: white !important; }
+.high-contrast-mode .content-card { background: rgba(0, 0, 0, 0.8); border: 2px solid white; }
+.high-contrast-mode .setup-text, .high-contrast-mode .punchline-text { color: white; text-shadow: none; }
+
+.large-targets-mode .nav-btn, .large-targets-mode .add-joke-btn, .large-targets-mode .auto-mode-btn, .large-targets-mode .jump-btn { min-height: 56px; padding: 16px 28px; }
+.large-targets-mode .jump-btn { min-height: 52px; }
+
+/*
+================================================================================
+This Area Of Code Is: Mobile Responsive
+Explanation: Adjustments for smaller screens including iPad and phones
+In Other Words: Makes it work on mobile devices
+================================================================================
+*/
+
+@media (max-width: 480px) {
+    .app-main { 
+        padding: calc(var(--header-height) + var(--safe-top) + 60px) 12px calc(90px + var(--safe-bottom)); 
     }
-}
-
-function goHome() {
-    window.location.href = '../index.html';
-}
-
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js').catch(() => {});
+    
+    .live-stats {
+        top: calc(var(--header-height) + var(--safe-top) + 8px);
+        right: 10px;
+        gap: 6px;
+    }
+    
+    .online-badge, .cards-badge {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+    
+    .content-card { 
+        padding: 25px 15px; 
+        min-height: 280px; 
+        border-radius: 20px;
+    }
+    
+    .setup-text { font-size: clamp(20px, 5.5vw, 28px); }
+    .punchline-text { font-size: clamp(16px, 4vw, 20px); }
+    
+    .controls-row.main-controls {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    
+    .punchline-btn { order: -1; }
+    
+    .controls-row.secondary { flex-direction: column; }
+    
+    .nav-btn, .add-joke-btn, .auto-mode-btn { 
+        width: 100%;
+        min-height: 44px;
+        font-size: 14px;
+    }
+    
+    .glass-modal { padding: 20px; }
+    .accessibility-content { padding: 20px; }
 }
