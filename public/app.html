@@ -23,7 +23,7 @@
 
     <!-- Header -->
     <header class="app-header">
-        <button class="menu-btn" id="menuBtn" aria-label="Open menu">
+        <button class="menu-btn" id="menuBtn" onclick="toggleMenu()" aria-label="Open menu">
             <div class="hamburger" id="hamburgerIcon">
                 <span></span>
                 <span></span>
@@ -44,8 +44,9 @@
 
     <!-- Live Stats -->
     <div class="live-stats">
-        <div class="online-badge" id="onlineBadge">
-            <span id="onlineUsers">Loading...</span>
+        <div class="welcome-badge" id="welcomeBadge">
+            <span>👋</span>
+            <span id="welcomeText">Welcome Back</span>
         </div>
         <div class="cards-badge">
             <span>😊</span>
@@ -60,10 +61,10 @@
             <button class="close-menu" onclick="toggleMenu()" aria-label="Close menu">×</button>
         </div>
         <div class="menu-content">
-            <button class="menu-item" onclick="goHome()">
+            <button class="menu-item" onclick="goHome(); toggleMenu();">
                 <span>🏠</span> Home
             </button>
-            <button class="menu-item accessibility-item" onclick="openAccessibilityModal(); toggleMenu();">
+            <button class="menu-item" onclick="openAccessibilityModal(); toggleMenu();">
                 <span>♿</span> Accessibility Options
             </button>
             <div class="menu-divider"></div>
@@ -97,7 +98,7 @@
                 <span>←</span> Back
             </button>
             <button class="nav-btn punchline-btn" id="punchlineBtn" onclick="togglePunchline()" aria-label="Toggle punchline">
-                <span>👁️</span> <span id="punchlineBtnText">Show Punchline</span>
+                <span class="eye-icon">👁️</span> <span id="punchlineBtnText">Show Punchline</span>
             </button>
             <button class="nav-btn" onclick="nextCard()" aria-label="Next card">
                 Next <span>→</span>
@@ -106,22 +107,22 @@
 
         <!-- Navigation Controls Row 2 -->
         <div class="controls-row secondary">
-            <button class="add-joke-btn" onclick="openJokeModal()">
+            <button class="action-btn add-joke-btn" onclick="openJokeModal()">
                 <span>+</span> Add Your Joke
             </button>
-            <button class="auto-mode-btn" id="autoModeBtn" onclick="toggleAutoMode()">
+            <button class="action-btn auto-mode-btn" id="autoModeBtn" onclick="toggleAutoMode()">
                 <span>◉</span> <span id="autoModeText">Auto Mode</span>
             </button>
         </div>
 
         <!-- Speed Controls -->
         <div class="speed-controls" id="speedControls">
-            <button class="speed-btn" data-speed="8000" onclick="setSpeed(8000)">Slow<br><small>8-10s</small></button>
-            <button class="speed-btn active" data-speed="6000" onclick="setSpeed(6000)">Medium<br><small>5-7s</small></button>
+            <button class="speed-btn" data-speed="8000" onclick="setSpeed(8000)">Slow<br><small>8s</small></button>
+            <button class="speed-btn active" data-speed="6000" onclick="setSpeed(6000)">Medium<br><small>6s</small></button>
             <button class="speed-btn" data-speed="3500" onclick="setSpeed(3500)">Fast<br><small>3.5s</small></button>
         </div>
 
-        <a href="#" class="guidelines-link" onclick="showGuidelines(); return false;">Community Guidelines</a>
+        <button class="guidelines-link" onclick="showGuidelines()">Community Guidelines</button>
     </main>
 
     <!-- Add Joke Modal -->
@@ -151,7 +152,7 @@
                             <input type="checkbox" id="showCountry" checked> Country
                         </label>
                     </div>
-                    <small class="help-text">Choose what to display with the checkboxes above</small>
+                    <small class="help-text">Choose what to display</small>
                 </div>
 
                 <div class="form-group">
@@ -174,8 +175,7 @@
                 </div>
                 
                 <p class="form-disclaimer">
-                    By submitting, you agree to our community guidelines. 
-                    All content is moderated for universal safety and appropriateness.
+                    By submitting, you agree to our community guidelines. All content is moderated.
                 </p>
             </form>
         </div>
@@ -204,7 +204,7 @@
 
     <!-- Accessibility Modal -->
     <div class="accessibility-modal" id="accessibilityModal" role="dialog" aria-label="Accessibility Options">
-        <div class="accessibility-content" id="accessibilityContent">
+        <div class="accessibility-content">
             <div class="accessibility-header">
                 <h2>♿ Universal Access</h2>
                 <p>Customizable options for every ability and need</p>
@@ -214,15 +214,15 @@
             <!-- Neurodivergent Section -->
             <div class="access-category">
                 <h3><span>🧠</span> Neurodivergent</h3>
-                <div class="access-toggle" data-feature="autism" onclick="toggleFeature(this, 'autism')" role="switch" aria-checked="false" tabindex="0">
+                <div class="access-toggle" onclick="toggleFeature(this, 'autism')">
                     <span>🧩 Autism-Friendly Mode (Calm)</span>
                     <div class="toggle-switch"></div>
                 </div>
-                <div class="access-toggle" data-feature="adhd" onclick="toggleFeature(this, 'adhd')" role="switch" aria-checked="false" tabindex="0">
+                <div class="access-toggle" onclick="toggleFeature(this, 'adhd')">
                     <span>⚡ ADHD Support (Focus)</span>
                     <div class="toggle-switch"></div>
                 </div>
-                <div class="access-toggle" data-feature="dyslexia" onclick="toggleFeature(this, 'dyslexia')" role="switch" aria-checked="false" tabindex="0">
+                <div class="access-toggle" onclick="toggleFeature(this, 'dyslexia')">
                     <span>📖 Dyslexia-Friendly Font</span>
                     <div class="toggle-switch"></div>
                 </div>
@@ -231,11 +231,11 @@
             <!-- Mental Health Section -->
             <div class="access-category">
                 <h3><span>💙</span> Mental Health</h3>
-                <div class="access-toggle" data-feature="anxiety" onclick="toggleFeature(this, 'anxiety')" role="switch" aria-checked="false" tabindex="0">
+                <div class="access-toggle" onclick="toggleFeature(this, 'anxiety')">
                     <span>🌊 Anxiety Relief Mode</span>
                     <div class="toggle-switch"></div>
                 </div>
-                <div class="access-toggle" data-feature="ptsd" onclick="toggleFeature(this, 'ptsd')" role="switch" aria-checked="false" tabindex="0">
+                <div class="access-toggle" onclick="toggleFeature(this, 'ptsd')">
                     <span>🎖️ PTSD Support (No Flash)</span>
                     <div class="toggle-switch"></div>
                 </div>
@@ -243,38 +243,25 @@
             
             <!-- Vision Section -->
             <div class="access-category">
-                <h3><span>👁️</span> Vision (9 Color Types)</h3>
-                <div class="access-toggle" data-feature="high-contrast" onclick="toggleFeature(this, 'high-contrast')" role="switch" aria-checked="false" tabindex="0">
+                <h3><span>👁️</span> Vision</h3>
+                <div class="access-toggle" onclick="toggleFeature(this, 'high-contrast')">
                     <span>🔆 High Contrast</span>
                     <div class="toggle-switch"></div>
                 </div>
                 <p class="color-filter-label">Color Vision Types:</p>
-                <div class="access-grid color-vision-grid">
-                    <div class="filter-group-label">Red-Green</div>
-                    <button class="access-btn" data-filter="deuteranomaly" onclick="applyColorFilter('deuteranomaly')">Deuteranomaly</button>
-                    <button class="access-btn" data-filter="deuteranopia" onclick="applyColorFilter('deuteranopia')">Deuteranopia</button>
-                    <button class="access-btn" data-filter="protanomaly" onclick="applyColorFilter('protanomaly')">Protanomaly</button>
-                    <button class="access-btn" data-filter="protanopia" onclick="applyColorFilter('protanopia')">Protanopia</button>
-                    
-                    <div class="filter-group-label">Blue-Yellow</div>
-                    <button class="access-btn" data-filter="tritanomaly" onclick="applyColorFilter('tritanomaly')">Tritanomaly</button>
-                    <button class="access-btn" data-filter="tritanopia" onclick="applyColorFilter('tritanopia')">Tritanopia</button>
-                    
-                    <div class="filter-group-label">Complete</div>
-                    <button class="access-btn" data-filter="achromatopsia" onclick="applyColorFilter('achromatopsia')">Achromatopsia</button>
-                    <button class="access-btn" data-filter="cone-monochromacy" onclick="applyColorFilter('cone-monochromacy')">Cone Mono.</button>
-                    <button class="access-btn" data-filter="blue-cone-monochromacy" onclick="applyColorFilter('blue-cone-monochromacy')">Blue Cone</button>
-                    
-                    <button class="access-btn active" data-filter="none" onclick="applyColorFilter('none')">Normal Vision</button>
+                <div class="access-grid">
+                    <button class="access-btn" onclick="applyColorFilter('deuteranomaly')">Deuteranomaly</button>
+                    <button class="access-btn" onclick="applyColorFilter('deuteranopia')">Deuteranopia</button>
+                    <button class="access-btn" onclick="applyColorFilter('protanomaly')">Protanomaly</button>
+                    <button class="access-btn" onclick="applyColorFilter('protanopia')">Protanopia</button>
+                    <button class="access-btn" onclick="applyColorFilter('tritanomaly')">Tritanomaly</button>
+                    <button class="access-btn" onclick="applyColorFilter('tritanopia')">Tritanopia</button>
+                    <button class="access-btn" onclick="applyColorFilter('achromatopsia')">Achromatopsia</button>
+                    <button class="access-btn active" onclick="applyColorFilter('none')">Normal Vision</button>
                 </div>
             </div>
             
             <button class="close-modal-btn" onclick="closeAccessibilityModal()">Close Settings</button>
-            
-            <div class="scroll-indicator" id="scrollIndicator">
-                <span class="scroll-text">Scroll</span>
-                <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
-            </div>
         </div>
     </div>
 
