@@ -45,7 +45,7 @@
     <!-- Live Stats -->
     <div class="live-stats">
         <div class="welcome-badge" id="welcomeBadge">
-            <span>👋</span>
+            <span id="waveEmoji">👋</span>
             <span id="welcomeText">Welcome Back</span>
         </div>
         <div class="cards-badge">
@@ -92,20 +92,20 @@
             </div>
         </div>
 
-        <!-- Navigation Controls Row 1 -->
+        <!-- Navigation Controls Row 1: Back, Show Punchline, Next -->
         <div class="controls-row main-controls">
             <button class="nav-btn" onclick="previousCard()" aria-label="Previous card">
                 <span>←</span> Back
             </button>
             <button class="nav-btn punchline-btn" id="punchlineBtn" onclick="togglePunchline()" aria-label="Toggle punchline">
-                <span class="eye-icon">👁️</span> <span id="punchlineBtnText">Show Punchline</span>
+                <span id="punchlineBtnText">Show Punchline</span>
             </button>
             <button class="nav-btn" onclick="nextCard()" aria-label="Next card">
                 Next <span>→</span>
             </button>
         </div>
 
-        <!-- Navigation Controls Row 2 -->
+        <!-- Navigation Controls Row 2: Add Joke, Auto Mode -->
         <div class="controls-row secondary">
             <button class="action-btn add-joke-btn" onclick="openJokeModal()">
                 <span>+</span> Add Your Joke
@@ -280,5 +280,29 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="./app.js"></script>
+    
+    <!-- Wave Emoji Animation -->
+    <script>
+        /*
+        ================================================================================
+        This Area Of Code Is: Welcome Back Wave Emoji Animation
+        Explanation: Cycles through different skin tone hand wave emojis every 2 seconds to represent universal diversity and inclusion.
+        In Other Words: Changes the hand wave color in the welcome badge automatically.
+        =================================================================================
+        */
+        (function() {
+            const waveEmojis = ['👋', '👋🏻', '👋🏼', '👋🏽', '👋🏾', '👋🏿'];
+            const waveElement = document.getElementById('waveEmoji');
+            
+            if (!waveElement) return;
+            
+            let currentIndex = 0;
+            
+            setInterval(() => {
+                currentIndex = (currentIndex + 1) % waveEmojis.length;
+                waveElement.textContent = waveEmojis[currentIndex];
+            }, 2000);
+        })();
+    </script>
 </body>
 </html>
