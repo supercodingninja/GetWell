@@ -11,6 +11,142 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./styles.css">
+    <style>
+        /*
+        ================================================================================
+        This Area Of Code Is: Live Stats Pill Enhancements
+        Explanation: Updated pill buttons with broader glass borders, intrinsic width sizing, and enhanced glass morphism effects including inner shadows and gradient borders.
+        In Other Words: Makes the Welcome Back and card count pills more glassy with borders that fit the text exactly.
+        =================================================================================
+        */
+        
+        .live-stats {
+            position: relative;
+            z-index: 50;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            gap: 10px;
+            align-items: center;
+            padding: 10px 15px;
+            margin-top: calc(60px + var(--safe-top));
+            width: 100%;
+            max-width: 600px;
+            pointer-events: none;
+        }
+
+        .live-stats > * {
+            pointer-events: auto;
+        }
+
+        /* Glassy Pill Base Styles - Intrinsic Width */
+        .welcome-badge,
+        .cards-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 14px;
+            color: white;
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            white-space: nowrap;
+            width: auto;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        /* Welcome Back Specific - Broader Border Glass Effect */
+        .welcome-badge {
+            font-family: 'Dancing Script', cursive;
+            font-size: 17px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 
+                inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.1),
+                0 4px 20px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+
+        .welcome-badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: pillShimmer 3s infinite;
+        }
+
+        @keyframes pillShimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* Cards Badge Specific - Broader Border Glass Effect */
+        .cards-badge {
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid rgba(255, 255, 255, 0.35);
+            box-shadow: 
+                inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.1),
+                0 4px 20px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Hover Effects */
+        .welcome-badge:hover,
+        .cards-badge:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 215, 0, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 
+                inset 0 1px 0 rgba(255, 255, 255, 0.3),
+                0 8px 25px rgba(0, 0, 0, 0.4),
+                0 0 20px rgba(255, 215, 0, 0.2);
+        }
+
+        /* Update Morph Logo to <SCN/>™ */
+        .scn-logo {
+            position: absolute;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 10px;
+            color: var(--primary-gold);
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.8);
+            opacity: 0;
+            transform: scale(0) rotate(-180deg);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            white-space: nowrap;
+            letter-spacing: -0.5px;
+        }
+
+        /* Responsive adjustments for pills */
+        @media (max-width: 375px) {
+            .welcome-badge {
+                font-size: 15px;
+                padding: 6px 12px;
+            }
+            .cards-badge {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+        }
+
+        /* High Contrast Mode Support */
+        @media (prefers-contrast: high) {
+            .welcome-badge,
+            .cards-badge {
+                border-width: 3px;
+                background: rgba(0, 0, 0, 0.7);
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Video Background -->
@@ -42,7 +178,7 @@
         </button>
     </header>
 
-    <!-- Live Stats -->
+    <!-- Live Stats - Positioned Left with Glassy Pills -->
     <div class="live-stats">
         <div class="welcome-badge" id="welcomeBadge">
             <span id="waveEmoji">👋</span>
