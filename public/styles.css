@@ -1477,6 +1477,12 @@ In Other Words: Specific fixes for all Apple screen sizes.
         font-size: 32px;
         margin-bottom: 10px;
     }
+    .accessibility-content {
+        max-height: 90vh;
+    }
+    .side-menu {
+        padding-top: calc(var(--safe-top) + 10px);
+    }
 }
 
 /* iPad and iPad Pro (768px and up) */
