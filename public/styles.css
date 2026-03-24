@@ -228,8 +228,8 @@ In Other Words: This is the top bar where the menu button turns into your SCN lo
 /*
 ================================================================================
 This Area Of Code Is: Live Stats Display - FIXED POSITIONING
-Explanation: Positioned below header, NOT overlapping card. Uses static positioning in normal flow rather than fixed to prevent overlap issues on mobile.
-In Other Words: These badges now sit properly between header and card, not floating over content.
+Explanation: Positioned below header, NOT overlapping card. Uses static positioning in normal flow rather than fixed to prevent overlap issues on mobile. Changed to flex-start to position Welcome pill on the left side of the viewport.
+In Other Words: These badges now sit properly between header and card, with Welcome Back on the left.
 ================================================================================
 */
 
@@ -238,7 +238,7 @@ In Other Words: These badges now sit properly between header and card, not float
     z-index: 50;
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: flex-start; /* CHANGED: Moved Welcome pill to left side (was flex-end) */
     gap: 8px;
     align-items: center;
     padding: 10px 15px;
